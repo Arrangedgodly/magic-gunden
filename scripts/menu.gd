@@ -28,7 +28,7 @@ func _on_quit_pressed() -> void:
 
 func _on_credits_pressed() -> void:
 	AudioManager.stop(menu_music)
-	get_tree().change_scene_to_file("res://scenes/credits.tscn")
+	LoadManager.load_scene("res://scenes/credits.tscn")
 
 func _on_high_score_pressed() -> void:
 	AudioManager.stop(menu_music)
