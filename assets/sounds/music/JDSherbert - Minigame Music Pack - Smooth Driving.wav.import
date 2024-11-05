@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://4rr7mj042p8u"
+path="res://.godot/imported/JDSherbert - Minigame Music Pack - Smooth Driving.wav-54f2120b71b156c8e0c5c516f7588ae7.sample"
+
+[deps]
+
+source_file="res://assets/sounds/music/JDSherbert - Minigame Music Pack - Smooth Driving.wav"
+dest_files=["res://.godot/imported/JDSherbert - Minigame Music Pack - Smooth Driving.wav-54f2120b71b156c8e0c5c516f7588ae7.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
