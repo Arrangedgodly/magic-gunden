@@ -1,0 +1,87 @@
+[gd_resource type="AudioBusLayout" load_steps=9 format=3 uid="uid://c42alvk7tfu3b"]
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_ft82r"]
+resource_name = "Limiter"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_cvh4q"]
+resource_name = "Reverb"
+room_size = 0.1
+damping = 0.2
+wet = 0.05
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_once5"]
+resource_name = "Limiter"
+ceiling_db = -3.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_rtriy"]
+resource_name = "Reverb"
+room_size = 0.1
+damping = 0.2
+wet = 0.05
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_ig4te"]
+resource_name = "Limiter"
+ceiling_db = -3.0
+
+[sub_resource type="AudioEffectChorus" id="AudioEffectChorus_x4reo"]
+resource_name = "Chorus"
+voice_count = 4
+wet = 0.3
+voice/3/delay_ms = 12.0
+voice/3/rate_hz = 1.0
+voice/3/depth_ms = 0.0
+voice/3/level_db = 0.0
+voice/3/cutoff_hz = 16000.0
+voice/3/pan = 0.0
+voice/4/delay_ms = 12.0
+voice/4/rate_hz = 1.0
+voice/4/depth_ms = 0.0
+voice/4/level_db = 0.0
+voice/4/cutoff_hz = 16000.0
+voice/4/pan = 0.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_fkgqe"]
+resource_name = "Reverb"
+room_size = 0.3
+damping = 0.2
+wet = 0.2
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_pr7yj"]
+resource_name = "Limiter"
+ceiling_db = -3.0
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectLimiter_ft82r")
+bus/0/effect/0/enabled = true
+bus/1/name = &"Music"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = -6.57885
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectReverb_cvh4q")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectLimiter_once5")
+bus/1/effect/1/enabled = true
+bus/2/name = &"SFX"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = -6.59009
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectReverb_rtriy")
+bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectLimiter_ig4te")
+bus/2/effect/1/enabled = true
+bus/3/name = &"Start"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -5.04538
+bus/3/send = &"Master"
+bus/3/effect/0/effect = SubResource("AudioEffectChorus_x4reo")
+bus/3/effect/0/enabled = true
+bus/3/effect/1/effect = SubResource("AudioEffectReverb_fkgqe")
+bus/3/effect/1/enabled = true
+bus/3/effect/2/effect = SubResource("AudioEffectLimiter_pr7yj")
+bus/3/effect/2/enabled = true

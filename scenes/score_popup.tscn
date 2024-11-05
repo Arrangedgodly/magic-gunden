@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2bwmjk3ouwpw"]
+
+[ext_resource type="Script" path="res://scripts/score_popup.gd" id="1_pxjsx"]
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="2_ro4ah"]
+[ext_resource type="AudioStream" uid="uid://c246gyuxjlny8" path="res://assets/sounds/sfx/coin5.ogg" id="3_8tiyn"]
+
+[node name="Score_Popup" type="Node2D"]
+script = ExtResource("1_pxjsx")
+stream = ExtResource("3_8tiyn")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 22.0
+offset_bottom = 13.0
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_ro4ah")
+theme_override_font_sizes/font_size = 16
+text = "10"

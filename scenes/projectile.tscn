@@ -1,0 +1,102 @@
+[gd_scene load_steps=17 format=3 uid="uid://ccbkcj3ax1y45"]
+
+[ext_resource type="Texture2D" uid="uid://172qrj22r216" path="res://assets/items/projectile.png" id="1_aahx2"]
+[ext_resource type="Script" path="res://scripts/projectile.gd" id="2_ro4io"]
+[ext_resource type="Texture2D" uid="uid://b6lg01x87ye7x" path="res://assets/items/projectile_frame1.png" id="3_omxde"]
+[ext_resource type="Texture2D" uid="uid://cbhdeubebnmw5" path="res://assets/items/projectile_frame2.png" id="4_dek31"]
+[ext_resource type="Texture2D" uid="uid://c4r5gvfd77oak" path="res://assets/items/projectile_frame3.png" id="5_bff2p"]
+[ext_resource type="Texture2D" uid="uid://cviehf4v406pe" path="res://assets/items/projectile_frame4.png" id="6_rxfm6"]
+[ext_resource type="AudioStream" uid="uid://dwbtjujmx5ts7" path="res://assets/sounds/sfx/LazerFire3.wav" id="7_8sb5m"]
+[ext_resource type="AudioStream" uid="uid://bksdii6ivbt8p" path="res://assets/sounds/sfx/Hit_Enamy_2.wav" id="8_6xlot"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fflme"]
+atlas = ExtResource("1_aahx2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5j03"]
+atlas = ExtResource("1_aahx2")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcfje"]
+atlas = ExtResource("1_aahx2")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rd06"]
+atlas = ExtResource("1_aahx2")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f7tvf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fflme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5j03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcfje")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rd06")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3fu5c"]
+particle_flag_disable_z = true
+angle_min = 90.0
+angle_max = 90.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = -1.60933e-05
+gravity = Vector3(0, 98, 0)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_5n58n"]
+frames = 4
+speed_scale = 11.7
+frame_0/texture = ExtResource("3_omxde")
+frame_1/texture = ExtResource("4_dek31")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("5_bff2p")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("6_rxfm6")
+frame_3/duration = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rgtqx"]
+radius = 5.0
+
+[node name="Projectile" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_f7tvf")
+autoplay = "default"
+frame = 1
+frame_progress = 0.795688
+script = ExtResource("2_ro4io")
+projectile_sound = ExtResource("7_8sb5m")
+hit_sound = ExtResource("8_6xlot")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.117647)
+show_behind_parent = true
+position = Vector2(-0.999992, -4.76837e-07)
+rotation = 1.5708
+scale = Vector2(0.65, 0.65)
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_3fu5c")
+texture = SubResource("AnimatedTexture_5n58n")
+lifetime = 2.0
+one_shot = true
+speed_scale = 15.0
+explosiveness = 0.2
+randomness = 0.2
+local_coords = true
+
+[node name="Area2D" type="Area2D" parent="." groups=["projectile"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(5, 0)
+shape = SubResource("CircleShape2D_rgtqx")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

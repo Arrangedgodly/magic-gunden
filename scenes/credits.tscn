@@ -1,0 +1,477 @@
+[gd_scene load_steps=39 format=3 uid="uid://b6n0dup30delf"]
+
+[ext_resource type="Script" path="res://scripts/credits.gd" id="1_w6cxx"]
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_xdy3h"]
+[ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="3_hn13o"]
+[ext_resource type="AudioStream" uid="uid://4rr7mj042p8u" path="res://assets/sounds/music/JDSherbert - Minigame Music Pack - Smooth Driving.wav" id="4_b413o"]
+[ext_resource type="Texture2D" uid="uid://dp6ns6e5nqynt" path="res://assets/map/Space Background_blue.png" id="5_52ucs"]
+[ext_resource type="Texture2D" uid="uid://d3hbpmt2dppbv" path="res://assets/character/runframe1.png" id="6_vcety"]
+[ext_resource type="Texture2D" uid="uid://byeu87qyo8igs" path="res://assets/character/runframe2.png" id="7_ouwri"]
+[ext_resource type="Texture2D" uid="uid://bovs7hc1uiolb" path="res://assets/character/runframe3.png" id="8_08f42"]
+[ext_resource type="Texture2D" uid="uid://cl5bcxt7yjeux" path="res://assets/character/runframe4.png" id="9_f86fj"]
+[ext_resource type="Texture2D" uid="uid://rw5vc1ab2ig6" path="res://assets/character/runframe5.png" id="10_4w071"]
+[ext_resource type="Texture2D" uid="uid://sqxxdrj6hbic" path="res://assets/character/runframe6.png" id="11_xyo76"]
+[ext_resource type="Texture2D" uid="uid://cmel2dc0wudpc" path="res://assets/enemies/Slime pack/slimeframe1.png" id="12_kw5ay"]
+[ext_resource type="Texture2D" uid="uid://b6hddyhvbg4hn" path="res://assets/enemies/Slime pack/slimeframe2.png" id="13_hmgrf"]
+[ext_resource type="Texture2D" uid="uid://djs4yq1xlkclh" path="res://assets/enemies/Slime pack/slimeframe3.png" id="14_0to6q"]
+[ext_resource type="Texture2D" uid="uid://b4bwwl2kqthmv" path="res://assets/enemies/Slime pack/slimeframe4.png" id="15_ug7ne"]
+[ext_resource type="Texture2D" uid="uid://dv1naubx0aesg" path="res://assets/items/gemframe1.png" id="16_0fjmf"]
+[ext_resource type="Texture2D" uid="uid://db4hhs7vdkqy8" path="res://assets/items/gemframe2.png" id="17_m1dtu"]
+[ext_resource type="Texture2D" uid="uid://ckvrtit26u8jg" path="res://assets/items/gemframe3.png" id="18_ilj0q"]
+[ext_resource type="Texture2D" uid="uid://bey3gqcljbw07" path="res://assets/items/gemframe4.png" id="19_4j1bc"]
+[ext_resource type="Texture2D" uid="uid://dj8xc3dvht4eo" path="res://assets/items/gemframe5.png" id="20_s0pv8"]
+[ext_resource type="Texture2D" uid="uid://dknedvws0nqm6" path="res://assets/items/gemframe6.png" id="21_yvyb6"]
+
+[sub_resource type="Curve" id="Curve_51ntx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_of7rn"]
+curve = SubResource("Curve_51ntx")
+
+[sub_resource type="Gradient" id="Gradient_avhg5"]
+colors = PackedColorArray(1, 1, 1, 0.0392157, 1, 1, 1, 0.196078)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dv4f6"]
+gradient = SubResource("Gradient_avhg5")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_guv6o"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(500, 50, 1)
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = 9.99998
+gravity = Vector3(60, 98, 0)
+scale_max = 20.0
+color_initial_ramp = SubResource("GradientTexture1D_dv4f6")
+alpha_curve = SubResource("CurveTexture_of7rn")
+turbulence_enabled = true
+turbulence_noise_strength = 10.0
+turbulence_initial_displacement_min = 1.49012e-06
+turbulence_initial_displacement_max = 35.0
+
+[sub_resource type="Curve" id="Curve_gjf6p"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 360), 0.0, 0.0, 0, 0, Vector2(1, -360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gsh28"]
+curve = SubResource("Curve_gjf6p")
+
+[sub_resource type="Gradient" id="Gradient_jhj8s"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1y46a"]
+gradient = SubResource("Gradient_jhj8s")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1hctx"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(20, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(30, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 1.00001
+angle_curve = SubResource("CurveTexture_gsh28")
+spread = 180.0
+gravity = Vector3(100, 500, 0)
+scale_min = 4.0
+scale_max = 4.0
+scale_over_velocity_max = 20.0
+color_ramp = SubResource("GradientTexture1D_1y46a")
+turbulence_noise_strength = 20.0
+turbulence_noise_speed = Vector3(30, 30, 0)
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 1.0
+collision_use_scale = true
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_vlvvl"]
+frames = 6
+speed_scale = 15.0
+frame_0/texture = ExtResource("6_vcety")
+frame_1/texture = ExtResource("7_ouwri")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("8_08f42")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("9_f86fj")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("10_4w071")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("11_xyo76")
+frame_5/duration = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aeked"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(20, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(30, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 1.00001
+angle_curve = SubResource("CurveTexture_gsh28")
+spread = 180.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = -1.60933e-05
+gravity = Vector3(300, 750, 0)
+scale_min = 4.0
+scale_max = 4.0
+scale_over_velocity_max = 20.0
+color_ramp = SubResource("GradientTexture1D_1y46a")
+hue_variation_min = -2.23517e-08
+hue_variation_max = -2.23517e-08
+turbulence_noise_strength = 20.0
+turbulence_noise_speed = Vector3(30, 30, 0)
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 1.0
+collision_use_scale = true
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_o57cf"]
+frames = 4
+speed_scale = 8.0
+frame_0/texture = ExtResource("12_kw5ay")
+frame_1/texture = ExtResource("13_hmgrf")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("14_0to6q")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("15_ug7ne")
+frame_3/duration = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_btx1x"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(30, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(20, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 1.00001
+angle_curve = SubResource("CurveTexture_gsh28")
+spread = 180.0
+gravity = Vector3(200, 1000, 0)
+scale_min = 8.0
+scale_max = 8.0
+scale_over_velocity_max = 20.0
+color_ramp = SubResource("GradientTexture1D_1y46a")
+turbulence_noise_strength = 5.0
+turbulence_noise_scale = 3.0
+turbulence_noise_speed = Vector3(100, 100, 0)
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 1.0
+collision_use_scale = true
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_u7y6m"]
+frames = 6
+speed_scale = 15.0
+frame_0/texture = ExtResource("16_0fjmf")
+frame_1/texture = ExtResource("17_m1dtu")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("18_ilj0q")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("19_4j1bc")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("20_s0pv8")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("21_yvyb6")
+frame_5/duration = 1.0
+
+[sub_resource type="Gradient" id="Gradient_twbtj"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gfgri"]
+gradient = SubResource("Gradient_twbtj")
+use_hdr = true
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_w6cxx")
+credits_music = ExtResource("4_b413o")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 800.0
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1200.0
+offset_bottom = 871.0
+
+[node name="Particle Effects" type="Node2D" parent="CenterContainer"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CenterContainer/Particle Effects"]
+position = Vector2(600, 0)
+scale = Vector2(7, 7)
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_guv6o")
+texture = ExtResource("5_52ucs")
+lifetime = 10.0
+preprocess = 60.0
+explosiveness = 0.5
+randomness = 1.0
+fixed_fps = 60
+collision_base_size = 128.0
+trail_lifetime = 7.54
+
+[node name="PlayerParticle" type="GPUParticles2D" parent="CenterContainer/Particle Effects"]
+position = Vector2(600, -50)
+emitting = false
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_1hctx")
+texture = SubResource("AnimatedTexture_vlvvl")
+lifetime = 1.75
+one_shot = true
+preprocess = 60.0
+speed_scale = 0.2
+fixed_fps = 60
+interpolate = false
+collision_base_size = 30.0
+
+[node name="SlimeParticle" type="GPUParticles2D" parent="CenterContainer/Particle Effects"]
+position = Vector2(600, -50)
+scale = Vector2(0.75, 0.75)
+emitting = false
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_aeked")
+texture = SubResource("AnimatedTexture_o57cf")
+lifetime = 1.5
+one_shot = true
+preprocess = 60.0
+speed_scale = 0.2
+fixed_fps = 60
+interpolate = false
+collision_base_size = 30.0
+trail_lifetime = 3.66
+
+[node name="GemParticle" type="GPUParticles2D" parent="CenterContainer/Particle Effects"]
+position = Vector2(600, -50)
+emitting = false
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_btx1x")
+texture = SubResource("AnimatedTexture_u7y6m")
+lifetime = 1.25
+one_shot = true
+preprocess = 60.0
+speed_scale = 0.2
+fixed_fps = 60
+interpolate = false
+collision_base_size = 30.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+offset_left = 162.0
+offset_right = 1038.0
+offset_bottom = 871.0
+theme_override_constants/separation = 25
+
+[node name="SlimeSprites" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Slime Sprites: phantomcooper - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TrippyBackground" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Trippy Animated Background: edermunizz - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ParticleFX" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Particle fx: ragnapixel - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RetroPixelRibbons" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Retro Pixel Ribbons, Banners and frames 2
++ Basic Pixel Health and Scroll Bar: bdragon1727 - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CoinsGemsAndMore" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Coins & gems & chests & more: greatdocbrown - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StackedPixelFont" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Stacked Pixel Font: monkopus - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoundFX" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "200 Free SFX: Kronbits - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Coin5" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Coin5, Hurt2 SFX, Pixel Crosshair : KenneyAssets - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Nature Landscape" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Nature Landscape free pixel art: craftpix.net"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minigame Music" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Minigame Music Pack: JDSherbert - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RetroSFX" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Retro SFX and Music Pack: Hunteraudio - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ELV Games" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Spell Casting, UI2_Start_3, UI2_TROPHY_2 : ELV Games - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VHS_CRT Monitor Effect" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "VHS/CRT Monitor Effect: pend00 - godotshaders.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pixel Bug" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Pixel Bug Font: Matheus Padovani - DAFONT.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Moving Rainbow Gradient" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Moving rainbow gradient: Exuin - godotshaders.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PixelMelt" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Pixel Melt Shader: ericalfaro - GODOTSHADERS.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="2D Highlight" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "2D Highlight Shader: kostilus - godotshaders.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Godot" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Godot Game engine - godotengine.org"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Godot2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Complete UI Essential Pack: crusenho - itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="CenterContainer"]
+position = Vector2(600, 400)
+
+[node name="CRT" parent="CenterContainer/Camera2D" instance=ExtResource("3_hn13o")]
+offset_left = -750.0
+offset_top = -500.0
+offset_right = 450.0
+offset_bottom = 300.0
+scale = Vector2(1.25, 1.25)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(578, 378)
+scale = Vector2(25, 25)
+shadow_enabled = true
+texture = SubResource("GradientTexture1D_gfgri")
+texture_scale = 50.0
+height = 1000.0

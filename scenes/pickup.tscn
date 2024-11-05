@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://7whgfpfllwbw"]
+
+[ext_resource type="Script" path="res://scenes/pickup.gd" id="1_c6228"]
+[ext_resource type="Texture2D" uid="uid://b0tky7r2k5ny" path="res://assets/items/blue-potion.png" id="2_7jhfn"]
+[ext_resource type="Shader" path="res://shaders/2d_highlight.gdshader" id="2_dch7r"]
+[ext_resource type="Texture2D" uid="uid://ccpre818t5pk7" path="res://assets/items/red-potion.png" id="4_bdny1"]
+[ext_resource type="Texture2D" uid="uid://i83y5wp4qb0r" path="res://assets/items/green-potion.png" id="5_c0j2x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5mjai"]
+shader = ExtResource("2_dch7r")
+shader_parameter/size_effect = 0.25
+shader_parameter/speed = 1.0
+shader_parameter/highlight_strength = 0.5
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = false
+shader_parameter/pause_duration = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dxmuf"]
+radius = 16.0
+
+[node name="Pickup" type="StaticBody2D"]
+script = ExtResource("1_c6228")
+
+[node name="BluePotion" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_5mjai")
+scale = Vector2(2, 2)
+texture = ExtResource("2_7jhfn")
+
+[node name="RedPotion" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_5mjai")
+scale = Vector2(2, 2)
+texture = ExtResource("4_bdny1")
+
+[node name="GreenPotion" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_5mjai")
+scale = Vector2(2, 2)
+texture = ExtResource("5_c0j2x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dxmuf")

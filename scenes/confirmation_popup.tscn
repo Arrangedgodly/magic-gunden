@@ -1,0 +1,90 @@
+[gd_scene load_steps=7 format=3 uid="uid://ci3e8foshsdo7"]
+
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_j1hkq"]
+[ext_resource type="Script" path="res://scripts/confirmation_popup.gd" id="2_euovm"]
+[ext_resource type="Shader" path="res://shaders/2d_highlight.gdshader" id="3_827jj"]
+
+[sub_resource type="Theme" id="Theme_1siol"]
+default_font = ExtResource("1_j1hkq")
+default_font_size = 32
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nor4g"]
+resource_local_to_scene = true
+shader = ExtResource("3_827jj")
+shader_parameter/size_effect = 0.3
+shader_parameter/speed = 0.0
+shader_parameter/highlight_strength = 0.75
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = true
+shader_parameter/pause_duration = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gbr8l"]
+resource_local_to_scene = true
+shader = ExtResource("3_827jj")
+shader_parameter/size_effect = 0.3
+shader_parameter/speed = 0.0
+shader_parameter/highlight_strength = 0.75
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = true
+shader_parameter/pause_duration = 0.5
+
+[node name="Confirmation Popup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -600.0
+offset_top = -400.0
+offset_right = -600.0
+offset_bottom = -400.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_1siol")
+script = ExtResource("2_euovm")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 800.0
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 800.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="WarningText" type="Label" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="YES" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_nor4g")
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "YES"
+
+[node name="NO" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_gbr8l")
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "NO"
+
+[connection signal="focus_entered" from="CenterContainer/VBoxContainer/HBoxContainer/YES" to="." method="_on_yes_focus_entered"]
+[connection signal="focus_exited" from="CenterContainer/VBoxContainer/HBoxContainer/YES" to="." method="_on_yes_focus_exited"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/YES" to="." method="_on_yes_pressed"]
+[connection signal="focus_entered" from="CenterContainer/VBoxContainer/HBoxContainer/NO" to="." method="_on_no_focus_entered"]
+[connection signal="focus_exited" from="CenterContainer/VBoxContainer/HBoxContainer/NO" to="." method="_on_no_focus_exited"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/NO" to="." method="_on_no_pressed"]

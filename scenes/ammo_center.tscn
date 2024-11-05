@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cky5n3rvt2mlw"]
+
+[ext_resource type="Texture2D" uid="uid://c2hmpdw6wp6tp" path="res://assets/UI/ammoemptycenter.png" id="1_dhply"]
+[ext_resource type="Texture2D" uid="uid://pgcn0a82kspd" path="res://assets/UI/ammofullcenter.png" id="2_uq0h8"]
+
+[node name="AmmoCenter" type="TextureProgressBar"]
+offset_right = 40.0
+offset_bottom = 40.0
+max_value = 1.0
+texture_under = ExtResource("1_dhply")
+texture_progress = ExtResource("2_uq0h8")

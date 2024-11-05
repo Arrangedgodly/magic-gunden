@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://bk6j0x0hdlfb6"]
+
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_tadfo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v0df1"]
+shader = ExtResource("1_tadfo")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.2
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(1200, 800)
+shader_parameter/pixelate = false
+shader_parameter/roll = false
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 0.0
+shader_parameter/roll_variation = 5.0
+shader_parameter/distort_intensity = 0.2
+shader_parameter/noise_opacity = 0.05
+shader_parameter/noise_speed = 0.5
+shader_parameter/static_noise_intensity = 0.03
+shader_parameter/aberration = 0.00600005
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.024
+shader_parameter/clip_warp = true
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+
+[sub_resource type="Environment" id="Environment_dagn0"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.5
+glow_strength = 0.5
+glow_bloom = 0.5
+
+[node name="CRT" type="ColorRect"]
+material = SubResource("ShaderMaterial_v0df1")
+offset_right = 1200.0
+offset_bottom = 800.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dagn0")

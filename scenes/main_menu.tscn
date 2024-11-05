@@ -1,0 +1,270 @@
+[gd_scene load_steps=22 format=3 uid="uid://dr56s5wnp1bbk"]
+
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_pei80"]
+[ext_resource type="Script" path="res://scripts/menu.gd" id="2_3vcad"]
+[ext_resource type="Texture2D" uid="uid://i4be6nigi01l" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/1.png" id="3_e26kg"]
+[ext_resource type="Texture2D" uid="uid://brs5hebcrop1d" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/3.png" id="4_hjydw"]
+[ext_resource type="Texture2D" uid="uid://b5jr6q2yggs4m" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/8.png" id="5_a0ckv"]
+[ext_resource type="Texture2D" uid="uid://b0orstaybxrb0" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/2.png" id="5_y2mmm"]
+[ext_resource type="Texture2D" uid="uid://cksv7jitekhqt" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/7.png" id="6_krq4x"]
+[ext_resource type="Texture2D" uid="uid://kgijcrwm0hoh" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/5.png" id="7_6dbxm"]
+[ext_resource type="Texture2D" uid="uid://5avnxkxro3wg" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/6.png" id="8_q0qtr"]
+[ext_resource type="AudioStream" uid="uid://ch5fx3ouvrmt" path="res://assets/sounds/music/JDSherbert - Minigame Music Pack - Refreshing Dawn.ogg" id="10_nmnbx"]
+[ext_resource type="Shader" path="res://shaders/rainbow_gradient.gdshader" id="12_kgamo"]
+[ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="13_kwihb"]
+[ext_resource type="Shader" path="res://shaders/2d_highlight.gdshader" id="13_wlnvm"]
+
+[sub_resource type="Theme" id="Theme_snljg"]
+default_font = ExtResource("1_pei80")
+default_font_size = 64
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6rq3u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqjev"]
+resource_local_to_scene = true
+shader = ExtResource("12_kgamo")
+shader_parameter/strength = 0.75
+shader_parameter/speed = 0.25
+shader_parameter/angle = 90.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0nd02"]
+resource_local_to_scene = true
+shader = ExtResource("13_wlnvm")
+shader_parameter/size_effect = 0.3
+shader_parameter/speed = 0.0
+shader_parameter/highlight_strength = 0.75
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = true
+shader_parameter/pause_duration = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_truad"]
+resource_local_to_scene = true
+shader = ExtResource("13_wlnvm")
+shader_parameter/size_effect = 0.3
+shader_parameter/speed = 2.0
+shader_parameter/highlight_strength = 0.75
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = true
+shader_parameter/pause_duration = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pe02v"]
+resource_local_to_scene = true
+shader = ExtResource("13_wlnvm")
+shader_parameter/size_effect = 0.3
+shader_parameter/speed = 0.0
+shader_parameter/highlight_strength = 0.75
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = true
+shader_parameter/pause_duration = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_soldt"]
+resource_local_to_scene = true
+shader = ExtResource("13_wlnvm")
+shader_parameter/size_effect = 0.3
+shader_parameter/speed = 0.0
+shader_parameter/highlight_strength = 0.75
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = true
+shader_parameter/pause_duration = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_162w6"]
+resource_local_to_scene = true
+shader = ExtResource("13_wlnvm")
+shader_parameter/size_effect = 0.3
+shader_parameter/speed = 0.0
+shader_parameter/highlight_strength = 0.75
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = true
+shader_parameter/pause_duration = 0.5
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_snljg")
+script = ExtResource("2_3vcad")
+menu_music = ExtResource("10_nmnbx")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_ignore_camera_zoom = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(760, 221)
+scale = Vector2(3, 3.578)
+texture = ExtResource("3_e26kg")
+
+[node name="Mountains" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 1
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(2304, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Mountains"]
+position = Vector2(-239, 270)
+scale = Vector2(4, 4)
+texture = ExtResource("4_hjydw")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 169, 576, 81)
+
+[node name="Big Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 2
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(3000, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Big Trees"]
+position = Vector2(-512, -444)
+scale = Vector2(4, 4)
+texture = ExtResource("6_krq4x")
+centered = false
+region_enabled = true
+region_rect = Rect2(200, 0, 280, 271)
+
+[node name="Grasslands" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 3
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(2304, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Grasslands"]
+position = Vector2(-875, 481)
+scale = Vector2(4, 4)
+texture = ExtResource("5_a0ckv")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 243, 576, 81)
+
+[node name="Clouds" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 3
+motion_scale = Vector2(0.4, 0.4)
+motion_mirroring = Vector2(3000, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Clouds"]
+position = Vector2(1061, 85)
+texture = ExtResource("5_y2mmm")
+centered = false
+
+[node name="Small Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 5
+position = Vector2(0, -1)
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(2752, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Small Trees"]
+position = Vector2(-750, -372)
+scale = Vector2(4, 4)
+texture = ExtResource("8_q0qtr")
+centered = false
+region_enabled = true
+region_rect = Rect2(128, 0, 688, 324)
+
+[node name="Bushes" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 6
+motion_scale = Vector2(0.7, 0.7)
+motion_mirroring = Vector2(1416, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Bushes"]
+position = Vector2(-140, 615)
+scale = Vector2(4, 4)
+texture = ExtResource("7_6dbxm")
+centered = false
+region_enabled = true
+region_rect = Rect2(90, 220, 354, 49)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 800.0
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="TITLE" type="HBoxContainer" parent="VBoxContainer"]
+material = SubResource("ShaderMaterial_6rq3u")
+use_parent_material = true
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/TITLE"]
+material = SubResource("ShaderMaterial_bqjev")
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 128
+text = "MAGIC"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/TITLE"]
+material = SubResource("ShaderMaterial_bqjev")
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 128
+text = "GUNDEN"
+horizontal_alignment = 1
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+material = SubResource("ShaderMaterial_0nd02")
+layout_mode = 2
+size_flags_horizontal = 4
+text = "PLAY"
+
+[node name="Options" type="Button" parent="VBoxContainer"]
+visible = false
+material = SubResource("ShaderMaterial_truad")
+layout_mode = 2
+size_flags_horizontal = 4
+text = "OPTIONS"
+
+[node name="HighScore" type="Button" parent="VBoxContainer"]
+material = SubResource("ShaderMaterial_pe02v")
+layout_mode = 2
+size_flags_horizontal = 4
+text = "High Scores"
+
+[node name="Credits" type="Button" parent="VBoxContainer"]
+material = SubResource("ShaderMaterial_soldt")
+layout_mode = 2
+size_flags_horizontal = 4
+text = "CREDITS
+"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+material = SubResource("ShaderMaterial_162w6")
+layout_mode = 2
+size_flags_horizontal = 4
+text = "QUIT GAME"
+
+[node name="Camera2D" type="Camera2D" parent="VBoxContainer"]
+anchor_mode = 0
+
+[node name="CRT" parent="VBoxContainer/Camera2D" instance=ExtResource("13_kwihb")]
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 1050.0
+offset_bottom = 700.0
+scale = Vector2(1.25, 1.25)
+
+[connection signal="focus_entered" from="VBoxContainer/Start" to="." method="_on_start_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/Start" to="." method="_on_start_focus_exited"]
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/HighScore" to="." method="_on_high_score_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/HighScore" to="." method="_on_high_score_focus_exited"]
+[connection signal="pressed" from="VBoxContainer/HighScore" to="." method="_on_high_score_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/Credits" to="." method="_on_credits_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/Credits" to="." method="_on_credits_focus_exited"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/Quit" to="." method="_on_quit_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/Quit" to="." method="_on_quit_focus_exited"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

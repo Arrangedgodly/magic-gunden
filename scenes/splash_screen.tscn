@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://ehktnmjhbg8p"]
+
+[ext_resource type="Script" path="res://scripts/splash_screen.gd" id="1_aobao"]
+[ext_resource type="Texture2D" uid="uid://b0w70ipmmq1jr" path="res://assets/vertical-dark.png" id="1_fytgl"]
+[ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="2_nhwfu"]
+[ext_resource type="Shader" path="res://shaders/pixel_melt.gdshader" id="4_un21p"]
+[ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="4_vcvn4"]
+[ext_resource type="AudioStream" uid="uid://bobfrycm3jaxp" path="res://assets/sounds/sfx/UI2_Start_3.wav" id="5_af7al"]
+[ext_resource type="AudioStream" uid="uid://tniwe5ojpo3v" path="res://assets/sounds/sfx/UI2_Trophy_2.wav" id="6_yewjr"]
+[ext_resource type="Shader" path="res://shaders/rainbow_gradient.gdshader" id="7_hqxex"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lrsiw"]
+shader = ExtResource("7_hqxex")
+shader_parameter/strength = 0.5
+shader_parameter/speed = 0.5
+shader_parameter/angle = 46.731
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4oik6"]
+shader = ExtResource("4_un21p")
+shader_parameter/progress = 0.0
+shader_parameter/meltiness = 3.0
+
+[node name="SplashScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aobao")
+godot_sound = ExtResource("5_af7al")
+gurpy_games_sound = ExtResource("6_yewjr")
+
+[node name="RainbowBackground" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_lrsiw")
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 800.0
+color = Color(1, 1, 1, 0)
+
+[node name="BlackBackground" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 800.0
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 1200.0
+offset_bottom = 802.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("2_nhwfu")
+theme_override_font_sizes/font_size = 256
+text = "GURPY"
+
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("2_nhwfu")
+theme_override_font_sizes/font_size = 256
+text = "GAMES"
+
+[node name="Godot Splash" type="Sprite2D" parent="CenterContainer"]
+material = SubResource("ShaderMaterial_4oik6")
+position = Vector2(-192, -32)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_fytgl")
+centered = false
+
+[node name="CRT" parent="." instance=ExtResource("4_vcvn4")]
+layout_mode = 2
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 1300.0
+offset_bottom = 900.0

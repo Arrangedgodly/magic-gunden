@@ -1,0 +1,174 @@
+[gd_scene load_steps=20 format=3 uid="uid://csfcavlmq7m8t"]
+
+[ext_resource type="Script" path="res://scripts/controls.gd" id="1_3dnsp"]
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_xk27j"]
+[ext_resource type="Texture2D" uid="uid://c4kui3ri4o0ak" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_up.png" id="2_ppbl8"]
+[ext_resource type="Texture2D" uid="uid://bpl60uvt3py6t" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_down.png" id="3_hwvtx"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_t4n2t"]
+[ext_resource type="Texture2D" uid="uid://beqflajmr5oxh" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_left.png" id="4_q6hcy"]
+[ext_resource type="Texture2D" uid="uid://cb3nqs3yb3rw0" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_right.png" id="5_81dl3"]
+[ext_resource type="Texture2D" uid="uid://cbsy8344jvhc8" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_w.png" id="6_wjlno"]
+[ext_resource type="Texture2D" uid="uid://dihb1j48n6sof" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_a.png" id="7_piuie"]
+[ext_resource type="Texture2D" uid="uid://cnd8d6e4ta1eg" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_s.png" id="8_qmm48"]
+[ext_resource type="Texture2D" uid="uid://bd50wprt8qppt" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_d.png" id="9_g3lto"]
+[ext_resource type="Texture2D" uid="uid://d14fl3hadmpw3" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_e.png" id="10_be061"]
+[ext_resource type="Texture2D" uid="uid://ccy6g4bqcaqhp" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_space.png" id="11_q00ah"]
+[ext_resource type="Texture2D" uid="uid://ddt585liyoave" path="res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_l1.png" id="13_4lx6a"]
+[ext_resource type="Texture2D" uid="uid://bbkhgk012qoy7" path="res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_r1.png" id="14_ovwh2"]
+[ext_resource type="Texture2D" uid="uid://dljbqse803dhw" path="res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l.png" id="15_5a1i3"]
+[ext_resource type="Texture2D" uid="uid://dcpb2v4xc6jt3" path="res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r.png" id="16_4lkn7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wxvyo"]
+shader = ExtResource("3_t4n2t")
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/line_thickness = 5.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q8thd"]
+shader = ExtResource("3_t4n2t")
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/line_thickness = 10.0
+
+[node name="Controls" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 68.0
+offset_top = 52.0
+offset_right = 68.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3dnsp")
+
+[node name="Move" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 140.0
+offset_right = 164.0
+offset_bottom = 192.0
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_xk27j")
+theme_override_font_sizes/font_size = 64
+text = "Move"
+
+[node name="Aim" type="Label" parent="."]
+layout_mode = 0
+offset_left = 940.0
+offset_top = 140.0
+offset_right = 1036.0
+offset_bottom = 192.0
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_xk27j")
+theme_override_font_sizes/font_size = 64
+text = "Aim
+"
+
+[node name="Detatch" type="Label" parent="."]
+layout_mode = 0
+offset_left = -4.0
+offset_top = 652.0
+offset_right = 188.0
+offset_bottom = 704.0
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_xk27j")
+theme_override_font_sizes/font_size = 64
+text = "Detach"
+
+[node name="Fire" type="Label" parent="."]
+layout_mode = 0
+offset_left = 932.0
+offset_top = 652.0
+offset_right = 1044.0
+offset_bottom = 704.0
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_xk27j")
+theme_override_font_sizes/font_size = 64
+text = "Fire"
+
+[node name="Keyboard" type="Node2D" parent="."]
+visible = false
+
+[node name="Up" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(988, 44)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ppbl8")
+
+[node name="Down" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(988, 108)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_hwvtx")
+
+[node name="Left" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(924, 108)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_q6hcy")
+
+[node name="Right" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(1052, 108)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_81dl3")
+
+[node name="W" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(92, 44)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_wjlno")
+
+[node name="A" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(28, 108)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_piuie")
+
+[node name="S" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(92, 108)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_qmm48")
+
+[node name="D" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(156, 108)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_g3lto")
+
+[node name="E" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(92, 612)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_be061")
+
+[node name="Space" type="Sprite2D" parent="Keyboard"]
+material = SubResource("ShaderMaterial_wxvyo")
+position = Vector2(988, 612)
+texture = ExtResource("11_q00ah")
+
+[node name="Controller" type="Node2D" parent="."]
+visible = false
+
+[node name="L1" type="Sprite2D" parent="Controller"]
+material = SubResource("ShaderMaterial_q8thd")
+position = Vector2(92, 620)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("13_4lx6a")
+
+[node name="R1" type="Sprite2D" parent="Controller"]
+material = SubResource("ShaderMaterial_q8thd")
+position = Vector2(988, 620)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("14_ovwh2")
+
+[node name="LeftJoystick" type="Sprite2D" parent="Controller"]
+material = SubResource("ShaderMaterial_q8thd")
+position = Vector2(92, 76)
+texture = ExtResource("15_5a1i3")
+
+[node name="RightJoystick" type="Sprite2D" parent="Controller"]
+material = SubResource("ShaderMaterial_q8thd")
+position = Vector2(988, 76)
+texture = ExtResource("16_4lkn7")

@@ -1,0 +1,159 @@
+[gd_scene load_steps=9 format=3 uid="uid://bpkrbv3i3it8v"]
+
+[ext_resource type="Script" path="res://scripts/high_score.gd" id="1_cjn1f"]
+[ext_resource type="Texture2D" uid="uid://cxjdlerjk72a5" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/1.png" id="2_06oxq"]
+[ext_resource type="Texture2D" uid="uid://d1nx4qtsflotx" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/2.png" id="3_cscdd"]
+[ext_resource type="Texture2D" uid="uid://cygord16esmnn" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/3.png" id="4_84is4"]
+[ext_resource type="Texture2D" uid="uid://btw05s05dd24i" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/4.png" id="5_rjd7s"]
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="6_g6rs3"]
+[ext_resource type="AudioStream" uid="uid://bkj4b0kwf3xdp" path="res://assets/sounds/music/JDSherbert - Minigame Music Pack - Beach Vibes.wav" id="7_46ke8"]
+[ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="7_y3ity"]
+
+[node name="HighScore" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cjn1f")
+high_score_music = ExtResource("7_46ke8")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(600, 400)
+scale = Vector2(2.5, 2.5)
+transform = Transform2D(2.5, 0, 0, 2.5, 600, 400)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.25, 0.25)
+motion_mirroring = Vector2(575, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("2_06oxq")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(575, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource("3_cscdd")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.75, 0.75)
+motion_mirroring = Vector2(575, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource("4_84is4")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(575, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
+texture = ExtResource("5_rjd7s")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 800.0
+
+[node name="Scores" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Scores"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="High Score Label" type="Label" parent="CenterContainer/Scores/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+text = "HIGH SCORE"
+horizontal_alignment = 1
+
+[node name="High Score" type="Label" parent="CenterContainer/Scores/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/Scores"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Most Kills Label" type="Label" parent="CenterContainer/Scores/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+text = "MOST KILLS"
+horizontal_alignment = 1
+
+[node name="Most Kills" type="Label" parent="CenterContainer/Scores/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CenterContainer/Scores"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Time Alive Label" type="Label" parent="CenterContainer/Scores/VBoxContainer3"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+text = "LONGEST TIME ALIVE"
+horizontal_alignment = 1
+
+[node name="Time Alive" type="Label" parent="CenterContainer/Scores/VBoxContainer3"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="CenterContainer/Scores"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Gems Captured Label" type="Label" parent="CenterContainer/Scores/VBoxContainer4"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+text = "MOST GEMS CAPTURED"
+horizontal_alignment = 1
+
+[node name="Gems Captured" type="Label" parent="CenterContainer/Scores/VBoxContainer4"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+
+[node name="No Scores" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 50
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 128
+text = "No
+saved
+scores
+detected!"
+horizontal_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="CenterContainer"]
+offset = Vector2(600, 400)
+
+[node name="CRT" parent="." instance=ExtResource("7_y3ity")]
+layout_mode = 0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 1300.0
+offset_bottom = 900.0

@@ -1,0 +1,187 @@
+[gd_scene load_steps=7 format=3 uid="uid://ca3e5xaqhn2jb"]
+
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_l870f"]
+[ext_resource type="Script" path="res://scripts/end_game_screen.gd" id="2_q6pom"]
+[ext_resource type="Shader" path="res://shaders/2d_highlight.gdshader" id="3_bcfar"]
+
+[sub_resource type="Theme" id="Theme_kln7l"]
+default_font = ExtResource("1_l870f")
+default_font_size = 128
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06bp5"]
+resource_local_to_scene = true
+shader = ExtResource("3_bcfar")
+shader_parameter/size_effect = 0.3
+shader_parameter/speed = 0.0
+shader_parameter/highlight_strength = 0.75
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = true
+shader_parameter/pause_duration = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tu6bt"]
+resource_local_to_scene = true
+shader = ExtResource("3_bcfar")
+shader_parameter/size_effect = 0.3
+shader_parameter/speed = 0.0
+shader_parameter/highlight_strength = 0.75
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = true
+shader_parameter/pause_duration = 0.5
+
+[node name="EndGameScreen" type="Control"]
+z_index = 20
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1200.0
+offset_bottom = -800.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_kln7l")
+script = ExtResource("2_q6pom")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 800.0
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 1201.0
+offset_bottom = 803.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 75
+alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+alignment = 1
+
+[node name="Final Score Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 32
+text = "FINAL
+SCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="FinalScore" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+alignment = 1
+
+[node name="Final Killcount Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 32
+text = "FINAL
+KILL COUNT"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="FinalKillcount" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+alignment = 1
+
+[node name="Gems Captured Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 32
+text = "TOTAL 
+GEMS CAPTURED"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Gems Captured" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+alignment = 1
+
+[node name="Time Alive Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer4"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 32
+text = "TOTAL 
+TIME ALIVE"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Time Alive" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer4"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+
+[node name="Try Again?" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 25
+text = "Try again?"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 200
+alignment = 1
+
+[node name="Yes" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_06bp5")
+layout_mode = 2
+text = "YES"
+
+[node name="No" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_tu6bt")
+layout_mode = 2
+text = "NO"
+
+[connection signal="focus_entered" from="CenterContainer/VBoxContainer/HBoxContainer/Yes" to="." method="_on_yes_focus_entered"]
+[connection signal="focus_exited" from="CenterContainer/VBoxContainer/HBoxContainer/Yes" to="." method="_on_yes_focus_exited"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/Yes" to="." method="_on_yes_pressed"]
+[connection signal="focus_entered" from="CenterContainer/VBoxContainer/HBoxContainer/No" to="." method="_on_no_focus_entered"]
+[connection signal="focus_exited" from="CenterContainer/VBoxContainer/HBoxContainer/No" to="." method="_on_no_focus_exited"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/No" to="." method="_on_no_pressed"]
