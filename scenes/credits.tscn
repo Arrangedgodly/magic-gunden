@@ -448,13 +448,23 @@ text = "Godot Game engine - godotengine.org"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Godot2" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="CompleteUI" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_xdy3h")
 theme_override_font_sizes/font_size = 32
 text = "Complete UI Essential Pack: crusenho - itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pixel Progress Bar" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Pixel Progress Bar: Woodlandcat - itch.io"
 horizontal_alignment = 1
 vertical_alignment = 1
 
