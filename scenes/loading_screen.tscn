@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://do1tt8u0tbmu5"]
+[gd_scene load_steps=45 format=4 uid="uid://do1tt8u0tbmu5"]
 
 [ext_resource type="Script" path="res://scripts/loading_screen.gd" id="1_ffvt4"]
 [ext_resource type="Texture2D" uid="uid://birx0olkss82k" path="res://assets/UI/32x32 circle bar under.png" id="2_cepkg"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://ddkdafryprv46" path="res://assets/UI/UI_Flat_IconCross01a.png" id="5_fb1qm"]
 [ext_resource type="Texture2D" uid="uid://craykw7rgfy7n" path="res://assets/UI/UI_Flat_IconCheck01a.png" id="6_07j0d"]
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="7_koc8k"]
+[ext_resource type="Texture2D" uid="uid://172qrj22r216" path="res://assets/items/projectile.png" id="10_igqlr"]
+[ext_resource type="Texture2D" uid="uid://ccbfjmv7tf62k" path="res://assets/items/coins-chests-etc-2-0-noborders.png" id="11_qu5am"]
 
 [sub_resource type="Image" id="Image_mlxag"]
 data = {
@@ -1654,15 +1656,6 @@ texture = ExtResource("5_fb1qm")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r004j"]
 texture = ExtResource("6_07j0d")
 
-[sub_resource type="Animation" id="Animation_b0hd5"]
-resource_name = "start_load"
-length = 1.5
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hx4e1"]
-_data = {
-"start_load": SubResource("Animation_b0hd5")
-}
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_oh13n"]
 atlas = ExtResource("2_ofoe8")
 region = Rect2(0, 0, 128, 128)
@@ -1756,6 +1749,85 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tnvld"]
+atlas = ExtResource("10_igqlr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hu5i"]
+atlas = ExtResource("10_igqlr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5saqa"]
+atlas = ExtResource("10_igqlr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d1epm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tnvld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hu5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5saqa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lkln"]
+atlas = ExtResource("11_qu5am")
+region = Rect2(80, 448, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umxq7"]
+atlas = ExtResource("11_qu5am")
+region = Rect2(96, 448, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydcxi"]
+atlas = ExtResource("11_qu5am")
+region = Rect2(112, 448, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pt0hl"]
+atlas = ExtResource("11_qu5am")
+region = Rect2(128, 448, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_keuac"]
+atlas = ExtResource("11_qu5am")
+region = Rect2(144, 448, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3dn0"]
+atlas = ExtResource("11_qu5am")
+region = Rect2(160, 448, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ai4go"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lkln")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umxq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydcxi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pt0hl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_keuac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3dn0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
 [node name="LoadingScreen" type="CanvasLayer"]
 script = ExtResource("1_ffvt4")
 
@@ -1768,29 +1840,23 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="ColorRect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -162.0
-offset_right = -118.0
-offset_bottom = -130.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 441.0
+offset_top = 243.0
+offset_right = 473.0
+offset_bottom = 275.0
 scale = Vector2(10, 10)
 rounded = true
+fill_mode = 1
 texture_under = ExtResource("2_cepkg")
 texture_over = ExtResource("3_hw3s0")
 texture_progress = ExtResource("4_h43dm")
 
 [node name="Button" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 565.0
+offset_left = 560.0
 offset_top = 600.0
-offset_right = 573.0
+offset_right = 568.0
 offset_bottom = 608.0
 scale = Vector2(10, 10)
 theme = SubResource("Theme_6ysrr")
@@ -1809,47 +1875,55 @@ theme_override_fonts/font = ExtResource("7_koc8k")
 theme_override_font_sizes/font_size = 64
 text = "Loading"
 
-[node name="Ellipsis Container" type="HBoxContainer" parent="ColorRect/HBoxContainer/Label"]
-layout_mode = 0
-offset_left = 241.0
-offset_top = -1.0
-offset_right = 324.0
-offset_bottom = 63.0
+[node name="Ellipsis Container" type="HBoxContainer" parent="ColorRect/HBoxContainer"]
+layout_mode = 2
 
-[node name="Dot1" type="Label" parent="ColorRect/HBoxContainer/Label/Ellipsis Container"]
+[node name="Dot1" type="Label" parent="ColorRect/HBoxContainer/Ellipsis Container"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_koc8k")
 theme_override_font_sizes/font_size = 64
 text = "."
 
-[node name="Dot2" type="Label" parent="ColorRect/HBoxContainer/Label/Ellipsis Container"]
+[node name="Dot2" type="Label" parent="ColorRect/HBoxContainer/Ellipsis Container"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_koc8k")
 theme_override_font_sizes/font_size = 64
 text = "."
 
-[node name="Dot3" type="Label" parent="ColorRect/HBoxContainer/Label/Ellipsis Container"]
+[node name="Dot3" type="Label" parent="ColorRect/HBoxContainer/Ellipsis Container"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_koc8k")
 theme_override_font_sizes/font_size = 64
 text = "."
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_hx4e1")
-}
+[node name="Sprites" type="Node" parent="."]
 
-[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(600, 400)
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="Sprites"]
+position = Vector2(590, 400)
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_etagk")
-frame_progress = 0.825521
+autoplay = "default"
+frame_progress = 0.359456
 
-[node name="SlimeSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(610, 400)
+[node name="SlimeSprite" type="AnimatedSprite2D" parent="Sprites"]
+position = Vector2(605, 400)
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_xyxoe")
 autoplay = "default"
-frame_progress = 0.568282
+frame_progress = 0.383161
+
+[node name="ProjectileSprite" type="AnimatedSprite2D" parent="Sprites"]
+position = Vector2(570, 400)
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_d1epm")
+autoplay = "default"
+frame_progress = 0.823938
+
+[node name="GemSprite" type="AnimatedSprite2D" parent="Sprites"]
+position = Vector2(600, 400)
+scale = Vector2(12, 12)
+sprite_frames = SubResource("SpriteFrames_ai4go")
+autoplay = "default"
+frame_progress = 0.370903
 
 [connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]

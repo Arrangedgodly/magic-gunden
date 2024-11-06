@@ -6,11 +6,11 @@ signal continue_pressed
 @onready var texture_progress_bar: TextureProgressBar = $ColorRect/TextureProgressBar
 @onready var continue_button: Button = $ColorRect/Button
 @onready var label: Label = $ColorRect/HBoxContainer/Label
-@onready var ellipsis_container: HBoxContainer = $"ColorRect/HBoxContainer/Label/Ellipsis Container"
-@onready var dot1: Label = $"ColorRect/HBoxContainer/Label/Ellipsis Container/Dot1"
-@onready var dot2: Label = $"ColorRect/HBoxContainer/Label/Ellipsis Container/Dot2"
-@onready var dot3: Label = $"ColorRect/HBoxContainer/Label/Ellipsis Container/Dot3"
-
+@onready var ellipsis_container: HBoxContainer = $"ColorRect/HBoxContainer/Ellipsis Container"
+@onready var dot1: Label = $"ColorRect/HBoxContainer/Ellipsis Container/Dot1"
+@onready var dot2: Label = $"ColorRect/HBoxContainer/Ellipsis Container/Dot2"
+@onready var dot3: Label = $"ColorRect/HBoxContainer/Ellipsis Container/Dot3"
+@onready var sprites: Node = $Sprites
 
 var is_loading: bool = true
 var tween: Tween
@@ -19,11 +19,17 @@ func _ready() -> void:
 	continue_button.disabled = true
 	label.text = "Loading"
 	start_dot_animation()
+	var sprite_nodes = sprites.get_children()
+	var random_sprite = randi_range(0, 3)
+	for sprite in sprites.get_children():
+		sprite.hide()
+	sprite_nodes[random_sprite].show()
 	await get_tree().create_timer(.1).timeout
 	ls_ready.emit()
 
 func _update_progress_bar(new_value: float) -> void:
 	texture_progress_bar.set_value_no_signal(new_value * 100)
+	texture_progress_bar.tint_progress.a = new_value
 	
 func _start_ready_prompt() -> void:
 	is_loading = false
