@@ -33,6 +33,11 @@ window/size/mode=4
 window/size/resizable=false
 window/stretch/mode="viewport"
 
+[editor]
+
+movie_writer/mjpeg_quality=1.0
+movie_writer/movie_file="C:/Users/arran/Documents/Godot/videos/magic_gunden.avi"
+
 [global_group]
 
 mobs=""

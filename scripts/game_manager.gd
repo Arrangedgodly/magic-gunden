@@ -80,16 +80,6 @@ func _ready() -> void:
 	var spawn_point = find_capture_spawn_point()
 	spawn_capture_points(spawn_point)
 	place_yoyo()
-	current_killstreak_label.hide()
-	current_killstreak.hide()
-	powerup_timer_label.hide()
-	powerup_timer.hide()
-	controls.hide()
-	ammo_bar.hide()
-	clip_count_label.hide()
-	ammo_label.hide()
-	score_banner.hide()
-	score_label.hide()
 
 func _input(event: InputEvent) -> void:
 	controls.handle_input_event(event)
@@ -409,9 +399,9 @@ func _on_enemy_spawn_timeout() -> void:
 	enemy_instance.position += Vector2.DOWN * 16
 	add_child(enemy_instance)
 	enemy_instance.was_killed.connect(increase_slimes_killed)
-	enemy_instance.play("spawn")
-	await enemy_instance.animation_finished
-	enemy_instance.play("idle_down")
+	enemy_instance.sprite.play("spawn")
+	await enemy_instance.sprite.animation_finished
+	enemy_instance.sprite.play("idle_down")
 	enemy_spawn.start()
 
 func _on_enemy_move_timeout() -> void:

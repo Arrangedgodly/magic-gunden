@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://dm3mim4ak40m5"]
+[gd_scene load_steps=73 format=4 uid="uid://dm3mim4ak40m5"]
 
 [ext_resource type="Texture2D" uid="uid://c1wrf536415ht" path="res://assets/map/colortiles.png" id="1_cmd0n"]
 [ext_resource type="PackedScene" uid="uid://vrr80sg0kivh" path="res://scenes/player.tscn" id="1_l5lwm"]
@@ -26,7 +26,6 @@
 [ext_resource type="PackedScene" uid="uid://cb56jyqau1a0p" path="res://scenes/pause_screen.tscn" id="22_1bpl5"]
 [ext_resource type="PackedScene" uid="uid://ca3e5xaqhn2jb" path="res://scenes/end_game_screen.tscn" id="25_5kf2c"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="26_2xw40"]
-[ext_resource type="PackedScene" uid="uid://dnnxf1yrdr4tb" path="res://scenes/tutorial.tscn" id="26_smc81"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lqy2t"]
 atlas = ExtResource("1_sjcuh")
@@ -594,14 +593,6 @@ offset_right = -458.667
 offset_bottom = -288.0
 scale = Vector2(0.75, 0.75)
 
-[node name="Tutorial" parent="." instance=ExtResource("26_smc81")]
-z_index = 100
-offset_left = -458.667
-offset_top = -288.0
-offset_right = -458.667
-offset_bottom = -288.0
-scale = Vector2(0.75, 0.75)
-
 [node name="CRT" parent="." instance=ExtResource("26_2xw40")]
 z_index = 1000
 z_as_relative = false
@@ -618,4 +609,3 @@ offset_bottom = 400.0
 [connection signal="timeout" from="MoveTimer" to="GameManager" method="_on_move_timer_timeout"]
 [connection signal="timeout" from="MoveTimer" to="Player" method="_on_move_timer_timeout"]
 [connection signal="visibility_changed" from="PauseScreen" to="GameManager" method="_on_pause_screen_visibility_changed"]
-[connection signal="tutorial_finished" from="Tutorial" to="GameManager" method="_on_tutorial_tutorial_finished"]

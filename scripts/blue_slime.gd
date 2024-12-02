@@ -1,7 +1,8 @@
-extends AnimatedSprite2D
+extends CharacterBody2D
 @onready var game_manager = get_parent()
 @onready var player: CharacterBody2D = $"../../Player"
 @onready var detection: RayCast2D = $Detection
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @export var hurt_sound: AudioStream
 
@@ -22,6 +23,9 @@ func _ready():
 	for point in capture_points:
 		var point_area = point.get_child(0)
 		detection.add_exception(point_area)
+
+func _process(delta: float) -> void:
+	move_and_slide()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body == player:
@@ -44,41 +48,41 @@ func move():
 		if not detection.is_colliding():
 			can_move = true
 			idle_direction(random_direction)
-			await self.animation_looped
+			await sprite.animation_looped
 			position += random_direction * 32
 			move_direction(random_direction)
 
 func idle_direction(dir):
 	if dir == right:
-		self.flip_h = false
-		self.play("idle_right")
+		sprite.flip_h = false
+		sprite.play("idle_right")
 	elif dir == left:
-		self.flip_h = true
-		self.play("idle_right")
+		sprite.flip_h = true
+		sprite.play("idle_right")
 	elif dir == up:
-		self.play("idle_up")
+		sprite.play("idle_up")
 	elif dir == down:
-		self.play("idle_down")
+		sprite.play("idle_down")
 
 func move_direction(dir):
 	if dir == right:
-		self.flip_h = false
-		self.play("move_right")
-		await self.animation_finished
-		self.play("idle_right")
+		sprite.flip_h = false
+		sprite.play("move_right")
+		await sprite.animation_finished
+		sprite.play("idle_right")
 	elif dir == left:
-		self.flip_h = true
-		self.play("move_right")
-		await self.animation_finished
-		self.play("idle_right")
+		sprite.flip_h = true
+		sprite.play("move_right")
+		await sprite.animation_finished
+		sprite.play("idle_right")
 	elif dir == up:
-		self.play("move_up")
-		await self.animation_finished
-		self.play("idle_up")
+		sprite.play("move_up")
+		await sprite.animation_finished
+		sprite.play("idle_up")
 	elif dir == down:
-		self.play("move_down")
-		await self.animation_finished
-		self.play("idle_down")
+		sprite.play("move_down")
+		await sprite.animation_finished
+		sprite.play("idle_down")
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
@@ -90,8 +94,8 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 func kill():
 	AudioManager.play_sound(hurt_sound)
 	game_manager.increase_kill_count()
-	self.play("death")
+	sprite.play("death")
 	var tween = create_tween()
-	tween.tween_property(self, "modulate", Color(10, 10, 10, 1), 1.0)
+	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)
 	was_killed.emit()
 	queue_free()
