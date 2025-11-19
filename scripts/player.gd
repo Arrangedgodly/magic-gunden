@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var move_timer: Timer = $"../MoveTimer"
@@ -16,10 +17,7 @@ const up = Vector2(0, -1)
 const down = Vector2(0, 1)
 const left = Vector2(-1, 0)
 const right = Vector2(1, 0)
-const crosshair_up = Vector2(0, -32)
-const crosshair_down = Vector2(0, 32)
-const crosshair_left = Vector2(-32, 0)
-const crosshair_right = Vector2(32, 0)
+
 var animation_speed = 5
 
 func _ready():
@@ -50,20 +48,12 @@ func _process(_delta: float) -> void:
 		animation_tree["parameters/playback"].travel("Run")
 		
 	if Input.is_action_just_pressed("aim-down"):
-		var tween = create_tween()
-		tween.tween_property(crosshair, "position", crosshair_down, 1.0/animation_speed)
 		aim_direction = down
 	if Input.is_action_just_pressed("aim-up"):
-		var tween = create_tween()
-		tween.tween_property(crosshair, "position", crosshair_up, 1.0/animation_speed)
 		aim_direction = up
 	if Input.is_action_just_pressed("aim-left"):
-		var tween = create_tween()
-		tween.tween_property(crosshair, "position", crosshair_left, 1.0/animation_speed)
 		aim_direction = left
 	if Input.is_action_just_pressed("aim-right"):
-		var tween = create_tween()
-		tween.tween_property(crosshair, "position", crosshair_right, 1.0/animation_speed)
 		aim_direction = right
 		
 func die():

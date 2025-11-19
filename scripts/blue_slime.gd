@@ -1,4 +1,6 @@
 extends CharacterBody2D
+class_name Slime
+
 @onready var game_manager = get_parent()
 @onready var player: CharacterBody2D = $"../../Player"
 @onready var detection: RayCast2D = $Detection
@@ -24,14 +26,14 @@ func _ready():
 		var point_area = point.get_child(0)
 		detection.add_exception(point_area)
 
-func _process(_delta: float) -> void:
-	move_and_slide()
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body == player:
-		game_manager.kill_player()
-	else:
-		kill()
+func _physics_process(delta: float) -> void:
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		var collider = collision.get_collider()
+		if collider is Player:
+			player.die()
+		elif collider is Projectile:
+			kill()
 
 func move():
 	randomize()
@@ -84,13 +86,6 @@ func move_direction(dir):
 		await sprite.animation_finished
 		sprite.play("idle_down")
 
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	var projectiles = get_tree().get_nodes_in_group("projectile")
-	for projectile in projectiles:
-		if area == projectile:
-			kill()
-
 func kill():
 	AudioManager.play_sound(hurt_sound)
 	game_manager.increase_kill_count()
@@ -98,4 +93,10 @@ func kill():
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)
 	was_killed.emit()
+	queue_free()
+
+func die():
+	sprite.play("death")
+	var tween = create_tween()
+	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)
 	queue_free()

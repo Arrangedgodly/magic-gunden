@@ -1,5 +1,8 @@
 extends AnimatedSprite2D
+class_name Projectile
+
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
+@onready var character_body: CharacterBody2D = $CharacterBody2D
 @export var projectile_sound: AudioStream
 @export var hit_sound: AudioStream
 
@@ -18,6 +21,7 @@ func _ready() -> void:
 	add_to_group("projectile")
 	gpu_particles_2d.emitting = true
 	AudioManager.play_sound(projectile_sound)
+	character_body.on_collision.connect(_on_collision)
 	
 func set_direction(new_dir: Vector2):
 	direction = new_dir
@@ -36,9 +40,6 @@ func _process(delta: float) -> void:
 	tween.tween_property(self, "modulate", Color(1, 1, 25, 1), 1.0)
 	tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 1.0)
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	var slimes = get_tree().get_nodes_in_group("slimearea")
-	for slime in slimes:
-		if area == slime:
-			AudioManager.play_sound(hit_sound)
-			queue_free()
+func _on_collision() -> void:
+	AudioManager.play_sound(hit_sound)
+	queue_free()

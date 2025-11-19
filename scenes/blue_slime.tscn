@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://brws2fdpkddsf"]
 
 [ext_resource type="SpriteFrames" uid="uid://6ve4oskmofxo" path="res://scenes/blue_slime.tres" id="2_a7qbt"]
-[ext_resource type="Script" path="res://scripts/blue_slime.gd" id="2_sr4gb"]
+[ext_resource type="Script" uid="uid://bl06jyust81q0" path="res://scripts/blue_slime.gd" id="2_sr4gb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3764d"]
 radius = 7.0

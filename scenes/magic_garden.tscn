@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://dm3mim4ak40m5"]
+[gd_scene load_steps=75 format=4 uid="uid://dm3mim4ak40m5"]
 
 [ext_resource type="Texture2D" uid="uid://c1wrf536415ht" path="res://assets/map/colortiles.png" id="1_cmd0n"]
 [ext_resource type="PackedScene" uid="uid://vrr80sg0kivh" path="res://scenes/player.tscn" id="1_l5lwm"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bmei0eiha30ii" path="res://assets/UI/scorebanner.png" id="17_hmsf0"]
 [ext_resource type="PackedScene" uid="uid://5jfivnerd7rx" path="res://scenes/ammo_bar.tscn" id="17_j7q35"]
 [ext_resource type="Script" uid="uid://ctndhqmo5h2tg" path="res://scripts/ui.gd" id="18_fqdd6"]
+[ext_resource type="Script" uid="uid://crffvyxw1awba" path="res://scripts/crosshair.gd" id="18_gfqsg"]
 [ext_resource type="Texture2D" uid="uid://ctc8lwfptxqir" path="res://assets/UI/crosshair.png" id="18_r4k4a"]
 [ext_resource type="AudioStream" uid="uid://dl527srvxquki" path="res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav" id="19_ncaqh"]
 [ext_resource type="PackedScene" uid="uid://csfcavlmq7m8t" path="res://scenes/controls.tscn" id="21_of0y2"]
@@ -434,6 +435,7 @@ z_index = 100
 position = Vector2(0, 32)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("18_r4k4a")
+script = ExtResource("18_gfqsg")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-14, 26)
@@ -606,7 +608,9 @@ offset_bottom = 400.0
 [connection signal="timeout" from="AnimatedBackground/BackgroundSwap" to="AnimatedBackground" method="_on_background_swap_timeout"]
 [connection signal="game_ended" from="GameManager" to="EndGameScreen" method="_on_game_manager_game_ended"]
 [connection signal="level_changed" from="GameManager" to="Grids" method="_on_game_manager_level_changed"]
+[connection signal="new_high_gems_captured" from="GameManager" to="EndGameScreen" method="_on_game_manager_new_high_gems_captured"]
 [connection signal="new_high_killcount" from="GameManager" to="EndGameScreen" method="_on_game_manager_new_high_killcount"]
+[connection signal="new_high_time_alive" from="GameManager" to="EndGameScreen" method="_on_game_manager_new_high_time_alive"]
 [connection signal="new_highscore" from="GameManager" to="EndGameScreen" method="_on_game_manager_new_highscore"]
 [connection signal="timeout" from="MoveTimer" to="GameManager" method="_on_move_timer_timeout"]
 [connection signal="timeout" from="MoveTimer" to="Player" method="_on_move_timer_timeout"]

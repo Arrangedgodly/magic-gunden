@@ -64,11 +64,11 @@ signal new_high_killcount(new_killcount: int)
 signal new_high_time_alive(new_time_alive: int)
 signal new_high_gems_captured(new_gems_captured: int)
 signal killstreak(new_killstreak: int)
-signal increase_ammo
-signal no_ammo
-signal decrease_ammo
+signal current_ammo(new_ammo: int)
 signal ui_visible(visible: bool)
 signal update_score(new_score: int)
+signal increase_ammo
+signal decrease_ammo
 #endregion
 
 func _ready() -> void:
@@ -76,7 +76,7 @@ func _ready() -> void:
 	spawn_capture_points(spawn_point)
 	place_yoyo()
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
 		last_direction = left
 		if not game_started:
@@ -114,7 +114,9 @@ func _process(_delta: float) -> void:
 		for score_item in scores_to_update:
 			score_to_add += score_item
 		scores_to_update.clear()
-		update_score.emit(score + score_to_add)
+		score = score + score_to_add
+		update_score.emit(score)
+		
 	
 	killstreak.emit(kill_count)
 		
@@ -317,9 +319,9 @@ func convert_to_ammo(pickup: Node2D, streak: int):
 	add_child(score_popup)
 	score_popup.handle_popup(10 * streak)
 	gems_captured += 1
-	ammo.increase_ammo()
-	handle_clip_change(ammo.clip_count)
 	increase_ammo.emit()
+	ammo.increase_ammo()
+	current_ammo.emit(ammo.clip_count)
 	pickup.queue_free()
 	gem_converted.emit((10 * streak))
 #endregion
@@ -332,16 +334,14 @@ func kill_player():
 func handle_attack():
 	if ammo.ammo_count == 0:
 		AudioManager.play_sound(ammo_error_sfx)
-		no_ammo.emit()
+		kill_count = 0
 		
 	if ammo.ammo_count >= 1:
-		ammo.decrease_ammo()
 		decrease_ammo.emit()
-		handle_clip_change(ammo.clip_count)
+		ammo.decrease_ammo()
 		await player.attack()
-	
-	if ammo.ammo_count == 0:
-		kill_count = 0
+		
+	current_ammo.emit(ammo.ammo_count)
 	
 func update_move_history():
 	var current_position = player.global_position
@@ -365,7 +365,7 @@ func _on_move_timer_timeout() -> void:
 
 func increase_kill_count():
 	kill_count += 1
-	update_score(score + (10 * kill_count), .5)
+	scores_to_update.append(10 * kill_count)
 	player.create_score_popup(10 * kill_count)
 
 func increase_slimes_killed():
