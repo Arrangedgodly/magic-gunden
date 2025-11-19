@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=4 uid="uid://dm3mim4ak40m5"]
+[gd_scene load_steps=74 format=4 uid="uid://dm3mim4ak40m5"]
 
 [ext_resource type="Texture2D" uid="uid://c1wrf536415ht" path="res://assets/map/colortiles.png" id="1_cmd0n"]
 [ext_resource type="PackedScene" uid="uid://vrr80sg0kivh" path="res://scenes/player.tscn" id="1_l5lwm"]
@@ -15,11 +15,12 @@
 [ext_resource type="PackedScene" uid="uid://ctl0ccri77fwo" path="res://scenes/killzone.tscn" id="6_u0n6b"]
 [ext_resource type="Texture2D" uid="uid://o24pp6fbf7ys" path="res://assets/map/sea03-Sheet.png" id="7_hws5d"]
 [ext_resource type="Texture2D" uid="uid://brwcy33ey3yjl" path="res://assets/map/tiles05-Sheet.png" id="9_ntuy8"]
-[ext_resource type="Script" path="res://scripts/animated_background.gd" id="10_83lwh"]
-[ext_resource type="Script" path="res://scripts/grids.gd" id="11_d8dij"]
+[ext_resource type="Script" uid="uid://38apjfhr7las" path="res://scripts/animated_background.gd" id="10_83lwh"]
+[ext_resource type="Script" uid="uid://bekcy8l8rddxk" path="res://scripts/grids.gd" id="11_d8dij"]
 [ext_resource type="Texture2D" uid="uid://bhsf2vijpvvtk" path="res://assets/map/transparent_tile.png" id="13_p54tl"]
 [ext_resource type="Texture2D" uid="uid://bmei0eiha30ii" path="res://assets/UI/scorebanner.png" id="17_hmsf0"]
 [ext_resource type="PackedScene" uid="uid://5jfivnerd7rx" path="res://scenes/ammo_bar.tscn" id="17_j7q35"]
+[ext_resource type="Script" uid="uid://ctndhqmo5h2tg" path="res://scripts/ui.gd" id="18_fqdd6"]
 [ext_resource type="Texture2D" uid="uid://ctc8lwfptxqir" path="res://assets/UI/crosshair.png" id="18_r4k4a"]
 [ext_resource type="AudioStream" uid="uid://dl527srvxquki" path="res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav" id="19_ncaqh"]
 [ext_resource type="PackedScene" uid="uid://csfcavlmq7m8t" path="res://scenes/controls.tscn" id="21_of0y2"]
@@ -444,6 +445,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("18_fqdd6")
 
 [node name="ScoreBanner" type="Sprite2D" parent="Camera2D/UI"]
 position = Vector2(14, -231.333)
@@ -478,7 +480,7 @@ offset_right = -67.3333
 offset_bottom = 214.0
 scale = Vector2(5, 5)
 
-[node name="Label" type="Label" parent="Camera2D/UI"]
+[node name="AmmoLabel" type="Label" parent="Camera2D/UI"]
 layout_mode = 0
 offset_left = -6.00007
 offset_top = 198.0

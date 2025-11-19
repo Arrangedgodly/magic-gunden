@@ -24,7 +24,7 @@ func _ready():
 		var point_area = point.get_child(0)
 		detection.add_exception(point_area)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	move_and_slide()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

@@ -12,7 +12,7 @@ config_version=5
 
 config/name="magic_garden_rip"
 run/main_scene="res://scenes/splash_screen.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/image="res://assets/vertical-dark.png"
 
@@ -35,8 +35,8 @@ window/stretch/mode="viewport"
 
 [editor]
 
-movie_writer/mjpeg_quality=1.0
 movie_writer/movie_file="C:/Users/arran/Documents/Godot/videos/magic_gunden.avi"
+movie_writer/mjpeg_quality=1.0
 
 [global_group]
 

@@ -4,24 +4,13 @@ extends Node2D
 
 @onready var move_timer: Timer = $"../MoveTimer"
 @onready var player: CharacterBody2D = %Player
-@onready var score_label: Label = $"../Camera2D/UI/Score"
-@onready var score_banner: Sprite2D = $"../Camera2D/UI/ScoreBanner"
 @onready var enemy_spawn: Timer = $EnemySpawn
 @onready var score_timer: Timer = $ScoreTimer
 @onready var enemy_move: Timer = $EnemyMove
 @onready var capture_point_timer: Timer = $CapturePointTimer
 @onready var pause_screen: Node2D = $"../PauseScreen"
-@onready var camera_ui: Control = $"../Camera2D/UI"
-@onready var ammo_bar: Control = $"../Camera2D/UI/AmmoBar"
 @onready var capture_point_animation: Timer = $CapturePointAnimation
-@onready var controls: Control = $"../Camera2D/UI/Controls"
 @onready var time_counter: Timer = $TimeCounter
-@onready var clip_count_label: Label = $"../Camera2D/UI/Clip Count"
-@onready var current_killstreak_label: Label = $"../Camera2D/UI/Current_Killstreak_Label"
-@onready var current_killstreak: Label = $"../Camera2D/UI/Current_Killstreak"
-@onready var powerup_timer_label: Label = $"../Camera2D/UI/Powerup Timer Label"
-@onready var powerup_timer: Label = $"../Camera2D/UI/Powerup Timer"
-@onready var ammo_label: Label = $"../Camera2D/UI/Label"
 
 @export var background_music: AudioStream
 @export var pickup_sfx: AudioStream
@@ -74,6 +63,12 @@ signal new_highscore(new_score: int)
 signal new_high_killcount(new_killcount: int)
 signal new_high_time_alive(new_time_alive: int)
 signal new_high_gems_captured(new_gems_captured: int)
+signal killstreak(new_killstreak: int)
+signal increase_ammo
+signal no_ammo
+signal decrease_ammo
+signal ui_visible(visible: bool)
+signal update_score(new_score: int)
 #endregion
 
 func _ready() -> void:
@@ -82,7 +77,6 @@ func _ready() -> void:
 	place_yoyo()
 
 func _input(event: InputEvent) -> void:
-	controls.handle_input_event(event)
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
 		last_direction = left
 		if not game_started:
@@ -120,14 +114,9 @@ func _process(_delta: float) -> void:
 		for score_item in scores_to_update:
 			score_to_add += score_item
 		scores_to_update.clear()
-		update_score(score + score_to_add, .5)
-	if kill_count > 0:
-		current_killstreak_label.show()
-		current_killstreak.show()
-		current_killstreak.text = str(kill_count)
-	else:
-		current_killstreak_label.hide()
-		current_killstreak.hide()
+		update_score.emit(score + score_to_add)
+	
+	killstreak.emit(kill_count)
 		
 #region Game Management Methods
 
@@ -330,7 +319,7 @@ func convert_to_ammo(pickup: Node2D, streak: int):
 	gems_captured += 1
 	ammo.increase_ammo()
 	handle_clip_change(ammo.clip_count)
-	ammo_bar.increase_ammo()
+	increase_ammo.emit()
 	pickup.queue_free()
 	gem_converted.emit((10 * streak))
 #endregion
@@ -343,15 +332,11 @@ func kill_player():
 func handle_attack():
 	if ammo.ammo_count == 0:
 		AudioManager.play_sound(ammo_error_sfx)
-		var tween = create_tween()
-		tween.tween_property(clip_count_label, "theme_override_colors/font_color", Color(5, 0, 0, 1), .125)
-		tween.tween_property(clip_count_label, "theme_override_colors/font_color", Color(1, 1, 1, 1), .125)
-		tween.tween_property(clip_count_label, "theme_override_colors/font_color", Color(5, 0, 0, 1), .125)
-		tween.tween_property(clip_count_label, "theme_override_colors/font_color", Color(1, 1, 1, 1), .125)
+		no_ammo.emit()
 		
 	if ammo.ammo_count >= 1:
 		ammo.decrease_ammo()
-		ammo_bar.decrease_ammo()
+		decrease_ammo.emit()
 		handle_clip_change(ammo.clip_count)
 		await player.attack()
 	
@@ -508,51 +493,16 @@ func _on_time_counter_timeout() -> void:
 	time_alive += 1
 	time_counter.start()
 
-func handle_clip_change(clip_count: int):
-	if clip_count == 0:
-		if ammo.ammo_count == 0:
-			clip_count_label.text = "no clips!"
-		else:
-			clip_count_label.text = "last clip!"
-	else:
-		clip_count_label.text = str(clip_count) + "clips!"
-
 func _on_gem_converted(point_value: int) -> void:
 	scores_to_update.append(point_value)
-
-func update_score(target_score: int, duration: float) -> void:
-	var start_score = score
-	var score_difference = target_score - start_score
-	var steps = 10
-	var step_duration = duration / steps
-	
-	for i in range(steps):
-		@warning_ignore("integer_division")
-		var current_score = start_score + (score_difference * (i + 1) / steps)
-		var formatted_score = str(round(current_score)).pad_zeros(5)
-		score_label.text = formatted_score
-		score_timer.wait_time = step_duration
-		score_timer.start()
-		await score_timer.timeout
-	
-	score = target_score
-	score_label.text = str(score).pad_zeros(5)
 #endregion
 
 func _on_pause_screen_visibility_changed() -> void:
 	if not game_paused:
 		AudioManager.pause(background_music)
 		game_paused = true
-		camera_ui.visible = false
+		ui_visible.emit(false)
 	else:
 		AudioManager.resume(background_music)
 		game_paused = false
-		camera_ui.visible = true
-
-func _on_tutorial_tutorial_finished() -> void:
-	controls.show()
-	ammo_bar.show()
-	clip_count_label.show()
-	ammo_label.show()
-	score_banner.show()
-	score_label.show()
+		ui_visible.emit(true)
