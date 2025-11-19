@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dwowopskm0d7t"
+path="res://.godot/imported/Peu Importe - One Month to Move - 17 Eyes in the Shadow.wav-e6694d287cf0c7a61f55f42711af26e1.sample"
+
+[deps]
+
+source_file="res://assets/sounds/music/Peu Importe - One Month to Move - 17 Eyes in the Shadow.wav"
+dest_files=["res://.godot/imported/Peu Importe - One Month to Move - 17 Eyes in the Shadow.wav-e6694d287cf0c7a61f55f42711af26e1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

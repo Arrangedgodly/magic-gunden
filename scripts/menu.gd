@@ -10,6 +10,19 @@ var move_direction = Vector2(1, 0)
 @export var menu_music: AudioStream
 
 func _ready() -> void:
+	start.pressed.connect(_on_start_pressed)
+	start.focus_entered.connect(_on_start_focus_entered)
+	start.focus_exited.connect(_on_start_focus_exited)
+	high_score.pressed.connect(_on_high_score_pressed)
+	high_score.focus_entered.connect(_on_high_score_focus_entered)
+	high_score.focus_exited.connect(_on_high_score_focus_exited)
+	credits_button.pressed.connect(_on_credits_pressed)
+	credits_button.focus_entered.connect(_on_credits_focus_entered)
+	credits_button.focus_exited.connect(_on_credits_focus_exited)
+	quit.pressed.connect(_on_quit_pressed)
+	quit.focus_entered.connect(_on_quit_focus_entered)
+	quit.focus_exited.connect(_on_quit_focus_exited)
+	
 	start.grab_focus()
 	AudioManager.play_music(menu_music)
 
@@ -28,7 +41,7 @@ func _on_quit_pressed() -> void:
 
 func _on_credits_pressed() -> void:
 	AudioManager.stop(menu_music)
-	LoadManager.load_scene("res://scenes/credits.tscn")
+	get_tree().change_scene_to_file("res://scenes/credits.tscn")
 
 func _on_high_score_pressed() -> void:
 	AudioManager.stop(menu_music)

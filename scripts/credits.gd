@@ -35,7 +35,7 @@ func _process(_delta: float) -> void:
 			particle.emitting = true
 
 func _sort_text(a, b) -> bool:
-	return a.text < b.text
+	return a.name < b.name
 
 func move_credits() -> void:
 	can_move = false

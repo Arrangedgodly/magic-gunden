@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://7whgfpfllwbw"]
 
-[ext_resource type="Script" path="res://scenes/pickup.gd" id="1_c6228"]
+[ext_resource type="Script" uid="uid://clkylpqky3krt" path="res://scripts/pickup.gd" id="1_c6228"]
 [ext_resource type="Texture2D" uid="uid://b0tky7r2k5ny" path="res://assets/items/blue-potion.png" id="2_7jhfn"]
-[ext_resource type="Shader" path="res://shaders/2d_highlight.gdshader" id="2_dch7r"]
+[ext_resource type="Shader" uid="uid://dcl3q3676uyh3" path="res://shaders/2d_highlight.gdshader" id="2_dch7r"]
 [ext_resource type="Texture2D" uid="uid://ccpre818t5pk7" path="res://assets/items/red-potion.png" id="4_bdny1"]
 [ext_resource type="Texture2D" uid="uid://i83y5wp4qb0r" path="res://assets/items/green-potion.png" id="5_c0j2x"]
 

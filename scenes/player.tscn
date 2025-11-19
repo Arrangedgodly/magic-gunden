@@ -1,7 +1,7 @@
 [gd_scene load_steps=67 format=3 uid="uid://vrr80sg0kivh"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_1u15e"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_et8rc"]
+[ext_resource type="Script" uid="uid://bkspcphwd6iqb" path="res://scripts/player.gd" id="1_1u15e"]
+[ext_resource type="Shader" uid="uid://lq80p6loouj4" path="res://shaders/outline.gdshader" id="2_et8rc"]
 [ext_resource type="SpriteFrames" uid="uid://n8be0laeowku" path="res://scenes/player.tres" id="2_rbxjp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ppxox"]
@@ -504,24 +504,24 @@ resource_name = "idle-down"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b11g8"]
 _data = {
-"Damage Down": SubResource("Animation_0k72v"),
-"Damage Left": SubResource("Animation_41iyy"),
-"Damage Right": SubResource("Animation_pkyqu"),
-"Damage Up": SubResource("Animation_q12di"),
-"Death Down": SubResource("Animation_nqo1m"),
-"Death Left": SubResource("Animation_0kbqs"),
-"Death Right": SubResource("Animation_fywfb"),
-"Death Up": SubResource("Animation_owbfe"),
-"Idle Down": SubResource("Animation_vk8mt"),
-"Idle Left": SubResource("Animation_8jpxs"),
-"Idle Right": SubResource("Animation_4f3kn"),
-"Idle Up": SubResource("Animation_b4o2o"),
-"RESET": SubResource("Animation_daewx"),
-"Run Down": SubResource("Animation_w487e"),
-"Run Left": SubResource("Animation_ii7me"),
-"Run Right": SubResource("Animation_f4jrk"),
-"Run Up": SubResource("Animation_6yrs7"),
-"idle-down": SubResource("Animation_edgu4")
+&"Damage Down": SubResource("Animation_0k72v"),
+&"Damage Left": SubResource("Animation_41iyy"),
+&"Damage Right": SubResource("Animation_pkyqu"),
+&"Damage Up": SubResource("Animation_q12di"),
+&"Death Down": SubResource("Animation_nqo1m"),
+&"Death Left": SubResource("Animation_0kbqs"),
+&"Death Right": SubResource("Animation_fywfb"),
+&"Death Up": SubResource("Animation_owbfe"),
+&"Idle Down": SubResource("Animation_vk8mt"),
+&"Idle Left": SubResource("Animation_8jpxs"),
+&"Idle Right": SubResource("Animation_4f3kn"),
+&"Idle Up": SubResource("Animation_b4o2o"),
+&"RESET": SubResource("Animation_daewx"),
+&"Run Down": SubResource("Animation_w487e"),
+&"Run Left": SubResource("Animation_ii7me"),
+&"Run Right": SubResource("Animation_f4jrk"),
+&"Run Up": SubResource("Animation_6yrs7"),
+&"idle-down": SubResource("Animation_edgu4")
 }
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_njhgw"]
@@ -603,7 +603,7 @@ nodes/BlendSpace2D/node = SubResource("AnimationNodeBlendSpace2D_o0yeo")
 nodes/BlendSpace2D/position = Vector2(-300, 80)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_a4s58")
 nodes/TimeScale/position = Vector2(60, 120)
-node_connections = [&"TimeScale", 0, &"BlendSpace2D", &"output", 0, &"TimeScale"]
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rqyg6"]
 animation = &"Run Left"
@@ -642,12 +642,12 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_u278o"]
 graph_offset = Vector2(103.009, 181.554)
+nodes/output/position = Vector2(1000, 200)
 nodes/BlendSpace2D/node = SubResource("AnimationNodeBlendSpace2D_tcpjy")
 nodes/BlendSpace2D/position = Vector2(299.874, 189.664)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_7smt0")
 nodes/TimeScale/position = Vector2(680, 220)
-nodes/output/position = Vector2(1000, 200)
-node_connections = [&"TimeScale", 0, &"BlendSpace2D", &"output", 0, &"TimeScale"]
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5iovq"]
 
@@ -696,6 +696,7 @@ transitions = ["Idle", "Run", SubResource("AnimationNodeStateMachineTransition_5
 graph_offset = Vector2(-397.256, 3.3544)
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 2
 scale = Vector2(1.25, 1.25)
 collision_layer = 15
 collision_mask = 15
@@ -717,7 +718,7 @@ shape = SubResource("RectangleShape2D_o74ew")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_b11g8")
+&"": SubResource("AnimationLibrary_b11g8")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]

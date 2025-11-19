@@ -5,7 +5,6 @@ extends Node2D
 @onready var move_timer: Timer = $"../MoveTimer"
 @onready var player: CharacterBody2D = %Player
 @onready var enemy_spawn: Timer = $EnemySpawn
-@onready var score_timer: Timer = $ScoreTimer
 @onready var enemy_move: Timer = $EnemyMove
 @onready var capture_point_timer: Timer = $CapturePointTimer
 @onready var pause_screen: Node2D = $"../PauseScreen"
