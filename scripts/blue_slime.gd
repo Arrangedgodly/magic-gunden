@@ -21,6 +21,7 @@ signal was_killed
 func _ready():
 	add_to_group("mobs")
 	detection.collide_with_bodies = true
+	detection.collide_with_areas = true
 	var capture_points = get_tree().get_nodes_in_group("capture")
 	for point in capture_points:
 		var point_area = point.get_child(0)
@@ -31,15 +32,21 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		var collider = collision.get_collider()
 		if collider is Player:
-			player.die()
+			if game_manager.stomp_active:
+				kill()
+			else:
+				player.die()
 		elif collider is Projectile:
 			kill()
 
 func move():
 	randomize()
 	var can_move = false
+	var attempts = 0
 	
-	while not can_move:
+	while not can_move and attempts < 5:
+		attempts += 1
+		
 		var random_num = randi_range(0, 3)
 		var random_direction = directions[random_num]
 		var random_angle = angles[random_num]
@@ -53,6 +60,9 @@ func move():
 			await sprite.animation_looped
 			position += random_direction * 32
 			move_direction(random_direction)
+			
+	if not can_move:
+		sprite.play("idle_down")
 
 func idle_direction(dir):
 	if dir == right:

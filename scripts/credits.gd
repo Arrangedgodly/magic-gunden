@@ -8,23 +8,22 @@ extends Control
 
 var credits = []
 var can_move : bool = false
+var scroll_tween: Tween
 
 func _ready() -> void:
 	AudioManager.play_music(credits_music)
-	credits = c_box.get_children()
-	credits.sort_custom(_sort_text)
 	c_box.position.y += get_viewport_rect().size.y
-	for node in credits:
-		c_box.remove_child(node)
-	
-	for credit in credits:
-		c_box.add_child(credit)
-		
 	can_move = true
 	
 func _process(_delta: float) -> void:
 	if can_move:
 		move_credits()
+	
+	if scroll_tween and scroll_tween.is_valid():
+		if Input.is_action_pressed("ui_accept"):
+			scroll_tween.set_speed_scale(10.0)
+		else:
+			scroll_tween.set_speed_scale(1.0)
 		
 	if Input.is_action_just_pressed("ui_cancel"):
 		return_to_main_menu()
@@ -34,16 +33,13 @@ func _process(_delta: float) -> void:
 		if particle.emitting == false:
 			particle.emitting = true
 
-func _sort_text(a, b) -> bool:
-	return a.name < b.name
-
 func move_credits() -> void:
 	can_move = false
 	var move_distance = -(get_viewport_rect().size.y + (c_box.size.y / 4))
 
-	var tween = create_tween()
-	tween.tween_property(c_box, "position:y", move_distance, 62)
-	tween.finished.connect(fade_credits)
+	scroll_tween = create_tween()
+	scroll_tween.tween_property(c_box, "position:y", move_distance, 62)
+	scroll_tween.finished.connect(fade_credits)
 
 func return_to_main_menu() -> void:
 	AudioManager.stop(credits_music)

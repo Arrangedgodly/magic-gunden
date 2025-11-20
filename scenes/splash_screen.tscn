@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=3 uid="uid://ehktnmjhbg8p"]
 
-[ext_resource type="Script" path="res://scripts/splash_screen.gd" id="1_aobao"]
+[ext_resource type="Script" uid="uid://jt2pcuspgfl" path="res://scripts/splash_screen.gd" id="1_aobao"]
 [ext_resource type="Texture2D" uid="uid://b0w70ipmmq1jr" path="res://assets/vertical-dark.png" id="1_fytgl"]
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="2_nhwfu"]
-[ext_resource type="Shader" path="res://shaders/pixel_melt.gdshader" id="4_un21p"]
+[ext_resource type="Shader" uid="uid://b2g3bl57j1ii0" path="res://shaders/pixel_melt.gdshader" id="4_un21p"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="4_vcvn4"]
 [ext_resource type="AudioStream" uid="uid://bobfrycm3jaxp" path="res://assets/sounds/sfx/UI2_Start_3.wav" id="5_af7al"]
 [ext_resource type="AudioStream" uid="uid://tniwe5ojpo3v" path="res://assets/sounds/sfx/UI2_Trophy_2.wav" id="6_yewjr"]
-[ext_resource type="Shader" path="res://shaders/rainbow_gradient.gdshader" id="7_hqxex"]
+[ext_resource type="Shader" uid="uid://clb5qaes170x3" path="res://shaders/rainbow_gradient.gdshader" id="7_hqxex"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lrsiw"]
 shader = ExtResource("7_hqxex")
@@ -82,7 +82,8 @@ texture = ExtResource("1_fytgl")
 centered = false
 
 [node name="CRT" parent="." instance=ExtResource("4_vcvn4")]
-layout_mode = 2
+layout_mode = 0
+anchors_preset = 0
 offset_left = -100.0
 offset_top = -100.0
 offset_right = 1300.0

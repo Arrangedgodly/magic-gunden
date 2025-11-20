@@ -1,8 +1,8 @@
 [gd_scene load_steps=31 format=3 uid="uid://cib5ytvbghks0"]
 
 [ext_resource type="Texture2D" uid="uid://ccbfjmv7tf62k" path="res://assets/items/coins-chests-etc-2-0-noborders.png" id="1_m46fh"]
-[ext_resource type="Shader" path="res://shaders/flash.gdshader" id="1_xxfxy"]
-[ext_resource type="Script" path="res://scripts/yoyo.gd" id="2_u5ria"]
+[ext_resource type="Shader" uid="uid://bjo28uqejifes" path="res://shaders/flash.gdshader" id="1_xxfxy"]
+[ext_resource type="Script" uid="uid://k28hhl62upg3" path="res://scripts/yoyo.gd" id="2_u5ria"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3fmkq"]
 resource_local_to_scene = true
@@ -221,5 +221,3 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YoyoArea"]
 shape = SubResource("CircleShape2D_4xlff")
-
-[connection signal="body_entered" from="YoyoArea" to="." method="_on_area_2d_body_entered"]

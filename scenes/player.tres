@@ -847,6 +847,11 @@ animations = [{
 "name": &"idle-up",
 "speed": 15.0
 }, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iasi7")

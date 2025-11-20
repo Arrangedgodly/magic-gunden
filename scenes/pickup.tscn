@@ -18,7 +18,7 @@ shader_parameter/pause_duration = 0.5
 [sub_resource type="CircleShape2D" id="CircleShape2D_dxmuf"]
 radius = 16.0
 
-[node name="Pickup" type="StaticBody2D"]
+[node name="Pickup" type="Area2D"]
 script = ExtResource("1_c6228")
 
 [node name="BluePotion" type="Sprite2D" parent="."]

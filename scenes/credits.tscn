@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b6n0dup30delf"]
+[gd_scene load_steps=40 format=3 uid="uid://b6n0dup30delf"]
 
 [ext_resource type="Script" uid="uid://j81xtfthil7b" path="res://scripts/credits.gd" id="1_w6cxx"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_xdy3h"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://db4hhs7vdkqy8" path="res://assets/items/gemframe2.png" id="17_m1dtu"]
 [ext_resource type="Texture2D" uid="uid://ckvrtit26u8jg" path="res://assets/items/gemframe3.png" id="18_ilj0q"]
 [ext_resource type="Texture2D" uid="uid://bey3gqcljbw07" path="res://assets/items/gemframe4.png" id="19_4j1bc"]
+[ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="20_4t8yx"]
 [ext_resource type="Texture2D" uid="uid://dj8xc3dvht4eo" path="res://assets/items/gemframe5.png" id="20_s0pv8"]
 [ext_resource type="Texture2D" uid="uid://dknedvws0nqm6" path="res://assets/items/gemframe6.png" id="21_yvyb6"]
 
@@ -266,107 +267,24 @@ offset_right = 1038.0
 offset_bottom = 871.0
 theme_override_constants/separation = 25
 
-[node name="SlimeSprites" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="Art Assets" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
-[node name="SlimeSprites" type="Label" parent="CenterContainer/VBoxContainer/SlimeSprites"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Slime Sprites"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PhantomCooper" type="Label" parent="CenterContainer/VBoxContainer/SlimeSprites"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "phantomcooper - Itch.io"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TrippyBackground" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="TrippyBackground" type="Label" parent="CenterContainer/VBoxContainer/TrippyBackground"]
+[node name="Art Assets Label" type="Label" parent="CenterContainer/VBoxContainer/Art Assets"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Trippy animated background"
+theme_override_fonts/font = ExtResource("20_4t8yx")
+theme_override_font_sizes/font_size = 50
+text = "Artistic Assets"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Edermunizz" type="Label" parent="CenterContainer/VBoxContainer/TrippyBackground"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "edermunizz - Itch.io"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ParticleFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="CoinsGemsAndMore" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
 layout_mode = 2
 
-[node name="ParticleFX" type="Label" parent="CenterContainer/VBoxContainer/ParticleFX"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Particle FX"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Ragnapixel" type="Label" parent="CenterContainer/VBoxContainer/ParticleFX"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "Ragnapixel - Itch.io"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="RetroPixelRibbons" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="RetroPixelRibbons" type="Label" parent="CenterContainer/VBoxContainer/RetroPixelRibbons"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Retro Pixel Ribbons, Banners and frames 2
-+ Basic Pixel Health and Scroll Bar"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="bdragon1727" type="Label" parent="CenterContainer/VBoxContainer/RetroPixelRibbons"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "bdragon1727 - Itch.io"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CoinsGemsAndMore" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CoinsGemsAndMore" type="Label" parent="CenterContainer/VBoxContainer/CoinsGemsAndMore"]
+[node name="CoinsGemsAndMore" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/CoinsGemsAndMore"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
@@ -376,7 +294,7 @@ text = "Coins & gems & chests & more"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GreatDocBrown" type="Label" parent="CenterContainer/VBoxContainer/CoinsGemsAndMore"]
+[node name="GreatDocBrown" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/CoinsGemsAndMore"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -387,298 +305,10 @@ text = "GreatDocBrown - Itch.io"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StackedPixelFont" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="Complete UI" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
 layout_mode = 2
 
-[node name="StackedPixelFont" type="Label" parent="CenterContainer/VBoxContainer/StackedPixelFont"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Stacked pixel Font"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Monokopus" type="Label" parent="CenterContainer/VBoxContainer/StackedPixelFont"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "Monokopus - Itch.io"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SoundFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="SoundFX" type="Label" parent="CenterContainer/VBoxContainer/SoundFX"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "200 Free SFX"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Kronbits" type="Label" parent="CenterContainer/VBoxContainer/SoundFX"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "Kronbits - Itch.io"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Coin5" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Coin5" type="Label" parent="CenterContainer/VBoxContainer/Coin5"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Coin5, Hurt2 SFX, Pixel Crosshair"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="KennyAssets" type="Label" parent="CenterContainer/VBoxContainer/Coin5"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "KennyAssets - Itch.io"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="NatureLandscape" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="NatureLandscape" type="Label" parent="CenterContainer/VBoxContainer/NatureLandscape"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Nature Landscape free pixel art"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Craftpix" type="Label" parent="CenterContainer/VBoxContainer/NatureLandscape"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "Craftpix.net"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="RetroSFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="RetroSFX" type="Label" parent="CenterContainer/VBoxContainer/RetroSFX"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Retro SFX and Music Pack"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HunterAudio" type="Label" parent="CenterContainer/VBoxContainer/RetroSFX"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "HunterAudio - Itch.io"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MoreSFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="MoreSFX" type="Label" parent="CenterContainer/VBoxContainer/MoreSFX"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Spell Casting, UI2_Start_3, UI2_TROPHY_2"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ELV Games" type="Label" parent="CenterContainer/VBoxContainer/MoreSFX"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "ELVGames - Itch.io"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VHS_CRT Shader" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VHS_CRT Monitor Effect" type="Label" parent="CenterContainer/VBoxContainer/VHS_CRT Shader"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "VHS/CRT Monitor Effect Shader"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Pend00" type="Label" parent="CenterContainer/VBoxContainer/VHS_CRT Shader"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "pend00 - godotshaders.com"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PixelBugFont" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="PixelBugFont" type="Label" parent="CenterContainer/VBoxContainer/PixelBugFont"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Pixel Bug Font"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MatheusPadovani" type="Label" parent="CenterContainer/VBoxContainer/PixelBugFont"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "Matheus Padovani - DAFONT.com"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MovingRainbow Shader" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="MovingRainbowGradient" type="Label" parent="CenterContainer/VBoxContainer/MovingRainbow Shader"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Moving rainbow gradient shader"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Exuin" type="Label" parent="CenterContainer/VBoxContainer/MovingRainbow Shader"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "Exuin - godotshaders.com"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PixelMelt Shader" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="PixelMeltShader" type="Label" parent="CenterContainer/VBoxContainer/PixelMelt Shader"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Pixel Melt Shader"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Ericalfard" type="Label" parent="CenterContainer/VBoxContainer/PixelMelt Shader"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "Ericalfard - godotshaders.com"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="2D Highlight Shader" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="2DHighlight" type="Label" parent="CenterContainer/VBoxContainer/2D Highlight Shader"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "2D Highlight Shader"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Kostilus" type="Label" parent="CenterContainer/VBoxContainer/2D Highlight Shader"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "Kostilus - godotshaders.com"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Godot" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="GodotGameEngine" type="Label" parent="CenterContainer/VBoxContainer/Godot"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 32
-text = "Godot Game Engine"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Godot" type="Label" parent="CenterContainer/VBoxContainer/Godot"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("1_xdy3h")
-theme_override_font_sizes/font_size = 28
-text = "godotengine.org"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Complete UI" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CompleteUI" type="Label" parent="CenterContainer/VBoxContainer/Complete UI"]
+[node name="CompleteUI" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/Complete UI"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
@@ -688,7 +318,7 @@ text = "Complete UI Essential Pack"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Crusenho" type="Label" parent="CenterContainer/VBoxContainer/Complete UI"]
+[node name="Crusenho" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/Complete UI"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -699,10 +329,106 @@ text = "crusenho - itch.io"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pixel Progress Bar" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="NatureLandscape" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
 layout_mode = 2
 
-[node name="PixelProgressBar" type="Label" parent="CenterContainer/VBoxContainer/Pixel Progress Bar"]
+[node name="NatureLandscape" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/NatureLandscape"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Nature Landscape free pixel art"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Craftpix" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/NatureLandscape"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Craftpix.net"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ParticleFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
+layout_mode = 2
+
+[node name="ParticleFX" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/ParticleFX"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Particle FX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Ragnapixel" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/ParticleFX"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Ragnapixel - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PixelBugFont" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
+layout_mode = 2
+
+[node name="PixelBugFont" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/PixelBugFont"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Pixel Bug Font"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MatheusPadovani" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/PixelBugFont"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Matheus Padovani - DAFONT.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PixelCrosshair" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
+layout_mode = 2
+
+[node name="Crosshair" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/PixelCrosshair"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Pixel Crosshair"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KennyAssets" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/PixelCrosshair"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "KennyAssets - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pixel Progress Bar" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
+layout_mode = 2
+
+[node name="PixelProgressBar" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/Pixel Progress Bar"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
@@ -712,7 +438,7 @@ text = "Pixel Progress Bar"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Woodlandcat" type="Label" parent="CenterContainer/VBoxContainer/Pixel Progress Bar"]
+[node name="Woodlandcat" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/Pixel Progress Bar"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -720,6 +446,457 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_xdy3h")
 theme_override_font_sizes/font_size = 28
 text = "woodlandcat - itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RetroPixelRibbons" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
+layout_mode = 2
+
+[node name="RetroPixelRibbons" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/RetroPixelRibbons"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Retro Pixel Ribbons, Banners and frames 2
++ Basic Pixel Health and Scroll Bar"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="bdragon1727" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/RetroPixelRibbons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "bdragon1727 - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SlimeSprites" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
+layout_mode = 2
+
+[node name="SlimeSprites" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/SlimeSprites"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Slime Sprites"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PhantomCooper" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/SlimeSprites"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "phantomcooper - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StackedPixelFont" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
+layout_mode = 2
+
+[node name="StackedPixelFont" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/StackedPixelFont"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Stacked pixel Font"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Monokopus" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/StackedPixelFont"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Monokopus - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TrippyBackground" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
+layout_mode = 2
+
+[node name="TrippyBackground" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/TrippyBackground"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Trippy animated background"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Edermunizz" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/TrippyBackground"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "edermunizz - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Audio Assets" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Audio Assets Label" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("20_4t8yx")
+theme_override_font_sizes/font_size = 50
+text = "Audio Assets"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoundFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="SoundFX" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/SoundFX"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "200 Free SFX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Kronbits" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/SoundFX"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Kronbits - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hurt2SFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="Hurt2SFX" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/Hurt2SFX"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Coin5, Hurt2 SFX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KennyAssets" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/Hurt2SFX"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "KennyAssets - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditsMusic" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="CreditsMusic" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/CreditsMusic"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Credits Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EyesInTheShadow" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/CreditsMusic"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Eyes in the Shadow - Peu IMPORTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameMusic" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="GameMusic" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/GameMusic"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Game Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BroadDayGetaway" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/GameMusic"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Broad Day Getaway - Peu IMPORTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighScoresMusic" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="HighScoresMusic" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/HighScoresMusic"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "High Scores Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="70sJam" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/HighScoresMusic"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "70s jam - Peu IMPORTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuMusic" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="MenuMusic" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/MenuMusic"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Menu Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FutureSkies" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/MenuMusic"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Future Skies - Peu IMPORTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RetroSFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="RetroSFX" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/RetroSFX"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Retro SFX and Music Pack"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HunterAudio" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/RetroSFX"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "HunterAudio - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoreSFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="MoreSFX" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/MoreSFX"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Spell Casting, UI2_Start_3, UI2_TROPHY_2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ELV Games" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/MoreSFX"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "ELVGames - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameEngine" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Game Engine Label" type="Label" parent="CenterContainer/VBoxContainer/GameEngine"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("20_4t8yx")
+theme_override_font_sizes/font_size = 50
+text = "Game Engine"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Godot" type="VBoxContainer" parent="CenterContainer/VBoxContainer/GameEngine"]
+layout_mode = 2
+
+[node name="GodotGameEngine" type="Label" parent="CenterContainer/VBoxContainer/GameEngine/Godot"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Godot Game Engine"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Godot" type="Label" parent="CenterContainer/VBoxContainer/GameEngine/Godot"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "godotengine.org"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Shaders" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Shaders Label" type="Label" parent="CenterContainer/VBoxContainer/Shaders"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("20_4t8yx")
+theme_override_font_sizes/font_size = 50
+text = "Shaders"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="2D Highlight Shader" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Shaders"]
+layout_mode = 2
+
+[node name="2DHighlight" type="Label" parent="CenterContainer/VBoxContainer/Shaders/2D Highlight Shader"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "2D Highlight Shader"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Kostilus" type="Label" parent="CenterContainer/VBoxContainer/Shaders/2D Highlight Shader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Kostilus - godotshaders.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MovingRainbow Shader" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Shaders"]
+layout_mode = 2
+
+[node name="MovingRainbowGradient" type="Label" parent="CenterContainer/VBoxContainer/Shaders/MovingRainbow Shader"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Moving rainbow gradient shader"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Exuin" type="Label" parent="CenterContainer/VBoxContainer/Shaders/MovingRainbow Shader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Exuin - godotshaders.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PixelMelt Shader" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Shaders"]
+layout_mode = 2
+
+[node name="PixelMeltShader" type="Label" parent="CenterContainer/VBoxContainer/Shaders/PixelMelt Shader"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Pixel Melt Shader"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Ericalfard" type="Label" parent="CenterContainer/VBoxContainer/Shaders/PixelMelt Shader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Ericalfard - godotshaders.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VHS_CRT Shader" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Shaders"]
+layout_mode = 2
+
+[node name="VHS_CRT Monitor Effect" type="Label" parent="CenterContainer/VBoxContainer/Shaders/VHS_CRT Shader"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "VHS/CRT Monitor Effect Shader"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pend00" type="Label" parent="CenterContainer/VBoxContainer/Shaders/VHS_CRT Shader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "pend00 - godotshaders.com"
 horizontal_alignment = 1
 vertical_alignment = 1
 

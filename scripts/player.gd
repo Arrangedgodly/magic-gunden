@@ -72,4 +72,8 @@ func create_score_popup(value):
 func attack():
 	var projectile = projectile_scene.instantiate()
 	projectile.set_direction(aim_direction)
+	
+	if game_manager.piercing_active:
+		projectile.is_piercing = true
+		
 	add_child(projectile)

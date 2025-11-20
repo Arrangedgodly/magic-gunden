@@ -10,6 +10,9 @@ extends Node2D
 @onready var pause_screen: Node2D = $"../PauseScreen"
 @onready var capture_point_animation: Timer = $CapturePointAnimation
 @onready var time_counter: Timer = $TimeCounter
+@onready var stomp_timer: Timer = $StompTimer
+@onready var magnet_timer: Timer = $MagnetTimer
+@onready var pierce_timer: Timer = $PierceTimer
 
 @export var background_music: AudioStream
 @export var pickup_sfx: AudioStream
@@ -54,6 +57,9 @@ var time_alive: int
 var gems_captured: int
 var ammo = Ammo.new()
 var scores_to_update: Array
+var stomp_active: bool = false
+var piercing_active: bool = false
+var magnet_active: bool = false
 
 signal level_changed(new_level: int)
 signal gem_converted(point_value: int)
@@ -74,6 +80,10 @@ func _ready() -> void:
 	var spawn_point = find_capture_spawn_point()
 	spawn_capture_points(spawn_point)
 	place_yoyo()
+	
+	_spawn_debug_pickup(Pickup.PickupType.RED_POTION)
+	_spawn_debug_pickup(Pickup.PickupType.BLUE_POTION)
+	_spawn_debug_pickup(Pickup.PickupType.GREEN_POTION)
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
@@ -108,6 +118,9 @@ func _input(_event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	if regen_yoyo:
 		place_yoyo()
+	
+	if not magnet_timer.is_stopped():
+		handle_magnet_effect(_delta)
 	if len(scores_to_update) != 0:
 		var score_to_add: int = 0
 		for score_item in scores_to_update:
@@ -212,8 +225,16 @@ func place_yoyo():
 	if regen_yoyo:
 		regen_yoyo = false
 		yoyo_pos = random_pos()
-		while not is_valid_spawn_position(yoyo_pos):
+		var attempts = 0
+		
+		while not is_valid_spawn_position(yoyo_pos) and attempts < 100:
 			yoyo_pos = random_pos()
+			attempts += 1
+		
+		if attempts >= 100:
+			regen_yoyo = true
+			return
+			
 		var yoyo_instance = yoyo_scene.instantiate()
 		yoyo_instance.enable_pickup()
 		yoyo_instance.position = yoyo_pos
@@ -229,8 +250,14 @@ func place_yoyo():
 
 func spawn_pickup():
 	var pickup_pos = random_pos()
-	while not is_valid_spawn_position(pickup_pos):
+	var attempts = 0
+	
+	while not is_valid_spawn_position(pickup_pos) and attempts < 100:
 		pickup_pos = random_pos()
+		attempts += 1
+	
+	if attempts >= 100:
+		return
 	
 	var pickup = pickup_scene.instantiate()
 	pickup.position = pickup_pos
@@ -349,8 +376,16 @@ func update_move_history():
 	move_history.append(current_position)
 		
 func move(dir):
-	await update_move_history()
 	var new_position = player.position + (dir * tile_size)
+	
+	if trail.size() > 0:
+		var first_trail_segment = trail[0]
+	
+		if first_trail_segment.position.distance_to(player.to_local(new_position)) < 5.0:
+			return
+			
+	await update_move_history()
+	
 	var tween = create_tween()
 	tween.tween_property(player, "position", new_position, 1.0/animation_speed).set_trans(Tween.TRANS_SINE)
 	move_trail()
@@ -505,3 +540,64 @@ func _on_pause_screen_visibility_changed() -> void:
 		AudioManager.resume(background_music)
 		game_paused = false
 		ui_visible.emit(true)
+
+func activate_powerup(type):
+	match type:
+		Pickup.PickupType.RED_POTION:
+			stomp_active = true
+			stomp_timer.start()
+			await stomp_timer.timeout
+			stomp_active = false
+			
+		Pickup.PickupType.BLUE_POTION:
+			piercing_active = true
+			pierce_timer.start()
+			await pierce_timer.timeout
+			piercing_active = false
+			
+		Pickup.PickupType.GREEN_POTION:
+			magnet_active = true
+			magnet_timer.start()
+			await magnet_timer.timeout
+			magnet_active = false
+
+func _spawn_debug_pickup(forced_type):
+	var pickup_pos = random_pos()
+	var attempts = 0
+	
+	while not is_valid_spawn_position(pickup_pos) and attempts < 100:
+		pickup_pos = random_pos()
+		attempts += 1
+	
+	if attempts >= 100:
+		print("Debug Spawn Failed: No valid position found")
+		return
+
+	var pickup = pickup_scene.instantiate()
+	pickup.position = pickup_pos
+	
+	pickup.position += Vector2(16, 16) 
+	
+	add_child(pickup)
+	
+	pickup.force_type(forced_type)
+
+func handle_magnet_effect(delta):
+	var magnet_radius = 160.0 
+	var pull_speed = 300.0
+	
+	for child in get_children():
+		if "can_pickup" in child and child.can_pickup:
+			var dist = child.global_position.distance_to(player.global_position)
+			
+			if dist < magnet_radius:
+				child.global_position = child.global_position.move_toward(player.global_position, pull_speed * delta)
+
+	var pickups = get_tree().get_nodes_in_group("pickups")
+	
+	for pickup in pickups:
+		if is_instance_valid(pickup):
+			var dist = pickup.global_position.distance_to(player.global_position)
+			
+			if dist < magnet_radius:
+				pickup.global_position = pickup.global_position.move_toward(player.global_position, pull_speed * delta)

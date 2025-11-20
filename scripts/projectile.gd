@@ -8,38 +8,47 @@ class_name Projectile
 
 var direction : Vector2
 var speed = 1250
-const up = Vector2(0, -1)
-const down = Vector2(0, 1)
-const left = Vector2(-1, 0)
-const right = Vector2(1, 0)
-const right_degrees = 0
-const down_degrees = 90
-const left_degrees = 180
-const up_degrees = 270
+var is_piercing: bool = false
 
 func _ready() -> void:
 	add_to_group("projectile")
+	top_level = true
+	global_position = get_parent().global_position
+	
+	if get_parent() is CharacterBody2D:
+		character_body.add_collision_exception_with(get_parent())
+		
 	gpu_particles_2d.emitting = true
 	AudioManager.play_sound(projectile_sound)
 	character_body.on_collision.connect(_on_collision)
 	
 func set_direction(new_dir: Vector2):
 	direction = new_dir
-	if direction == right:
-		rotation_degrees = right_degrees
-	if direction == down:
-		rotation_degrees = down_degrees
-	if direction == left:
-		rotation_degrees = left_degrees
-	if direction == up:
-		rotation_degrees = up_degrees
+	rotation = direction.angle()
 	
 func _process(delta: float) -> void:
-	position += direction * speed * delta
+	var motion = direction * speed * delta
+	var collision = character_body.move_and_collide(motion, true)
+	
+	if collision:
+		var collider = collision.get_collider()
+		if collider.has_method("kill"):
+			collider.kill()
+			_on_collision()
+		elif collider.is_in_group("mobs"):
+			collider.kill()
+			_on_collision()
+		else:
+			_on_collision()
+	else:
+		position += motion
+	
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color(1, 1, 25, 1), 1.0)
 	tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 1.0)
 
 func _on_collision() -> void:
 	AudioManager.play_sound(hit_sound)
-	queue_free()
+	
+	if not is_piercing:
+		queue_free()

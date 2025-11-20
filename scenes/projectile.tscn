@@ -69,6 +69,7 @@ gravity = Vector3(0, 98, 0)
 radius = 5.0
 
 [node name="Projectile" type="AnimatedSprite2D"]
+z_index = 3
 sprite_frames = SubResource("SpriteFrames_f7tvf")
 autoplay = "default"
 frame = 1
@@ -98,5 +99,4 @@ process_material = SubResource("ParticleProcessMaterial_3fu5c")
 script = ExtResource("9_pl1gp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(5, 0)
 shape = SubResource("CircleShape2D_rgtqx")
