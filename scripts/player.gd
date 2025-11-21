@@ -5,6 +5,7 @@ class_name Player
 @onready var move_timer: Timer = $"../MoveTimer"
 @onready var game_manager: Node2D = $"../GameManager"
 @onready var crosshair: Sprite2D = $Crosshair
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var score_popup_scene = preload("res://scenes/score_popup.tscn")
@@ -23,6 +24,7 @@ var animation_speed = 5
 func _ready():
 	position = position.snapped(Vector2.ONE * tile_size)
 	position += Vector2.ONE * 8
+	powerup_active()
 
 func _process(_delta: float) -> void:
 	var input_vector = Vector2(
@@ -77,3 +79,16 @@ func attack():
 		projectile.is_piercing = true
 		
 	add_child(projectile)
+
+func powerup_active():
+	var tween = create_tween()
+	tween.tween_property(sprite, "modulate", Color(1, 0, 0), .5).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1), .5).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "modulate", Color(1, 0, 0), .5).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1), .5).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "modulate", Color(1, 0, 0), .5).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1), .5).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "modulate", Color(1, 0, 0), .5).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1), .5).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "modulate", Color(1, 0, 0), .5).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1), .5).set_trans(Tween.TRANS_SINE)

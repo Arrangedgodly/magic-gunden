@@ -24,8 +24,8 @@ func _process(_delta: float) -> void:
 		if game_paused:
 			unpause_game()
 		else:
-			remove_child(restart_warning)
-			remove_child(quit_warning)
+			restart_warning.visible = false
+			quit_warning.visible = false
 			game_paused = true
 			get_tree().paused = true
 			self.visible = true
@@ -35,7 +35,7 @@ func _on_resume_pressed() -> void:
 	unpause_game()
 
 func _on_restart_pressed() -> void:
-	add_child(restart_warning)
+	restart_warning.visible = true
 	restart_warning.enable_focus()
 
 func _on_restart_warning_confirmation(confirmation: bool) -> void:
@@ -51,7 +51,7 @@ func _on_main_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func _on_quit_pressed() -> void:
-	add_child(quit_warning)
+	quit_warning.visible = true
 	quit_warning.enable_focus()
 	
 func _on_quit_warning_confirmation(confirmation: bool) -> void:

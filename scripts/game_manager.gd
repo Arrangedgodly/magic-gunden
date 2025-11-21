@@ -80,10 +80,6 @@ func _ready() -> void:
 	var spawn_point = find_capture_spawn_point()
 	spawn_capture_points(spawn_point)
 	place_yoyo()
-	
-	_spawn_debug_pickup(Pickup.PickupType.RED_POTION)
-	_spawn_debug_pickup(Pickup.PickupType.BLUE_POTION)
-	_spawn_debug_pickup(Pickup.PickupType.GREEN_POTION)
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
@@ -560,27 +556,6 @@ func activate_powerup(type):
 			magnet_timer.start()
 			await magnet_timer.timeout
 			magnet_active = false
-
-func _spawn_debug_pickup(forced_type):
-	var pickup_pos = random_pos()
-	var attempts = 0
-	
-	while not is_valid_spawn_position(pickup_pos) and attempts < 100:
-		pickup_pos = random_pos()
-		attempts += 1
-	
-	if attempts >= 100:
-		print("Debug Spawn Failed: No valid position found")
-		return
-
-	var pickup = pickup_scene.instantiate()
-	pickup.position = pickup_pos
-	
-	pickup.position += Vector2(16, 16) 
-	
-	add_child(pickup)
-	
-	pickup.force_type(forced_type)
 
 func handle_magnet_effect(delta):
 	var magnet_radius = 160.0 

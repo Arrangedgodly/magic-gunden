@@ -46,12 +46,3 @@ func collect():
 		game_manager.activate_powerup(type)
 		
 	queue_free()
-
-func force_type(new_type):
-	type = new_type
-	
-	blue_potion.visible = false
-	red_potion.visible = false
-	green_potion.visible = false
-	
-	_check_pickup_type()
