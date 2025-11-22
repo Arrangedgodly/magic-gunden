@@ -27,7 +27,8 @@ func initialize(_game_scene_root: Node2D, _capture_point_timer: Timer, _capture_
 	capture_point_timer.timeout.connect(_on_capture_point_timer_timeout)
 	capture_point_animation.timeout.connect(_on_capture_point_animation_timeout)
 	
-	GameManager.level_changed.connect(_on_level_changed)
+	if not GameManager.level_changed.is_connected(_on_level_changed):
+		GameManager.level_changed.connect(_on_level_changed)
 	
 	call_deferred("initialize_first_spawn")
 

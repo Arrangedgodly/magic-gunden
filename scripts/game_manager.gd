@@ -52,20 +52,46 @@ func initialize_game_scene(scene_root: Node2D, _player: CharacterBody2D, _move_t
 	pause_screen = _pause_screen
 	time_counter = _time_counter
 	
+	reset_game_state()
+	
 	if TrailManager:
-		TrailManager.trail_item_converted_to_ammo.connect(_on_trail_item_converted_to_ammo)
-		TrailManager.trail_released.connect(_on_trail_released)
+		if not TrailManager.trail_item_converted_to_ammo.is_connected(_on_trail_item_converted_to_ammo):
+			TrailManager.trail_item_converted_to_ammo.connect(_on_trail_item_converted_to_ammo)
+		if not TrailManager.trail_released.is_connected(_on_trail_released):
+			TrailManager.trail_released.connect(_on_trail_released)
 	
 	if PickupManager:
-		PickupManager.yoyo_collected.connect(_on_yoyo_collected)
+		if not PickupManager.yoyo_collected.is_connected(_on_yoyo_collected):
+			PickupManager.yoyo_collected.connect(_on_yoyo_collected)
 	
 	if ScoreManager:
-		ScoreManager.score_updated.connect(_on_score_updated)
-		ScoreManager.killstreak_changed.connect(_on_killstreak_changed)
-		
-	move_timer.timeout.connect(_on_move_timer_timeout)
-	time_counter.timeout.connect(_on_time_counter_timeout)
-	pause_screen.visibility_changed.connect(_on_pause_screen_visibility_changed)
+		if not ScoreManager.score_updated.is_connected(_on_score_updated):
+			ScoreManager.score_updated.connect(_on_score_updated)
+		if not ScoreManager.killstreak_changed.is_connected(_on_killstreak_changed):
+			ScoreManager.killstreak_changed.connect(_on_killstreak_changed)
+	
+	if not move_timer.timeout.is_connected(_on_move_timer_timeout):	
+		move_timer.timeout.connect(_on_move_timer_timeout)
+	if not time_counter.timeout.is_connected(_on_time_counter_timeout):
+		time_counter.timeout.connect(_on_time_counter_timeout)
+	if not pause_screen.visibility_changed.is_connected(_on_pause_screen_visibility_changed):
+		pause_screen.visibility_changed.connect(_on_pause_screen_visibility_changed)
+
+func reset_game_state() -> void:
+	game_started = false
+	last_direction = null
+	aim_direction = down
+	pickup_count = 0
+	level = 1
+	game_paused = false
+	is_attacking = false
+	ammo = Ammo.new()
+	ScoreManager.reset_all()
+	TrailManager.clear_trail()
+	EnemyManager.clear_all_enemies()
+	EnemyManager.slimes_killed = 0
+	PowerupManager.reset_all()
+	CapturePointManager.clear_capture_points()
 
 func _input(_event: InputEvent) -> void:
 	if not player:
@@ -110,6 +136,7 @@ func start_game():
 	CapturePointManager.start_capture_systems()
 	time_counter.start()
 	EnemyManager.start_enemy_systems()
+	PickupManager.spawn_pickup()
 	
 func end_game():
 	if not is_initialized():

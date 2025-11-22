@@ -20,7 +20,8 @@ func initialize(_game_scene_root: Node2D, _player: CharacterBody2D) -> void:
 	player = _player
 	game_scene_root = _game_scene_root
 	
-	GameManager.level_changed.connect(_on_level_changed)
+	if not GameManager.level_changed.is_connected(_on_level_changed):
+		GameManager.level_changed.connect(_on_level_changed)
 
 func _process(_delta: float) -> void:
 	if regen_yoyo:

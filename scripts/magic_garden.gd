@@ -38,7 +38,7 @@ func _initialize_managers() -> void:
 		PickupManager.initialize(game_manager_scene, player)
 	
 	if PowerupManager:
-		PowerupManager.initialize(player, stomp_timer, magnet_timer, pierce_timer)
+		PowerupManager.initialize(game_manager_scene, player, stomp_timer, magnet_timer, pierce_timer)
 	
 	if ScoreManager:
 		ScoreManager.reset_all()

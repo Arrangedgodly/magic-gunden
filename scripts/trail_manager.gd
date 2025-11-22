@@ -22,7 +22,7 @@ func initialize(scene_root: Node2D, _player: CharacterBody2D) -> void:
 	game_scene_root = scene_root
 	player = _player
 	
-	if GameManager:
+	if not GameManager.level_changed.is_connected(_on_level_changed):
 		GameManager.level_changed.connect(_on_level_changed)
 
 func update_move_history(current_position: Vector2) -> void:
@@ -36,7 +36,7 @@ func create_trail_segment() -> void:
 		
 	var yoyo_instance = yoyo_scene.instantiate()
 	var last_position = move_history[len(move_history) - 1]
-	var local_position = GameManager.to_local(last_position)
+	var local_position = game_scene_root.to_local(last_position)
 	
 	yoyo_instance.position = local_position
 	yoyo_instance.negate_pickup()
@@ -46,7 +46,7 @@ func create_trail_segment() -> void:
 		2: yoyo_instance.play("green")
 		3: yoyo_instance.play("red")
 	
-	GameManager.call_deferred("add_child", yoyo_instance)
+	game_scene_root.call_deferred("add_child", yoyo_instance)
 	yoyo_instance.add_to_group("equipped")
 	trail.append(yoyo_instance)
 	pickup_count += 1
@@ -58,8 +58,8 @@ func move_trail() -> void:
 	for i in range(len(trail)):
 		if i + 1 < len(move_history):
 			var target_position = move_history[-(i + 1)]
-			var local_position = GameManager.to_local(target_position)
-			var tween = GameManager.create_tween()
+			var local_position = game_scene_root.to_local(target_position)
+			var tween = game_scene_root.create_tween()
 			tween.tween_property(trail[i], "position", local_position, 1.0/ANIMATION_SPEED).set_trans(Tween.TRANS_SINE)
 
 func release_trail() -> void:
@@ -99,7 +99,7 @@ func release_trail() -> void:
 		else:
 			var enemy_instance = blue_slime_scene.instantiate()
 			enemy_instance.position = item_data.position
-			GameManager.add_child(enemy_instance)
+			game_scene_root.add_child(enemy_instance)
 			
 			if GameManager.has_method("increase_slimes_killed"):
 				enemy_instance.was_killed.connect(GameManager.increase_slimes_killed)
@@ -112,7 +112,7 @@ func release_trail() -> void:
 	trail_released.emit(items_captured)
 
 func is_on_capture_point(item: Node2D) -> bool:
-	var capture_points = GameManager.get_tree().get_nodes_in_group("capture")
+	var capture_points = game_scene_root.get_tree().get_nodes_in_group("capture")
 	
 	for point in capture_points:
 		var detected_body = point.check_detected_body()
