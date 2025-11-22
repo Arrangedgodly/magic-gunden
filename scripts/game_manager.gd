@@ -4,24 +4,21 @@ extends Node2D
 
 @onready var move_timer: Timer = $"../MoveTimer"
 @onready var player: CharacterBody2D = %Player
-@onready var capture_point_timer: Timer = $CapturePointTimer
 @onready var pause_screen: Node2D = $"../PauseScreen"
-@onready var capture_point_animation: Timer = $CapturePointAnimation
 @onready var time_counter: Timer = $TimeCounter
 @onready var stomp_timer: Timer = $StompTimer
 @onready var magnet_timer: Timer = $MagnetTimer
 @onready var pierce_timer: Timer = $PierceTimer
-@onready var trail_manager: TrailManager = $"../TrailManager"
-@onready var pickup_manager: PickupManager = $"../PickupManager"
-@onready var enemy_manager: EnemyManager = $"../EnemyManager"
+@onready var trail_manager: TrailManager = %TrailManager
+@onready var pickup_manager: PickupManager = %PickupManager
+@onready var enemy_manager: EnemyManager = %EnemyManager
+@onready var capture_point_manager: CapturePointManager = %CapturePointManager
 
 @export var background_music: AudioStream
 @export var pickup_sfx: AudioStream
 @export var death_sfx: AudioStream
-@export var capture_sfx: AudioStream
 @export var ammo_error_sfx: AudioStream
 
-var capture_point_scene = preload("res://scenes/capture_point.tscn")
 var projectile_scene = preload("res://scenes/projectile.tscn")
 var score_popup_scene = preload("res://scenes/score_popup.tscn")
 
@@ -41,8 +38,6 @@ const right = Vector2(1, 0)
 var pickup_count : int
 var kill_count : int
 var level = 1
-var capture_pattern_bar : bool = false
-var bars_vertical : bool = true
 var game_paused : bool
 var is_attacking : bool
 var time_alive: int
@@ -74,8 +69,7 @@ func _ready() -> void:
 	
 	pickup_manager.yoyo_collected.connect(_on_yoyo_collected)
 	
-	var spawn_point = find_capture_spawn_point()
-	spawn_capture_points(spawn_point)
+	capture_point_manager.initialize_first_spawn()
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
@@ -127,8 +121,7 @@ func start_game():
 	game_started = true
 	AudioManager.play_music(background_music)
 	move_timer.start()
-	capture_point_timer.start()
-	capture_point_animation.start()
+	capture_point_manager.start_capture_systems()
 	time_counter.start()
 	enemy_manager.start_enemy_systems()
 	
@@ -136,8 +129,7 @@ func end_game():
 	AudioManager.stop(background_music)
 	AudioManager.play_start(death_sfx)
 	move_timer.stop()
-	capture_point_timer.stop()
-	capture_point_animation.stop()
+	capture_point_manager.stop_capture_systems()
 	time_counter.stop()
 	enemy_manager.stop_enemy_systems()
 	game_ended.emit(score, kill_count, time_alive, gems_captured)
@@ -238,92 +230,6 @@ func increase_kill_count():
 	player.create_score_popup(10 * kill_count)
 #endregion
 	
-#region Capture Point Methods
-
-func spawn_capture_points(starting_pos):
-	if capture_pattern_bar:
-		capture_pattern_bar = false
-		for i in range(12):
-			var capture_point_instance = capture_point_scene.instantiate()
-			capture_point_instance.position = starting_pos
-			capture_point_instance.position += Vector2.DOWN * 16
-			capture_point_instance.position += Vector2.RIGHT * 16
-			if not bars_vertical:
-				capture_point_instance.position.x += i * tile_size
-			else:
-				capture_point_instance.position.y += i * tile_size
-			
-			if level == 1:
-				capture_point_instance.play("blue")
-			elif level == 2:
-				capture_point_instance.play("green")
-			elif level == 3:
-				capture_point_instance.play("red")
-			add_child(capture_point_instance)
-	else:
-		capture_pattern_bar = true
-		for i in range(16):
-			var capture_point_instance = capture_point_scene.instantiate()
-			capture_point_instance.position = starting_pos
-			capture_point_instance.position += Vector2.DOWN * 16
-			capture_point_instance.position += Vector2.RIGHT * 16
-			
-			@warning_ignore("integer_division")
-			var row = i / 4
-			var col = i % 4
-			
-			capture_point_instance.position.x += col * tile_size
-			capture_point_instance.position.y += row * tile_size
-			
-			if row == 0 and (col == 1 or col == 2):
-				add_child(capture_point_instance)
-			elif row == 1 or row == 2:
-				add_child(capture_point_instance)
-			elif row == 3 and (col == 1 or col == 2):
-				add_child(capture_point_instance)
-			
-			if level == 1:
-				capture_point_instance.play("blue")
-	
-	capture_point_timer.start()
-	capture_point_animation.start()
-
-func find_capture_spawn_point():
-	var x = 0
-	var y = 0
-	randomize()
-	if capture_pattern_bar:
-		if bars_vertical:
-			y = (randi_range(0, tiles - 1) * 32)
-			bars_vertical = false
-		else:
-			x = (randi_range(0, tiles - 1) * 32)
-			bars_vertical = true
-	else:
-		y = (randi_range(1, tiles - 5) * 32)
-		x = (randi_range(1, tiles - 5) * 32)
-	
-	return Vector2i(x,y)
-	
-func clear_capture_points():
-	var capture_points = get_tree().get_nodes_in_group("capture")
-	for point in capture_points:
-		point.queue_free()
-
-func _on_capture_point_animation_timeout() -> void:
-	var capture_points = get_tree().get_nodes_in_group("capture")
-	AudioManager.play_sound(capture_sfx)
-	for point in capture_points:
-		point.flash()
-	await get_tree().create_timer(1.5).timeout
-	AudioManager.play_sound(capture_sfx)
-
-func _on_capture_point_timer_timeout() -> void:
-	await clear_capture_points()
-	var spawn_point = find_capture_spawn_point()
-	spawn_capture_points(spawn_point)
-#endregion
-	
 #region Score Methods
 
 func increase_level():
@@ -340,9 +246,9 @@ func _on_gem_converted(point_value: int) -> void:
 
 #region TrailManager Signal Handlers (NEW!)
 
-func _on_trail_item_converted_to_ammo(streak: int, position: Vector2) -> void:
+func _on_trail_item_converted_to_ammo(streak: int, new_position: Vector2) -> void:
 	var score_popup = score_popup_scene.instantiate()
-	score_popup.position = position
+	score_popup.position = new_position
 	score_popup.position += Vector2(-6, -25)
 	add_child(score_popup)
 	score_popup.handle_popup(10 * streak)
@@ -357,9 +263,7 @@ func _on_trail_released(items_captured: int) -> void:
 	if items_captured >= 6:
 		pickup_manager.spawn_pickup()
 	
-	capture_point_timer.stop()
-	capture_point_timer.emit_signal("timeout")
-	capture_point_animation.stop()
+	capture_point_manager.reset_capture_timers()
 
 #endregion
 

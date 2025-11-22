@@ -15,12 +15,6 @@ death_sfx = ExtResource("4_dtfe4")
 capture_sfx = ExtResource("4_0tsf3")
 ammo_error_sfx = ExtResource("5_kpxhj")
 
-[node name="CapturePointTimer" type="Timer" parent="."]
-wait_time = 15.0
-
-[node name="CapturePointAnimation" type="Timer" parent="."]
-wait_time = 12.0
-
 [node name="TimeCounter" type="Timer" parent="."]
 
 [node name="StompTimer" type="Timer" parent="."]
@@ -36,6 +30,4 @@ wait_time = 10.0
 one_shot = true
 
 [connection signal="gem_converted" from="." to="." method="_on_gem_converted"]
-[connection signal="timeout" from="CapturePointTimer" to="." method="_on_capture_point_timer_timeout"]
-[connection signal="timeout" from="CapturePointAnimation" to="." method="_on_capture_point_animation_timeout"]
 [connection signal="timeout" from="TimeCounter" to="." method="_on_time_counter_timeout"]
