@@ -1,9 +1,8 @@
 extends Node2D
 
-@onready var enemy_spawn: Timer = $EnemySpawn
-@onready var enemy_move: Timer = $EnemyMove
-@onready var player: CharacterBody2D = %Player
-@onready var game_manager: Node2D
+var enemy_spawn: Timer
+var enemy_move: Timer
+var player: CharacterBody2D
 
 signal enemy_spawned(enemy: Node2D)
 signal slime_killed
@@ -14,8 +13,11 @@ var slimes_killed: int = 0
 const TILES = 12
 const TILE_SIZE = 32
 
-func _ready() -> void:
-	game_manager = get_node("/root/MagicGarden/GameManager")
+func initialize(_player: CharacterBody2D, _enemy_spawn: Timer, _enemy_move: Timer) -> void:
+	player = _player
+	enemy_spawn = _enemy_spawn
+	enemy_move = _enemy_move
+	
 	enemy_spawn.timeout.connect(_on_enemy_spawn_timeout)
 	enemy_move.timeout.connect(_on_enemy_move_timeout)
 
@@ -43,7 +45,7 @@ func spawn_enemy() -> void:
 	enemy_instance.position += Vector2.RIGHT * 16
 	enemy_instance.position += Vector2.DOWN * 16
 	
-	game_manager.add_child(enemy_instance)
+	GameManager.add_child(enemy_instance)
 	
 	enemy_instance.was_killed.connect(_on_slime_killed)
 	
@@ -66,21 +68,19 @@ func random_pos() -> Vector2i:
 	return Vector2i(x, y)
 
 func is_valid_spawn_position(pos: Vector2) -> bool:
-	if not player or not game_manager:
+	if not player:
 		return false
 		
 	if player.position == pos:
 		return false
 	
-	for child in game_manager.get_children():
+	for child in GameManager.get_children():
 		if child is AnimatedSprite2D and child.position == pos:
 			return false
 	
-	if game_manager.has_node("TrailManager"):
-		var trail_manager = game_manager.get_node("TrailManager")
-		for yoyo_instance in trail_manager.trail:
-			if is_instance_valid(yoyo_instance) and yoyo_instance.position == pos:
-				return false
+	for yoyo_instance in TrailManager.trail:
+		if is_instance_valid(yoyo_instance) and yoyo_instance.position == pos:
+			return false
 	
 	return true
 

@@ -3,18 +3,23 @@ extends Node2D
 signal powerup_activated(type: Pickup.PickupType)
 signal powerup_deactivated(type: Pickup.PickupType)
 
-@onready var stomp_timer: Timer = $StompTimer
-@onready var magnet_timer: Timer = $MagnetTimer
-@onready var pierce_timer: Timer = $PierceTimer
-@onready var player: CharacterBody2D = %Player
-@onready var game_manager: Node2D = %GameManager
+var stomp_timer: Timer
+var magnet_timer: Timer
+var pierce_timer: Timer
+var player: CharacterBody2D
 
 var stomp_active: bool = false
 var piercing_active: bool = false
 var magnet_active: bool = false	
 
+func initialize(_player: CharacterBody2D, _stomp_timer: Timer, _magnet_timer: Timer, _pierce_timer: Timer) -> void:
+	player = _player
+	stomp_timer = _stomp_timer
+	magnet_timer = _magnet_timer
+	pierce_timer = _pierce_timer
+
 func _process(delta: float) -> void:
-	if magnet_active and player and game_manager:
+	if magnet_active and player:
 		handle_magnet_effect(delta)
 
 func activate_powerup(type: Pickup.PickupType) -> void:
@@ -44,20 +49,20 @@ func activate_powerup(type: Pickup.PickupType) -> void:
 			powerup_deactivated.emit(type)
 
 func handle_magnet_effect(delta: float) -> void:
-	if not player or not game_manager:
+	if not player:
 		return
 		
 	var magnet_radius = 160.0 
 	var pull_speed = 300.0
 	
-	for child in game_manager.get_children():
+	for child in GameManager.get_children():
 		if "can_pickup" in child and child.can_pickup:
 			var dist = child.global_position.distance_to(player.global_position)
 			
 			if dist < magnet_radius:
 				child.global_position = child.global_position.move_toward(player.global_position, pull_speed * delta)
 
-	var pickups = game_manager.get_tree().get_nodes_in_group("pickups")
+	var pickups = GameManager.get_tree().get_nodes_in_group("pickups")
 	
 	for pickup in pickups:
 		if is_instance_valid(pickup):

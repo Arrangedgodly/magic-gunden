@@ -3,8 +3,7 @@ extends Node2D
 signal yoyo_collected
 signal powerup_spawned(position: Vector2)
 
-@onready var player: CharacterBody2D = %Player
-@onready var game_manager: Node2D = $"../GameManager"
+var player: CharacterBody2D
 
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var pickup_scene = preload("res://scenes/pickup.tscn")
@@ -16,9 +15,10 @@ var level: int = 1
 const TILES = 12
 const TILE_SIZE = 32
 
-func _ready() -> void:
-	if game_manager:
-		game_manager.level_changed.connect(_on_level_changed)
+func initialize(_player: CharacterBody2D) -> void:
+	player = _player
+	
+	GameManager.level_changed.connect(_on_level_changed)
 
 func _process(_delta: float) -> void:
 	if regen_yoyo:
@@ -51,7 +51,7 @@ func place_yoyo() -> void:
 		2: yoyo_instance.play('green')
 		3: yoyo_instance.play('red')
 	
-	game_manager.add_child(yoyo_instance)
+	GameManager.add_child(yoyo_instance)
 
 func reset_regen_yoyo() -> void:
 	regen_yoyo = true
@@ -71,7 +71,7 @@ func spawn_pickup() -> void:
 	var pickup = pickup_scene.instantiate()
 	pickup.position = pickup_pos
 	pickup.position += Vector2(16, 16)
-	game_manager.add_child(pickup)
+	GameManager.add_child(pickup)
 	powerup_spawned.emit(pickup_pos)
 
 func random_pos() -> Vector2i:
@@ -87,15 +87,13 @@ func is_valid_spawn_position(pos: Vector2) -> bool:
 	if player.position == pos:
 		return false
 	
-	for child in game_manager.get_children():
+	for child in GameManager.get_children():
 		if child is AnimatedSprite2D and child.position == pos:
 			return false
 	
-	if game_manager.has_node("TrailManager"):
-		var trail_manager = game_manager.get_node("TrailManager")
-		for yoyo_instance in trail_manager.trail:
-			if is_instance_valid(yoyo_instance) and yoyo_instance.position == pos:
-				return false
+	for yoyo_instance in TrailManager.trail:
+		if is_instance_valid(yoyo_instance) and yoyo_instance.position == pos:
+			return false
 	
 	return true
 

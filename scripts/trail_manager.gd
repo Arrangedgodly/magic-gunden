@@ -4,8 +4,8 @@ signal trail_item_converted_to_ammo(streak: int, position: Vector2)
 signal trail_item_converted_to_enemy(position: Vector2)
 signal trail_released(items_captured: int)
 
-@onready var player: CharacterBody2D = %Player
-@onready var game_manager: Node2D = $"../GameManager"
+var player: CharacterBody2D
+var game_scene_root: Node2D
 
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var blue_slime_scene = preload("res://scenes/blue_slime.tscn")
@@ -18,9 +18,12 @@ var capture_count: int = 0
 const ANIMATION_SPEED = 5
 var level: int = 1
 
-func _ready() -> void:
-	if game_manager:
-		game_manager.level_changed.connect(_on_level_changed)
+func initialize(scene_root: Node2D, _player: CharacterBody2D) -> void:
+	game_scene_root = scene_root
+	player = _player
+	
+	if GameManager:
+		GameManager.level_changed.connect(_on_level_changed)
 
 func update_move_history(current_position: Vector2) -> void:
 	if len(move_history) > pickup_count:
@@ -33,7 +36,7 @@ func create_trail_segment() -> void:
 		
 	var yoyo_instance = yoyo_scene.instantiate()
 	var last_position = move_history[len(move_history) - 1]
-	var local_position = game_manager.to_local(last_position)
+	var local_position = GameManager.to_local(last_position)
 	
 	yoyo_instance.position = local_position
 	yoyo_instance.negate_pickup()
@@ -43,7 +46,7 @@ func create_trail_segment() -> void:
 		2: yoyo_instance.play("green")
 		3: yoyo_instance.play("red")
 	
-	game_manager.call_deferred("add_child", yoyo_instance)
+	GameManager.call_deferred("add_child", yoyo_instance)
 	yoyo_instance.add_to_group("equipped")
 	trail.append(yoyo_instance)
 	pickup_count += 1
@@ -55,8 +58,8 @@ func move_trail() -> void:
 	for i in range(len(trail)):
 		if i + 1 < len(move_history):
 			var target_position = move_history[-(i + 1)]
-			var local_position = game_manager.to_local(target_position)
-			var tween = game_manager.create_tween()
+			var local_position = GameManager.to_local(target_position)
+			var tween = GameManager.create_tween()
 			tween.tween_property(trail[i], "position", local_position, 1.0/ANIMATION_SPEED).set_trans(Tween.TRANS_SINE)
 
 func release_trail() -> void:
@@ -96,10 +99,10 @@ func release_trail() -> void:
 		else:
 			var enemy_instance = blue_slime_scene.instantiate()
 			enemy_instance.position = item_data.position
-			game_manager.add_child(enemy_instance)
+			GameManager.add_child(enemy_instance)
 			
-			if game_manager.has_method("increase_slimes_killed"):
-				enemy_instance.was_killed.connect(game_manager.increase_slimes_killed)
+			if GameManager.has_method("increase_slimes_killed"):
+				enemy_instance.was_killed.connect(GameManager.increase_slimes_killed)
 			
 			trail_item_converted_to_enemy.emit(item_data.position)
 		
@@ -109,7 +112,7 @@ func release_trail() -> void:
 	trail_released.emit(items_captured)
 
 func is_on_capture_point(item: Node2D) -> bool:
-	var capture_points = game_manager.get_tree().get_nodes_in_group("capture")
+	var capture_points = GameManager.get_tree().get_nodes_in_group("capture")
 	
 	for point in capture_points:
 		var detected_body = point.check_detected_body()
@@ -124,10 +127,10 @@ func convert_to_enemy(pickup: Node2D) -> void:
 	
 	var enemy_instance = blue_slime_scene.instantiate()
 	enemy_instance.position = pickup.position
-	game_manager.add_child(enemy_instance)
+	GameManager.add_child(enemy_instance)
 	
-	if game_manager.has_method("increase_slimes_killed"):
-		enemy_instance.was_killed.connect(game_manager.increase_slimes_killed)
+	if GameManager.has_method("increase_slimes_killed"):
+		enemy_instance.was_killed.connect(GameManager.increase_slimes_killed)
 	
 	pickup.queue_free()
 	trail_item_converted_to_enemy.emit(pickup.position)

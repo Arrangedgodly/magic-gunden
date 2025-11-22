@@ -4,8 +4,8 @@ signal capture_points_spawned(count: int)
 signal capture_points_cleared
 signal capture_animation_played
 
-@onready var capture_point_timer: Timer = $CapturePointTimer
-@onready var capture_point_animation: Timer = $CapturePointAnimation
+var capture_point_timer: Timer
+var capture_point_animation: Timer
 
 @export var capture_sfx: AudioStream
 
@@ -18,7 +18,10 @@ var bars_vertical: bool = true
 const TILES = 12
 const TILE_SIZE = 32
 
-func _ready() -> void:
+func initialize(_capture_point_timer: Timer, _capture_point_animation: Timer) -> void:
+	capture_point_timer = _capture_point_timer
+	capture_point_animation = _capture_point_animation
+	
 	capture_point_timer.timeout.connect(_on_capture_point_timer_timeout)
 	capture_point_animation.timeout.connect(_on_capture_point_animation_timeout)
 	

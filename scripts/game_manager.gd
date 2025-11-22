@@ -1,11 +1,9 @@
 extends Node2D
 
-#region Variables/Consts/Signals
-
-@onready var move_timer: Timer = $"../MoveTimer"
-@onready var player: CharacterBody2D = %Player
-@onready var pause_screen: Node2D = $"../PauseScreen"
-@onready var time_counter: Timer = $TimeCounter
+var move_timer: Timer
+var player: CharacterBody2D
+var pause_screen: Node2D
+var time_counter: Timer
 
 @export var background_music: AudioStream
 @export var pickup_sfx: AudioStream
@@ -32,6 +30,7 @@ var level = 1
 var game_paused : bool
 var is_attacking : bool
 var ammo = Ammo.new()
+var game_scene_root: Node2D
 
 signal level_changed(new_level: int)
 signal gem_converted(point_value: int)
@@ -46,18 +45,33 @@ signal ui_visible(visible: bool)
 signal update_score(new_score: int)
 signal increase_ammo
 signal decrease_ammo
-#endregion
 
-func _ready() -> void:
-	TrailManager.trail_item_converted_to_ammo.connect(_on_trail_item_converted_to_ammo)
-	TrailManager.trail_released.connect(_on_trail_released)
+func initialize_game_scene(scene_root: Node2D, _player: CharacterBody2D, _move_timer: Timer, _pause_screen: Node2D, _time_counter: Timer) -> void:
+	game_scene_root = scene_root
+	player = _player
+	move_timer = _move_timer
+	pause_screen = _pause_screen
+	time_counter = _time_counter
 	
-	PickupManager.yoyo_collected.connect(_on_yoyo_collected)
+	if TrailManager:
+		TrailManager.trail_item_converted_to_ammo.connect(_on_trail_item_converted_to_ammo)
+		TrailManager.trail_released.connect(_on_trail_released)
 	
-	ScoreManager.score_updated.connect(_on_score_updated)
-	ScoreManager.killstreak_changed.connect(_on_killstreak_changed)
+	if PickupManager:
+		PickupManager.yoyo_collected.connect(_on_yoyo_collected)
+	
+	if ScoreManager:
+		ScoreManager.score_updated.connect(_on_score_updated)
+		ScoreManager.killstreak_changed.connect(_on_killstreak_changed)
+		
+	move_timer.timeout.connect(_on_move_timer_timeout)
+	time_counter.timeout.connect(_on_time_counter_timeout)
+	pause_screen.visibility_changed.connect(_on_pause_screen_visibility_changed)
 
 func _input(_event: InputEvent) -> void:
+	if not player:
+		return
+		
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
 		last_direction = left
 		if not game_started:
@@ -87,11 +101,10 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("attack"):
 		is_attacking = true
 
-
-		
-#region Game Management Methods
-
 func start_game():
+	if not is_initialized():
+		return
+		
 	game_started = true
 	AudioManager.play_music(background_music)
 	move_timer.start()
@@ -100,6 +113,9 @@ func start_game():
 	EnemyManager.start_enemy_systems()
 	
 func end_game():
+	if not is_initialized():
+		return
+		
 	AudioManager.stop(background_music)
 	AudioManager.play_start(death_sfx)
 	move_timer.stop()
@@ -152,7 +168,9 @@ func save_game():
 		new_high_gems_captured.emit(current_gems)
 	
 	ResourceSaver.save(saved_game, "user://save.tres")
-#endregion
+
+func is_initialized() -> bool:
+	return player != null and move_timer != null
 
 func random_pos():
 	randomize()
@@ -164,8 +182,6 @@ func handle_pickup_yoyo():
 	AudioManager.play_sound(pickup_sfx)
 	pickup_count += 1
 	TrailManager.create_trail_segment()
-
-#region Player Methods
 
 func kill_player():
 	player.die()
@@ -183,6 +199,9 @@ func handle_attack():
 	current_ammo.emit(ammo.ammo_count)
 		
 func move(dir):
+	if not player:
+		return
+		
 	var new_position = player.position + (dir * tile_size)
 	
 	if TrailManager.has_trail():
