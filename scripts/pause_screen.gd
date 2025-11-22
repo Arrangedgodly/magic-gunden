@@ -8,6 +8,8 @@ var game_paused : bool
 @onready var restart_warning: Control = $RestartWarning
 @onready var quit_warning: Control = $QuitWarning
 
+signal main_menu_pressed
+
 func _ready():
 	var reset_warning_text = "Are you sure you would like to restart the game? This will delete your current progress!"
 	restart_warning.set_warning_text(reset_warning_text)
@@ -47,6 +49,7 @@ func _on_restart_warning_confirmation(confirmation: bool) -> void:
 		enable_focus()
 
 func _on_main_menu_pressed() -> void:
+	main_menu_pressed.emit()
 	unpause_game()
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 

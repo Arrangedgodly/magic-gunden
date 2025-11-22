@@ -64,6 +64,10 @@ signal decrease_ammo
 #endregion
 
 func _ready() -> void:
+	pause_screen.main_menu_pressed.connect(_on_main_menu_pressed)
+	call_deferred("_initialize")
+
+func _initialize() -> void:
 	trail_manager.trail_item_converted_to_ammo.connect(_on_trail_item_converted_to_ammo)
 	trail_manager.trail_released.connect(_on_trail_released)
 	
@@ -319,3 +323,6 @@ func handle_magnet_effect(delta):
 
 func _on_yoyo_collected() -> void:
 	handle_pickup_yoyo()
+
+func _on_main_menu_pressed() -> void:
+	AudioManager.stop(background_music)
