@@ -4,6 +4,7 @@ signal yoyo_collected
 signal powerup_spawned(position: Vector2)
 
 var player: CharacterBody2D
+var game_scene_root: Node2D
 
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var pickup_scene = preload("res://scenes/pickup.tscn")
@@ -15,8 +16,9 @@ var level: int = 1
 const TILES = 12
 const TILE_SIZE = 32
 
-func initialize(_player: CharacterBody2D) -> void:
+func initialize(_game_scene_root: Node2D, _player: CharacterBody2D) -> void:
 	player = _player
+	game_scene_root = _game_scene_root
 	
 	GameManager.level_changed.connect(_on_level_changed)
 
@@ -51,7 +53,7 @@ func place_yoyo() -> void:
 		2: yoyo_instance.play('green')
 		3: yoyo_instance.play('red')
 	
-	GameManager.add_child(yoyo_instance)
+	game_scene_root.add_child(yoyo_instance)
 
 func reset_regen_yoyo() -> void:
 	regen_yoyo = true
@@ -71,7 +73,7 @@ func spawn_pickup() -> void:
 	var pickup = pickup_scene.instantiate()
 	pickup.position = pickup_pos
 	pickup.position += Vector2(16, 16)
-	GameManager.add_child(pickup)
+	game_scene_root.add_child(pickup)
 	powerup_spawned.emit(pickup_pos)
 
 func random_pos() -> Vector2i:
@@ -87,7 +89,7 @@ func is_valid_spawn_position(pos: Vector2) -> bool:
 	if player.position == pos:
 		return false
 	
-	for child in GameManager.get_children():
+	for child in game_scene_root.get_children():
 		if child is AnimatedSprite2D and child.position == pos:
 			return false
 	

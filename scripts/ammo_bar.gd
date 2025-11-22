@@ -13,7 +13,6 @@ extends Control
 @onready var depleted6: TextureProgressBar = $"Depleted/6"
 @onready var full: HBoxContainer = $Full
 @onready var depleted: HBoxContainer = $Depleted
-@onready var game_manager: Node2D = $"../../../GameManager"
 
 var ammunition : int
 var ammo = Ammo.new()
@@ -21,8 +20,8 @@ var animation_speed = 5
 
 func _ready() -> void:
 	full.position = depleted.position
-	game_manager.decrease_ammo.connect(decrease_ammo)
-	game_manager.increase_ammo.connect(increase_ammo)
+	GameManager.decrease_ammo.connect(decrease_ammo)
+	GameManager.increase_ammo.connect(increase_ammo)
 
 func _process(_delta: float) -> void:
 	check_ammo()

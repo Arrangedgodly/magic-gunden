@@ -1,10 +1,5 @@
 extends Node2D
 
-var move_timer: Timer
-var player: CharacterBody2D
-var pause_screen: Node2D
-var time_counter: Timer
-
 @export var background_music: AudioStream
 @export var pickup_sfx: AudioStream
 @export var death_sfx: AudioStream
@@ -31,6 +26,10 @@ var game_paused : bool
 var is_attacking : bool
 var ammo = Ammo.new()
 var game_scene_root: Node2D
+var move_timer: Timer
+var player: CharacterBody2D
+var pause_screen: Node2D
+var time_counter: Timer
 
 signal level_changed(new_level: int)
 signal gem_converted(point_value: int)

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Slime
 
-@onready var player: CharacterBody2D = $"../../Player"
+var player: CharacterBody2D
 @onready var detection: RayCast2D = $Detection
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -28,6 +28,9 @@ func _ready():
 	for point in capture_points:
 		var point_area = point.get_child(0)
 		detection.add_exception(point_area)
+
+func initialize(_player: CharacterBody2D) -> void:
+	player = _player
 
 func _physics_process(delta: float) -> void:
 	if is_moving:

@@ -6,6 +6,7 @@ signal capture_animation_played
 
 var capture_point_timer: Timer
 var capture_point_animation: Timer
+var game_scene_root: Node2D
 
 @export var capture_sfx: AudioStream
 
@@ -18,7 +19,8 @@ var bars_vertical: bool = true
 const TILES = 12
 const TILE_SIZE = 32
 
-func initialize(_capture_point_timer: Timer, _capture_point_animation: Timer) -> void:
+func initialize(_game_scene_root: Node2D, _capture_point_timer: Timer, _capture_point_animation: Timer) -> void:
+	game_scene_root = _game_scene_root
 	capture_point_timer = _capture_point_timer
 	capture_point_animation = _capture_point_animation
 	
@@ -95,15 +97,15 @@ func spawn_cross_pattern(starting_pos: Vector2i) -> int:
 		# Only spawn in cross pattern
 		if row == 0 and (col == 1 or col == 2):
 			set_capture_point_color(capture_point_instance)
-			GameManager.add_child(capture_point_instance)
+			game_scene_root.add_child(capture_point_instance)
 			count += 1
 		elif row == 1 or row == 2:
 			set_capture_point_color(capture_point_instance)
-			GameManager.add_child(capture_point_instance)
+			game_scene_root.add_child(capture_point_instance)
 			count += 1
 		elif row == 3 and (col == 1 or col == 2):
 			set_capture_point_color(capture_point_instance)
-			GameManager.add_child(capture_point_instance)
+			game_scene_root.add_child(capture_point_instance)
 			count += 1
 		else:
 			capture_point_instance.queue_free()

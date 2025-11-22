@@ -3,6 +3,7 @@ extends Node2D
 var enemy_spawn: Timer
 var enemy_move: Timer
 var player: CharacterBody2D
+var game_scene_root: Node2D
 
 signal enemy_spawned(enemy: Node2D)
 signal slime_killed
@@ -13,7 +14,8 @@ var slimes_killed: int = 0
 const TILES = 12
 const TILE_SIZE = 32
 
-func initialize(_player: CharacterBody2D, _enemy_spawn: Timer, _enemy_move: Timer) -> void:
+func initialize(_game_scene_root: Node2D, _player: CharacterBody2D, _enemy_spawn: Timer, _enemy_move: Timer) -> void:
+	game_scene_root = _game_scene_root
 	player = _player
 	enemy_spawn = _enemy_spawn
 	enemy_move = _enemy_move
@@ -45,7 +47,8 @@ func spawn_enemy() -> void:
 	enemy_instance.position += Vector2.RIGHT * 16
 	enemy_instance.position += Vector2.DOWN * 16
 	
-	GameManager.add_child(enemy_instance)
+	game_scene_root.add_child(enemy_instance)
+	enemy_instance.initialize(player)
 	
 	enemy_instance.was_killed.connect(_on_slime_killed)
 	
@@ -74,7 +77,7 @@ func is_valid_spawn_position(pos: Vector2) -> bool:
 	if player.position == pos:
 		return false
 	
-	for child in GameManager.get_children():
+	for child in game_scene_root.get_children():
 		if child is AnimatedSprite2D and child.position == pos:
 			return false
 	

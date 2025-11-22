@@ -13,6 +13,13 @@ extends Control
 
 func _ready() -> void:
 	hide()
+
+func initialize() -> void:
+	GameManager.game_ended.connect(_on_game_manager_game_ended)
+	GameManager.new_highscore.connect(_on_game_manager_new_highscore)
+	GameManager.new_high_killcount.connect(_on_game_manager_new_high_killcount)
+	GameManager.new_high_time_alive.connect(_on_game_manager_new_high_time_alive)
+	GameManager.new_high_gems_captured.connect(_on_game_manager_new_high_gems_captured)
 	
 func _on_game_manager_game_ended(new_score: int, new_killcount: int, new_time_alive: int, new_gems_captured: int) -> void:
 	final_score.text = str(new_score)
