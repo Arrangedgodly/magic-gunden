@@ -4,8 +4,6 @@ extends Node2D
 
 @onready var move_timer: Timer = $"../MoveTimer"
 @onready var player: CharacterBody2D = %Player
-@onready var enemy_spawn: Timer = $EnemySpawn
-@onready var enemy_move: Timer = $EnemyMove
 @onready var capture_point_timer: Timer = $CapturePointTimer
 @onready var pause_screen: Node2D = $"../PauseScreen"
 @onready var capture_point_animation: Timer = $CapturePointAnimation
@@ -13,6 +11,9 @@ extends Node2D
 @onready var stomp_timer: Timer = $StompTimer
 @onready var magnet_timer: Timer = $MagnetTimer
 @onready var pierce_timer: Timer = $PierceTimer
+@onready var trail_manager: TrailManager = $"../TrailManager"
+@onready var pickup_manager: PickupManager = $"../PickupManager"
+@onready var enemy_manager: EnemyManager = $"../EnemyManager"
 
 @export var background_music: AudioStream
 @export var pickup_sfx: AudioStream
@@ -20,12 +21,9 @@ extends Node2D
 @export var capture_sfx: AudioStream
 @export var ammo_error_sfx: AudioStream
 
-var yoyo_scene = preload("res://scenes/yoyo.tscn")
-var blue_slime_scene = preload("res://scenes/blue_slime.tscn")
 var capture_point_scene = preload("res://scenes/capture_point.tscn")
 var projectile_scene = preload("res://scenes/projectile.tscn")
 var score_popup_scene = preload("res://scenes/score_popup.tscn")
-var pickup_scene = preload("res://scenes/pickup.tscn")
 
 const tiles = 12
 const tile_size = 32
@@ -40,19 +38,13 @@ const up = Vector2(0, -1)
 const down = Vector2(0, 1)
 const left = Vector2(-1, 0)
 const right = Vector2(1, 0)
-var regen_yoyo = true
-var yoyo_pos : Vector2i
-var move_history : Array
 var pickup_count : int
-var trail : Array
-var capture_count : int
 var kill_count : int
 var level = 1
 var capture_pattern_bar : bool = false
 var bars_vertical : bool = true
 var game_paused : bool
 var is_attacking : bool
-var slimes_killed : int
 var time_alive: int
 var gems_captured: int
 var ammo = Ammo.new()
@@ -77,9 +69,13 @@ signal decrease_ammo
 #endregion
 
 func _ready() -> void:
+	trail_manager.trail_item_converted_to_ammo.connect(_on_trail_item_converted_to_ammo)
+	trail_manager.trail_released.connect(_on_trail_released)
+	
+	pickup_manager.yoyo_collected.connect(_on_yoyo_collected)
+	
 	var spawn_point = find_capture_spawn_point()
 	spawn_capture_points(spawn_point)
-	place_yoyo()
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
@@ -107,14 +103,11 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("aim-up"):
 		aim_direction = up
 	if Input.is_action_just_pressed("detach"):
-		release_trail()
+		trail_manager.release_trail()  # CHANGED!
 	if Input.is_action_just_pressed("attack"):
 		is_attacking = true
 
 func _process(_delta: float) -> void:
-	if regen_yoyo:
-		place_yoyo()
-	
 	if not magnet_timer.is_stopped():
 		handle_magnet_effect(_delta)
 	if len(scores_to_update) != 0:
@@ -136,9 +129,8 @@ func start_game():
 	move_timer.start()
 	capture_point_timer.start()
 	capture_point_animation.start()
-	enemy_move.start()
-	enemy_spawn.start()
 	time_counter.start()
+	enemy_manager.start_enemy_systems()
 	
 func end_game():
 	AudioManager.stop(background_music)
@@ -146,9 +138,8 @@ func end_game():
 	move_timer.stop()
 	capture_point_timer.stop()
 	capture_point_animation.stop()
-	enemy_move.stop()
-	enemy_spawn.stop()
 	time_counter.stop()
+	enemy_manager.stop_enemy_systems()
 	game_ended.emit(score, kill_count, time_alive, gems_captured)
 	save_game()
 
@@ -166,12 +157,12 @@ func save_game():
 		new_highscore.emit(score)
 	
 	if not saved_game.slimes_killed == null:
-		if slimes_killed > saved_game.slimes_killed:
-			saved_game.slimes_killed = slimes_killed
-			new_high_killcount.emit(slimes_killed)
+		if enemy_manager.get_slimes_killed() > saved_game.slimes_killed:
+			saved_game.slimes_killed = enemy_manager.get_slimes_killed()
+			new_high_killcount.emit(enemy_manager.get_slimes_killed())
 	else:
-		saved_game.slimes_killed = slimes_killed
-		new_high_killcount.emit(slimes_killed)
+		saved_game.slimes_killed = enemy_manager.get_slimes_killed()
+		new_high_killcount.emit(enemy_manager.get_slimes_killed())
 		
 	if not saved_game.time_alive == null:
 		if time_alive > saved_game.time_alive:
@@ -192,161 +183,16 @@ func save_game():
 	ResourceSaver.save(saved_game, "user://save.tres")
 #endregion
 
-#region Utility Methods
-
 func random_pos():
 	randomize()
 	var x = (randi_range(0, tiles - 1) * 32)
 	var y = (randi_range(0, tiles - 1) * 32)
 	return Vector2i(x,y)
-
-func is_valid_spawn_position(pos: Vector2) -> bool:
-	if player.position == pos:
-		return false
-		
-	for child in get_children():
-		if child is AnimatedSprite2D and child.position == pos:
-			return false
 	
-	for yoyo_instance in trail:
-		if yoyo_instance.position == pos:
-			return false
-	
-	return true
-#endregion
-	
-#region Pickup Methods
-
-func place_yoyo():
-	if regen_yoyo:
-		regen_yoyo = false
-		yoyo_pos = random_pos()
-		var attempts = 0
-		
-		while not is_valid_spawn_position(yoyo_pos) and attempts < 100:
-			yoyo_pos = random_pos()
-			attempts += 1
-		
-		if attempts >= 100:
-			regen_yoyo = true
-			return
-			
-		var yoyo_instance = yoyo_scene.instantiate()
-		yoyo_instance.enable_pickup()
-		yoyo_instance.position = yoyo_pos
-		yoyo_instance.position += Vector2.RIGHT * 16
-		yoyo_instance.position += Vector2.DOWN * 16
-		if level == 1:
-			yoyo_instance.play('blue')
-		elif level == 2:
-			yoyo_instance.play('green')
-		elif level == 3:
-			yoyo_instance.play('red')
-		add_child(yoyo_instance)
-
-func spawn_pickup():
-	var pickup_pos = random_pos()
-	var attempts = 0
-	
-	while not is_valid_spawn_position(pickup_pos) and attempts < 100:
-		pickup_pos = random_pos()
-		attempts += 1
-	
-	if attempts >= 100:
-		return
-	
-	var pickup = pickup_scene.instantiate()
-	pickup.position = pickup_pos
-	pickup.position += Vector2(16, 16)
-	add_child(pickup)
-	
-func reset_regen_yoyo():
-	regen_yoyo = true
-	handle_pickup_yoyo()
-
 func handle_pickup_yoyo():
 	AudioManager.play_sound(pickup_sfx)
 	pickup_count += 1
-	create_trail()
-	
-func create_trail():
-	var yoyo_instance = yoyo_scene.instantiate()
-	set_deferred("add_child", yoyo_instance)
-	var last_position = move_history[len(move_history) - 1]
-	var local_position = to_local(last_position)
-	yoyo_instance.position = local_position
-	yoyo_instance.negate_pickup()
-	if level == 1:
-		yoyo_instance.play("blue")
-	elif level == 2:
-		yoyo_instance.play('green')
-	elif level == 3:
-		yoyo_instance.play('red')
-	call_deferred("add_child", yoyo_instance)
-	yoyo_instance.add_to_group("equipped")
-	trail.append(yoyo_instance)
-		
-func move_trail():
-	if trail.is_empty():
-		return
-		
-	for i in range(len(trail)):
-		if i + 1 < len(move_history):
-			var target_position = move_history[-(i + 1)]
-			var local_position = to_local(target_position)
-			var tween = create_tween()
-			tween.tween_property(trail[i], "position", local_position, 1.0/animation_speed).set_trans(Tween.TRANS_SINE)
-
-func release_trail():
-	for item in trail:
-		if is_on_capture_point(item):
-			capture_count += 1
-			convert_to_ammo(item, capture_count)
-		else:
-			convert_to_enemy(item)
-	
-	if capture_count >= 6:
-		spawn_pickup()
-	
-	trail = []		
-	capture_count = 0
-	capture_point_timer.stop()
-	capture_point_timer.emit_signal("timeout")
-	capture_point_animation.stop()
-	
-func is_on_capture_point(item) -> bool:
-	var capture_points = get_tree().get_nodes_in_group("capture")
-	
-	for point in capture_points:
-		var detected_body = point.check_detected_body()
-		if detected_body:
-			if detected_body.position == item.position:
-				return true
-	
-	return false
-	
-func convert_to_enemy(pickup: Node2D):
-	await pickup.flash(Color(255, 0, 0, 255))
-	var enemy_instance = blue_slime_scene.instantiate()
-	enemy_instance.position = pickup.position
-	add_child(enemy_instance)
-	enemy_instance.was_killed.connect(increase_slimes_killed)
-	pickup.queue_free()
-	
-func convert_to_ammo(pickup: Node2D, streak: int):
-	await pickup.flash(Color(0, 255, 0, 255))
-	var score_popup = score_popup_scene.instantiate()
-	score_popup.position = pickup.position
-	score_popup.position += Vector2(-6, -25)
-	add_child(score_popup)
-	score_popup.handle_popup(10 * streak)
-	gems_captured += 1
-	increase_ammo.emit()
-	ammo.increase_ammo()
-	current_ammo.emit(ammo.clip_count)
-	pickup.queue_free()
-	gem_converted.emit((10 * streak))
-#endregion
+	trail_manager.create_trail_segment()
 
 #region Player Methods
 
@@ -364,27 +210,20 @@ func handle_attack():
 		await player.attack()
 		
 	current_ammo.emit(ammo.ammo_count)
-	
-func update_move_history():
-	var current_position = player.global_position
-	if len(move_history) > pickup_count:
-		move_history.pop_front()
-	move_history.append(current_position)
 		
 func move(dir):
 	var new_position = player.position + (dir * tile_size)
 	
-	if trail.size() > 0:
-		var first_trail_segment = trail[0]
-	
-		if first_trail_segment.position.distance_to(player.to_local(new_position)) < 5.0:
+	if trail_manager.has_trail():
+		var first_trail_position = trail_manager.get_first_trail_position()
+		if first_trail_position.distance_to(player.to_local(new_position)) < 5.0:
 			return
-			
-	await update_move_history()
+	
+	trail_manager.update_move_history(player.global_position)
 	
 	var tween = create_tween()
 	tween.tween_property(player, "position", new_position, 1.0/animation_speed).set_trans(Tween.TRANS_SINE)
-	move_trail()
+	trail_manager.move_trail()
 	
 func _on_move_timer_timeout() -> void:
 	if is_attacking:
@@ -397,34 +236,6 @@ func increase_kill_count():
 	kill_count += 1
 	scores_to_update.append(10 * kill_count)
 	player.create_score_popup(10 * kill_count)
-
-func increase_slimes_killed():
-	slimes_killed += 1
-#endregion
-				
-#region Enemy Methods
-
-func _on_enemy_spawn_timeout() -> void:
-	var enemy_pos = random_pos()
-	while not is_valid_spawn_position(enemy_pos):
-		enemy_pos = random_pos()
-	var enemy_instance = blue_slime_scene.instantiate()
-	enemy_instance.position = enemy_pos
-	enemy_instance.position += Vector2.RIGHT * 16
-	enemy_instance.position += Vector2.DOWN * 16
-	add_child(enemy_instance)
-	enemy_instance.was_killed.connect(increase_slimes_killed)
-	enemy_instance.sprite.play("spawn")
-	await enemy_instance.sprite.animation_finished
-	enemy_instance.sprite.play("idle_down")
-	enemy_spawn.start()
-
-func _on_enemy_move_timeout() -> void:
-	var enemies = get_tree().get_nodes_in_group("mobs")
-	for enemy in enemies:
-		enemy.move()
-		
-	enemy_move.start()
 #endregion
 	
 #region Capture Point Methods
@@ -527,6 +338,31 @@ func _on_gem_converted(point_value: int) -> void:
 	scores_to_update.append(point_value)
 #endregion
 
+#region TrailManager Signal Handlers (NEW!)
+
+func _on_trail_item_converted_to_ammo(streak: int, position: Vector2) -> void:
+	var score_popup = score_popup_scene.instantiate()
+	score_popup.position = position
+	score_popup.position += Vector2(-6, -25)
+	add_child(score_popup)
+	score_popup.handle_popup(10 * streak)
+	
+	gems_captured += 1
+	increase_ammo.emit()
+	ammo.increase_ammo()
+	current_ammo.emit(ammo.clip_count)
+	gem_converted.emit((10 * streak))
+
+func _on_trail_released(items_captured: int) -> void:
+	if items_captured >= 6:
+		pickup_manager.spawn_pickup()
+	
+	capture_point_timer.stop()
+	capture_point_timer.emit_signal("timeout")
+	capture_point_animation.stop()
+
+#endregion
+
 func _on_pause_screen_visibility_changed() -> void:
 	if not game_paused:
 		AudioManager.pause(background_music)
@@ -576,3 +412,6 @@ func handle_magnet_effect(delta):
 			
 			if dist < magnet_radius:
 				pickup.global_position = pickup.global_position.move_toward(player.global_position, pull_speed * delta)
+
+func _on_yoyo_collected() -> void:
+	handle_pickup_yoyo()

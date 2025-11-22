@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=4 uid="uid://dm3mim4ak40m5"]
+[gd_scene load_steps=78 format=4 uid="uid://dm3mim4ak40m5"]
 
 [ext_resource type="Texture2D" uid="uid://c1wrf536415ht" path="res://assets/map/colortiles.png" id="1_cmd0n"]
 [ext_resource type="PackedScene" uid="uid://vrr80sg0kivh" path="res://scenes/player.tscn" id="1_l5lwm"]
@@ -18,8 +18,11 @@
 [ext_resource type="Script" uid="uid://38apjfhr7las" path="res://scripts/animated_background.gd" id="10_83lwh"]
 [ext_resource type="Script" uid="uid://bekcy8l8rddxk" path="res://scripts/grids.gd" id="11_d8dij"]
 [ext_resource type="Texture2D" uid="uid://bhsf2vijpvvtk" path="res://assets/map/transparent_tile.png" id="13_p54tl"]
+[ext_resource type="Script" uid="uid://d0tb0csmu3il5" path="res://scripts/trail_manager.gd" id="16_4w6kg"]
 [ext_resource type="Texture2D" uid="uid://bmei0eiha30ii" path="res://assets/UI/scorebanner.png" id="17_hmsf0"]
+[ext_resource type="Script" uid="uid://c4qph2t4vtj04" path="res://scripts/pickup_manager.gd" id="17_ixuxk"]
 [ext_resource type="PackedScene" uid="uid://5jfivnerd7rx" path="res://scenes/ammo_bar.tscn" id="17_j7q35"]
+[ext_resource type="PackedScene" uid="uid://dx3lupwb8kn48" path="res://scenes/enemy_manager.tscn" id="18_bxcp7"]
 [ext_resource type="Script" uid="uid://ctndhqmo5h2tg" path="res://scripts/ui.gd" id="18_fqdd6"]
 [ext_resource type="Script" uid="uid://crffvyxw1awba" path="res://scripts/crosshair.gd" id="18_gfqsg"]
 [ext_resource type="Texture2D" uid="uid://ctc8lwfptxqir" path="res://assets/UI/crosshair.png" id="18_r4k4a"]
@@ -425,6 +428,15 @@ collision_enabled = false
 
 [node name="GameManager" parent="." instance=ExtResource("1_xu37e")]
 position = Vector2(-200, -167.778)
+
+[node name="TrailManager" type="Node2D" parent="."]
+script = ExtResource("16_4w6kg")
+
+[node name="PickupManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("17_ixuxk")
+
+[node name="EnemyManager" parent="." instance=ExtResource("18_bxcp7")]
 
 [node name="Player" parent="." instance=ExtResource("1_l5lwm")]
 unique_name_in_owner = true
