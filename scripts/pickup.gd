@@ -41,8 +41,5 @@ func _on_body_entered(body: Node2D) -> void:
 		collect()
 
 func collect():
-	var game_manager = get_parent()
-	if game_manager.has_method("activate_powerup"):
-		game_manager.activate_powerup(type)
-		
+	PowerupManager.activate_powerup(type)
 	queue_free()

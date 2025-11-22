@@ -3,7 +3,6 @@ class_name Player
 
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var move_timer: Timer = $"../MoveTimer"
-@onready var game_manager: Node2D = $"../GameManager"
 @onready var crosshair: Sprite2D = $Crosshair
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -59,7 +58,7 @@ func _process(_delta: float) -> void:
 		aim_direction = right
 		
 func die():
-	game_manager.end_game()
+	GameManager.end_game()
 	animation_tree.set("parameters/Death/BlendSpace2D/blend_position", last_direction)
 	animation_tree.get("parameters/playback").travel("Death")
 	set_process(false)
@@ -75,7 +74,7 @@ func attack():
 	var projectile = projectile_scene.instantiate()
 	projectile.set_direction(aim_direction)
 	
-	if game_manager.piercing_active:
+	if PowerupManager.piercing_active:
 		projectile.is_piercing = true
 		
 	add_child(projectile)

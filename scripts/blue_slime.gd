@@ -1,7 +1,6 @@
 extends CharacterBody2D
 class_name Slime
 
-@onready var game_manager = get_parent()
 @onready var player: CharacterBody2D = $"../../Player"
 @onready var detection: RayCast2D = $Detection
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -15,6 +14,9 @@ const right = Vector2(1, 0)
 var directions = [down, left, up, right]
 var angles = [0, 90, 180, 270]
 var can_animation_change : bool
+var is_moving: bool = false
+var next_move_direction: Vector2 = Vector2.ZERO
+var next_move_valid: bool = false
 
 signal was_killed
 
@@ -28,11 +30,14 @@ func _ready():
 		detection.add_exception(point_area)
 
 func _physics_process(delta: float) -> void:
+	if is_moving:
+		return
+		
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		var collider = collision.get_collider()
 		if collider is Player:
-			if game_manager.stomp_active:
+			if PowerupManager.stomp_active:
 				kill()
 			else:
 				player.die()
@@ -40,11 +45,33 @@ func _physics_process(delta: float) -> void:
 			kill()
 
 func move():
+	if is_moving:
+		return
+		
+	calculate_next_move()
+	
+	if next_move_valid:
+		is_moving = true
+		idle_direction(next_move_direction)
+		await sprite.animation_looped
+		
+		var target_pos = position + next_move_direction * 32
+		
+		var tween = create_tween()
+		tween.tween_property(self, "position", target_pos, 0.2)
+		await tween.finished
+		
+		move_direction(next_move_direction)
+		is_moving = false
+	else:
+		sprite.play("idle_down")
+
+func calculate_next_move():
 	randomize()
-	var can_move = false
+	next_move_valid = false
 	var attempts = 0
 	
-	while not can_move and attempts < 5:
+	while not next_move_valid and attempts < 5:
 		attempts += 1
 		
 		var random_num = randi_range(0, 3)
@@ -55,14 +82,23 @@ func move():
 		detection.force_raycast_update()
 	
 		if not detection.is_colliding():
-			can_move = true
-			idle_direction(random_direction)
-			await sprite.animation_looped
-			position += random_direction * 32
-			move_direction(random_direction)
+			var target_pos = position + random_direction * 32
 			
-	if not can_move:
-		sprite.play("idle_down")
+			if not is_position_occupied(target_pos):
+				next_move_direction = random_direction
+				next_move_valid = true
+
+func is_position_occupied(pos: Vector2) -> bool:
+	var slimes = get_tree().get_nodes_in_group("mobs")
+	for slime in slimes:
+		if slime != self and is_instance_valid(slime):
+			if slime.position.distance_to(pos) < 16:
+				return true
+	
+	if player and player.position.distance_to(pos) < 16:
+		return true
+	
+	return false
 
 func idle_direction(dir):
 	if dir == right:
@@ -98,7 +134,7 @@ func move_direction(dir):
 
 func kill():
 	AudioManager.play_sound(hurt_sound)
-	game_manager.increase_kill_count()
+	GameManager.increase_kill_count()
 	sprite.play("death")
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)

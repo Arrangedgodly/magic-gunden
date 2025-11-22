@@ -1,26 +1,23 @@
 extends AnimatedSprite2D
 
-@onready var game_manager = get_parent()
 @onready var yoyo_area: Area2D = $YoyoArea
-@onready var pickup_manager: PickupManager
 
 var can_pickup: bool
 var is_fresh_trail: bool = false
 
 func _ready() -> void:
-	pickup_manager = get_node("/root/MagicGarden/PickupManager")
 	yoyo_area.body_entered.connect(_on_area_2d_body_entered)
 	yoyo_area.body_exited.connect(_on_area_2d_body_exited)
 
 func _on_area_2d_body_entered(_body: Node2D) -> void:
 	if can_pickup:
-		pickup_manager.reset_regen_yoyo()
+		PickupManager.reset_regen_yoyo()
 		queue_free()
 	else:
 		if is_fresh_trail:
 			return
 			
-		game_manager.kill_player()
+		GameManager.kill_player()
 
 func _on_area_2d_body_exited(_body: Node2D) -> void:
 	if is_fresh_trail and not can_pickup:

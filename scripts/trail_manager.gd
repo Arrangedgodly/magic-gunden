@@ -1,5 +1,4 @@
 extends Node2D
-class_name TrailManager
 
 signal trail_item_converted_to_ammo(streak: int, position: Vector2)
 signal trail_item_converted_to_enemy(position: Vector2)

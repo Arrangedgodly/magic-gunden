@@ -1,5 +1,4 @@
 extends Node2D
-class_name PickupManager
 
 signal yoyo_collected
 signal powerup_spawned(position: Vector2)

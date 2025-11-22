@@ -1,5 +1,4 @@
 extends Node2D
-class_name EnemyManager
 
 @onready var enemy_spawn: Timer = $EnemySpawn
 @onready var enemy_move: Timer = $EnemyMove

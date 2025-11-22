@@ -1,11 +1,9 @@
 extends Node2D
-class_name CapturePointManager
 
 signal capture_points_spawned(count: int)
 signal capture_points_cleared
 signal capture_animation_played
 
-@onready var game_manager: Node2D = %GameManager
 @onready var capture_point_timer: Timer = $CapturePointTimer
 @onready var capture_point_animation: Timer = $CapturePointAnimation
 
@@ -24,8 +22,9 @@ func _ready() -> void:
 	capture_point_timer.timeout.connect(_on_capture_point_timer_timeout)
 	capture_point_animation.timeout.connect(_on_capture_point_animation_timeout)
 	
-	if game_manager:
-		game_manager.level_changed.connect(_on_level_changed)
+	GameManager.level_changed.connect(_on_level_changed)
+	
+	call_deferred("initialize_first_spawn")
 
 func start_capture_systems() -> void:
 	capture_point_timer.start()
@@ -68,7 +67,7 @@ func spawn_bar_pattern(starting_pos: Vector2i) -> int:
 			capture_point_instance.position.y += i * TILE_SIZE
 		
 		set_capture_point_color(capture_point_instance)
-		game_manager.add_child(capture_point_instance)
+		GameManager.add_child(capture_point_instance)
 		count += 1
 	
 	return count
@@ -93,15 +92,15 @@ func spawn_cross_pattern(starting_pos: Vector2i) -> int:
 		# Only spawn in cross pattern
 		if row == 0 and (col == 1 or col == 2):
 			set_capture_point_color(capture_point_instance)
-			game_manager.add_child(capture_point_instance)
+			GameManager.add_child(capture_point_instance)
 			count += 1
 		elif row == 1 or row == 2:
 			set_capture_point_color(capture_point_instance)
-			game_manager.add_child(capture_point_instance)
+			GameManager.add_child(capture_point_instance)
 			count += 1
 		elif row == 3 and (col == 1 or col == 2):
 			set_capture_point_color(capture_point_instance)
-			game_manager.add_child(capture_point_instance)
+			GameManager.add_child(capture_point_instance)
 			count += 1
 		else:
 			capture_point_instance.queue_free()

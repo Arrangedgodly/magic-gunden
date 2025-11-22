@@ -9,6 +9,9 @@ class_name Projectile
 var direction : Vector2
 var speed = 1250
 var is_piercing: bool = false
+var has_hit_enemy: bool = false
+var lifetime: float = 0.0
+var max_lifetime: float = 2.0
 
 func _ready() -> void:
 	add_to_group("projectile")
@@ -27,6 +30,12 @@ func set_direction(new_dir: Vector2):
 	rotation = direction.angle()
 	
 func _process(delta: float) -> void:
+	lifetime += delta
+	
+	if lifetime > max_lifetime:
+		_on_missed()
+		return
+		
 	var motion = direction * speed * delta
 	var collision = character_body.move_and_collide(motion, true)
 	
@@ -52,3 +61,9 @@ func _on_collision() -> void:
 	
 	if not is_piercing:
 		queue_free()
+
+func _on_missed() -> void:
+	if not has_hit_enemy:
+		ScoreManager.reset_kill_count()
+	
+	queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=4 uid="uid://dm3mim4ak40m5"]
+[gd_scene load_steps=81 format=4 uid="uid://dm3mim4ak40m5"]
 
 [ext_resource type="Texture2D" uid="uid://c1wrf536415ht" path="res://assets/map/colortiles.png" id="1_cmd0n"]
 [ext_resource type="PackedScene" uid="uid://vrr80sg0kivh" path="res://scenes/player.tscn" id="1_l5lwm"]
@@ -28,6 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://ctc8lwfptxqir" path="res://assets/UI/crosshair.png" id="18_r4k4a"]
 [ext_resource type="AudioStream" uid="uid://dl527srvxquki" path="res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav" id="19_ncaqh"]
 [ext_resource type="PackedScene" uid="uid://c7okeh7owghnm" path="res://scenes/capture_point_manager.tscn" id="19_rag3k"]
+[ext_resource type="Script" uid="uid://pl1mmnrye0a2" path="res://scripts/score_manager.gd" id="20_a4uvu"]
+[ext_resource type="PackedScene" uid="uid://xuluuy8cronv" path="res://scenes/powerup_manager.tscn" id="21_n3gpv"]
 [ext_resource type="PackedScene" uid="uid://csfcavlmq7m8t" path="res://scenes/controls.tscn" id="21_of0y2"]
 [ext_resource type="PackedScene" uid="uid://cb56jyqau1a0p" path="res://scenes/pause_screen.tscn" id="22_1bpl5"]
 [ext_resource type="PackedScene" uid="uid://ca3e5xaqhn2jb" path="res://scenes/end_game_screen.tscn" id="25_5kf2c"]
@@ -443,6 +445,13 @@ script = ExtResource("17_ixuxk")
 unique_name_in_owner = true
 
 [node name="CapturePointManager" parent="." instance=ExtResource("19_rag3k")]
+unique_name_in_owner = true
+
+[node name="ScoreManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("20_a4uvu")
+
+[node name="PowerupManager" parent="." instance=ExtResource("21_n3gpv")]
 unique_name_in_owner = true
 
 [node name="Player" parent="." instance=ExtResource("1_l5lwm")]
