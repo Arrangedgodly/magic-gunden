@@ -9,6 +9,7 @@ extends Node2D
 @onready var stomp_timer: Timer = $StompTimer
 @onready var magnet_timer: Timer = $MagnetTimer
 @onready var pierce_timer: Timer = $PierceTimer
+@onready var ricochet_timer: Timer = $RicochetTimer
 @onready var trail_manager: TrailManager = %TrailManager
 @onready var pickup_manager: PickupManager = %PickupManager
 @onready var enemy_manager: EnemyManager = %EnemyManager
@@ -74,6 +75,8 @@ func _initialize() -> void:
 	pickup_manager.yoyo_collected.connect(_on_yoyo_collected)
 	
 	capture_point_manager.initialize_first_spawn()
+	
+	ricochet_timer.timeout.connect(_on_ricochet_timeout)
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
@@ -300,6 +303,9 @@ func handle_magnet_effect(delta):
 			
 			if dist < magnet_radius:
 				pickup.global_position = pickup.global_position.move_toward(player.global_position, pull_speed * delta)
+
+func _on_ricochet_timeout() -> void:
+	player.ricochet_timeout()
 
 func _on_yoyo_collected() -> void:
 	handle_pickup_yoyo()

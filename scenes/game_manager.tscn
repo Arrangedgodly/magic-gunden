@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cw0p0vqmn4qyn"]
+[gd_scene load_steps=6 format=3 uid="uid://cw0p0vqmn4qyn"]
 
 [ext_resource type="Script" uid="uid://bbphwfkj5jqil" path="res://scripts/game_manager.gd" id="1_cvlyp"]
 [ext_resource type="AudioStream" uid="uid://djb66ruw3tbwt" path="res://assets/sounds/sfx/Retro PickUp Coin 04.wav" id="2_77dcg"]
 [ext_resource type="AudioStream" uid="uid://chanm8g8w3b0d" path="res://assets/sounds/music/Peu Importe - One Month to Move - 05 Broad Day Getaway.wav" id="2_ternb"]
-[ext_resource type="AudioStream" uid="uid://d3facckunh1y0" path="res://assets/sounds/sfx/Spell_Casting_3.wav" id="4_0tsf3"]
 [ext_resource type="AudioStream" uid="uid://dl527srvxquki" path="res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav" id="4_dtfe4"]
 [ext_resource type="AudioStream" uid="uid://bwiba7d07plqd" path="res://assets/sounds/sfx/error_style_3_001.wav" id="5_kpxhj"]
 
@@ -12,7 +11,6 @@ script = ExtResource("1_cvlyp")
 background_music = ExtResource("2_ternb")
 pickup_sfx = ExtResource("2_77dcg")
 death_sfx = ExtResource("4_dtfe4")
-capture_sfx = ExtResource("4_0tsf3")
 ammo_error_sfx = ExtResource("5_kpxhj")
 
 [node name="TimeCounter" type="Timer" parent="."]
@@ -26,6 +24,10 @@ wait_time = 10.0
 one_shot = true
 
 [node name="PierceTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="RicochetTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
 

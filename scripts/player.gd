@@ -11,15 +11,17 @@ var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var score_popup_scene = preload("res://scenes/score_popup.tscn")
 var projectile_scene = preload("res://scenes/projectile.tscn")
 
-const tile_size = 32
 var last_direction = null
 var aim_direction = down
+var is_ricochet_active: bool = false
+var animation_speed = 5
+
+const tile_size = 32
 const up = Vector2(0, -1)
 const down = Vector2(0, 1)
 const left = Vector2(-1, 0)
 const right = Vector2(1, 0)
 
-var animation_speed = 5
 
 func _ready():
 	position = position.snapped(Vector2.ONE * tile_size)
@@ -77,8 +79,18 @@ func attack():
 	
 	if game_manager.piercing_active:
 		projectile.is_piercing = true
+	
+	if is_ricochet_active:
+		projectile.can_ricochet = true
+		projectile.max_bounces = 3
 		
 	add_child(projectile)
+
+func activate_ricochet() -> void:
+	is_ricochet_active = true
+
+func ricochet_timeout() -> void:
+	is_ricochet_active = false
 
 func powerup_active():
 	var tween = create_tween()
