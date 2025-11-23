@@ -5,14 +5,17 @@ signal yoyo_collected
 signal powerup_spawned(position: Vector2)
 
 @onready var player: CharacterBody2D = %Player
-@onready var game_manager: Node2D = $"../GameManager"
+@onready var game_manager: Node2D = %GameManager
 
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
-var pickup_scene = preload("res://scenes/pickup.tscn")
-
+var stomp_scene = preload("res://scenes/stomp.tscn")
+var magnet_scene = preload("res://scenes/magnet.tscn")
+var pierce_scene = preload("res://scenes/pierce.tscn")
+var ricochet_scene = preload("res://scenes/ricochet.tscn")
 var regen_yoyo: bool = true
 var yoyo_pos: Vector2i
 var level: int = 1
+var available_pickups: Array[PackedScene]
 
 const TILES = 12
 const TILE_SIZE = 32
@@ -20,6 +23,8 @@ const TILE_SIZE = 32
 func _ready() -> void:
 	if game_manager:
 		game_manager.level_changed.connect(_on_level_changed)
+	
+	available_pickups = [magnet_scene, pierce_scene, ricochet_scene, stomp_scene]
 
 func _process(_delta: float) -> void:
 	if regen_yoyo:
@@ -69,12 +74,22 @@ func spawn_pickup() -> void:
 	if attempts >= 100:
 		return
 	
-	var pickup = pickup_scene.instantiate()
+	var random_scene = available_pickups.pick_random()
+	var pickup = random_scene.instantiate()
 	pickup.position = pickup_pos
 	pickup.position += Vector2(16, 16)
 	game_manager.add_child(pickup)
 	powerup_spawned.emit(pickup_pos)
 
+func force_spawn_pickup(index: int) -> void:
+	var pos = random_pos()
+	var scene = available_pickups[index]
+	var pickup = scene.instantiate()
+	
+	pickup.position = pos
+	pickup.position += Vector2(16, 16)
+	game_manager.add_child(pickup)
+	powerup_spawned.emit()
 func random_pos() -> Vector2i:
 	randomize()
 	var x = (randi_range(0, TILES - 1) * TILE_SIZE)

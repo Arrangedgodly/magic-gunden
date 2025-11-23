@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjxvx17xi1kd0"]
+
+[ext_resource type="Script" uid="uid://bb8x0xm7vg185" path="res://scripts/stomp.gd" id="1_l874n"]
+[ext_resource type="Texture2D" uid="uid://ceuymmnnp5eyc" path="res://assets/items/stomp.png" id="2_apo6r"]
+
+[node name="Stomp" type="Area2D"]
+script = ExtResource("1_l874n")
+icon = ExtResource("2_apo6r")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

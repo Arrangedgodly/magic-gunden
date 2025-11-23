@@ -281,26 +281,6 @@ func _on_pause_screen_visibility_changed() -> void:
 		game_paused = false
 		ui_visible.emit(true)
 
-func activate_powerup(type):
-	match type:
-		Pickup.PickupType.RED_POTION:
-			stomp_active = true
-			stomp_timer.start()
-			await stomp_timer.timeout
-			stomp_active = false
-			
-		Pickup.PickupType.BLUE_POTION:
-			piercing_active = true
-			pierce_timer.start()
-			await pierce_timer.timeout
-			piercing_active = false
-			
-		Pickup.PickupType.GREEN_POTION:
-			magnet_active = true
-			magnet_timer.start()
-			await magnet_timer.timeout
-			magnet_active = false
-
 func handle_magnet_effect(delta):
 	var magnet_radius = 160.0 
 	var pull_speed = 300.0

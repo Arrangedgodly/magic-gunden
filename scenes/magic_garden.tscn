@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=4 uid="uid://dm3mim4ak40m5"]
+[gd_scene load_steps=80 format=4 uid="uid://dm3mim4ak40m5"]
 
 [ext_resource type="Texture2D" uid="uid://c1wrf536415ht" path="res://assets/map/colortiles.png" id="1_cmd0n"]
 [ext_resource type="PackedScene" uid="uid://vrr80sg0kivh" path="res://scenes/player.tscn" id="1_l5lwm"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://cb56jyqau1a0p" path="res://scenes/pause_screen.tscn" id="22_1bpl5"]
 [ext_resource type="PackedScene" uid="uid://ca3e5xaqhn2jb" path="res://scenes/end_game_screen.tscn" id="25_5kf2c"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="26_2xw40"]
+[ext_resource type="PackedScene" uid="uid://cl28e4ldob2go" path="res://scenes/dev_console.tscn" id="33_a4uvu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lqy2t"]
 atlas = ExtResource("1_sjcuh")
@@ -623,6 +624,8 @@ offset_left = -600.0
 offset_top = -400.0
 offset_right = 600.0
 offset_bottom = 400.0
+
+[node name="DevConsole" parent="." instance=ExtResource("33_a4uvu")]
 
 [connection signal="timeout" from="AnimatedBackground/BackgroundSwap" to="AnimatedBackground" method="_on_background_swap_timeout"]
 [connection signal="game_ended" from="GameManager" to="EndGameScreen" method="_on_game_manager_game_ended"]

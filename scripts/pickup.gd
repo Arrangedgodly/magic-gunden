@@ -1,40 +1,25 @@
 extends Area2D
 class_name Pickup
 
-@onready var blue_potion: Sprite2D = $BluePotion
-@onready var red_potion: Sprite2D = $RedPotion
-@onready var green_potion: Sprite2D = $GreenPotion
+@export var icon: Texture
 
-enum PickupType {BLUE_POTION, RED_POTION, GREEN_POTION}
+enum PickupType {Stomp, Magnet, Ricochet, Pierce}
 
-#RED = Stomp, GREEN = Magnet, Blue = Pierce
-
-var type
+var type: PickupType
 
 func _ready() -> void:
 	add_to_group("pickups")
-	_set_pickup_type()
-	_check_pickup_type()
+	
+	var collision_shape = CollisionShape2D.new()
+	collision_shape.shape = CircleShape2D.new()
+	collision_shape.shape.radius = 16
+	add_child(collision_shape)
+	
+	var sprite = Sprite2D.new()
+	sprite.texture = icon
+	add_child(sprite)
 	
 	body_entered.connect(_on_body_entered)
-
-func _set_pickup_type():
-	var random_num = randi_range(0, 2)
-	if random_num == 0:
-		type = PickupType.BLUE_POTION
-	elif random_num == 1:
-		type = PickupType.RED_POTION
-	elif random_num == 2:
-		type = PickupType.GREEN_POTION
-
-func _check_pickup_type():
-	match type:
-		PickupType.BLUE_POTION:
-			blue_potion.visible = true
-		PickupType.RED_POTION:
-			red_potion.visible = true
-		PickupType.GREEN_POTION:
-			green_potion.visible = true
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
@@ -42,7 +27,9 @@ func _on_body_entered(body: Node2D) -> void:
 
 func collect():
 	var game_manager = get_parent()
-	if game_manager.has_method("activate_powerup"):
-		game_manager.activate_powerup(type)
+	apply_effect(game_manager)
 		
 	queue_free()
+
+func apply_effect(game_manager: Node2D) -> void:
+	print("Pickup collected but no effect defined")
