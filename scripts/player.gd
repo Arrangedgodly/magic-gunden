@@ -13,8 +13,8 @@ var projectile_scene = preload("res://scenes/projectile.tscn")
 
 var last_direction = null
 var aim_direction = down
-var is_ricochet_active: bool = false
 var animation_speed = 5
+var powerup_manager
 
 const tile_size = 32
 const up = Vector2(0, -1)
@@ -22,8 +22,8 @@ const down = Vector2(0, 1)
 const left = Vector2(-1, 0)
 const right = Vector2(1, 0)
 
-
 func _ready():
+	powerup_manager = get_node("/root/MagicGarden/PowerupManager")
 	position = position.snapped(Vector2.ONE * tile_size)
 	position += Vector2.ONE * 8
 	powerup_active()
@@ -77,20 +77,14 @@ func attack():
 	var projectile = projectile_scene.instantiate()
 	projectile.set_direction(aim_direction)
 	
-	if game_manager.piercing_active:
+	if powerup_manager.piercing_active:
 		projectile.is_piercing = true
 	
-	if is_ricochet_active:
+	if powerup_manager.ricochet_active:
 		projectile.can_ricochet = true
 		projectile.max_bounces = 3
 		
 	add_child(projectile)
-
-func activate_ricochet() -> void:
-	is_ricochet_active = true
-
-func ricochet_timeout() -> void:
-	is_ricochet_active = false
 
 func powerup_active():
 	var tween = create_tween()

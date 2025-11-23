@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cl28e4ldob2go"]
+[gd_scene load_steps=3 format=3 uid="uid://cl28e4ldob2go"]
 
 [ext_resource type="Script" uid="uid://vf5ol0lca4da" path="res://scripts/dev_console.gd" id="1_gtvys"]
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="2_qve2q"]
 
 [node name="DevConsole" type="CanvasLayer"]
 script = ExtResource("1_gtvys")
@@ -35,23 +36,39 @@ offset_right = 101.5
 offset_bottom = 85.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 25
 
 [node name="Enemy" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
 text = "Spawn Enemy"
 
 [node name="Magnet" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
 text = "Spawn Magnet Powerup"
 
 [node name="Pierce" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
 text = "Spawn Pierce Powerup"
 
 [node name="Ricochet" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
 text = "Spawn Ricochet Powerup"
 
 [node name="Stomp" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
 text = "Spawn Stomp Powerup"

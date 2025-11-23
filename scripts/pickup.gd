@@ -26,10 +26,10 @@ func _on_body_entered(body: Node2D) -> void:
 		collect()
 
 func collect():
-	var game_manager = get_parent()
-	apply_effect(game_manager)
+	var powerup_manager = get_node("/root/MagicGarden/PowerupManager")
+	apply_effect(powerup_manager)
 		
 	queue_free()
 
-func apply_effect(game_manager: Node2D) -> void:
+func apply_effect(powerup_manager: Node2D) -> void:
 	print("Pickup collected but no effect defined")

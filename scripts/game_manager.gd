@@ -1,15 +1,10 @@
 extends Node2D
 
-#region Variables/Consts/Signals
-
 @onready var move_timer: Timer = $"../MoveTimer"
 @onready var player: CharacterBody2D = %Player
 @onready var pause_screen: Node2D = $"../PauseScreen"
 @onready var time_counter: Timer = $TimeCounter
-@onready var stomp_timer: Timer = $StompTimer
-@onready var magnet_timer: Timer = $MagnetTimer
-@onready var pierce_timer: Timer = $PierceTimer
-@onready var ricochet_timer: Timer = $RicochetTimer
+
 @onready var trail_manager: TrailManager = %TrailManager
 @onready var pickup_manager: PickupManager = %PickupManager
 @onready var enemy_manager: EnemyManager = %EnemyManager
@@ -26,16 +21,17 @@ var score_popup_scene = preload("res://scenes/score_popup.tscn")
 const tiles = 12
 const tile_size = 32
 const cell_size = Vector2i(32, 32)
+const up = Vector2(0, -1)
+const down = Vector2(0, 1)
+const left = Vector2(-1, 0)
+const right = Vector2(1, 0)
+
 var animation_speed = 5
 var grid_size
 var game_started: bool = false
 var score : int
 var last_direction = null
 var aim_direction = down
-const up = Vector2(0, -1)
-const down = Vector2(0, 1)
-const left = Vector2(-1, 0)
-const right = Vector2(1, 0)
 var pickup_count : int
 var kill_count : int
 var level = 1
@@ -45,9 +41,6 @@ var time_alive: int
 var gems_captured: int
 var ammo = Ammo.new()
 var scores_to_update: Array
-var stomp_active: bool = false
-var piercing_active: bool = false
-var magnet_active: bool = false
 
 signal level_changed(new_level: int)
 signal gem_converted(point_value: int)
@@ -62,7 +55,6 @@ signal ui_visible(visible: bool)
 signal update_score(new_score: int)
 signal increase_ammo
 signal decrease_ammo
-#endregion
 
 func _ready() -> void:
 	pause_screen.main_menu_pressed.connect(_on_main_menu_pressed)
@@ -75,8 +67,6 @@ func _initialize() -> void:
 	pickup_manager.yoyo_collected.connect(_on_yoyo_collected)
 	
 	capture_point_manager.initialize_first_spawn()
-	
-	ricochet_timer.timeout.connect(_on_ricochet_timeout)
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
@@ -109,8 +99,6 @@ func _input(_event: InputEvent) -> void:
 		is_attacking = true
 
 func _process(_delta: float) -> void:
-	if not magnet_timer.is_stopped():
-		handle_magnet_effect(_delta)
 	if len(scores_to_update) != 0:
 		var score_to_add: int = 0
 		for score_item in scores_to_update:
@@ -121,8 +109,6 @@ func _process(_delta: float) -> void:
 		
 	
 	killstreak.emit(kill_count)
-		
-#region Game Management Methods
 
 func start_game():
 	game_started = true
@@ -180,7 +166,6 @@ func save_game():
 		new_high_gems_captured.emit(gems_captured)
 	
 	ResourceSaver.save(saved_game, "user://save.tres")
-#endregion
 
 func random_pos():
 	randomize()
@@ -192,8 +177,6 @@ func handle_pickup_yoyo():
 	AudioManager.play_sound(pickup_sfx)
 	pickup_count += 1
 	trail_manager.create_trail_segment()
-
-#region Player Methods
 
 func kill_player():
 	player.die()
@@ -235,9 +218,6 @@ func increase_kill_count():
 	kill_count += 1
 	scores_to_update.append(10 * kill_count)
 	player.create_score_popup(10 * kill_count)
-#endregion
-	
-#region Score Methods
 
 func increase_level():
 	level += 1
@@ -249,9 +229,6 @@ func _on_time_counter_timeout() -> void:
 
 func _on_gem_converted(point_value: int) -> void:
 	scores_to_update.append(point_value)
-#endregion
-
-#region TrailManager Signal Handlers (NEW!)
 
 func _on_trail_item_converted_to_ammo(streak: int, new_position: Vector2) -> void:
 	var score_popup = score_popup_scene.instantiate()
@@ -272,8 +249,6 @@ func _on_trail_released(items_captured: int) -> void:
 	
 	capture_point_manager.reset_capture_timers()
 
-#endregion
-
 func _on_pause_screen_visibility_changed() -> void:
 	if not game_paused:
 		AudioManager.pause(background_music)
@@ -283,29 +258,6 @@ func _on_pause_screen_visibility_changed() -> void:
 		AudioManager.resume(background_music)
 		game_paused = false
 		ui_visible.emit(true)
-
-func handle_magnet_effect(delta):
-	var magnet_radius = 160.0 
-	var pull_speed = 300.0
-	
-	for child in get_children():
-		if "can_pickup" in child and child.can_pickup:
-			var dist = child.global_position.distance_to(player.global_position)
-			
-			if dist < magnet_radius:
-				child.global_position = child.global_position.move_toward(player.global_position, pull_speed * delta)
-
-	var pickups = get_tree().get_nodes_in_group("pickups")
-	
-	for pickup in pickups:
-		if is_instance_valid(pickup):
-			var dist = pickup.global_position.distance_to(player.global_position)
-			
-			if dist < magnet_radius:
-				pickup.global_position = pickup.global_position.move_toward(player.global_position, pull_speed * delta)
-
-func _on_ricochet_timeout() -> void:
-	player.ricochet_timeout()
 
 func _on_yoyo_collected() -> void:
 	handle_pickup_yoyo()

@@ -15,21 +15,5 @@ ammo_error_sfx = ExtResource("5_kpxhj")
 
 [node name="TimeCounter" type="Timer" parent="."]
 
-[node name="StompTimer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
-
-[node name="MagnetTimer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
-
-[node name="PierceTimer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
-
-[node name="RicochetTimer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
-
 [connection signal="gem_converted" from="." to="." method="_on_gem_converted"]
 [connection signal="timeout" from="TimeCounter" to="." method="_on_time_counter_timeout"]

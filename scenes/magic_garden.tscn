@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=4 uid="uid://dm3mim4ak40m5"]
+[gd_scene load_steps=81 format=4 uid="uid://dm3mim4ak40m5"]
 
 [ext_resource type="Texture2D" uid="uid://c1wrf536415ht" path="res://assets/map/colortiles.png" id="1_cmd0n"]
 [ext_resource type="PackedScene" uid="uid://vrr80sg0kivh" path="res://scenes/player.tscn" id="1_l5lwm"]
@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://ctc8lwfptxqir" path="res://assets/UI/crosshair.png" id="18_r4k4a"]
 [ext_resource type="AudioStream" uid="uid://dl527srvxquki" path="res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav" id="19_ncaqh"]
 [ext_resource type="PackedScene" uid="uid://c7okeh7owghnm" path="res://scenes/capture_point_manager.tscn" id="19_rag3k"]
+[ext_resource type="PackedScene" uid="uid://xuluuy8cronv" path="res://scenes/powerup_manager.tscn" id="20_n3gpv"]
 [ext_resource type="PackedScene" uid="uid://csfcavlmq7m8t" path="res://scenes/controls.tscn" id="21_of0y2"]
 [ext_resource type="PackedScene" uid="uid://cb56jyqau1a0p" path="res://scenes/pause_screen.tscn" id="22_1bpl5"]
 [ext_resource type="PackedScene" uid="uid://ca3e5xaqhn2jb" path="res://scenes/end_game_screen.tscn" id="25_5kf2c"]
@@ -446,6 +447,8 @@ unique_name_in_owner = true
 [node name="CapturePointManager" parent="." instance=ExtResource("19_rag3k")]
 unique_name_in_owner = true
 
+[node name="PowerupManager" parent="." instance=ExtResource("20_n3gpv")]
+
 [node name="Player" parent="." instance=ExtResource("1_l5lwm")]
 unique_name_in_owner = true
 position = Vector2(-120, -122)
@@ -548,29 +551,12 @@ theme_override_fonts/font = ExtResource("3_sdpff")
 theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 
-[node name="Powerup Timer Label" type="Label" parent="Camera2D/UI"]
+[node name="PowerupContainer" type="HBoxContainer" parent="Camera2D/UI"]
 layout_mode = 0
 offset_left = -244.667
 offset_top = 198.0
 offset_right = -74.6667
 offset_bottom = 227.0
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("3_sdpff")
-theme_override_font_sizes/font_size = 16
-text = "POWERUP
-TIMER"
-horizontal_alignment = 1
-
-[node name="Powerup Timer" type="Label" parent="Camera2D/UI"]
-layout_mode = 0
-offset_left = -244.667
-offset_top = 230.0
-offset_right = -74.6667
-offset_bottom = 259.0
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("3_sdpff")
-theme_override_font_sizes/font_size = 16
-horizontal_alignment = 1
 
 [node name="MoveTimer" type="Timer" parent="."]
 wait_time = 0.4

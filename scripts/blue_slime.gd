@@ -5,6 +5,7 @@ class_name Slime
 @onready var player: CharacterBody2D = $"../../Player"
 @onready var detection: RayCast2D = $Detection
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var powerup_manager: PowerupManager
 
 @export var hurt_sound: AudioStream
 
@@ -19,6 +20,8 @@ var can_animation_change : bool
 signal was_killed
 
 func _ready():
+	powerup_manager = get_node("/root/MagicGarden/PowerupManager")
+	
 	add_to_group("mobs")
 	detection.collide_with_bodies = true
 	detection.collide_with_areas = true
@@ -32,7 +35,7 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		var collider = collision.get_collider()
 		if collider is Player:
-			if game_manager.stomp_active:
+			if powerup_manager.stomp_active:
 				kill()
 			else:
 				player.die()

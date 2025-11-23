@@ -8,16 +8,28 @@ extends Control
 @onready var clip_count_label: Label = $"Clip Count"
 @onready var current_killstreak_label: Label = $Current_Killstreak_Label
 @onready var current_killstreak: Label = $Current_Killstreak
-@onready var powerup_timer_label: Label = $"Powerup Timer Label"
-@onready var powerup_timer: Label = $"Powerup Timer"
+@onready var powerup_container: HBoxContainer = $PowerupContainer
 @onready var game_manager: Node2D = $"../../GameManager"
 
+var powerup_widget_scene = preload("res://scenes/powerup_widget.tscn")
+var powerup_icons = {
+	"Ricochet" = preload("res://assets/items/ricochet.png"),
+	"Pierce" = preload("res://assets/items/pierce.png"),
+	"Magnet" = preload("res://assets/items/magnet.png"),
+	"Stomp" = preload("res://assets/items/stomp.png")
+}
+var active_widgets: Dictionary = {}
 var current_display_score: int = 0
 var current_ammo: int = 0
+var player
+var powerup_manager: PowerupManager
 
 func _ready() -> void:
 	current_killstreak_label.hide()
 	current_killstreak.hide()
+	
+	powerup_manager = get_node("/root/MagicGarden/PowerupManager")
+	powerup_manager.powerup_activated.connect(_on_powerup_activated)
 	
 	game_manager.update_score.connect(_on_game_manager_update_score)
 	game_manager.ui_visible.connect(_on_game_manager_ui_visible)
@@ -87,3 +99,24 @@ func _on_game_manager_current_ammo(new_ammo: int) -> void:
 	
 	current_ammo = new_ammo
 	update_ammo_ui(new_ammo)
+
+func _on_powerup_activated(p_name: String) -> void:
+	if active_widgets.has(p_name):
+		return
+
+	var timer_node = powerup_manager.get_powerup_timer(p_name)
+	
+	if not timer_node:
+		push_error("UI: No timer found for " + p_name)
+		return
+
+	var new_widget = powerup_widget_scene.instantiate()
+	powerup_container.add_child(new_widget)
+	
+	var icon = powerup_icons.get(p_name)
+	
+	new_widget.setup(p_name, timer_node, icon)
+	
+	active_widgets[p_name] = new_widget
+	
+	new_widget.tree_exiting.connect(func(): active_widgets.erase(p_name))
