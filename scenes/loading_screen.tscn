@@ -1,16 +1,24 @@
-[gd_scene load_steps=45 format=4 uid="uid://do1tt8u0tbmu5"]
+[gd_scene load_steps=16 format=4 uid="uid://do1tt8u0tbmu5"]
 
-[ext_resource type="Script" path="res://scripts/loading_screen.gd" id="1_ffvt4"]
-[ext_resource type="Texture2D" uid="uid://birx0olkss82k" path="res://assets/UI/32x32 circle bar under.png" id="2_cepkg"]
-[ext_resource type="Texture2D" uid="uid://dr736aqse3ybo" path="res://assets/character/2_Template_Run_Right-Sheet.png" id="2_ofoe8"]
-[ext_resource type="Texture2D" uid="uid://21ufhkhayjg0" path="res://assets/UI/32x32 circle bar over.png" id="3_hw3s0"]
-[ext_resource type="Texture2D" uid="uid://cws60lkjve5ed" path="res://assets/enemies/Slime pack/Slime blue.png" id="3_tqu3e"]
-[ext_resource type="Texture2D" uid="uid://bbh35a4lg7wke" path="res://assets/UI/32x32 circle bar progress green.png" id="4_h43dm"]
+[ext_resource type="Script" uid="uid://do33kp1vfaerp" path="res://scripts/loading_screen.gd" id="1_ffvt4"]
+[ext_resource type="Shader" uid="uid://m2tpo8qfm0ln" path="res://shaders/adaptive_sliding_gradient_background.gdshader" id="2_djmwj"]
+[ext_resource type="Texture2D" uid="uid://t16bquur5mlf" path="res://assets/enemies/Slime pack/Port slime blue.png" id="3_qygbf"]
 [ext_resource type="Texture2D" uid="uid://ddkdafryprv46" path="res://assets/UI/UI_Flat_IconCross01a.png" id="5_fb1qm"]
 [ext_resource type="Texture2D" uid="uid://craykw7rgfy7n" path="res://assets/UI/UI_Flat_IconCheck01a.png" id="6_07j0d"]
-[ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="7_koc8k"]
-[ext_resource type="Texture2D" uid="uid://172qrj22r216" path="res://assets/items/projectile.png" id="10_igqlr"]
-[ext_resource type="Texture2D" uid="uid://ccbfjmv7tf62k" path="res://assets/items/coins-chests-etc-2-0-noborders.png" id="11_qu5am"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pu4a1"]
+shader = ExtResource("2_djmwj")
+shader_parameter/pattern_sampler = ExtResource("3_qygbf")
+shader_parameter/background_gradient_start_color = Color(0, 0, 1, 1)
+shader_parameter/background_gradient_end_color = Color(0.6745098, 0, 0, 1)
+shader_parameter/gradient_angle = 1.571
+shader_parameter/pattern_alpha = 0.4
+shader_parameter/pattern_brightness_boost = 0.25
+shader_parameter/tint_shift_strength = 0.08
+shader_parameter/pattern_scale = 150.0
+shader_parameter/pattern_direction = Vector2(1, 0.5)
+shader_parameter/pattern_speed = 0.2
+shader_parameter/pattern_rotation = 0.4
 
 [sub_resource type="Image" id="Image_mlxag"]
 data = {
@@ -1650,188 +1658,17 @@ Button/fonts/font = SubResource("FontFile_8kd48")
 Button/styles/disabled = SubResource("StyleBoxFlat_obsdm")
 Button/styles/pressed = SubResource("StyleBoxFlat_0wtmh")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ctkfy"]
-texture = ExtResource("5_fb1qm")
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r004j"]
 texture = ExtResource("6_07j0d")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oh13n"]
-atlas = ExtResource("2_ofoe8")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_txxp7"]
-atlas = ExtResource("2_ofoe8")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p1a37"]
-atlas = ExtResource("2_ofoe8")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_huvuh"]
-atlas = ExtResource("2_ofoe8")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e8q74"]
-atlas = ExtResource("2_ofoe8")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nql0v"]
-atlas = ExtResource("2_ofoe8")
-region = Rect2(640, 0, 128, 128)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_etagk"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_oh13n")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_txxp7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p1a37")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_huvuh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e8q74")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nql0v")
-}],
-"loop": true,
-"name": &"default",
-"speed": 15.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7r1hd"]
-atlas = ExtResource("3_tqu3e")
-region = Rect2(0, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2e2m6"]
-atlas = ExtResource("3_tqu3e")
-region = Rect2(48, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1uqj5"]
-atlas = ExtResource("3_tqu3e")
-region = Rect2(96, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rnc3a"]
-atlas = ExtResource("3_tqu3e")
-region = Rect2(144, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b7qr3"]
-atlas = ExtResource("3_tqu3e")
-region = Rect2(192, 48, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_xyxoe"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7r1hd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2e2m6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1uqj5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rnc3a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b7qr3")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tnvld"]
-atlas = ExtResource("10_igqlr")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2hu5i"]
-atlas = ExtResource("10_igqlr")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5saqa"]
-atlas = ExtResource("10_igqlr")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_d1epm"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tnvld")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2hu5i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5saqa")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8lkln"]
-atlas = ExtResource("11_qu5am")
-region = Rect2(80, 448, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_umxq7"]
-atlas = ExtResource("11_qu5am")
-region = Rect2(96, 448, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ydcxi"]
-atlas = ExtResource("11_qu5am")
-region = Rect2(112, 448, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pt0hl"]
-atlas = ExtResource("11_qu5am")
-region = Rect2(128, 448, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_keuac"]
-atlas = ExtResource("11_qu5am")
-region = Rect2(144, 448, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x3dn0"]
-atlas = ExtResource("11_qu5am")
-region = Rect2(160, 448, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ai4go"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8lkln")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_umxq7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ydcxi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pt0hl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_keuac")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_x3dn0")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ctkfy"]
+texture = ExtResource("5_fb1qm")
 
 [node name="LoadingScreen" type="CanvasLayer"]
 script = ExtResource("1_ffvt4")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_pu4a1")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1839,91 +1676,31 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="ColorRect"]
-layout_mode = 0
-offset_left = 441.0
-offset_top = 243.0
-offset_right = 473.0
-offset_bottom = 275.0
-scale = Vector2(10, 10)
-rounded = true
-fill_mode = 1
-texture_under = ExtResource("2_cepkg")
-texture_over = ExtResource("3_hw3s0")
-texture_progress = ExtResource("4_h43dm")
+[node name="ProgressBar" type="ProgressBar" parent="ColorRect"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -13.5
+offset_right = 2.0
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
 
 [node name="Button" type="Button" parent="ColorRect"]
-layout_mode = 0
+layout_mode = 1
 offset_left = 560.0
 offset_top = 600.0
 offset_right = 568.0
 offset_bottom = 608.0
 scale = Vector2(10, 10)
 theme = SubResource("Theme_6ysrr")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_ctkfy")
 theme_override_styles/normal = SubResource("StyleBoxTexture_r004j")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect"]
-layout_mode = 0
-offset_right = 1200.0
-offset_bottom = 350.0
-alignment = 1
-
-[node name="Label" type="Label" parent="ColorRect/HBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("7_koc8k")
-theme_override_font_sizes/font_size = 64
-text = "Loading"
-
-[node name="Ellipsis Container" type="HBoxContainer" parent="ColorRect/HBoxContainer"]
-layout_mode = 2
-
-[node name="Dot1" type="Label" parent="ColorRect/HBoxContainer/Ellipsis Container"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("7_koc8k")
-theme_override_font_sizes/font_size = 64
-text = "."
-
-[node name="Dot2" type="Label" parent="ColorRect/HBoxContainer/Ellipsis Container"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("7_koc8k")
-theme_override_font_sizes/font_size = 64
-text = "."
-
-[node name="Dot3" type="Label" parent="ColorRect/HBoxContainer/Ellipsis Container"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("7_koc8k")
-theme_override_font_sizes/font_size = 64
-text = "."
-
-[node name="Sprites" type="Node" parent="."]
-
-[node name="PlayerSprite" type="AnimatedSprite2D" parent="Sprites"]
-position = Vector2(590, 400)
-scale = Vector2(5, 5)
-sprite_frames = SubResource("SpriteFrames_etagk")
-autoplay = "default"
-frame_progress = 0.359456
-
-[node name="SlimeSprite" type="AnimatedSprite2D" parent="Sprites"]
-position = Vector2(605, 400)
-scale = Vector2(5, 5)
-sprite_frames = SubResource("SpriteFrames_xyxoe")
-autoplay = "default"
-frame_progress = 0.383161
-
-[node name="ProjectileSprite" type="AnimatedSprite2D" parent="Sprites"]
-position = Vector2(570, 400)
-scale = Vector2(6, 6)
-sprite_frames = SubResource("SpriteFrames_d1epm")
-autoplay = "default"
-frame_progress = 0.823938
-
-[node name="GemSprite" type="AnimatedSprite2D" parent="Sprites"]
-position = Vector2(600, 400)
-scale = Vector2(12, 12)
-sprite_frames = SubResource("SpriteFrames_ai4go")
-autoplay = "default"
-frame_progress = 0.370903
+theme_override_styles/disabled = SubResource("StyleBoxTexture_ctkfy")
 
 [connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]
