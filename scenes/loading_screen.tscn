@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=4 uid="uid://do1tt8u0tbmu5"]
+[gd_scene load_steps=22 format=4 uid="uid://do1tt8u0tbmu5"]
 
 [ext_resource type="Script" uid="uid://do33kp1vfaerp" path="res://scripts/loading_screen.gd" id="1_ffvt4"]
 [ext_resource type="Shader" uid="uid://m2tpo8qfm0ln" path="res://shaders/adaptive_sliding_gradient_background.gdshader" id="2_djmwj"]
 [ext_resource type="Texture2D" uid="uid://t16bquur5mlf" path="res://assets/enemies/Slime pack/Port slime blue.png" id="3_qygbf"]
+[ext_resource type="Shader" uid="uid://pa4s3ahwe562" path="res://shaders/dynamic_progress.gdshader" id="4_qygbf"]
 [ext_resource type="Texture2D" uid="uid://ddkdafryprv46" path="res://assets/UI/UI_Flat_IconCross01a.png" id="5_fb1qm"]
 [ext_resource type="Texture2D" uid="uid://craykw7rgfy7n" path="res://assets/UI/UI_Flat_IconCheck01a.png" id="6_07j0d"]
 
@@ -19,6 +20,38 @@ shader_parameter/pattern_scale = 150.0
 shader_parameter/pattern_direction = Vector2(1, 0.5)
 shader_parameter/pattern_speed = 0.2
 shader_parameter/pattern_rotation = 0.4
+
+[sub_resource type="Gradient" id="Gradient_pu4a1"]
+colors = PackedColorArray(1.2032688e-06, 0.7457401, 0.36353326, 1, 0.6666667, 0, 0.14509805, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_if62a"]
+gradient = SubResource("Gradient_pu4a1")
+use_hdr = true
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f7y4a"]
+shader = ExtResource("4_qygbf")
+shader_parameter/progress = 0.74400003534
+shader_parameter/background_color = Color(0, 0.5646824, 0.6461129, 1)
+shader_parameter/color_gradient = SubResource("GradientTexture2D_if62a")
+shader_parameter/wave_amplitude = 0.074000003515
+shader_parameter/wave_frequency = 1.2270000582825
+shader_parameter/wave_speed = 1.6190000769025001
+shader_parameter/particle_speed = 0.12700000533397998
+shader_parameter/particle_lifetime = 1.606000028785
+shader_parameter/particle_softness = 0.866000041135
+shader_parameter/particle_spacing = 0.87500004086398
+shader_parameter/particle_offset = Vector2(0, 0)
+shader_parameter/particle_start_scale = Vector2(0.03, 0.1)
+shader_parameter/particle_end_scale = Vector2(0.001, 0.001)
+shader_parameter/particle_scale_randomness = 0.458000021755
+shader_parameter/particle_amount = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qygbf"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pu4a1"]
 
 [sub_resource type="Image" id="Image_mlxag"]
 data = {
@@ -1677,7 +1710,8 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="ProgressBar" type="ProgressBar" parent="ColorRect"]
-custom_minimum_size = Vector2(200, 20)
+material = SubResource("ShaderMaterial_f7y4a")
+custom_minimum_size = Vector2(400, 50)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1690,6 +1724,8 @@ offset_right = 2.0
 offset_bottom = 13.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qygbf")
+theme_override_styles/fill = SubResource("StyleBoxEmpty_pu4a1")
 max_value = 1.0
 
 [node name="Button" type="Button" parent="ColorRect"]
