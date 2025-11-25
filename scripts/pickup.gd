@@ -3,7 +3,7 @@ class_name Pickup
 
 @export var icon: Texture
 
-enum PickupType {Stomp, Magnet, Ricochet, Pierce}
+enum PickupType {Stomp, Magnet, Ricochet, Pierce, Poison, AutoAim, Health, Cyclone, Flames, FreeAmmo, Ice}
 
 var type: PickupType
 

@@ -5,6 +5,12 @@ class_name PowerupManager
 @onready var magnet_timer: Timer = $MagnetTimer
 @onready var pierce_timer: Timer = $PierceTimer
 @onready var ricochet_timer: Timer = $RicochetTimer
+@onready var poison_timer: Timer = $PoisonTimer
+@onready var auto_aim_timer: Timer = $AutoAimTimer
+@onready var cyclone_timer: Timer = $CycloneTimer
+@onready var flames_timer: Timer = $FlamesTimer
+@onready var free_ammo_timer: Timer = $FreeAmmoTimer
+@onready var ice_timer: Timer = $IceTimer
 @onready var player: CharacterBody2D = %Player
 @onready var game_manager: Node2D = %GameManager
 
@@ -12,6 +18,12 @@ var stomp_active: bool = false
 var piercing_active: bool = false
 var magnet_active: bool = false
 var ricochet_active: bool = false
+var poison_active: bool = false
+var auto_aim_active: bool = false
+var cyclone_active: bool = false
+var flames_active: bool = false
+var free_ammo_active: bool = false
+var ice_active: bool = false
 var timers_map: Dictionary = {}
 
 signal powerup_activated(type: String)
@@ -21,13 +33,25 @@ func _ready() -> void:
 		"Ricochet": ricochet_timer,
 		"Magnet": magnet_timer,
 		"Pierce": pierce_timer,
-		"Stomp": stomp_timer
+		"Stomp": stomp_timer,
+		"Poison": poison_timer,
+		"AutoAim": auto_aim_timer,
+		"Cyclone": cyclone_timer,
+		"Flames": flames_timer,
+		"FreeAmmo": free_ammo_timer,
+		"Ice": ice_timer
 	}
 	
 	ricochet_timer.timeout.connect(func(): ricochet_active = false)
 	magnet_timer.timeout.connect(func(): magnet_active = false)
 	pierce_timer.timeout.connect(func(): piercing_active = false)
 	stomp_timer.timeout.connect(func(): stomp_active = false)
+	poison_timer.timeout.connect(func(): poison_active = false)
+	auto_aim_timer.timeout.connect(func(): auto_aim_active = false)
+	cyclone_timer.timeout.connect(func(): cyclone_active = false)
+	flames_timer.timeout.connect(func(): flames_active = false)
+	free_ammo_timer.timeout.connect(func(): free_ammo_active = false)
+	ice_timer.timeout.connect(func(): ice_active = false)
 
 func _process(delta: float) -> void:
 	if not magnet_timer.is_stopped():

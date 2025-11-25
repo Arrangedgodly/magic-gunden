@@ -20,3 +20,27 @@ one_shot = true
 [node name="RicochetTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
+
+[node name="PoisonTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="AutoAimTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="CycloneTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="FlamesTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="FreeAmmoTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="IceTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
