@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://do33kp1vfaerp" path="res://scripts/loading_screen.gd" id="1_ffvt4"]
 [ext_resource type="Shader" uid="uid://m2tpo8qfm0ln" path="res://shaders/adaptive_sliding_gradient_background.gdshader" id="2_djmwj"]
-[ext_resource type="Texture2D" uid="uid://t16bquur5mlf" path="res://assets/enemies/Slime pack/Port slime blue.png" id="3_qygbf"]
+[ext_resource type="Texture2D" uid="uid://bsidjl7lsq8xu" path="res://assets/loading_background_white.png" id="3_qygbf"]
 [ext_resource type="Shader" uid="uid://pa4s3ahwe562" path="res://shaders/dynamic_progress.gdshader" id="4_qygbf"]
 [ext_resource type="Texture2D" uid="uid://ddkdafryprv46" path="res://assets/UI/UI_Flat_IconCross01a.png" id="5_fb1qm"]
 [ext_resource type="Texture2D" uid="uid://craykw7rgfy7n" path="res://assets/UI/UI_Flat_IconCheck01a.png" id="6_07j0d"]
@@ -12,11 +12,11 @@ shader = ExtResource("2_djmwj")
 shader_parameter/pattern_sampler = ExtResource("3_qygbf")
 shader_parameter/background_gradient_start_color = Color(0, 0, 1, 1)
 shader_parameter/background_gradient_end_color = Color(0.6745098, 0, 0, 1)
-shader_parameter/gradient_angle = 1.571
-shader_parameter/pattern_alpha = 0.4
-shader_parameter/pattern_brightness_boost = 0.25
-shader_parameter/tint_shift_strength = 0.08
-shader_parameter/pattern_scale = 150.0
+shader_parameter/gradient_angle = -0.019
+shader_parameter/pattern_alpha = 0.05
+shader_parameter/pattern_brightness_boost = 4.015
+shader_parameter/tint_shift_strength = 0.775
+shader_parameter/pattern_scale = 405.595
 shader_parameter/pattern_direction = Vector2(1, 0.5)
 shader_parameter/pattern_speed = 0.2
 shader_parameter/pattern_rotation = 0.4
@@ -37,7 +37,7 @@ shader_parameter/background_color = Color(0, 0.5646824, 0.6461129, 1)
 shader_parameter/color_gradient = SubResource("GradientTexture2D_if62a")
 shader_parameter/wave_amplitude = 0.074000003515
 shader_parameter/wave_frequency = 1.2270000582825
-shader_parameter/wave_speed = 1.6190000769025001
+shader_parameter/wave_speed = 1.6190000769025
 shader_parameter/particle_speed = 0.12700000533397998
 shader_parameter/particle_lifetime = 1.606000028785
 shader_parameter/particle_softness = 0.866000041135
