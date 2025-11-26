@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://5jfivnerd7rx"]
 
-[ext_resource type="Script" path="res://scripts/ammo_bar.gd" id="1_4geb2"]
+[ext_resource type="Script" uid="uid://d3bw8cucmdw5k" path="res://scripts/ammo_bar.gd" id="1_4geb2"]
 [ext_resource type="Texture2D" uid="uid://c76ijbb3i1d52" path="res://assets/UI/ammoemptyleft.png" id="2_d51x0"]
 [ext_resource type="Texture2D" uid="uid://4x8d6iyy874q" path="res://assets/UI/ammofullleft.png" id="3_e11eo"]
 [ext_resource type="PackedScene" uid="uid://cky5n3rvt2mlw" path="res://scenes/ammo_center.tscn" id="4_1fewl"]
@@ -11,18 +11,23 @@
 [ext_resource type="Texture2D" uid="uid://b1yo0jxq1y2ph" path="res://assets/UI/ammodepletedright.png" id="9_f5dgm"]
 
 [node name="AmmoBar" type="Control"]
+custom_minimum_size = Vector2(32, 8)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1200.0
+offset_bottom = -800.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_4geb2")
 
 [node name="Depleted" type="HBoxContainer" parent="."]
 z_index = 5
 layout_mode = 0
-offset_right = 12.0
+offset_right = 32.0
 offset_bottom = 8.0
 theme_override_constants/separation = 0
 
@@ -62,7 +67,7 @@ texture_progress = ExtResource("9_f5dgm")
 
 [node name="Full" type="HBoxContainer" parent="."]
 z_index = 10
-layout_mode = 2
+layout_mode = 0
 offset_left = 32.0
 offset_right = 64.0
 offset_bottom = 8.0

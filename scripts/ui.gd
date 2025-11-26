@@ -3,13 +3,13 @@ extends Control
 @onready var score_banner: Sprite2D = $ScoreBanner
 @onready var score_label: Label = $Score
 @onready var controls: Control = $Controls
-@onready var ammo_bar: Control = $AmmoBar
-@onready var ammo_label: Label = $AmmoLabel
-@onready var clip_count_label: Label = $"Clip Count"
-@onready var current_killstreak_label: Label = $Current_Killstreak_Label
-@onready var current_killstreak: Label = $Current_Killstreak
+@onready var ammo_bar: Control = $Ammo/AmmoBar
+@onready var ammo_label: Label = $Ammo/AmmoLabel
+@onready var clip_count_label: Label = $"Ammo/Clip Count"
+@onready var current_killstreak_label: Label = $Killstreak/Current_Killstreak_Label
+@onready var current_killstreak: Label = $Killstreak/Current_Killstreak
 @onready var powerup_container: HBoxContainer = $PowerupContainer
-@onready var game_manager: Node2D = $"../../GameManager"
+@onready var game_manager: Node2D = %GameManager
 
 var powerup_widget_scene = preload("res://scenes/powerup_widget.tscn")
 var powerup_icons = {

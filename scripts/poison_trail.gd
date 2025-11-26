@@ -1,7 +1,7 @@
 extends Area2D
 class_name PoisonTrail
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $Sprite
 @onready var lifetime_timer: Timer = $LifetimeTimer
 
 var damage_interval: float = 0.5
@@ -13,15 +13,7 @@ func _ready() -> void:
 	collision_shape.shape.radius = 16
 	add_child(collision_shape)
 	
-	sprite = Sprite2D.new()
-	sprite.modulate = Color(0.5, 1, 0.3, 0.6)
-	add_child(sprite)
-	
-	lifetime_timer = Timer.new()
-	lifetime_timer.wait_time = 3.0
-	lifetime_timer.one_shot = true
 	lifetime_timer.timeout.connect(_on_lifetime_timeout)
-	add_child(lifetime_timer)
 	lifetime_timer.start()
 	
 	modulate.a = 0

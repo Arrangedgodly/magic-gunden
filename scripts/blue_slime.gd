@@ -5,6 +5,9 @@ class_name Slime
 @onready var player: CharacterBody2D = $"../../Player"
 @onready var detection: RayCast2D = $Detection
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var fire_fx: AnimatedSprite2D = $FireFx
+@onready var ice_fx: AnimatedSprite2D = $IceFx
+@onready var poison_fx: AnimatedSprite2D = $PoisonFx
 @onready var powerup_manager: PowerupManager
 
 @export var hurt_sound: AudioStream
@@ -21,6 +24,9 @@ signal was_killed
 
 func _ready():
 	powerup_manager = get_node("/root/MagicGarden/PowerupManager")
+	hide_fire()
+	hide_ice()
+	hide_poison()
 	
 	add_to_group("mobs")
 	detection.collide_with_bodies = true
@@ -113,3 +119,21 @@ func die():
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)
 	queue_free()
+
+func show_fire() -> void:
+	fire_fx.show()
+
+func hide_fire() -> void:
+	fire_fx.hide()
+
+func show_ice() -> void:
+	ice_fx.show()
+
+func hide_ice() -> void:
+	ice_fx.hide()
+
+func show_poison() -> void:
+	poison_fx.show()
+
+func hide_poison() -> void:
+	poison_fx.hide()

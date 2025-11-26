@@ -41,8 +41,8 @@ shader_parameter/pause_duration = 0.5
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_truad"]
 resource_local_to_scene = true
 shader = ExtResource("13_wlnvm")
-shader_parameter/size_effect = 0.3
-shader_parameter/speed = 2.0
+shader_parameter/size_effect = 0.3000000789763604
+shader_parameter/speed = 0.0
 shader_parameter/highlight_strength = 0.75
 shader_parameter/color_mode_toggle = false
 shader_parameter/is_horizontal = true

@@ -1,0 +1,86 @@
+[gd_scene load_steps=13 format=3 uid="uid://dx3nihiph2q5h"]
+
+[ext_resource type="Texture2D" uid="uid://iecpgcc3x2dq" path="res://assets/FX/flame circle exp.png" id="1_yuc24"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijxlo"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ollb3"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ex1t"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbpqm"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwrtn"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlycd"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwxrv"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_or2ug"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_00nx1"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ebto"]
+atlas = ExtResource("1_yuc24")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ku4e5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijxlo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ollb3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ex1t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbpqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwrtn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlycd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwxrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_or2ug")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_00nx1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ebto")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="FireFx" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_ku4e5")
+autoplay = "default"
+frame_progress = 0.7385279

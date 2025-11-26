@@ -13,7 +13,7 @@ extends Control
 @onready var depleted6: TextureProgressBar = $"Depleted/6"
 @onready var full: HBoxContainer = $Full
 @onready var depleted: HBoxContainer = $Depleted
-@onready var game_manager: Node2D = $"../../../GameManager"
+@onready var game_manager: Node2D = %GameManager
 
 var ammunition : int
 var ammo = Ammo.new()

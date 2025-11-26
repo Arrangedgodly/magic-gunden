@@ -70,4 +70,3 @@ func _on_spawn_enemy() -> void:
 
 func _on_spawn_pickup(index: int) -> void:
 	pickup_manager.force_spawn_pickup(index)
-	toggle_console()

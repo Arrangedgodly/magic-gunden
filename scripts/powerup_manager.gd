@@ -221,6 +221,7 @@ func unfreeze_all_enemies() -> void:
 	
 	for enemy in frozen_enemies:
 		if is_instance_valid(enemy) and enemy.has_node("AnimatedSprite2D"):
+			enemy.hide_ice()
 			var sprite = enemy.get_node("AnimatedSprite2D")
 			sprite.modulate = Color(1, 1, 1, 1)
 	
@@ -269,6 +270,7 @@ func activate_flames() -> void:
 	for enemy in enemies:
 		if is_instance_valid(enemy):
 			ignite_enemy(enemy)
+			enemy.show_fire()
 	
 	powerup_activated.emit("Flames")
 
@@ -325,10 +327,12 @@ func clear_flames() -> void:
 				if tween and tween.is_valid():
 					tween.kill()
 				enemy.remove_meta("flame_tween")
+				enemy.hide_fire()
 			
 			if enemy.has_node("AnimatedSprite2D"):
 				var sprite = enemy.get_node("AnimatedSprite2D")
 				sprite.modulate = Color(1, 1, 1, 1)
+				enemy.hide_fire()
 		
 		var timer = flaming_enemies[enemy]
 		if is_instance_valid(timer):
@@ -360,6 +364,7 @@ func freeze_all_enemies() -> void:
 	
 	for enemy in enemies:
 		if is_instance_valid(enemy):
+			enemy.show_ice()
 			frozen_enemies.append(enemy)
 			
 			if enemy.has_node("AnimatedSprite2D"):
