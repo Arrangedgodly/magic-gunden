@@ -16,7 +16,13 @@ var powerup_icons = {
 	"Ricochet" = preload("res://assets/items/ricochet.png"),
 	"Pierce" = preload("res://assets/items/pierce.png"),
 	"Magnet" = preload("res://assets/items/magnet.png"),
-	"Stomp" = preload("res://assets/items/stomp.png")
+	"Stomp" = preload("res://assets/items/stomp.png"),
+	"Poison" = preload("res://assets/items/poison.png"),
+	"AutoAim" = preload("res://assets/items/auto_aim.png"),
+	"Flames" = preload("res://assets/items/flames.png"),
+	"FreeAmmo" = preload("res://assets/items/free_ammo.png"),
+	"Ice" = preload("res://assets/items/ice.png"),
+	"Cyclone" = preload("res://assets/items/cyclone.png")
 }
 var active_widgets: Dictionary = {}
 var current_display_score: int = 0

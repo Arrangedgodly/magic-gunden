@@ -20,6 +20,7 @@ boot_splash/image="res://assets/vertical-dark.png"
 
 AudioManager="*res://autoloads/AudioManager.gd"
 LoadManager="*res://autoloads/LoadManager.gd"
+SettingsManager="*res://autoloads/SettingsManager.gd"
 
 [debug]
 

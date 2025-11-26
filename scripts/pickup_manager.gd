@@ -12,6 +12,12 @@ var stomp_scene = preload("res://scenes/stomp.tscn")
 var magnet_scene = preload("res://scenes/magnet.tscn")
 var pierce_scene = preload("res://scenes/pierce.tscn")
 var ricochet_scene = preload("res://scenes/ricochet.tscn")
+var poison_scene = preload("res://scenes/poison.tscn")
+var auto_aim_scene = preload("res://scenes/auto_aim.tscn")
+var flames_scene = preload("res://scenes/flames.tscn")
+var free_ammo_scene = preload("res://scenes/free_ammo.tscn")
+var ice_scene = preload("res://scenes/ice.tscn")
+var cyclone_scene = preload("res://scenes/cyclone.tscn")
 var regen_yoyo: bool = true
 var yoyo_pos: Vector2i
 var level: int = 1
@@ -24,7 +30,18 @@ func _ready() -> void:
 	if game_manager:
 		game_manager.level_changed.connect(_on_level_changed)
 	
-	available_pickups = [magnet_scene, pierce_scene, ricochet_scene, stomp_scene]
+	available_pickups = [
+	magnet_scene, 
+	pierce_scene, 
+	ricochet_scene, 
+	stomp_scene,
+	poison_scene,
+	auto_aim_scene,
+	flames_scene,
+	free_ammo_scene,
+	ice_scene,
+	cyclone_scene
+]
 
 func _process(_delta: float) -> void:
 	if regen_yoyo:

@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://26sdep47xssj"]
+[gd_scene load_steps=2 format=3 uid="uid://26sdep47xssj"]
+
+[ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="1_c2u1v"]
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -8,7 +10,160 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 0
-offset_right = 1200.0
-offset_bottom = 800.0
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = -189.5
+offset_right = 82.5
+offset_bottom = 189.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 48
+text = "OPTIONS"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AudioSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AudioLabel" type="Label" parent="MarginContainer/VBoxContainer/AudioSection"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 32
+text = "AUDIO"
+horizontal_alignment = 1
+
+[node name="MusicControl" type="HBoxContainer" parent="MarginContainer/VBoxContainer/AudioSection"]
+layout_mode = 2
+alignment = 1
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/VBoxContainer/AudioSection/MusicControl"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 24
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/VBoxContainer/AudioSection/MusicControl"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 24)
+layout_mode = 2
+value = 80.0
+
+[node name="MusicValueLabel" type="Label" parent="MarginContainer/VBoxContainer/AudioSection/MusicControl"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "80%"
+
+[node name="SFXControl" type="HBoxContainer" parent="MarginContainer/VBoxContainer/AudioSection"]
+layout_mode = 2
+alignment = 1
+
+[node name="SFXLabel" type="Label" parent="MarginContainer/VBoxContainer/AudioSection/SFXControl"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 24
+text = "SFX Volume"
+
+[node name="SFXSlider" type="HSlider" parent="MarginContainer/VBoxContainer/AudioSection/SFXControl"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 24)
+layout_mode = 2
+value = 80.0
+
+[node name="SFXValueLabel" type="Label" parent="MarginContainer/VBoxContainer/AudioSection/SFXControl"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "80%"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SaveSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SaveLabel" type="Label" parent="MarginContainer/VBoxContainer/SaveSection"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 32
+text = "SAVE DATA"
+horizontal_alignment = 1
+
+[node name="ResetSaveButton" type="Button" parent="MarginContainer/VBoxContainer/SaveSection"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Resets high scores and progress"
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 24
+text = "Reset Save"
+
+[node name="ResetTutorialButton" type="Button" parent="MarginContainer/VBoxContainer/SaveSection"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Show tutorial again on next play"
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 24
+text = "Reset Tutorial"
+
+[node name="ResetAllButton" type="Button" parent="MarginContainer/VBoxContainer/SaveSection"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Resets everything, including settings"
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 24
+text = "Reset All"
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ControlsSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ControlsLabel" type="Label" parent="MarginContainer/VBoxContainer/ControlsSection"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 32
+text = "CONTROLS"
+horizontal_alignment = 1
+
+[node name="ControlsButton" type="Button" parent="MarginContainer/VBoxContainer/ControlsSection"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 24
+text = "Edit Controls"
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_c2u1v")
+theme_override_font_sizes/font_size = 32
+text = "Go Back"

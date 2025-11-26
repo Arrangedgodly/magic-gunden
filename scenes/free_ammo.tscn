@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwd4gejefcfnk"]
+
+[ext_resource type="Script" uid="uid://itkiogng24gn" path="res://scripts/free_ammo.gd" id="1_638ne"]
+[ext_resource type="Texture2D" uid="uid://dnq5bwe0sr2dp" path="res://assets/items/free_ammo.png" id="2_4fkuf"]
+
+[node name="FreeAmmo" type="Area2D"]
+script = ExtResource("1_638ne")
+icon = ExtResource("2_4fkuf")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

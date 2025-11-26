@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cldt23n4lgnum"]
+
+[ext_resource type="Script" uid="uid://cdptfjhlvr3sl" path="res://scripts/flames.gd" id="1_1uo3d"]
+[ext_resource type="Texture2D" uid="uid://bb8s3roktkx4r" path="res://assets/items/flames.png" id="2_dusva"]
+
+[node name="Flames" type="Area2D"]
+script = ExtResource("1_1uo3d")
+icon = ExtResource("2_dusva")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5ijj8alts60m"]
+
+[ext_resource type="Script" uid="uid://bxmnwjnl3sveg" path="res://scripts/auto_aim.gd" id="1_ayk3f"]
+[ext_resource type="Texture2D" uid="uid://1lnjume8gy8n" path="res://assets/items/auto_aim.png" id="2_bvida"]
+
+[node name="AutoAim" type="Area2D"]
+script = ExtResource("1_ayk3f")
+icon = ExtResource("2_bvida")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

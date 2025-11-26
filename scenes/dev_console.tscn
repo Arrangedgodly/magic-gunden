@@ -23,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.8)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="MainMenu" type="VBoxContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,37 +38,108 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
 
-[node name="Enemy" type="Button" parent="Control/VBoxContainer"]
+[node name="Enemy" type="Button" parent="Control/MainMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Enemy"
 
-[node name="Magnet" type="Button" parent="Control/VBoxContainer"]
+[node name="Powerup" type="Button" parent="Control/MainMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
-text = "Spawn Magnet Powerup"
+text = "Spawn Powerup"
 
-[node name="Pierce" type="Button" parent="Control/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/outline_size = 20
-theme_override_fonts/font = ExtResource("2_qve2q")
-theme_override_font_sizes/font_size = 32
-text = "Spawn Pierce Powerup"
+[node name="PowerupMenu" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -101.5
+offset_top = -85.5
+offset_right = 101.5
+offset_bottom = 85.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
 
-[node name="Ricochet" type="Button" parent="Control/VBoxContainer"]
+[node name="Magnet" type="Button" parent="Control/PowerupMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
-text = "Spawn Ricochet Powerup"
+text = "Spawn Magnet"
 
-[node name="Stomp" type="Button" parent="Control/VBoxContainer"]
+[node name="Pierce" type="Button" parent="Control/PowerupMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
-text = "Spawn Stomp Powerup"
+text = "Spawn Pierce"
+
+[node name="Ricochet" type="Button" parent="Control/PowerupMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Spawn Ricochet"
+
+[node name="Stomp" type="Button" parent="Control/PowerupMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Spawn Stomp"
+
+[node name="Poison" type="Button" parent="Control/PowerupMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Spawn Poison"
+
+[node name="AutoAim" type="Button" parent="Control/PowerupMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Spawn Auto Aim"
+
+[node name="Flames" type="Button" parent="Control/PowerupMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Spawn Flames"
+
+[node name="FreeAmmo" type="Button" parent="Control/PowerupMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Spawn Free Ammo"
+
+[node name="Ice" type="Button" parent="Control/PowerupMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Spawn Ice"
+
+[node name="Cyclone" type="Button" parent="Control/PowerupMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Spawn Cyclone"
+
+[node name="Back" type="Button" parent="Control/PowerupMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Go Back"

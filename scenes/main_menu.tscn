@@ -220,7 +220,6 @@ size_flags_horizontal = 4
 text = "PLAY"
 
 [node name="Options" type="Button" parent="VBoxContainer"]
-visible = false
 material = SubResource("ShaderMaterial_truad")
 layout_mode = 2
 size_flags_horizontal = 4
@@ -254,5 +253,3 @@ offset_top = -100.0
 offset_right = 1050.0
 offset_bottom = 700.0
 scale = Vector2(1.25, 1.25)
-
-[connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
