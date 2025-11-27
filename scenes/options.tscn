@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="5_1sggn"]
 
 [node name="Options" type="Control"]
-z_index = 20
+z_index = 100
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

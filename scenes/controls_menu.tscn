@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d18aq1dt35mtn" path="res://scenes/controls_background.tscn" id="2_n0kuk"]
 
 [node name="ControlsMenu" type="Control"]
-z_index = 40
+z_index = 100
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

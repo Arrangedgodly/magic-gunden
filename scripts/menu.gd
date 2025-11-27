@@ -4,22 +4,27 @@ extends Control
 @onready var options: Button = $VBoxContainer/Options
 @onready var credits_button: Button = $VBoxContainer/Credits
 @onready var quit: Button = $VBoxContainer/Quit
-
+@onready var v_box: VBoxContainer = $VBoxContainer
+@onready var background: ParallaxBackground = $MainMenuBackground
 @export var menu_music: AudioStream
 
 func _ready() -> void:
 	start.pressed.connect(_on_start_pressed)
 	start.focus_entered.connect(_on_start_focus_entered)
 	start.focus_exited.connect(_on_start_focus_exited)
+	
 	high_score.pressed.connect(_on_high_score_pressed)
 	high_score.focus_entered.connect(_on_high_score_focus_entered)
 	high_score.focus_exited.connect(_on_high_score_focus_exited)
+	
 	options.pressed.connect(_on_options_pressed)
 	options.focus_entered.connect(_on_options_focus_entered)
 	options.focus_exited.connect(_on_options_focus_exited)
+	
 	credits_button.pressed.connect(_on_credits_pressed)
 	credits_button.focus_entered.connect(_on_credits_focus_entered)
 	credits_button.focus_exited.connect(_on_credits_focus_exited)
+	
 	quit.pressed.connect(_on_quit_pressed)
 	quit.focus_entered.connect(_on_quit_focus_entered)
 	quit.focus_exited.connect(_on_quit_focus_exited)
@@ -33,7 +38,12 @@ func _on_start_pressed() -> void:
 
 func _on_options_pressed() -> void:
 	AudioManager.stop(menu_music)
-	get_tree().change_scene_to_file("res://scenes/options.tscn")
+	var options_scene = load("res://scenes/options.tscn")
+	var options_instance = options_scene.instantiate()
+	add_child(options_instance)
+	options_instance.options_closed.connect(_on_options_closed.bind(options_instance))
+	background.hide()
+	v_box.hide()
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
@@ -75,3 +85,10 @@ func _on_quit_focus_entered() -> void:
 
 func _on_quit_focus_exited() -> void:
 	quit.get_material().set_shader_parameter("speed", 0)
+
+func _on_options_closed(options_instance: Control) -> void:
+	options_instance.queue_free()
+	background.show()
+	v_box.show()
+	start.grab_focus()
+	AudioManager.play_music(menu_music)

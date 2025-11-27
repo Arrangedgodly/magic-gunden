@@ -128,8 +128,8 @@ func handle_poison_trail() -> void:
 	if trail_manager.move_history.is_empty():
 		return
 	
-	for position in trail_manager.move_history:
-		var local_pos = game_manager.to_local(position)
+	for trail_position in trail_manager.move_history:
+		var local_pos = game_manager.to_local(trail_position)
 		
 		var already_spawned = false
 		for spawned_pos in poison_positions_spawned:
