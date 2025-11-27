@@ -5,33 +5,33 @@ extends AnimatedSprite2D
 @onready var pickup_manager: PickupManager
 
 var can_pickup: bool
-var is_fresh_trail: bool = false
+var collision_active: bool = false
 
 func _ready() -> void:
 	pickup_manager = get_node("/root/MagicGarden/PickupManager")
 	yoyo_area.body_entered.connect(_on_area_2d_body_entered)
-	yoyo_area.body_exited.connect(_on_area_2d_body_exited)
 
-func _on_area_2d_body_entered(_body: Node2D) -> void:
+func _on_area_2d_body_entered(body: Node2D) -> void:
 	if can_pickup:
-		pickup_manager.reset_regen_yoyo()
-		queue_free()
-	else:
-		if is_fresh_trail:
-			return
-			
-		game_manager.kill_player()
-
-func _on_area_2d_body_exited(_body: Node2D) -> void:
-	if is_fresh_trail and not can_pickup:
-		is_fresh_trail = false
+		if body is Player:
+			pickup_manager.reset_regen_yoyo()
+			queue_free()
+		return
+	
+	if body is Player:
+		if collision_active:
+			game_manager.kill_player()
 	
 func negate_pickup():
 	can_pickup = false
-	is_fresh_trail = true
+	collision_active = false
 	
 func enable_pickup():
 	can_pickup = true
+	collision_active = false
+
+func activate_collision():
+	collision_active = true
 
 func flash(flash_color: Color):
 	var shader_material = self.get_material()

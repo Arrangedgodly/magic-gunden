@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://sqy3ak3goim2"]
+[gd_scene load_steps=4 format=3 uid="uid://sqy3ak3goim2"]
 
 [ext_resource type="Script" uid="uid://14hnvr8qqkfs" path="res://scripts/controls_menu.gd" id="1_5qlyv"]
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="2_d0u3u"]
+[ext_resource type="PackedScene" uid="uid://d18aq1dt35mtn" path="res://scenes/controls_background.tscn" id="2_n0kuk"]
 
 [node name="ControlsMenu" type="Control"]
+z_index = 30
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +14,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5qlyv")
 
+[node name="ControlsBackground" parent="." instance=ExtResource("2_n0kuk")]
+offset = Vector2(0, 400)
+scale = Vector2(2.5, 2.5)
+transform = Transform2D(2.5, 0, 0, 2.5, 0, 400)
+
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -19,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0.43137255)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

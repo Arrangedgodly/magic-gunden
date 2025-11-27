@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var main_menu: VBoxContainer = $Control/MainMenu
 @onready var powerup_menu: VBoxContainer = $Control/PowerupMenu
 @onready var enemy_button: Button = $Control/MainMenu/Enemy
+@onready var gem_button: Button = $Control/MainMenu/Gem
 @onready var powerup_button: Button = $Control/MainMenu/Powerup
 @onready var back_button: Button = $Control/PowerupMenu/Back
 @onready var enemy_manager: EnemyManager = %EnemyManager
@@ -26,6 +27,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	enemy_button.pressed.connect(_on_spawn_enemy)
+	gem_button.pressed.connect(_on_spawn_yoyo)
 	powerup_button.pressed.connect(_on_powerup_menu_open)
 	
 	back_button.pressed.connect(_on_back_to_main)
@@ -70,3 +72,6 @@ func _on_spawn_enemy() -> void:
 
 func _on_spawn_pickup(index: int) -> void:
 	pickup_manager.force_spawn_pickup(index)
+
+func _on_spawn_yoyo() -> void:
+	pickup_manager.force_spawn_yoyo()

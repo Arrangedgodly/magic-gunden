@@ -124,7 +124,6 @@ func reset_game_save() -> void:
 	var save_path = "user://save.tres"
 	if FileAccess.file_exists(save_path):
 		DirAccess.remove_absolute(save_path)
-	print("Game save data reset successfully")
 
 func reset_tutorial_save() -> void:
 	var tutorial_path = "user://tutorial.tres"
@@ -132,43 +131,27 @@ func reset_tutorial_save() -> void:
 	tutorial_save.show_tutorial = true
 	tutorial_save.has_played = false
 	ResourceSaver.save(tutorial_save, tutorial_path)
-	print("Tutorial reset successfully")
 
 func reset_all_data() -> void:
 	reset_game_save()
-	
 	reset_tutorial_save()
 	
 	settings_save = SettingsSave.new()
 	save_settings()
 	
 	setup_volume_controls()
-	
-	print("All data reset successfully")
 
 func _on_controls_pressed() -> void:
-	print("Opening controls menu...")
-	
 	var controls_scene = load("res://scenes/controls_menu.tscn")
-	if controls_scene:
-		print("Controls scene loaded successfully")
-		var controls_instance = controls_scene.instantiate()
-		add_child(controls_instance)
+	var controls_instance = controls_scene.instantiate()
+	add_child(controls_instance)
 		
-		if controls_instance.has_signal("controls_closed"):
-			controls_instance.controls_closed.connect(_on_controls_closed)
-			print("Controls closed signal connected")
-		else:
-			print("Warning: controls_closed signal not found")
-	else:
-		print("ERROR: Could not load res://scenes/controls_menu.tscn")
-		print("Make sure the controls menu scene exists!")
+	controls_instance.controls_closed.connect(_on_controls_closed)
 
 func _on_controls_closed() -> void:
 	back_button.grab_focus()
 
 func _on_back_pressed() -> void:
-	print("Back button pressed - closing options menu")
 	options_closed.emit()
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 

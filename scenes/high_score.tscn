@@ -1,11 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bpkrbv3i3it8v"]
+[gd_scene load_steps=6 format=3 uid="uid://bpkrbv3i3it8v"]
 
 [ext_resource type="Script" uid="uid://b7u3xdp1xtifx" path="res://scripts/high_score.gd" id="1_cjn1f"]
-[ext_resource type="Texture2D" uid="uid://cxjdlerjk72a5" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/1.png" id="2_06oxq"]
 [ext_resource type="AudioStream" uid="uid://bhaysq1l6mj7n" path="res://assets/sounds/music/Peu Importe - One Month to Move - 09 70s Jam.wav" id="2_p2yeh"]
-[ext_resource type="Texture2D" uid="uid://d1nx4qtsflotx" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/2.png" id="3_cscdd"]
-[ext_resource type="Texture2D" uid="uid://cygord16esmnn" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/3.png" id="4_84is4"]
-[ext_resource type="Texture2D" uid="uid://btw05s05dd24i" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/4.png" id="5_rjd7s"]
+[ext_resource type="PackedScene" uid="uid://bn53kfg46urrt" path="res://scenes/high_score_background.tscn" id="3_vbgfm"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="6_g6rs3"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="7_y3ity"]
 
@@ -19,37 +16,7 @@ grow_vertical = 2
 script = ExtResource("1_cjn1f")
 high_score_music = ExtResource("2_p2yeh")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-offset = Vector2(600, 400)
-scale = Vector2(2.5, 2.5)
-transform = Transform2D(2.5, 0, 0, 2.5, 600, 400)
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.25, 0.25)
-motion_mirroring = Vector2(575, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-texture = ExtResource("2_06oxq")
-
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.5, 0.5)
-motion_mirroring = Vector2(575, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
-texture = ExtResource("3_cscdd")
-
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.75, 0.75)
-motion_mirroring = Vector2(575, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
-texture = ExtResource("4_84is4")
-
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(575, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
-texture = ExtResource("5_rjd7s")
+[node name="HighScoreBackground" parent="." instance=ExtResource("3_vbgfm")]
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0

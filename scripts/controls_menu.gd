@@ -107,7 +107,6 @@ func _input(event: InputEvent) -> void:
 		
 		var conflict = check_key_conflict(event.physical_keycode, currently_remapping)
 		if conflict != "":
-			print("Key already bound to: " + conflict)
 			cancel_remapping()
 			return
 		
@@ -146,8 +145,6 @@ func remap_action(action: String, new_keycode: int) -> void:
 	
 	settings_save.set_control_key(action, new_keycode)
 	save_settings()
-	
-	print("Remapped " + action + " to " + OS.get_keycode_string(new_keycode))
 
 func cancel_remapping() -> void:
 	is_listening = false
@@ -173,8 +170,6 @@ func _on_reset_controls_pressed() -> void:
 	
 	save_settings()
 	populate_controls()
-	
-	print("Controls reset to defaults")
 
 func _on_back_pressed() -> void:
 	controls_closed.emit()

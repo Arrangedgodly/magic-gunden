@@ -14,6 +14,7 @@ class_name PowerupManager
 @onready var player: CharacterBody2D = %Player
 @onready var game_manager: Node2D = %GameManager
 @onready var enemy_manager: EnemyManager = %EnemyManager
+@onready var trail_manager: TrailManager = %TrailManager
 
 var stomp_active: bool = false
 var piercing_active: bool = false
@@ -28,8 +29,7 @@ var ice_active: bool = false
 var timers_map: Dictionary = {}
 
 var poison_trail_scene = preload("res://scenes/poison_trail.tscn")
-var last_player_position: Vector2 = Vector2.ZERO
-var poison_spawn_distance: float = 32.0
+var poison_positions_spawned: Array = []
 
 var current_target: Node2D = null
 
@@ -67,7 +67,7 @@ func _ready() -> void:
 	stomp_timer.timeout.connect(func(): stomp_active = false)
 	poison_timer.timeout.connect(func(): 
 		poison_active = false
-		last_player_position = Vector2.ZERO
+		poison_positions_spawned.clear()
 	)
 	auto_aim_timer.timeout.connect(func(): 
 		auto_aim_active = false
@@ -125,18 +125,24 @@ func handle_magnet_effect(delta):
 				pickup.global_position = pickup.global_position.move_toward(player.global_position, pull_speed * delta)
 
 func handle_poison_trail() -> void:
-	if last_player_position == Vector2.ZERO:
-		last_player_position = player.global_position
+	if trail_manager.move_history.is_empty():
 		return
 	
-	var distance = player.global_position.distance_to(last_player_position)
-	
-	if distance >= poison_spawn_distance:
-		var poison_instance = poison_trail_scene.instantiate()
-		poison_instance.global_position = last_player_position
-		game_manager.add_child(poison_instance)
+	for position in trail_manager.move_history:
+		var local_pos = game_manager.to_local(position)
 		
-		last_player_position = player.global_position
+		var already_spawned = false
+		for spawned_pos in poison_positions_spawned:
+			if local_pos.distance_to(spawned_pos) < 16:
+				already_spawned = true
+				break
+		
+		if not already_spawned:
+			var poison_instance = poison_trail_scene.instantiate()
+			poison_instance.position = local_pos
+			game_manager.add_child(poison_instance)
+			
+			poison_positions_spawned.append(local_pos)
 
 func handle_auto_aim() -> void:
 	var nearest_enemy = find_nearest_enemy()
@@ -252,7 +258,7 @@ func activate_stomp() -> void:
 
 func activate_poison() -> void:
 	poison_active = true
-	last_player_position = player.global_position
+	poison_positions_spawned.clear()
 	poison_timer.start()
 	powerup_activated.emit("Poison")
 

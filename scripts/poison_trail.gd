@@ -8,11 +8,6 @@ var damage_interval: float = 0.5
 var damage_timers: Dictionary = {}
 
 func _ready() -> void:
-	var collision_shape = CollisionShape2D.new()
-	collision_shape.shape = CircleShape2D.new()
-	collision_shape.shape.radius = 16
-	add_child(collision_shape)
-	
 	lifetime_timer.timeout.connect(_on_lifetime_timeout)
 	lifetime_timer.start()
 	
@@ -41,12 +36,14 @@ func start_damaging_enemy(enemy: Node2D) -> void:
 	add_child(timer)
 	timer.start()
 	damage_timers[enemy] = timer
+	enemy.show_poison()
 
 func stop_damaging_enemy(enemy: Node2D) -> void:
 	if damage_timers.has(enemy):
 		var timer = damage_timers[enemy]
 		timer.queue_free()
 		damage_timers.erase(enemy)
+		enemy.hide_poison()
 
 func damage_enemy(enemy: Node2D) -> void:
 	if is_instance_valid(enemy) and enemy.has_method("kill"):

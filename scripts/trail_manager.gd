@@ -27,6 +27,15 @@ func update_move_history(current_position: Vector2) -> void:
 	if len(move_history) > pickup_count:
 		move_history.pop_front()
 	move_history.append(current_position)
+	
+	activate_trail_collisions()
+
+func activate_trail_collisions() -> void:
+	for i in range(trail.size()):
+		if i < trail.size() - 1:
+			var piece = trail[i]
+			if is_instance_valid(piece) and piece.has_method("activate_collision"):
+				piece.activate_collision()
 
 func create_trail_segment() -> void:
 	if move_history.is_empty():

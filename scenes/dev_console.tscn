@@ -45,6 +45,13 @@ theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Enemy"
 
+[node name="Gem" type="Button" parent="Control/MainMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Spawn Gem"
+
 [node name="Powerup" type="Button" parent="Control/MainMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 20

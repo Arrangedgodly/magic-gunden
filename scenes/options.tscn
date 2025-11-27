@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://26sdep47xssj"]
+[gd_scene load_steps=6 format=3 uid="uid://26sdep47xssj"]
 
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="1_c2u1v"]
 [ext_resource type="Script" uid="uid://1lw7cq5qvwch" path="res://scripts/options.gd" id="1_yjkok"]
+[ext_resource type="PackedScene" uid="uid://cqa6wvdx22niq" path="res://scenes/options_background.tscn" id="2_kv8mn"]
 [ext_resource type="PackedScene" uid="uid://ci3e8foshsdo7" path="res://scenes/confirmation_popup.tscn" id="3_2iy26"]
+[ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="5_1sggn"]
 
 [node name="Options" type="Control"]
+z_index = 20
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,14 +16,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yjkok")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
+[node name="OptionsBackground" parent="." instance=ExtResource("2_kv8mn")]
+offset = Vector2(0, 400)
+scale = Vector2(2.5, 2.5)
+transform = Transform2D(2.5, 0, 0, 2.5, 0, 400)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -39,6 +38,10 @@ theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.43137255)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -171,6 +174,17 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_c2u1v")
 theme_override_font_sizes/font_size = 32
 text = "Go Back"
+
+[node name="Camera2D" type="Camera2D" parent="MarginContainer"]
+position = Vector2(-310, -144)
+anchor_mode = 0
+
+[node name="CRT" parent="MarginContainer/Camera2D" instance=ExtResource("5_1sggn")]
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 1050.0
+offset_bottom = 700.0
+scale = Vector2(1.25, 1.25)
 
 [node name="Confirmation Popup" parent="." instance=ExtResource("3_2iy26")]
 unique_name_in_owner = true

@@ -41,4 +41,4 @@ frame_progress = 0.74779576
 [node name="PoisonFx" parent="." instance=ExtResource("5_7qf5q")]
 modulate = Color(1, 1, 1, 0.43137255)
 scale = Vector2(0.3, 0.3)
-frame_progress = 0.2767876
+frame_progress = 0.5293466

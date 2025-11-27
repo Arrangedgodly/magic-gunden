@@ -16,9 +16,11 @@ const up = Vector2(0, -1)
 const down = Vector2(0, 1)
 const left = Vector2(-1, 0)
 const right = Vector2(1, 0)
+
 var directions = [down, left, up, right]
 var angles = [0, 90, 180, 270]
 var can_animation_change : bool
+var current_move_direction: Vector2 = Vector2.ZERO
 
 signal was_killed
 
@@ -48,30 +50,83 @@ func _physics_process(delta: float) -> void:
 		elif collider is Projectile:
 			kill()
 
-func move():
+func calculate_move(intended_positions: Dictionary) -> Dictionary:
 	randomize()
-	var can_move = false
 	var attempts = 0
+	var max_attempts = 5
 	
-	while not can_move and attempts < 5:
+	var shuffled_directions = directions.duplicate()
+	shuffled_directions.shuffle()
+	
+	while attempts < max_attempts:
 		attempts += 1
 		
-		var random_num = randi_range(0, 3)
-		var random_direction = directions[random_num]
-		var random_angle = angles[random_num]
-	
+		var random_index = attempts - 1
+		if random_index >= shuffled_directions.size():
+			break
+			
+		var random_direction = shuffled_directions[random_index]
+		var direction_index = directions.find(random_direction)
+		var random_angle = angles[direction_index]
+		
+		var target_position = position + (random_direction * 32)
+		
 		detection.rotation_degrees = random_angle
 		detection.force_raycast_update()
+		
+		if detection.is_colliding():
+			continue
+		
+		if is_trail_at_position(target_position):
+			continue
+		
+		if intended_positions.has(target_position):
+			continue
+		
+		if is_enemy_at_position(target_position):
+			continue
+		
+		return {
+			"can_move": true,
+			"direction": random_direction,
+			"target_position": target_position
+		}
 	
-		if not detection.is_colliding():
-			can_move = true
-			idle_direction(random_direction)
-			await sprite.animation_looped
-			position += random_direction * 32
-			move_direction(random_direction)
-			
-	if not can_move:
-		sprite.play("idle_down")
+	return {
+		"can_move": false,
+		"direction": Vector2.ZERO,
+		"target_position": position
+	}
+
+func start_idle_animation(direction: Vector2) -> void:
+	current_move_direction = direction
+	idle_direction(direction)
+
+func execute_movement(target_pos: Vector2) -> void:
+	var tween = create_tween()
+	tween.tween_property(self, "position", target_pos, 0.2).set_trans(Tween.TRANS_SINE)
+	
+	move_direction(current_move_direction)
+
+func is_trail_at_position(target_pos: Vector2) -> bool:
+	var trail_pieces = get_tree().get_nodes_in_group("equipped")
+	for piece in trail_pieces:
+		if is_instance_valid(piece):
+			var distance = target_pos.distance_to(piece.global_position)
+			if distance < 16:
+				return true
+	return false
+
+func is_enemy_at_position(target_pos: Vector2) -> bool:
+	var enemies = get_tree().get_nodes_in_group("mobs")
+	for enemy in enemies:
+		if enemy == self:
+			continue
+		if is_instance_valid(enemy):
+			var distance = target_pos.distance_to(enemy.position)
+			if distance < 16:
+				return true
+	return false
 
 func idle_direction(dir):
 	if dir == right:

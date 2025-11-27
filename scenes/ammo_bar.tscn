@@ -11,13 +11,14 @@
 [ext_resource type="Texture2D" uid="uid://b1yo0jxq1y2ph" path="res://assets/UI/ammodepletedright.png" id="9_f5dgm"]
 
 [node name="AmmoBar" type="Control"]
-custom_minimum_size = Vector2(32, 8)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1200.0
-offset_bottom = -800.0
+offset_left = -16.0
+offset_top = -4.0
+offset_right = -1184.0
+offset_bottom = -796.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3

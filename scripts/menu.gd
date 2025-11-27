@@ -1,7 +1,4 @@
 extends Control
-@onready var v_box_container: VBoxContainer = $VBoxContainer
-var animation_speed = 250
-var move_direction = Vector2(1, 0)
 @onready var start: Button = $VBoxContainer/Start
 @onready var high_score: Button = $VBoxContainer/HighScore
 @onready var options: Button = $VBoxContainer/Options
@@ -29,9 +26,6 @@ func _ready() -> void:
 	
 	start.grab_focus()
 	AudioManager.play_music(menu_music)
-
-func _process(delta: float) -> void:
-	v_box_container.position += move_direction * animation_speed * delta
 
 func _on_start_pressed() -> void:
 	AudioManager.stop(menu_music)

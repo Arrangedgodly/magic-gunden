@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://bn53kfg46urrt"]
+
+[ext_resource type="Texture2D" uid="uid://cxjdlerjk72a5" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/1.png" id="1_sn3mw"]
+[ext_resource type="Texture2D" uid="uid://d1nx4qtsflotx" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/2.png" id="2_uvigk"]
+[ext_resource type="Texture2D" uid="uid://cygord16esmnn" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/3.png" id="3_eu4xf"]
+[ext_resource type="Texture2D" uid="uid://btw05s05dd24i" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_4/4.png" id="4_i3nea"]
+
+[node name="HighScoreBackground" type="ParallaxBackground"]
+offset = Vector2(600, 400)
+scale = Vector2(2.5, 2.5)
+transform = Transform2D(2.5, 0, 0, 2.5, 600, 400)
+
+[node name="ParallaxLayer" type="Parallax2D" parent="."]
+repeat_size = Vector2(575, 0)
+autoscroll = Vector2(25, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+texture = ExtResource("1_sn3mw")
+
+[node name="ParallaxLayer2" type="Parallax2D" parent="."]
+repeat_size = Vector2(575, 0)
+autoscroll = Vector2(50, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer2"]
+texture = ExtResource("2_uvigk")
+
+[node name="ParallaxLayer3" type="Parallax2D" parent="."]
+repeat_size = Vector2(575, 0)
+autoscroll = Vector2(100, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer3"]
+texture = ExtResource("3_eu4xf")
+
+[node name="ParallaxLayer4" type="Parallax2D" parent="."]
+repeat_size = Vector2(575, 0)
+autoscroll = Vector2(150, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer4"]
+texture = ExtResource("4_i3nea")

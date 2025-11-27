@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=3 uid="uid://c88uxkcqyvwgd"]
+
+[ext_resource type="Texture2D" uid="uid://i4be6nigi01l" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/1.png" id="1_hi2cd"]
+[ext_resource type="Texture2D" uid="uid://brs5hebcrop1d" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/3.png" id="2_dv37r"]
+[ext_resource type="Texture2D" uid="uid://cksv7jitekhqt" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/7.png" id="3_huch7"]
+[ext_resource type="Texture2D" uid="uid://b5jr6q2yggs4m" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/8.png" id="4_sij4v"]
+[ext_resource type="Texture2D" uid="uid://b0orstaybxrb0" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/2.png" id="5_1rgf1"]
+[ext_resource type="Texture2D" uid="uid://5avnxkxro3wg" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/6.png" id="6_0omyj"]
+[ext_resource type="Texture2D" uid="uid://kgijcrwm0hoh" path="res://assets/map/Nature Landscapes Free Pixel Art/nature_1/5.png" id="7_nifa5"]
+
+[node name="MainMenuBackground" type="ParallaxBackground"]
+scroll_ignore_camera_zoom = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(760, 221)
+scale = Vector2(3, 3.578)
+texture = ExtResource("1_hi2cd")
+
+[node name="Mountains" type="Parallax2D" parent="."]
+z_index = 1
+repeat_size = Vector2(2304, 0)
+autoscroll = Vector2(25, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Mountains"]
+position = Vector2(-239, 270)
+scale = Vector2(4, 4)
+texture = ExtResource("2_dv37r")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 169, 576, 81)
+
+[node name="Big Trees" type="Parallax2D" parent="."]
+z_index = 2
+repeat_size = Vector2(3000, 0)
+autoscroll = Vector2(50, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Big Trees"]
+position = Vector2(-512, -444)
+scale = Vector2(4, 4)
+texture = ExtResource("3_huch7")
+centered = false
+region_enabled = true
+region_rect = Rect2(200, 0, 280, 271)
+
+[node name="Grasslands" type="Parallax2D" parent="."]
+z_index = 3
+repeat_size = Vector2(2304, 0)
+autoscroll = Vector2(75, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Grasslands"]
+position = Vector2(-875, 481)
+scale = Vector2(4, 4)
+texture = ExtResource("4_sij4v")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 243, 576, 81)
+
+[node name="Clouds" type="Parallax2D" parent="."]
+z_index = 3
+repeat_size = Vector2(3000, 0)
+autoscroll = Vector2(100, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Clouds"]
+position = Vector2(1061, 85)
+texture = ExtResource("5_1rgf1")
+centered = false
+
+[node name="Small Trees" type="Parallax2D" parent="."]
+z_index = 5
+repeat_size = Vector2(2752, 0)
+autoscroll = Vector2(200, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Small Trees"]
+position = Vector2(-750, -372)
+scale = Vector2(4, 4)
+texture = ExtResource("6_0omyj")
+centered = false
+region_enabled = true
+region_rect = Rect2(128, 0, 688, 324)
+
+[node name="Bushes" type="Parallax2D" parent="."]
+z_index = 6
+repeat_size = Vector2(1416, 0)
+autoscroll = Vector2(300, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bushes"]
+position = Vector2(-140, 615)
+scale = Vector2(4, 4)
+texture = ExtResource("7_nifa5")
+centered = false
+region_enabled = true
+region_rect = Rect2(90, 220, 354, 49)
