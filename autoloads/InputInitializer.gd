@@ -8,12 +8,8 @@ func initialize_input_map() -> void:
 	
 	if settings_save == null:
 		settings_save = SettingsSave.new()
-		settings_save.set_default_controls()
 		ResourceSaver.save(settings_save, "user://settings.tres")
-	
-	if settings_save.controller_buttons.is_empty() and settings_save.controller_axes.is_empty():
-		populate_settings_from_input_map(settings_save)
-		ResourceSaver.save(settings_save, "user://settings.tres")
+		return
 	
 	apply_all_bindings(settings_save)
 
@@ -42,42 +38,49 @@ func apply_all_bindings(settings_save: SettingsSave) -> void:
 	for action in settings_save.control_mappings:
 		var keycode = settings_save.control_mappings[action]
 		if keycode != -1 and InputMap.has_action(action):
-			var already_bound = false
+			var events_to_keep = []
 			for event in InputMap.action_get_events(action):
-				if event is InputEventKey and event.physical_keycode == keycode:
-					already_bound = true
-					break
+				if not event is InputEventKey:
+					events_to_keep.append(event)
 			
-			if not already_bound:
-				var new_event = InputEventKey.new()
-				new_event.physical_keycode = keycode
-				InputMap.action_add_event(action, new_event)
+			InputMap.action_erase_events(action)
+			for event in events_to_keep:
+				InputMap.action_add_event(action, event)
+			
+			var new_event = InputEventKey.new()
+			new_event.physical_keycode = keycode
+			InputMap.action_add_event(action, new_event)
 	
 	for action in settings_save.controller_buttons:
 		var button = settings_save.controller_buttons[action]
 		if button != -1 and InputMap.has_action(action):
-			var already_bound = false
+			var events_to_keep = []
 			for event in InputMap.action_get_events(action):
-				if event is InputEventJoypadButton and event.button_index == button:
-					already_bound = true
-					break
+				if not event is InputEventJoypadButton:
+					events_to_keep.append(event)
 			
-			if not already_bound:
-				var new_event = InputEventJoypadButton.new()
-				new_event.button_index = button
-				InputMap.action_add_event(action, new_event)
+			InputMap.action_erase_events(action)
+			for event in events_to_keep:
+				InputMap.action_add_event(action, event)
+			
+			var new_event = InputEventJoypadButton.new()
+			new_event.button_index = button
+			InputMap.action_add_event(action, new_event)
 	
 	for action in settings_save.controller_axes:
 		var axis_data = settings_save.controller_axes[action]
 		if axis_data.has("axis") and InputMap.has_action(action):
-			var already_bound = false
+			var events_to_keep = []
 			for event in InputMap.action_get_events(action):
-				if event is InputEventJoypadMotion and event.axis == axis_data["axis"] and sign(event.axis_value) == sign(axis_data["value"]):
-					already_bound = true
-					break
+				if not event is InputEventJoypadMotion:
+					events_to_keep.append(event)
 			
-			if not already_bound:
-				var new_event = InputEventJoypadMotion.new()
-				new_event.axis = axis_data["axis"]
-				new_event.axis_value = axis_data["value"]
-				InputMap.action_add_event(action, new_event)
+			InputMap.action_erase_events(action)
+			for event in events_to_keep:
+				InputMap.action_add_event(action, event)
+			
+			# Add the saved controller axis binding
+			var new_event = InputEventJoypadMotion.new()
+			new_event.axis = axis_data["axis"]
+			new_event.axis_value = axis_data["value"]
+			InputMap.action_add_event(action, new_event)

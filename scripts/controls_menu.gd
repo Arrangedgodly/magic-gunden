@@ -163,19 +163,6 @@ func get_keyboard_name(action: String) -> String:
 	return "Unbound"
 
 func get_controller_name(action: String) -> String:
-	var button = settings_save.get_controller_button(action)
-	if button != -1:
-		return "Button " + str(button)
-	
-	var axis_data = settings_save.get_controller_axis(action)
-	if not axis_data.is_empty():
-		var axis_name = "Axis " + str(axis_data["axis"])
-		if axis_data["value"] > 0:
-			axis_name += " +"
-		else:
-			axis_name += " -"
-		return axis_name
-	
 	var events = InputMap.action_get_events(action)
 	for event in events:
 		if event is InputEventJoypadButton:
@@ -187,7 +174,6 @@ func get_controller_name(action: String) -> String:
 			else:
 				axis_name += " -"
 			return axis_name
-	
 	return "Unbound"
 
 func get_axis_name(event: InputEventJoypadMotion) -> String:
