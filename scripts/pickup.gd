@@ -31,5 +31,5 @@ func collect():
 		
 	queue_free()
 
-func apply_effect(powerup_manager: Node2D) -> void:
+func apply_effect(_powerup_manager: Node2D) -> void:
 	print("Pickup collected but no effect defined")

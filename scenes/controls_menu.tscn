@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d18aq1dt35mtn" path="res://scenes/controls_background.tscn" id="2_n0kuk"]
 
 [node name="ControlsMenu" type="Control"]
-z_index = 30
+z_index = 40
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,10 +35,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -42.5
-offset_top = -41.0
-offset_right = 42.5
-offset_bottom = 41.0
+offset_left = -340.0
+offset_top = -327.0
+offset_right = 340.0
+offset_bottom = 327.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 40
@@ -61,7 +61,7 @@ horizontal_alignment = 1
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(600, 400)
+custom_minimum_size = Vector2(800, 400)
 layout_mode = 2
 
 [node name="ControlsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]

@@ -10,6 +10,7 @@ extends Control
 @onready var confirmation_popup: Control = %"Confirmation Popup"
 @onready var controls_button: Button = %ControlsButton
 @onready var back_button: Button = %BackButton
+@onready var margin_container: MarginContainer = $MarginContainer
 
 var settings_save: SettingsSave
 
@@ -147,8 +148,10 @@ func _on_controls_pressed() -> void:
 	add_child(controls_instance)
 		
 	controls_instance.controls_closed.connect(_on_controls_closed)
+	margin_container.hide()
 
 func _on_controls_closed() -> void:
+	margin_container.show()
 	back_button.grab_focus()
 
 func _on_back_pressed() -> void:

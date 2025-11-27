@@ -1,21 +1,17 @@
 extends Control
 
-# Tutorial save resource
 var tutorial_save: TutorialSave
 
-# UI References
 @onready var tutorial_panel: Panel = $TutorialPanel
 @onready var instruction_label: Label = $TutorialPanel/MarginContainer/VBoxContainer/InstructionLabel
 @onready var hint_label: Label = $TutorialPanel/MarginContainer/VBoxContainer/HintLabel
 @onready var progress_label: Label = $TutorialPanel/MarginContainer/VBoxContainer/ProgressLabel
 @onready var skip_button: Button = $TutorialPanel/MarginContainer/VBoxContainer/SkipButton
 
-# Game References - get them safely
 var game_manager: Node2D
 var player: CharacterBody2D
 var trail_manager: TrailManager
 
-# Tutorial state
 enum TutorialStep {
 	WELCOME,
 	MOVEMENT,
@@ -30,8 +26,9 @@ enum TutorialStep {
 
 var current_step: TutorialStep = TutorialStep.WELCOME
 var tutorial_active: bool = false
+var waiting_for_continue: bool = false
+var game_was_paused: bool = false
 
-# Tracking variables
 var has_moved: bool = false
 var has_picked_up_gem: bool = false
 var gems_collected: int = 0

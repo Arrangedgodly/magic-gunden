@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bl0nwdugnf3ae"]
 
 [ext_resource type="Script" uid="uid://d2witc4r6xwrt" path="res://scripts/cyclone.gd" id="1_33xxp"]
-[ext_resource type="Texture2D" uid="uid://nawqodrk68dn" path="res://assets/items/cyclone.png" id="2_cd6u3"]
+[ext_resource type="Texture2D" uid="uid://b3wa7itjnfujs" path="res://assets/items/cyclone-new.png" id="2_33xxp"]
 
 [node name="Cyclone" type="Area2D"]
 script = ExtResource("1_33xxp")
-icon = ExtResource("2_cd6u3")
+icon = ExtResource("2_33xxp")
 metadata/_custom_type_script = "uid://clkylpqky3krt"

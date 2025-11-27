@@ -3,9 +3,8 @@ extends Control
 @onready var score_banner: Sprite2D = $ScoreBanner
 @onready var score_label: Label = $Score
 @onready var controls: Control = $Controls
-@onready var ammo_bar: Control = $Ammo/AmmoBar
-@onready var ammo_label: Label = $Ammo/AmmoLabel
-@onready var clip_count_label: Label = $"Ammo/Clip Count"
+@onready var ammo_bar: Control = $AmmoBar
+@onready var ammo_label: Label = $AmmoLabel
 @onready var current_killstreak_label: Label = $Killstreak/Current_Killstreak_Label
 @onready var current_killstreak: Label = $Killstreak/Current_Killstreak
 @onready var powerup_container: HBoxContainer = $PowerupContainer
@@ -13,16 +12,16 @@ extends Control
 
 var powerup_widget_scene = preload("res://scenes/powerup_widget.tscn")
 var powerup_icons = {
-	"Ricochet" = preload("res://assets/items/ricochet.png"),
-	"Pierce" = preload("res://assets/items/pierce.png"),
+	"Ricochet" = preload("res://assets/items/ricochet-new.png"),
+	"Pierce" = preload("res://assets/items/pierce-new.png"),
 	"Magnet" = preload("res://assets/items/magnet.png"),
 	"Stomp" = preload("res://assets/items/stomp.png"),
-	"Poison" = preload("res://assets/items/poison.png"),
+	"Poison" = preload("res://assets/items/poison-new.png"),
 	"AutoAim" = preload("res://assets/items/auto_aim.png"),
-	"Flames" = preload("res://assets/items/flames.png"),
-	"FreeAmmo" = preload("res://assets/items/free_ammo.png"),
-	"Ice" = preload("res://assets/items/ice.png"),
-	"Cyclone" = preload("res://assets/items/cyclone.png")
+	"Flames" = preload("res://assets/items/flames-new.png"),
+	"FreeAmmo" = preload("res://assets/items/free-ammo.png"),
+	"Ice" = preload("res://assets/items/ice-new.png"),
+	"Cyclone" = preload("res://assets/items/cyclone-new.png")
 }
 var active_widgets: Dictionary = {}
 var current_display_score: int = 0
@@ -44,31 +43,10 @@ func _ready() -> void:
 	
 func _input(event: InputEvent) -> void:
 	controls.handle_input_event(event)
-
-func _process(_delta: float) -> void:
-	pass
-
-func no_ammo_animation():
-	var tween = create_tween()
-	tween.tween_property(clip_count_label, "theme_override_colors/font_color", Color(5, 0, 0, 1), .125)
-	tween.tween_property(clip_count_label, "theme_override_colors/font_color", Color(1, 1, 1, 1), .125)
-	tween.tween_property(clip_count_label, "theme_override_colors/font_color", Color(5, 0, 0, 1), .125)
-	tween.tween_property(clip_count_label, "theme_override_colors/font_color", Color(1, 1, 1, 1), .125)
-
-func update_ammo_ui(ammo_count: int):
-	if current_ammo != ammo_count:
-		if ammo_count == 0:
-			clip_count_label.text = "no clips!"
-		elif ammo_count <= 6:
-			clip_count_label.text = "last clip!"
-		else:
-			clip_count_label.text = str(ammo_count / 6) + "clips!"
 	
-
 func _on_tutorial_tutorial_finished() -> void:
 	controls.show()
 	ammo_bar.show()
-	clip_count_label.show()
 	ammo_label.show()
 	score_banner.show()
 	score_label.show()
@@ -100,11 +78,7 @@ func _on_game_manager_killstreak(new_killstreak: int) -> void:
 		current_killstreak.hide()
 
 func _on_game_manager_current_ammo(new_ammo: int) -> void:
-	if new_ammo == 0:
-		no_ammo_animation()
-	
 	current_ammo = new_ammo
-	update_ammo_ui(new_ammo)
 
 func _on_powerup_activated(p_name: String) -> void:
 	if active_widgets.has(p_name):

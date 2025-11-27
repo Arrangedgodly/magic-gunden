@@ -474,16 +474,16 @@ offset_bottom = 40.0
 script = ExtResource("18_fqdd6")
 
 [node name="ScoreBanner" type="Sprite2D" parent="Camera2D/UI"]
-position = Vector2(14, -231.333)
+position = Vector2(14, 230)
 scale = Vector2(2, 2)
 texture = ExtResource("17_hmsf0")
 
 [node name="Score" type="Label" parent="Camera2D/UI"]
 layout_mode = 0
 offset_left = -26.0
-offset_top = -241.333
+offset_top = 220.0
 offset_right = 54.0
-offset_bottom = -215.333
+offset_bottom = 246.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("3_sdpff")
@@ -499,41 +499,35 @@ offset_right = -376.667
 offset_bottom = -271.333
 scale = Vector2(0.7, 0.7)
 
-[node name="Ammo" type="VBoxContainer" parent="Camera2D/UI"]
+[node name="AmmoLabel" type="Label" parent="Camera2D/UI"]
 layout_mode = 0
-offset_left = 320.0
-offset_top = -260.0
-offset_right = 381.0
-offset_bottom = -218.0
-theme_override_constants/separation = 8
-alignment = 1
-
-[node name="AmmoLabel" type="Label" parent="Camera2D/UI/Ammo"]
-layout_mode = 2
+offset_left = 275.0
+offset_top = 165.0
+offset_right = 336.0
+offset_bottom = 178.0
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_sdpff")
 text = "AMMO"
 horizontal_alignment = 1
 
-[node name="AmmoBar" parent="Camera2D/UI/Ammo" instance=ExtResource("17_j7q35")]
-layout_mode = 2
+[node name="AmmoBar" parent="Camera2D/UI" instance=ExtResource("17_j7q35")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 150.0
+offset_top = 200.0
+offset_right = 211.0
+offset_bottom = 200.0
+scale = Vector2(5, 5)
 size_flags_vertical = 1
-
-[node name="Clip Count" type="Label" parent="Camera2D/UI/Ammo"]
-z_index = 100
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("3_sdpff")
-text = "no clips!"
-horizontal_alignment = 1
 
 [node name="Killstreak" type="VBoxContainer" parent="Camera2D/UI"]
 layout_mode = 0
 offset_left = -360.0
-offset_top = -260.0
+offset_top = 165.0
 offset_right = -284.0
-offset_bottom = -214.0
+offset_bottom = 228.0
 theme_override_constants/separation = 8
 alignment = 1
 
@@ -550,15 +544,15 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_sdpff")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 
 [node name="PowerupContainer" type="HBoxContainer" parent="Camera2D/UI"]
 layout_mode = 1
 offset_left = -75.0
-offset_top = 198.0
+offset_top = -250.0
 offset_right = 95.0
-offset_bottom = 248.0
+offset_bottom = -200.0
 
 [node name="MoveTimer" type="Timer" parent="."]
 wait_time = 0.4
@@ -617,8 +611,8 @@ offset_bottom = 408.0
 
 [node name="Tutorial" parent="." instance=ExtResource("35_a2mr6")]
 z_index = 30
-offset_top = 300.0
-offset_bottom = 300.0
+offset_top = -50.0
+offset_bottom = -50.0
 
 [connection signal="timeout" from="AnimatedBackground/BackgroundSwap" to="AnimatedBackground" method="_on_background_swap_timeout"]
 [connection signal="game_ended" from="GameManager" to="EndGameScreen" method="_on_game_manager_game_ended"]

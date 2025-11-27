@@ -19,10 +19,16 @@ var ammunition : int
 var ammo = Ammo.new()
 var animation_speed = 5
 
+var full_bars: Array[TextureProgressBar]
+var depleted_bars: Array[TextureProgressBar]
+
 func _ready() -> void:
 	full.position = depleted.position
 	game_manager.decrease_ammo.connect(decrease_ammo)
 	game_manager.increase_ammo.connect(increase_ammo)
+	
+	full_bars = [full1, full2, full3, full4, full5, full6]
+	depleted_bars = [depleted1, depleted2, depleted3, depleted4, depleted5, depleted6]
 
 func _process(_delta: float) -> void:
 	check_ammo()
@@ -35,31 +41,28 @@ func increase_ammo():
 		ammunition = ammo.ammo_count % 6
 	
 func decrease_ammo():
+	var old_ammunition = ammunition
+	
 	ammo.decrease_ammo()
+	
 	if ammo.ammo_count == 0:
 		ammunition = 0
 	elif ammo.ammo_count % 6 == 0:
 		ammunition = 6
 	else:
 		ammunition = ammo.ammo_count % 6
-	if ammunition == 5:
-		full6.value = 0
-		deplete_ammo_container(depleted6)
-	if ammunition == 4:
-		full5.value = 0
-		deplete_ammo_container(depleted5)
-	if ammunition == 3:
-		full4.value = 0
-		deplete_ammo_container(depleted4)
-	if ammunition == 2:
-		full3.value = 0
-		deplete_ammo_container(depleted3)
-	if ammunition == 1:
-		full2.value = 0
-		deplete_ammo_container(depleted2)
-	if ammunition == 0:
-		full1.value = 0
-		deplete_ammo_container(depleted1)
+	
+	if ammo.ammo_count < 6 and old_ammunition > ammunition:
+		var depleted_index = ammunition
+		if depleted_index >= 0 and depleted_index < 6:
+			full_bars[depleted_index].value = 0
+			deplete_ammo_container(depleted_bars[depleted_index])
+	else:
+		for i in range(6):
+			if i < ammunition:
+				full_bars[i].value = 1
+			else:
+				full_bars[i].value = 0
 	
 	check_ammo()
 
@@ -74,15 +77,8 @@ func empty_ammo():
 	ammunition = 0
 
 func check_ammo():
-	if ammunition >= 1:
-		full1.value = 1
-	if ammunition >= 2:
-		full2.value = 1
-	if ammunition >= 3:
-		full3.value = 1
-	if ammunition >= 4:
-		full4.value = 1
-	if ammunition >= 5:
-		full5.value = 1
-	if ammunition >= 6:
-		full6.value = 1	
+	for i in range(6):
+		if ammunition >= i + 1:
+			full_bars[i].value = 1
+		else:
+			full_bars[i].value = 0

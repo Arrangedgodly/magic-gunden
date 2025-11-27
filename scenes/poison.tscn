@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://4o27wv2xlkhk"]
 
 [ext_resource type="Script" uid="uid://04022ob2kbrq" path="res://scripts/poison.gd" id="1_1tvu1"]
-[ext_resource type="Texture2D" uid="uid://bxa3b4gkr0ih1" path="res://assets/items/poison.png" id="2_sw2w0"]
+[ext_resource type="Texture2D" uid="uid://dwweo3ixhd0qb" path="res://assets/items/poison-new.png" id="2_1tvu1"]
 
 [node name="Poison" type="Area2D"]
 script = ExtResource("1_1tvu1")
-icon = ExtResource("2_sw2w0")
+icon = ExtResource("2_1tvu1")
 metadata/_custom_type_script = "uid://clkylpqky3krt"
