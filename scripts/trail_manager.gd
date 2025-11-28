@@ -6,15 +6,14 @@ signal trail_item_converted_to_enemy(position: Vector2)
 signal trail_released(items_captured: int)
 
 @onready var player: CharacterBody2D = %Player
-@onready var game_manager: Node2D = $"../GameManager"
-
-var yoyo_scene = preload("res://scenes/yoyo.tscn")
-var blue_slime_scene = preload("res://scenes/blue_slime.tscn")
+@onready var game_manager: Node2D = %GameManager
 
 var trail: Array = []
 var move_history: Array = []
 var pickup_count: int = 0
 var capture_count: int = 0
+var yoyo_scene_path: String = "res://scenes/yoyo.tscn"
+var blue_slime_scene_path: String = "res://scenes/blue_slime.tscn"
 
 const ANIMATION_SPEED = 5
 var level: int = 1
@@ -40,7 +39,8 @@ func activate_trail_collisions() -> void:
 func create_trail_segment() -> void:
 	if move_history.is_empty():
 		return
-		
+	
+	var yoyo_scene = load(yoyo_scene_path)
 	var yoyo_instance = yoyo_scene.instantiate()
 	var last_position = move_history[len(move_history) - 1]
 	var local_position = game_manager.to_local(last_position)
@@ -104,6 +104,7 @@ func release_trail() -> void:
 			current_streak += 1
 			trail_item_converted_to_ammo.emit(current_streak, item_data.position)
 		else:
+			var blue_slime_scene = load(blue_slime_scene_path)
 			var enemy_instance = blue_slime_scene.instantiate()
 			enemy_instance.position = item_data.position
 			game_manager.add_child(enemy_instance)
@@ -132,6 +133,7 @@ func is_on_capture_point(item: Node2D) -> bool:
 func convert_to_enemy(pickup: Node2D) -> void:
 	await pickup.flash(Color(255, 0, 0, 255))
 	
+	var blue_slime_scene = load(blue_slime_scene_path)
 	var enemy_instance = blue_slime_scene.instantiate()
 	enemy_instance.position = pickup.position
 	game_manager.add_child(enemy_instance)

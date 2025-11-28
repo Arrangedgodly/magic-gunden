@@ -43,7 +43,12 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		var collider = collision.get_collider()
 		if collider is Player:
-			if powerup_manager.stomp_active:
+			if powerup_manager and powerup_manager.is_jump_active():
+				var can_jump = powerup_manager.check_jump_enemy_collision(self)
+				if can_jump:
+					return
+			
+			if powerup_manager and powerup_manager.is_stomp_active():
 				kill()
 			else:
 				player.die()
@@ -103,8 +108,12 @@ func start_idle_animation(direction: Vector2) -> void:
 	idle_direction(direction)
 
 func execute_movement(target_pos: Vector2) -> void:
-	var tween = create_tween()
-	tween.tween_property(self, "position", target_pos, 0.2).set_trans(Tween.TRANS_SINE)
+	var movement_duration = 0.2
+	if has_meta("is_slowed"):
+		movement_duration = 1.0
+	
+	var movement_tween = create_tween()
+	movement_tween.tween_property(self, "position", target_pos, movement_duration).set_trans(Tween.TRANS_SINE)
 	
 	move_direction(current_move_direction)
 

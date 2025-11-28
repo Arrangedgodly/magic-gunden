@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdc2ncb6hlwmi"]
+
+[ext_resource type="Script" uid="uid://b68cd41x1lcoq" path="res://scripts/powerups/time_pause.gd" id="1_kff1i"]
+[ext_resource type="Texture2D" uid="uid://by5q8qh7f0fp8" path="res://assets/items/powerups/pause.png" id="2_pdsj6"]
+
+[node name="TimePause" type="Area2D"]
+script = ExtResource("1_kff1i")
+icon = ExtResource("2_pdsj6")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

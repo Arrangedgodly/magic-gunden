@@ -6,373 +6,136 @@ class_name PowerupManager
 @onready var enemy_manager: EnemyManager = %EnemyManager
 @onready var trail_manager: TrailManager = %TrailManager
 
-var stomp_active: bool = false
-var piercing_active: bool = false
-var magnet_active: bool = false
-var ricochet_active: bool = false
-var poison_active: bool = false
-var auto_aim_active: bool = false
-var cyclone_active: bool = false
-var flames_active: bool = false
-var free_ammo_active: bool = false
-var ice_active: bool = false
-var timers_map: Dictionary = {}
-
-var poison_trail_scene = preload("res://scenes/poison_trail.tscn")
-var poison_positions_spawned: Array = []
-
-var current_target: Node2D = null
-
-var flaming_enemies: Dictionary = {}
-
-var ammo_generation_interval: float = 1.0
-var ammo_generation_timer: float = 0.0
-
-var frozen_enemies: Array = []
-
-var jump_active: bool = false
-
-const TILE_SIZE = 32
+var active_jump: JumpPickup = null
+var active_stomp: StompPickup = null
+var active_pierce: PiercePickup = null
+var active_ricochet: RicochetPickup = null
+var active_magnet: MagnetPickup = null
+var active_poison: PoisonPickup = null
+var active_auto_aim: AutoAimPickup = null
+var active_flames: FlamesPickup = null
+var active_free_ammo: FreeAmmoPickup = null
+var active_ice: IcePickup = null
+var active_time_pause: TimePausePickup = null
 
 signal powerup_activated(type: String)
 
-func _ready() -> void:
-	timers_map = {
-		"Ricochet": ricochet_timer,
-		"Magnet": magnet_timer,
-		"Pierce": pierce_timer,
-		"Stomp": stomp_timer,
-		"Poison": poison_timer,
-		"AutoAim": auto_aim_timer,
-		"Flames": flames_timer,
-		"FreeAmmo": free_ammo_timer,
-		"Ice": ice_timer,
-		"Jump": jump_timer
-	}
-	
-	ricochet_timer.timeout.connect(func(): ricochet_active = false)
-	magnet_timer.timeout.connect(func(): magnet_active = false)
-	pierce_timer.timeout.connect(func(): piercing_active = false)
-	stomp_timer.timeout.connect(func(): stomp_active = false)
-	poison_timer.timeout.connect(func(): 
-		poison_active = false
-		poison_positions_spawned.clear()
-	)
-	auto_aim_timer.timeout.connect(func(): 
-		auto_aim_active = false
-		current_target = null
-	)
-	flames_timer.timeout.connect(func(): 
-		flames_active = false
-		clear_flames()
-	)
-	free_ammo_timer.timeout.connect(func(): 
-		free_ammo_active = false
-	)
-	ice_timer.timeout.connect(func(): 
-		ice_active = false
-		unfreeze_all_enemies()
-	)
-	jump_timer.timeout.connect(func(): 
-		jump_active = false
-	)
-
 func _process(delta: float) -> void:
-	if not magnet_timer.is_stopped():
-		handle_magnet_effect(delta)
+	if active_magnet and active_magnet.is_active:
+		active_magnet.process_effect(delta)
 	
-	if poison_active and player:
-		handle_poison_trail()
+	if active_poison and active_poison.is_active:
+		active_poison.process_effect(delta)
 	
-	if auto_aim_active:
-		handle_auto_aim()
+	if active_auto_aim and active_auto_aim.is_active:
+		active_auto_aim.process_effect(delta)
 	
-	if free_ammo_active:
-		handle_free_ammo(delta)
+	if active_free_ammo and active_free_ammo.is_active:
+		active_free_ammo.process_effect(delta)
 
-func handle_magnet_effect(delta):
-	var magnet_radius = 160.0 
-	var pull_speed = 300.0
-	
-	for child in game_manager.get_children():
-		if "can_pickup" in child and child.can_pickup:
-			var dist = child.global_position.distance_to(player.global_position)
-			
-			if dist < magnet_radius:
-				child.global_position = child.global_position.move_toward(player.global_position, pull_speed * delta)
+func register_jump_powerup(pickup: JumpPickup) -> void:
+	active_jump = pickup
 
-	var pickups = get_tree().get_nodes_in_group("pickups")
-	
-	for pickup in pickups:
-		if is_instance_valid(pickup):
-			var dist = pickup.global_position.distance_to(player.global_position)
-			
-			if dist < magnet_radius:
-				pickup.global_position = pickup.global_position.move_toward(player.global_position, pull_speed * delta)
+func register_stomp_powerup(pickup: StompPickup) -> void:
+	active_stomp = pickup
 
-func handle_poison_trail() -> void:
-	if trail_manager.move_history.is_empty():
-		return
-	
-	for trail_position in trail_manager.move_history:
-		var local_pos = game_manager.to_local(trail_position)
-		
-		var already_spawned = false
-		for spawned_pos in poison_positions_spawned:
-			if local_pos.distance_to(spawned_pos) < 16:
-				already_spawned = true
-				break
-		
-		if not already_spawned:
-			var poison_instance = poison_trail_scene.instantiate()
-			poison_instance.position = local_pos
-			game_manager.add_child(poison_instance)
-			
-			poison_positions_spawned.append(local_pos)
+func register_pierce_powerup(pickup: PiercePickup) -> void:
+	active_pierce = pickup
 
-func handle_auto_aim() -> void:
-	var nearest_enemy = find_nearest_enemy()
-	
-	if nearest_enemy != current_target:
-		current_target = nearest_enemy
-	
-	if current_target and is_instance_valid(current_target):
-		var direction = (current_target.global_position - player.global_position).normalized()
-		
-		var aim_dir = get_cardinal_direction(direction)
-		update_aim_direction(aim_dir)
+func register_ricochet_powerup(pickup: RicochetPickup) -> void:
+	active_ricochet = pickup
 
-func find_nearest_enemy() -> Node2D:
-	var enemies = get_tree().get_nodes_in_group("mobs")
-	var nearest: Node2D = null
-	var min_dist: float = INF
-	
-	for enemy in enemies:
-		if not is_instance_valid(enemy):
-			continue
-			
-		var dist = player.global_position.distance_squared_to(enemy.global_position)
-		if dist < min_dist:
-			min_dist = dist
-			nearest = enemy
-	
-	return nearest
+func register_magnet_powerup(pickup: MagnetPickup) -> void:
+	active_magnet = pickup
 
-func get_cardinal_direction(direction: Vector2) -> Vector2:
-	var abs_x = abs(direction.x)
-	var abs_y = abs(direction.y)
-	
-	if abs_x > abs_y:
-		return Vector2(sign(direction.x), 0)
-	else:
-		return Vector2(0, sign(direction.y))
+func register_poison_powerup(pickup: PoisonPickup) -> void:
+	active_poison = pickup
 
-func update_aim_direction(direction: Vector2) -> void:
-	if game_manager:
-		game_manager.aim_direction = direction
+func register_auto_aim_powerup(pickup: AutoAimPickup) -> void:
+	active_auto_aim = pickup
 
-func handle_free_ammo(delta: float) -> void:
-	ammo_generation_timer += delta
-	
-	if ammo_generation_timer >= ammo_generation_interval:
-		ammo_generation_timer = 0.0
-		if game_manager:
-			game_manager.increase_ammo.emit()
-			game_manager.ammo.increase_ammo()
+func register_flames_powerup(pickup: FlamesPickup) -> void:
+	active_flames = pickup
 
-func unfreeze_all_enemies() -> void:
-	if enemy_manager and enemy_manager.has_node("EnemyMove"):
-		var enemy_move_timer = enemy_manager.get_node("EnemyMove")
-		if enemy_move_timer is Timer:
-			enemy_move_timer.paused = false
-	
-	for enemy in frozen_enemies:
-		if is_instance_valid(enemy) and enemy.has_node("AnimatedSprite2D"):
-			enemy.hide_ice()
-			var sprite = enemy.get_node("AnimatedSprite2D")
-			sprite.modulate = Color(1, 1, 1, 1)
-	
-	frozen_enemies.clear()
+func register_free_ammo_powerup(pickup: FreeAmmoPickup) -> void:
+	active_free_ammo = pickup
+
+func register_ice_powerup(pickup: IcePickup) -> void:
+	active_ice = pickup
+
+func register_time_pause_powerup(pickup: TimePausePickup) -> void:
+	active_time_pause = pickup
+
+func is_jump_active() -> bool:
+	return active_jump != null and active_jump.is_active
+
+func is_stomp_active() -> bool:
+	return active_stomp != null and active_stomp.is_active
+
+func is_pierce_active() -> bool:
+	return active_pierce != null and active_pierce.is_active
+
+func is_ricochet_active() -> bool:
+	return active_ricochet != null and active_ricochet.is_active
+
+func is_magnet_active() -> bool:
+	return active_magnet != null and active_magnet.is_active
+
+func is_poison_active() -> bool:
+	return active_poison != null and active_poison.is_active
+
+func is_auto_aim_active() -> bool:
+	return active_auto_aim != null and active_auto_aim.is_active
+
+func is_flames_active() -> bool:
+	return active_flames != null and active_flames.is_active
+
+func is_free_ammo_active() -> bool:
+	return active_free_ammo != null and active_free_ammo.is_active
+
+func is_ice_active() -> bool:
+	return active_ice != null and active_ice.is_active
+
+func is_time_pause_active() -> bool:
+	return active_time_pause != null and active_time_pause.is_active
+
+func check_jump_movement(target_pos: Vector2, direction: Vector2) -> Vector2:
+	if active_jump and active_jump.is_active:
+		return active_jump.modify_movement(target_pos, direction)
+	return target_pos
+
+func check_jump_enemy_collision(enemy: Node2D) -> bool:
+	if active_jump and active_jump.is_active:
+		return active_jump.check_enemy_collision(enemy)
+	return false
+
+func get_ricochet_max_bounces() -> int:
+	if active_ricochet and active_ricochet.is_active:
+		return active_ricochet.get_max_bounces()
+	return 0
 
 func get_powerup_timer(p_name: String) -> Timer:
-	return timers_map.get(p_name)
-
-func activate_ricochet() -> void:
-	ricochet_active = true
-	ricochet_timer.start()
-	powerup_activated.emit("Ricochet")
-
-func activate_magnet() -> void:
-	magnet_active = true
-	magnet_timer.start()
-	powerup_activated.emit("Magnet")
-
-func activate_pierce() -> void:
-	piercing_active = true
-	pierce_timer.start()
-	powerup_activated.emit("Pierce")
-
-func activate_stomp() -> void:
-	stomp_active = true
-	stomp_timer.start()
-	powerup_activated.emit("Stomp")
-
-func activate_poison() -> void:
-	poison_active = true
-	poison_positions_spawned.clear()
-	poison_timer.start()
-	powerup_activated.emit("Poison")
-
-func activate_auto_aim() -> void:
-	auto_aim_active = true
-	current_target = null
-	auto_aim_timer.start()
-	powerup_activated.emit("AutoAim")
-
-func activate_flames() -> void:
-	flames_active = true
-	flames_timer.start()
-	
-	var enemies = get_tree().get_nodes_in_group("mobs")
-	for enemy in enemies:
-		if is_instance_valid(enemy):
-			ignite_enemy(enemy)
-			enemy.show_fire()
-	
-	powerup_activated.emit("Flames")
-
-func ignite_enemy(enemy: Node2D) -> void:
-	if flaming_enemies.has(enemy) or not flames_active:
-		return
-	
-	var burn_timer = Timer.new()
-	burn_timer.wait_time = 3.0
-	burn_timer.one_shot = true
-	add_child(burn_timer)
-	
-	flaming_enemies[enemy] = burn_timer
-	
-	if enemy.has_node("AnimatedSprite2D"):
-		var sprite = enemy.get_node("AnimatedSprite2D")
-		var tween = create_tween()
-		tween.set_loops(0)  # Infinite loop
-		tween.tween_property(sprite, "modulate", Color(1.5, 0.5, 0.2), 0.3)
-		tween.tween_property(sprite, "modulate", Color(1, 1, 1), 0.3)
-		
-		if not enemy.has_meta("flame_tween"):
-			enemy.set_meta("flame_tween", tween)
-	
-	burn_timer.timeout.connect(func(): kill_burning_enemy(enemy))
-	burn_timer.start()
-
-func kill_burning_enemy(enemy: Node2D) -> void:
-	if is_instance_valid(enemy):
-		if enemy.has_meta("flame_tween"):
-			var tween = enemy.get_meta("flame_tween")
-			if tween and tween.is_valid():
-				tween.kill()
-			enemy.remove_meta("flame_tween")
-		
-		if enemy.has_node("AnimatedSprite2D"):
-			var sprite = enemy.get_node("AnimatedSprite2D")
-			sprite.modulate = Color(1, 1, 1, 1)
-		
-		if enemy.has_method("kill"):
-			enemy.kill()
-	
-	if flaming_enemies.has(enemy):
-		var timer = flaming_enemies[enemy]
-		if is_instance_valid(timer):
-			timer.queue_free()
-		flaming_enemies.erase(enemy)
-
-func clear_flames() -> void:
-	for enemy in flaming_enemies.keys():
-		if is_instance_valid(enemy):
-			if enemy.has_meta("flame_tween"):
-				var tween = enemy.get_meta("flame_tween")
-				if tween and tween.is_valid():
-					tween.kill()
-				enemy.remove_meta("flame_tween")
-				enemy.hide_fire()
-			
-			if enemy.has_node("AnimatedSprite2D"):
-				var sprite = enemy.get_node("AnimatedSprite2D")
-				sprite.modulate = Color(1, 1, 1, 1)
-				enemy.hide_fire()
-		
-		var timer = flaming_enemies[enemy]
-		if is_instance_valid(timer):
-			timer.queue_free()
-	
-	flaming_enemies.clear()
-
-func activate_free_ammo() -> void:
-	free_ammo_active = true
-	ammo_generation_timer = 0.0
-	free_ammo_timer.start()
-	powerup_activated.emit("FreeAmmo")
-
-func activate_ice() -> void:
-	ice_active = true
-	freeze_all_enemies()
-	ice_timer.start()
-	powerup_activated.emit("Ice")
-
-func freeze_all_enemies() -> void:
-	frozen_enemies.clear()
-	
-	if enemy_manager and enemy_manager.has_node("EnemyMove"):
-		var enemy_move_timer = enemy_manager.get_node("EnemyMove")
-		if enemy_move_timer is Timer:
-			enemy_move_timer.paused = true
-	
-	var enemies = get_tree().get_nodes_in_group("mobs")
-	
-	for enemy in enemies:
-		if is_instance_valid(enemy):
-			enemy.show_ice()
-			frozen_enemies.append(enemy)
-			
-			if enemy.has_node("AnimatedSprite2D"):
-				var sprite = enemy.get_node("AnimatedSprite2D")
-				sprite.modulate = Color(0.5, 0.7, 1.0, 1)
-
-func check_jump_collision(target_position: Vector2, direction: Vector2) -> Vector2:
-	if not jump_active:
-		return target_position
-	
-	var enemies = get_tree().get_nodes_in_group("mobs")
-	for enemy in enemies:
-		if not is_instance_valid(enemy):
-			continue
-		
-		var distance = target_position.distance_to(enemy.position)
-		if distance < 16:
-			var jump_position = target_position + (direction * TILE_SIZE)
-			
-			if is_position_in_bounds(jump_position):
-				var jump_blocked = false
-				for other_enemy in enemies:
-					if other_enemy == enemy or not is_instance_valid(other_enemy):
-						continue
-					var jump_distance = jump_position.distance_to(other_enemy.position)
-					if jump_distance < 16:
-						jump_blocked = true
-						break
-				
-				if not jump_blocked:
-					if player.has_method("create_jump_effect"):
-						player.create_jump_effect()
-					return jump_position
-	
-	return target_position
-
-func is_position_in_bounds(pos: Vector2) -> bool:
-	var grid_size = 12 * TILE_SIZE
-	return pos.x >= 0 and pos.x < grid_size and pos.y >= 0 and pos.y < grid_size
-
-func activate_jump() -> void:
-	jump_active = true
-	jump_timer.start()
-	powerup_activated.emit("Jump")
+	match p_name:
+		"Jump":
+			return active_jump.get_timer() if active_jump else null
+		"Stomp":
+			return active_stomp.get_timer() if active_stomp else null
+		"Pierce":
+			return active_pierce.get_timer() if active_pierce else null
+		"Ricochet":
+			return active_ricochet.get_timer() if active_ricochet else null
+		"Magnet":
+			return active_magnet.get_timer() if active_magnet else null
+		"Poison":
+			return active_poison.get_timer() if active_poison else null
+		"AutoAim":
+			return active_auto_aim.get_timer() if active_auto_aim else null
+		"Flames":
+			return active_flames.get_timer() if active_flames else null
+		"FreeAmmo":
+			return active_free_ammo.get_timer() if active_free_ammo else null
+		"Ice":
+			return active_ice.get_timer() if active_ice else null
+		"TimePause":
+			return active_time_pause.get_timer() if active_time_pause else null
+	return null

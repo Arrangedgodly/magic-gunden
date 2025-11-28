@@ -3,20 +3,28 @@ class_name Pickup
 
 @export var icon: Texture
 
-@onready var sprite: Sprite2D = $Sprite2D
-
-enum PickupType {Stomp, Magnet, Ricochet, Pierce, Poison, AutoAim, Health, Flames, FreeAmmo, Ice, Jump}
+enum PickupType {Stomp, Magnet, Ricochet, Pierce, Poison, AutoAim, Health, Flames, FreeAmmo, Ice, Jump, TimePause}
 
 var duration: float = 10.0
 var type: PickupType
 var powerup_manager: PowerupManager
 var is_active: bool = false
 var timer: Timer
+var sprite: Sprite2D
+var collision_node: CollisionShape2D
 
 func _ready() -> void:
 	add_to_group("pickups")
 	
+	collision_node = CollisionShape2D.new()
+	var collision_shape = CircleShape2D.new()
+	collision_shape.radius = 16
+	collision_node.shape = collision_shape
+	add_child(collision_node)
+	
+	sprite = Sprite2D.new()
 	sprite.texture = icon
+	add_child(sprite)
 	
 	body_entered.connect(_on_body_entered)
 	
@@ -28,9 +36,19 @@ func _on_body_entered(body: Node2D) -> void:
 
 func collect():
 	if powerup_manager:
-		activate(powerup_manager)
+		sprite.visible = false
+		collision_node.set_deferred("disabled", true)
+		call_deferred("_transfer_and_activate")
 		
-	queue_free()
+	else:
+		queue_free()
+
+func _transfer_and_activate() -> void:
+	if get_parent():
+		get_parent().remove_child(self)
+	
+	powerup_manager.add_child(self)
+	activate(powerup_manager)
 
 func activate(manager: PowerupManager) -> void:
 	powerup_manager = manager
@@ -54,6 +72,8 @@ func _on_timeout() -> void:
 	is_active = false
 	if timer:
 		timer.queue_free()
+	
+	queue_free()
 
 func get_timer() -> Timer:
 	return timer

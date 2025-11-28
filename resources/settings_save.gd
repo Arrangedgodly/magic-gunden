@@ -14,8 +14,8 @@ func _init() -> void:
 		sfx_volume = 80.0
 		master_volume = 100.0
 	
-	if control_mappings.is_empty():
-		set_default_controls()
+	#if control_mappings.is_empty():
+	#	set_default_controls()
 
 func set_default_controls() -> void:
 	control_mappings = {

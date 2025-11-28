@@ -197,8 +197,8 @@ func handle_attack():
 func move(dir):
 	var new_position = player.position + (dir * tile_size)
 	
-	if powerup_manager and powerup_manager.jump_active:
-		new_position = powerup_manager.check_jump_collision(new_position, dir)
+	if powerup_manager and powerup_manager.is_jump_active:
+		new_position = powerup_manager.check_jump_movement(new_position, dir)
 	
 	if trail_manager.has_trail():
 		var first_trail_position = trail_manager.get_first_trail_position()

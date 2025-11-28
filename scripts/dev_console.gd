@@ -20,6 +20,7 @@ extends CanvasLayer
 @onready var free_ammo_button: Button = $Control/PowerupMenu/FreeAmmo
 @onready var ice_button: Button = $Control/PowerupMenu/Ice
 @onready var jump_button: Button = $Control/PowerupMenu/Jump
+@onready var time_pause_button: Button = $Control/PowerupMenu/TimePause
 
 func _ready() -> void:
 	container.visible = false
@@ -41,6 +42,7 @@ func _ready() -> void:
 	free_ammo_button.pressed.connect(_on_spawn_pickup.bind(7))
 	ice_button.pressed.connect(_on_spawn_pickup.bind(8))
 	jump_button.pressed.connect(_on_spawn_pickup.bind(9))
+	time_pause_button.pressed.connect(_on_spawn_pickup.bind(10))
 	
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("console"):
