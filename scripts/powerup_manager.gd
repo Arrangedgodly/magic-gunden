@@ -1,16 +1,6 @@
 extends Node2D
 class_name PowerupManager
 
-@onready var stomp_timer: Timer = $StompTimer
-@onready var magnet_timer: Timer = $MagnetTimer
-@onready var pierce_timer: Timer = $PierceTimer
-@onready var ricochet_timer: Timer = $RicochetTimer
-@onready var poison_timer: Timer = $PoisonTimer
-@onready var auto_aim_timer: Timer = $AutoAimTimer
-@onready var cyclone_timer: Timer = $CycloneTimer
-@onready var flames_timer: Timer = $FlamesTimer
-@onready var free_ammo_timer: Timer = $FreeAmmoTimer
-@onready var ice_timer: Timer = $IceTimer
 @onready var player: CharacterBody2D = %Player
 @onready var game_manager: Node2D = %GameManager
 @onready var enemy_manager: EnemyManager = %EnemyManager
@@ -38,12 +28,11 @@ var flaming_enemies: Dictionary = {}
 var ammo_generation_interval: float = 1.0
 var ammo_generation_timer: float = 0.0
 
-var cyclone_radius: float = 128.0
-var cyclone_speed: float = 200.0
-var cyclone_angle: float = 0.0
-var cyclone_push_force: float = 150.0
-
 var frozen_enemies: Array = []
+
+var jump_active: bool = false
+
+const TILE_SIZE = 32
 
 signal powerup_activated(type: String)
 
@@ -55,10 +44,10 @@ func _ready() -> void:
 		"Stomp": stomp_timer,
 		"Poison": poison_timer,
 		"AutoAim": auto_aim_timer,
-		"Cyclone": cyclone_timer,
 		"Flames": flames_timer,
 		"FreeAmmo": free_ammo_timer,
-		"Ice": ice_timer
+		"Ice": ice_timer,
+		"Jump": jump_timer
 	}
 	
 	ricochet_timer.timeout.connect(func(): ricochet_active = false)
@@ -73,9 +62,6 @@ func _ready() -> void:
 		auto_aim_active = false
 		current_target = null
 	)
-	cyclone_timer.timeout.connect(func(): 
-		cyclone_active = false
-	)
 	flames_timer.timeout.connect(func(): 
 		flames_active = false
 		clear_flames()
@@ -86,6 +72,9 @@ func _ready() -> void:
 	ice_timer.timeout.connect(func(): 
 		ice_active = false
 		unfreeze_all_enemies()
+	)
+	jump_timer.timeout.connect(func(): 
+		jump_active = false
 	)
 
 func _process(delta: float) -> void:
@@ -100,9 +89,6 @@ func _process(delta: float) -> void:
 	
 	if free_ammo_active:
 		handle_free_ammo(delta)
-	
-	if cyclone_active:
-		handle_cyclone_effect(delta)
 
 func handle_magnet_effect(delta):
 	var magnet_radius = 160.0 
@@ -193,31 +179,6 @@ func handle_free_ammo(delta: float) -> void:
 		if game_manager:
 			game_manager.increase_ammo.emit()
 			game_manager.ammo.increase_ammo()
-
-func handle_cyclone_effect(delta: float) -> void:
-	cyclone_angle += cyclone_speed * delta
-	if cyclone_angle >= 360:
-		cyclone_angle -= 360
-	
-	var enemies = get_tree().get_nodes_in_group("mobs")
-	
-	for enemy in enemies:
-		if not is_instance_valid(enemy):
-			continue
-		
-		var distance = player.global_position.distance_to(enemy.global_position)
-		
-		if distance < cyclone_radius:
-			var to_enemy = (enemy.global_position - player.global_position).normalized()
-			var tangent = Vector2(-to_enemy.y, to_enemy.x)
-			
-			var push_out = to_enemy * 50.0 * delta
-			
-			var new_pos = enemy.global_position + (tangent * cyclone_push_force * delta) + push_out
-			
-			var new_distance = player.global_position.distance_to(new_pos)
-			if new_distance > 48.0:
-				enemy.global_position = new_pos
 
 func unfreeze_all_enemies() -> void:
 	if enemy_manager and enemy_manager.has_node("EnemyMove"):
@@ -377,8 +338,41 @@ func freeze_all_enemies() -> void:
 				var sprite = enemy.get_node("AnimatedSprite2D")
 				sprite.modulate = Color(0.5, 0.7, 1.0, 1)
 
-func activate_cyclone() -> void:
-	cyclone_active = true
-	cyclone_angle = 0.0
-	cyclone_timer.start()
-	powerup_activated.emit("Cyclone")
+func check_jump_collision(target_position: Vector2, direction: Vector2) -> Vector2:
+	if not jump_active:
+		return target_position
+	
+	var enemies = get_tree().get_nodes_in_group("mobs")
+	for enemy in enemies:
+		if not is_instance_valid(enemy):
+			continue
+		
+		var distance = target_position.distance_to(enemy.position)
+		if distance < 16:
+			var jump_position = target_position + (direction * TILE_SIZE)
+			
+			if is_position_in_bounds(jump_position):
+				var jump_blocked = false
+				for other_enemy in enemies:
+					if other_enemy == enemy or not is_instance_valid(other_enemy):
+						continue
+					var jump_distance = jump_position.distance_to(other_enemy.position)
+					if jump_distance < 16:
+						jump_blocked = true
+						break
+				
+				if not jump_blocked:
+					if player.has_method("create_jump_effect"):
+						player.create_jump_effect()
+					return jump_position
+	
+	return target_position
+
+func is_position_in_bounds(pos: Vector2) -> bool:
+	var grid_size = 12 * TILE_SIZE
+	return pos.x >= 0 and pos.x < grid_size and pos.y >= 0 and pos.y < grid_size
+
+func activate_jump() -> void:
+	jump_active = true
+	jump_timer.start()
+	powerup_activated.emit("Jump")

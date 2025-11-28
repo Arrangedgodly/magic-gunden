@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsi6cml66i01d"]
+
+[ext_resource type="Script" uid="uid://bfu6t17o31300" path="res://scripts/powerups/jump.gd" id="1_cqu17"]
+[ext_resource type="Texture2D" uid="uid://bx55klgqwfm4j" path="res://assets/items/powerups/jump.png" id="2_foi76"]
+
+[node name="Jump" type="Area2D"]
+script = ExtResource("1_cqu17")
+icon = ExtResource("2_foi76")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

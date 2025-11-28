@@ -8,16 +8,16 @@ signal powerup_spawned(position: Vector2)
 @onready var game_manager: Node2D = %GameManager
 
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
-var stomp_scene = preload("res://scenes/stomp.tscn")
-var magnet_scene = preload("res://scenes/magnet.tscn")
-var pierce_scene = preload("res://scenes/pierce.tscn")
-var ricochet_scene = preload("res://scenes/ricochet.tscn")
-var poison_scene = preload("res://scenes/poison.tscn")
-var auto_aim_scene = preload("res://scenes/auto_aim.tscn")
-var flames_scene = preload("res://scenes/flames.tscn")
-var free_ammo_scene = preload("res://scenes/free_ammo.tscn")
-var ice_scene = preload("res://scenes/ice.tscn")
-var cyclone_scene = preload("res://scenes/cyclone.tscn")
+var stomp_scene = preload("res://scenes/powerups/stomp.tscn")
+var magnet_scene = preload("res://scenes/powerups/magnet.tscn")
+var pierce_scene = preload("res://scenes/powerups/pierce.tscn")
+var ricochet_scene = preload("res://scenes/powerups/ricochet.tscn")
+var poison_scene = preload("res://scenes/powerups/poison.tscn")
+var auto_aim_scene = preload("res://scenes/powerups/auto_aim.tscn")
+var flames_scene = preload("res://scenes/powerups/flames.tscn")
+var free_ammo_scene = preload("res://scenes/powerups/free_ammo.tscn")
+var ice_scene = preload("res://scenes/powerups/ice.tscn")
+var jump_scene = preload("res://scenes/powerups/jump.tscn")
 var regen_yoyo: bool = true
 var yoyo_pos: Vector2i
 var level: int = 1
@@ -40,7 +40,7 @@ func _ready() -> void:
 	flames_scene,
 	free_ammo_scene,
 	ice_scene,
-	cyclone_scene
+	jump_scene
 ]
 
 func _process(_delta: float) -> void:

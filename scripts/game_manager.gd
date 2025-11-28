@@ -9,6 +9,7 @@ extends Node2D
 @onready var pickup_manager: PickupManager = %PickupManager
 @onready var enemy_manager: EnemyManager = %EnemyManager
 @onready var capture_point_manager: CapturePointManager = %CapturePointManager
+@onready var powerup_manager: PowerupManager = %PowerupManager
 
 @export var background_music: AudioStream
 @export var pickup_sfx: AudioStream
@@ -195,6 +196,9 @@ func handle_attack():
 		
 func move(dir):
 	var new_position = player.position + (dir * tile_size)
+	
+	if powerup_manager and powerup_manager.jump_active:
+		new_position = powerup_manager.check_jump_collision(new_position, dir)
 	
 	if trail_manager.has_trail():
 		var first_trail_position = trail_manager.get_first_trail_position()

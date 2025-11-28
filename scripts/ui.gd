@@ -12,16 +12,16 @@ extends Control
 
 var powerup_widget_scene = preload("res://scenes/powerup_widget.tscn")
 var powerup_icons = {
-	"Ricochet" = preload("res://assets/items/ricochet-new.png"),
-	"Pierce" = preload("res://assets/items/pierce-new.png"),
-	"Magnet" = preload("res://assets/items/magnet.png"),
-	"Stomp" = preload("res://assets/items/stomp.png"),
-	"Poison" = preload("res://assets/items/poison-new.png"),
-	"AutoAim" = preload("res://assets/items/auto_aim.png"),
-	"Flames" = preload("res://assets/items/flames-new.png"),
-	"FreeAmmo" = preload("res://assets/items/free-ammo.png"),
-	"Ice" = preload("res://assets/items/ice-new.png"),
-	"Cyclone" = preload("res://assets/items/cyclone-new.png")
+	"Ricochet" = preload("res://assets/items/powerups/ricochet-new.png"),
+	"Pierce" = preload("res://assets/items/powerups/pierce-new.png"),
+	"Magnet" = preload("res://assets/items/powerups/magnet.png"),
+	"Stomp" = preload("res://assets/items/powerups/stomp.png"),
+	"Poison" = preload("res://assets/items/powerups/poison-new.png"),
+	"AutoAim" = preload("res://assets/items/powerups/auto_aim.png"),
+	"Flames" = preload("res://assets/items/powerups/flames-new.png"),
+	"FreeAmmo" = preload("res://assets/items/powerups/free-ammo.png"),
+	"Ice" = preload("res://assets/items/powerups/ice-new.png"),
+	"Jump" = preload("res://assets/items/powerups/jump.png")
 }
 var active_widgets: Dictionary = {}
 var current_display_score: int = 0

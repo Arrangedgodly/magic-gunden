@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cowgq61vfrdry"]
+
+[ext_resource type="Script" uid="uid://dcla00c3tkruv" path="res://scripts/powerups/ice.gd" id="1_hdoyw"]
+[ext_resource type="Texture2D" uid="uid://bjgy4f4eun4pb" path="res://assets/items/powerups/ice-new.png" id="2_hdoyw"]
+
+[node name="Ice" type="Area2D"]
+script = ExtResource("1_hdoyw")
+icon = ExtResource("2_hdoyw")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

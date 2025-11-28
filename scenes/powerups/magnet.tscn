@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxu7cey7gtwvk"]
+
+[ext_resource type="Script" uid="uid://br17gum3x4e2s" path="res://scripts/powerups/magnet.gd" id="1_yp8jf"]
+[ext_resource type="Texture2D" uid="uid://iermdnmnsuv4" path="res://assets/items/powerups/magnet.png" id="2_oylys"]
+
+[node name="Magnet" type="Area2D"]
+script = ExtResource("1_yp8jf")
+icon = ExtResource("2_oylys")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

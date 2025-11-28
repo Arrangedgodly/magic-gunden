@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi6tsgb1qbly5"]
+
+[ext_resource type="Script" uid="uid://dv1tlwxlet10i" path="res://scripts/powerups/ricochet.gd" id="1_wsp5a"]
+[ext_resource type="Texture2D" uid="uid://bfos4yyqlw8hm" path="res://assets/items/powerups/ricochet-new.png" id="2_qwljd"]
+
+[node name="Ricochet" type="Area2D"]
+script = ExtResource("1_wsp5a")
+icon = ExtResource("2_qwljd")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

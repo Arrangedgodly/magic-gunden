@@ -137,12 +137,12 @@ theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Ice"
 
-[node name="Cyclone" type="Button" parent="Control/PowerupMenu"]
+[node name="Jump" type="Button" parent="Control/PowerupMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
-text = "Spawn Cyclone"
+text = "Spawn Jump"
 
 [node name="Back" type="Button" parent="Control/PowerupMenu"]
 layout_mode = 2
