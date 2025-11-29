@@ -357,13 +357,18 @@ func _on_reset_controls_pressed() -> void:
 	
 	for action_data in remappable_actions:
 		var action = action_data["action"]
-		var default_key = settings_save.get_control_key(action)
 		
+		var default_key = settings_save.get_control_key(action)
 		if default_key != -1:
-			InputMap.action_erase_events(action)
-			var new_event = InputEventKey.new()
-			new_event.physical_keycode = default_key
-			InputMap.action_add_event(action, new_event)
+			remap_keyboard_action(action, default_key)
+			
+		var default_button = settings_save.get_controller_button(action)
+		if default_button != -1:
+			remap_controller_button_action(action, default_button)
+			
+		var axis_data = settings_save.get_controller_axis(action)
+		if not axis_data.is_empty():
+			remap_controller_axis_action(action, axis_data["axis"], axis_data["value"])
 	
 	save_settings()
 	populate_controls()

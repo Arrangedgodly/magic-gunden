@@ -42,6 +42,7 @@ var time_alive: int
 var gems_captured: int
 var ammo = Ammo.new()
 var scores_to_update: Array
+var is_tutorial_mode: bool = false
 
 signal level_changed(new_level: int)
 signal gem_converted(point_value: int)
@@ -114,11 +115,20 @@ func _process(_delta: float) -> void:
 func start_game():
 	game_started = true
 	AudioManager.play_music(background_music)
-	move_timer.start()
+	if not is_tutorial_mode:
+		move_timer.start()
+		capture_point_manager.start_capture_systems()
+		time_counter.start()
+		enemy_manager.start_enemy_systems()
+	else:
+		move_timer.start()
+
+func start_normal_gameplay_loop():
+	is_tutorial_mode = false
 	capture_point_manager.start_capture_systems()
 	time_counter.start()
 	enemy_manager.start_enemy_systems()
-	
+
 func end_game():
 	AudioManager.stop(background_music)
 	AudioManager.play_start(death_sfx)
@@ -130,7 +140,12 @@ func end_game():
 	save_game()
 
 func save_game():
-	var saved_game:SavedGame = load("user://save.tres") as SavedGame
+	var saved_game_path = "user://save.tres"
+	var saved_game: SavedGame
+	
+	if FileAccess.file_exists(saved_game_path):
+		saved_game = load(saved_game_path)
+	
 	if saved_game == null:
 		saved_game = SavedGame.new()
 		

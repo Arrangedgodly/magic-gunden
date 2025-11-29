@@ -29,26 +29,29 @@ func stop_enemy_systems() -> void:
 	enemy_spawn.stop()
 	enemy_move.stop()
 
-func spawn_enemy() -> void:
-	var enemy_pos = random_pos()
-	var attempts = 0
+func spawn_enemy(override_pos: Vector2 = Vector2.ZERO) -> void:
+	var enemy_pos: Vector2
 	
-	while not is_valid_spawn_position(enemy_pos) and attempts < 100:
+	if override_pos != Vector2.ZERO:
+		enemy_pos = override_pos
+	else:
 		enemy_pos = random_pos()
-		attempts += 1
-	
-	if attempts >= 100:
-		return
+		var attempts = 0
+		while not is_valid_spawn_position(enemy_pos) and attempts < 100:
+			enemy_pos = random_pos()
+			attempts += 1
+		if attempts >= 100:
+			return
 	
 	var enemy_instance = blue_slime_scene.instantiate()
 	enemy_instance.position = enemy_pos
-	enemy_instance.position += Vector2.RIGHT * 16
-	enemy_instance.position += Vector2.DOWN * 16
+	if override_pos == Vector2.ZERO:
+		enemy_instance.position += Vector2.RIGHT * 16
+		enemy_instance.position += Vector2.DOWN * 16
 	
 	game_manager.add_child(enemy_instance)
 	
 	enemy_instance.was_killed.connect(_on_slime_killed)
-	
 	setup_enemy_collision_exceptions(enemy_instance)
 	
 	enemy_instance.sprite.play("spawn")
