@@ -1,79 +1,83 @@
 extends Control
+class_name Tutorial
 
 var tutorial_save: TutorialSave
 
-@onready var instruction_label: Label = $TutorialPanel/MarginContainer/VBoxContainer/InstructionLabel
-@onready var hint_label: Label = $TutorialPanel/MarginContainer/VBoxContainer/HintLabel
-@onready var progress_label: Label = $TutorialPanel/MarginContainer/VBoxContainer/ProgressLabel
-@onready var skip_button: Button = $TutorialPanel/MarginContainer/VBoxContainer/SkipButton
+@onready var instruction_label: Label = %InstructionLabel
+@onready var hint_label: Label = %HintLabel
+@onready var progress_label: Label = %ProgressLabel
+@onready var skip_button: Button = %SkipButton
+@onready var background: Panel = $TutorialPanel
 
-# Managers
 var game_manager: Node2D
 var player: CharacterBody2D
 var trail_manager: TrailManager
 var enemy_manager: EnemyManager
 var capture_manager: CapturePointManager
+var pickup_manager: PickupManager
+var powerup_manager: PowerupManager
 
-# Scene Preloads
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var stomp_scene = preload("res://scenes/powerups/stomp.tscn")
-var capture_point_scene = preload("res://scenes/capture_point.tscn")
 
 enum TutorialStep {
 	WELCOME,
 	MOVEMENT,
 	SPAWN_GEM,
 	PICKUP_GEM,
-	SPAWN_CAPTURE,
+	EXPLAIN_CAPTURE_ZONES,
 	CAPTURE_GEM,
+	EXPLAIN_CAPTURE_MOVEMENT,
 	SPAWN_GEM_FOR_ENEMY,
 	PICKUP_GEM_FOR_ENEMY,
+	MOVE_AWAY_FROM_CAPTURE,
 	MAKE_ENEMY,
+	ENEMY_MOVEMENT_EXPLANATION,
+	AIM_AT_ENEMY,
 	KILL_ENEMY,
 	SPAWN_POWERUP,
 	COLLECT_POWERUP,
+	TEST_POWERUP,
+	FINAL_EXPLANATION,
 	COMPLETE
 }
 
 var current_step: TutorialStep = TutorialStep.WELCOME
 var tutorial_active: bool = false
 var is_using_controller: bool = false 
-
-# Hardcoded Positions (Based on 12x12 Grid, 32px tiles)
-# Center of map is approx 192, 192
-var start_pos = Vector2(176, 176) # Center Tile
-var right_pos = Vector2(240, 176) # 2 Tiles Right
-var left_pos = Vector2(112, 176)  # 2 Tiles Left
-var top_pos = Vector2(176, 112)   # 2 Tiles Up
-
-# State Tracking
 var has_moved: bool = false
-var has_picked_up_gem: bool = false
+var has_aimed: bool = false
 var enemies_spawned_by_trail: int = 0
-var capture_points_created: Array[Node] = []
+var test_enemies_killed: int = 0
+var waiting_for_continue: bool = false
+var tutorial_spawned_yoyo: Node = null
+var tutorial_spawned_powerup: Node = null
 
 signal tutorial_finished
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	# Check for controller immediately
+	self.z_index = 300
+
 	if Input.get_connected_joypads().size() > 0:
 		is_using_controller = true
-	
-	# Get References
+
 	game_manager = get_node_or_null("/root/MagicGarden/GameManager")
 	player = get_node_or_null("/root/MagicGarden/Player")
 	trail_manager = get_node_or_null("/root/MagicGarden/TrailManager")
 	enemy_manager = get_node_or_null("/root/MagicGarden/EnemyManager")
 	capture_manager = get_node_or_null("/root/MagicGarden/CapturePointManager")
-	
-	# Connect Signals
+	pickup_manager = get_node_or_null("/root/MagicGarden/PickupManager")
+	powerup_manager = get_node_or_null("/root/MagicGarden/PowerupManager")
+
 	if trail_manager:
 		trail_manager.trail_item_converted_to_ammo.connect(_on_trail_converted_to_ammo)
 		trail_manager.trail_item_converted_to_enemy.connect(_on_trail_converted_to_enemy)
 	
-	# Load Save Data
+	if enemy_manager:
+		enemy_manager.slime_killed.connect(_on_test_enemy_killed)
+
 	var tutorial_path = "user://tutorial.tres"
 	if FileAccess.file_exists(tutorial_path):
 		tutorial_save = load(tutorial_path)
@@ -88,138 +92,246 @@ func _ready() -> void:
 		
 	if skip_button:
 		skip_button.pressed.connect(_on_skip_pressed)
+		update_skip_button_text()
 
 func start_tutorial_logic() -> void:
 	tutorial_active = true
 	show()
+
+	await get_tree().process_frame
 	
 	if game_manager and player:
-		# 1. Teleport Player to Center (Safety First)
-		player.position = start_pos
+		game_manager.is_tutorial_mode = true
+		game_manager.tutorial_mode_active = true
 		
-		# 2. Manual Game Start
-		# We set game_started to true so inputs work...
+		if pickup_manager:
+			pickup_manager.regen_yoyo = false
+
+		if capture_manager:
+			capture_manager.enable_tutorial_mode()
+			capture_manager.clear_capture_points()
+			var spawn_point = capture_manager.find_capture_spawn_point()
+			capture_manager.spawn_capture_points(spawn_point)
+
+		if enemy_manager:
+			enemy_manager.stop_enemy_systems()
+			enemy_manager.clear_all_enemies()
+
 		game_manager.game_started = true
-		# ...but we ONLY start the move timer. We do NOT call start_game().
-		# This prevents the GameManager from starting the Enemy/Capture timers.
 		game_manager.move_timer.start()
-		
-		# 3. Double check systems are off
-		if capture_manager: capture_manager.stop_capture_systems()
-		if enemy_manager: enemy_manager.stop_enemy_systems()
 
 	current_step = TutorialStep.WELCOME
 	show_step()
 
 func _input(event: InputEvent) -> void:
-	if not tutorial_active: return
+	if not tutorial_active: 
+		return
 
-	# Simple Input Switching
+	if waiting_for_continue:
+		return
+
+	if event.is_action_pressed("move-up") or event.is_action_pressed("move-down") or \
+	   event.is_action_pressed("move-left") or event.is_action_pressed("move-right"):
+		has_moved = true
+
 	if event is InputEventJoypadMotion:
 		if abs(event.axis_value) > 0.5 and not is_using_controller:
 			is_using_controller = true
 			refresh_step_text()
+			update_skip_button_text()
 	elif event is InputEventJoypadButton:
 		if event.pressed and not is_using_controller:
 			is_using_controller = true
 			refresh_step_text()
+			update_skip_button_text()
 	elif (event is InputEventKey or event is InputEventMouseButton) and is_using_controller:
 		is_using_controller = false
 		refresh_step_text()
-	
-	if event.is_action_pressed("ui_cancel"):
+		update_skip_button_text()
+
+	if event.is_action_pressed("skip"):
 		_on_skip_pressed()
+
+func pause_and_wait() -> void:
+	var inputs = get_input_strings()
+	waiting_for_continue = true
+	get_tree().paused = true
+	self.z_index = 300
+	background.show()
+
+	var continue_text = hint_label.text + "\n\n[Press %s to continue]" % inputs.accept
+	hint_label.text = continue_text
+
+	while waiting_for_continue:
+		await get_tree().process_frame
 
 func show_step() -> void:
 	var inputs = get_input_strings()
+	var total_steps = 18
 	
 	match current_step:
 		TutorialStep.WELCOME:
-			set_text("Welcome to Magic Garden!", "Let's learn how to survive.", "1/10")
-			await get_tree().create_timer(3.0).timeout
-			if check_step(TutorialStep.WELCOME): next_step()
+			instruction_label.text = "Welcome to Magic Garden!"
+			hint_label.text = "Let's learn how to survive."
+			progress_label.text = "1/%d" % total_steps
+			await get_tree().create_timer(2.0).timeout
+			next_step()
 
 		TutorialStep.MOVEMENT:
-			set_text("MOVEMENT", "Use %s to move." % inputs.move, "2/10")
+			instruction_label.text = "MOVEMENT"
+			hint_label.text = "Use %s to move around the grid." % inputs.move
+			progress_label.text = "2/%d" % total_steps
 
 		TutorialStep.SPAWN_GEM:
-			spawn_item(yoyo_scene, right_pos) # Fixed Position Right
+			cleanup_tutorial_spawns()
+			spawn_gem_near_player()
 			next_step()
 
 		TutorialStep.PICKUP_GEM:
-			set_text("COLLECT GEMS", "Walk over the blue gem to pick it up.", "3/10")
+			instruction_label.text = "COLLECT GEMS"
+			hint_label.text = "Walk over the gem to pick it up. Gems form a trail behind you."
+			progress_label.text = "3/%d" % total_steps
 
-		TutorialStep.SPAWN_CAPTURE:
-			spawn_capture_points(left_pos) # Fixed Position Left
+		TutorialStep.EXPLAIN_CAPTURE_ZONES:
+			instruction_label.text = "CAPTURE ZONES"
+			hint_label.text = "These colored tiles are Capture Zones. They are essential for ammo."
+			progress_label.text = "4/%d" % total_steps
 			next_step()
 
 		TutorialStep.CAPTURE_GEM:
-			set_text("CAPTURE GEMS", "Stand on the GLOWING TILES and Press %s." % inputs.detach, "4/10")
-			hint_label.text = "Gems must be ON the tiles when you detach!"
+			instruction_label.text = "GET AMMO"
+			hint_label.text = "Move so your GEM TRAIL is ON the tiles, then press %s. The trail turns into ammo!" % inputs.detach
+			progress_label.text = "5/%d" % total_steps
+			await pause_and_wait()
+			
+		TutorialStep.EXPLAIN_CAPTURE_MOVEMENT:
+			instruction_label.text = "ZONES MOVE"
+			hint_label.text = "Zones move to a new location when you capture, or if unused too long. Watch them flash!"
+			progress_label.text = "6/%d" % total_steps
+			await pause_and_wait()
+			
+			if capture_manager:
+				for i in range(3):
+					capture_manager.flash_capture_points()
+					await get_tree().create_timer(0.5).timeout
+				
+				await get_tree().create_timer(1.0).timeout
+				
+				capture_manager.clear_capture_points()
+				var spawn_point = capture_manager.find_capture_spawn_point()
+				capture_manager.spawn_capture_points(spawn_point)
+				
+				next_step()
 
 		TutorialStep.SPAWN_GEM_FOR_ENEMY:
-			await get_tree().create_timer(1.0).timeout
-			cleanup_capture_points()
-			spawn_item(yoyo_scene, right_pos) # Reuse Right Position
+			await get_tree().create_timer(0.5).timeout
+			cleanup_tutorial_spawns()
+			spawn_gem_near_player()
 			next_step()
 			
 		TutorialStep.PICKUP_GEM_FOR_ENEMY:
-			has_picked_up_gem = false 
-			set_text("RELOAD", "Pick up this new gem.", "5/10")
+			instruction_label.text = "RELOAD"
+			hint_label.text = "Pick up this gem. You'll use it to create an enemy."
+			progress_label.text = "7/%d" % total_steps
+
+		TutorialStep.MOVE_AWAY_FROM_CAPTURE:
+			instruction_label.text = "MOVE AWAY"
+			hint_label.text = "Move away from the capture zones (at least 2 tiles away)."
+			progress_label.text = "8/%d" % total_steps
 
 		TutorialStep.MAKE_ENEMY:
-			set_text("CREATE TRAPS", "Stand AWAY from points and Press %s." % inputs.detach, "6/10")
-			hint_label.text = "Gems NOT on capture points turn into Slimes!"
+			instruction_label.text = "CREATE ENEMIES"
+			hint_label.text = "Press %s while NOT on capture points. Gems off tiles turn into Slimes!" % inputs.detach
+			progress_label.text = "9/%d" % total_steps
+			await pause_and_wait()
+
+		TutorialStep.ENEMY_MOVEMENT_EXPLANATION:
+			instruction_label.text = "ENEMY BEHAVIOR"
+			hint_label.text = "Slimes turn to face their target, then move. Watch closely!"
+			progress_label.text = "10/%d" % total_steps
+			await pause_and_wait()
+			
+			if enemy_manager:
+				enemy_manager.move_all_enemies()
+			
+			await get_tree().create_timer(1.5).timeout
+			next_step()
+
+		TutorialStep.AIM_AT_ENEMY:
+			instruction_label.text = "AIMING"
+			hint_label.text = "Use %s to aim at the slime. The crosshair shows your aim direction." % inputs.aim
+			progress_label.text = "11/%d" % total_steps
 
 		TutorialStep.KILL_ENEMY:
-			set_text("COMBAT", "A Slime appeared! Aim with %s and Shoot with %s" % [inputs.aim, inputs.shoot], "7/10")
-		
+			instruction_label.text = "ATTACK"
+			hint_label.text = "Press %s to shoot at the slime! Kill it before it reaches you!" % inputs.shoot
+			progress_label.text = "12/%d" % total_steps
+
 		TutorialStep.SPAWN_POWERUP:
-			spawn_item(stomp_scene, top_pos) # Fixed Position Up
+			spawn_powerup_near_player()
+			await get_tree().create_timer(0.3).timeout
 			next_step()
-			
+
 		TutorialStep.COLLECT_POWERUP:
-			set_text("POWERUPS", "Collect the Stomp Powerup!", "8/10")
-			hint_label.text = "Powerups spawn when you capture 6+ gems at once."
+			instruction_label.text = "POWERUPS"
+			hint_label.text = "This is a Stomp powerup! Walk over it to collect it."
+			progress_label.text = "13/%d" % total_steps
+
+		TutorialStep.TEST_POWERUP:
+			instruction_label.text = "TEST STOMP"
+			hint_label.text = "Touch the slimes to kill them! Stomp is active for a limited time."
+			progress_label.text = "14/%d" % total_steps
+			spawn_test_enemies(5)
+
+		TutorialStep.FINAL_EXPLANATION:
+			instruction_label.text = "TUTORIAL COMPLETE!"
+			hint_label.text = "You now know the basics. Survive as long as you can!"
+			progress_label.text = "15/%d" % total_steps
+			await pause_and_wait()
+			next_step()
 
 		TutorialStep.COMPLETE:
-			set_text("TUTORIAL COMPLETE!", "You're ready! Good luck!", "Complete!")
-			await get_tree().create_timer(3.0).timeout
 			finish_tutorial()
 
-# --- SPAWNING HELPERS ---
+func spawn_gem_near_player() -> void:
+	if not game_manager or not player or not pickup_manager:
+		return
+	
+	pickup_manager.force_spawn_yoyo()
 
-func spawn_item(scene, pos: Vector2) -> void:
-	if not scene: return
-	var instance = scene.instantiate()
-	instance.position = pos
-	game_manager.call_deferred("add_child", instance)
+func spawn_powerup_near_player() -> void:
+	if not pickup_manager:
+		return
 
-func spawn_capture_points(pos: Vector2) -> void:
-	# Spawn a 2x1 vertical bar of capture points
-	for i in range(2):
-		var cp = capture_point_scene.instantiate()
-		cp.position = pos + Vector2(0, i * 32)
-		game_manager.add_child(cp)
-		capture_points_created.append(cp)
-		if cp.sprite_frames.has_animation("blue"):
-			cp.play("blue")
+	pickup_manager.force_spawn_pickup(3)
 
-func cleanup_capture_points() -> void:
-	for cp in capture_points_created:
-		if is_instance_valid(cp):
-			cp.queue_free()
-	capture_points_created.clear()
+func spawn_test_enemies(count: int) -> void:
+	if not enemy_manager:
+		return
 
-# --- LOGIC UPDATES ---
+	for i in range(count):
+		await get_tree().create_timer(0.3).timeout
+		enemy_manager.spawn_enemy()
+
+func cleanup_tutorial_spawns() -> void:
+	tutorial_spawned_yoyo = null
+	tutorial_spawned_powerup = null
 
 func _process(_delta: float) -> void:
-	if not tutorial_active: return
+	if waiting_for_continue:
+		if Input.is_action_just_pressed("ui_accept"):
+			self.z_index = 0
+			background.hide()
+			waiting_for_continue = false
+			get_tree().paused = false
+		return
+	
+	if not tutorial_active: 
+		return
 	
 	match current_step:
 		TutorialStep.MOVEMENT:
-			# Check distance from the hardcoded start_pos
-			if player.position.distance_to(start_pos) > 10.0:
+			if has_moved:
 				next_step()
 		
 		TutorialStep.PICKUP_GEM:
@@ -230,81 +342,135 @@ func _process(_delta: float) -> void:
 			if trail_manager.get_trail_size() > 0:
 				next_step()
 		
+		TutorialStep.MOVE_AWAY_FROM_CAPTURE:
+			var capture_points = get_tree().get_nodes_in_group("capture")
+			var min_distance = INF
+			for cp in capture_points:
+				if is_instance_valid(cp):
+					var dist = player.position.distance_to(cp.position)
+					min_distance = min(min_distance, dist)
+			
+			if min_distance > 64.0:
+				next_step()
+		
+		TutorialStep.AIM_AT_ENEMY:
+			if game_manager.aim_direction != Vector2(0, 1):
+				has_aimed = true
+				next_step()
+		
 		TutorialStep.KILL_ENEMY:
 			if enemy_manager.get_enemy_count() == 0 and enemies_spawned_by_trail > 0:
 				next_step()
 		
 		TutorialStep.COLLECT_POWERUP:
-			# If player collected it (it's gone), move on
-			if game_manager.get_node_or_null("Stomp") == null: 
-				# Note: This relies on the pickup deleting itself. 
-				# Better to check if powerup manager has it active:
-				if get_node("/root/MagicGarden/PowerupManager").is_stomp_active():
-					next_step()
+			if powerup_manager and powerup_manager.is_stomp_active():
+				next_step()
+		
+		TutorialStep.TEST_POWERUP:
+			if test_enemies_killed >= 1:
+				next_step()
 
 func _on_trail_converted_to_ammo(_streak, _pos):
 	if current_step == TutorialStep.CAPTURE_GEM:
 		AudioManager.play_sound(game_manager.pickup_sfx)
+		await get_tree().create_timer(0.5).timeout
+
+		if capture_manager:
+			capture_manager.clear_capture_points()
+			var spawn_point = capture_manager.find_capture_spawn_point()
+			capture_manager.spawn_capture_points(spawn_point)
 		next_step()
-	elif current_step == TutorialStep.MAKE_ENEMY:
-		set_text("OOPS!", "You captured it! Try again.", "Retrying...")
+
+	elif current_step == TutorialStep.MAKE_ENEMY or current_step == TutorialStep.MOVE_AWAY_FROM_CAPTURE:
+		instruction_label.text = "OOPS!"
+		hint_label.text = "You captured it! Try stepping off the glowing tiles."
+		progress_label.text = "Retrying..."
 		await get_tree().create_timer(2.0).timeout
 		current_step = TutorialStep.SPAWN_GEM_FOR_ENEMY
 		show_step()
 
 func _on_trail_converted_to_enemy(_pos):
-	if current_step == TutorialStep.MAKE_ENEMY:
-		enemies_spawned_by_trail += 1
-		next_step()
+	if current_step != TutorialStep.MAKE_ENEMY:
+		return
+		
+	enemies_spawned_by_trail += 1
 
-# --- UTILITIES ---
+	await get_tree().create_timer(0.1).timeout
+
+	next_step()
+
+func _on_test_enemy_killed() -> void:
+	if current_step == TutorialStep.TEST_POWERUP:
+		test_enemies_killed += 1
 
 func check_step(step: TutorialStep) -> bool:
 	return tutorial_active and current_step == step
 
 func next_step() -> void:
-	if current_step == TutorialStep.COMPLETE: return
+	if current_step == TutorialStep.COMPLETE: 
+		return
 	current_step = TutorialStep.values()[current_step + 1] as TutorialStep
 	show_step()
 
 func refresh_step_text() -> void:
 	show_step()
 
-func set_text(instr: String, hint: String, prog: String) -> void:
-	instruction_label.text = instr
-	hint_label.text = hint
-	progress_label.text = prog
+func update_skip_button_text() -> void:
+	if not skip_button:
+		return
+	
+	if is_using_controller:
+		skip_button.text = "Skip Tutorial (B)"
+	else:
+		skip_button.text = "Skip Tutorial (T)"
 
 func get_input_strings() -> Dictionary:
 	if is_using_controller:
 		return {
 			"move": "Left Stick",
-			"detach": "Button East (B/Circle)",
+			"detach": "Left Bumper/Trigger",
 			"aim": "Right Stick",
-			"shoot": "Right Trigger"
+			"shoot": "Right Bumper/Trigger",
+			"accept": "A/X"
 		}
 	else:
 		return {
 			"move": "WASD",
-			"detach": "E or Space",
-			"aim": "Arrows",
-			"shoot": "Space"
+			"detach": "E",
+			"aim": "Arrow Keys",
+			"shoot": "Space",
+			"accept": "Enter"
 		}
 
 func finish_tutorial() -> void:
-	cleanup_capture_points()
+	cleanup_tutorial_spawns()
+	
 	tutorial_active = false
 	tutorial_save.show_tutorial = false
 	ResourceSaver.save(tutorial_save, "user://tutorial.tres")
+
+	if pickup_manager:
+		pickup_manager.regen_yoyo = true
 	
-	# NOW we start the real game chaos
+	if capture_manager:
+		capture_manager.clear_capture_points()
+		capture_manager.disable_tutorial_mode()
+
+		var spawn_point = capture_manager.find_capture_spawn_point()
+		capture_manager.spawn_capture_points(spawn_point)
+
 	if game_manager:
-		if capture_manager: capture_manager.start_capture_systems()
-		if enemy_manager: enemy_manager.start_enemy_systems()
-		game_manager.time_counter.start()
+		game_manager.start_normal_gameplay_loop()
 		
 	tutorial_finished.emit()
 	queue_free()
 
 func _on_skip_pressed() -> void:
+	if waiting_for_continue:
+		waiting_for_continue = false
+		get_tree().paused = false
+	
+	tutorial_save.show_tutorial = false
+	ResourceSaver.save(tutorial_save, "user://tutorial.tres")
+	
 	finish_tutorial()

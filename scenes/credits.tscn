@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://j81xtfthil7b" path="res://scripts/credits.gd" id="1_w6cxx"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_xdy3h"]
-[ext_resource type="AudioStream" uid="uid://dwowopskm0d7t" path="res://assets/sounds/music/Peu Importe - One Month to Move - 17 Eyes in the Shadow.wav" id="2_g801i"]
+[ext_resource type="AudioStream" uid="uid://bt68qq04jj871" path="res://assets/sounds/music/Eyes in the Shadow.wav" id="2_4t8yx"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="3_hn13o"]
 [ext_resource type="Texture2D" uid="uid://dp6ns6e5nqynt" path="res://assets/map/Space Background_blue.png" id="5_52ucs"]
 [ext_resource type="Texture2D" uid="uid://d3hbpmt2dppbv" path="res://assets/character/runframe1.png" id="6_vcety"]
@@ -187,7 +187,7 @@ use_hdr = true
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_w6cxx")
-credits_music = ExtResource("2_g801i")
+credits_music = ExtResource("2_4t8yx")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -608,6 +608,30 @@ text = "KennyAssets - Itch.io"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ControlsMusic" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="ControlsMusic" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/ControlsMusic"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Controls Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Phantom of the Pocket Operator" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/ControlsMusic"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Phantom of the Pocket Operator - Peu IMPORTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CreditsMusic" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
 layout_mode = 2
 
@@ -704,6 +728,30 @@ text = "Future Skies - Peu IMPORTE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="OptionsMusic" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="OptionsMusic" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/OptionsMusic"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Options Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TickTickHaunt" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/OptionsMusic"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Tick Tick Haunt - Peu IMPORTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="RetroSFX" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
 layout_mode = 2
 
@@ -749,6 +797,30 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_xdy3h")
 theme_override_font_sizes/font_size = 28
 text = "ELVGames - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TutorialMusic" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="TutorialMusic" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/TutorialMusic"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Options Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BankBalance" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/TutorialMusic"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Bank Balance $13.27 - Peu IMPORTE"
 horizontal_alignment = 1
 vertical_alignment = 1
 

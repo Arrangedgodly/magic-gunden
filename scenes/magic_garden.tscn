@@ -603,7 +603,6 @@ offset_bottom = -288.0
 scale = Vector2(0.75, 0.75)
 
 [node name="CRT" parent="." instance=ExtResource("26_2xw40")]
-z_index = 1000
 z_as_relative = false
 offset_left = -600.0
 offset_top = -392.0
@@ -613,10 +612,8 @@ offset_bottom = 408.0
 [node name="DevConsole" parent="." instance=ExtResource("33_a4uvu")]
 
 [node name="Tutorial" parent="." instance=ExtResource("35_a2mr6")]
-z_index = 30
-offset_top = -140.0
-offset_bottom = -140.0
-scale = Vector2(0.5, 0.5)
+unique_name_in_owner = true
+scale = Vector2(0.75, 0.75)
 
 [connection signal="timeout" from="AnimatedBackground/BackgroundSwap" to="AnimatedBackground" method="_on_background_swap_timeout"]
 [connection signal="game_ended" from="GameManager" to="EndGameScreen" method="_on_game_manager_game_ended"]

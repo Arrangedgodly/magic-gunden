@@ -12,6 +12,9 @@ extends Control
 @onready var back_button: Button = %BackButton
 @onready var margin_container: MarginContainer = $MarginContainer
 
+@export var options_music: AudioStream
+@export var controls_music: AudioStream
+
 var settings_save: SettingsSave
 
 signal options_closed
@@ -30,6 +33,8 @@ func _ready() -> void:
 	controls_button.pressed.connect(_on_controls_pressed)
 	back_button.pressed.connect(_on_back_pressed)
 	back_button.grab_focus()
+	
+	AudioManager.play_music(options_music)
 
 func load_settings() -> void:
 	settings_save = load("user://settings.tres") as SettingsSave
@@ -88,7 +93,7 @@ func _on_sfx_volume_changed(value: float) -> void:
 
 func linear_to_db(linear: float) -> float:
 	if linear <= 0:
-		return -80.0  # Mute
+		return -80.0
 	return 20.0 * log(linear) / log(10.0)
 
 func _on_reset_save_pressed() -> void:
@@ -149,13 +154,20 @@ func _on_controls_pressed() -> void:
 		
 	controls_instance.controls_closed.connect(_on_controls_closed)
 	margin_container.hide()
+	
+	AudioManager.stop(options_music)
+	AudioManager.play_music(controls_music)
 
 func _on_controls_closed() -> void:
 	margin_container.show()
 	back_button.grab_focus()
+	
+	AudioManager.stop(controls_music)
+	AudioManager.play_music(options_music)
 
 func _on_back_pressed() -> void:
 	options_closed.emit()
+	AudioManager.stop(options_music)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

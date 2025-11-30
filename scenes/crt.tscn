@@ -35,12 +35,14 @@ glow_bloom = 0.3
 glow_map_strength = 0.5
 
 [node name="CRT" type="ColorRect"]
+z_index = 1000
 material = SubResource("ShaderMaterial_v0df1")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dagn0")

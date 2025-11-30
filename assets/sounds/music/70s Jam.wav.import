@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://de4xib533vhgt"
+path="res://.godot/imported/70s Jam.wav-7377110864fe86c541def0d83de8301e.sample"
+
+[deps]
+
+source_file="res://assets/sounds/music/70s Jam.wav"
+dest_files=["res://.godot/imported/70s Jam.wav-7377110864fe86c541def0d83de8301e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

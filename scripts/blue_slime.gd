@@ -1,3 +1,4 @@
+@icon("res://assets/icons/icon_skull.png")
 extends CharacterBody2D
 class_name Slime
 

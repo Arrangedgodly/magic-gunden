@@ -371,7 +371,7 @@ func _on_reset_controls_pressed() -> void:
 			remap_controller_axis_action(action, axis_data["axis"], axis_data["value"])
 	
 	save_settings()
-	populate_controls()
+	populate_controls() 
 
 func _on_back_pressed() -> void:
 	controls_closed.emit()

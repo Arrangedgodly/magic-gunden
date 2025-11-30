@@ -1,3 +1,4 @@
+@icon("res://assets/icons/icon_bullet.png")
 extends AnimatedSprite2D
 class_name Projectile
 

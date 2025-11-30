@@ -4,6 +4,7 @@ extends Node2D
 @onready var player: CharacterBody2D = %Player
 @onready var pause_screen: Node2D = $"../PauseScreen"
 @onready var time_counter: Timer = $TimeCounter
+@onready var tutorial: Tutorial = %Tutorial
 
 @onready var trail_manager: TrailManager = %TrailManager
 @onready var pickup_manager: PickupManager = %PickupManager
@@ -43,6 +44,7 @@ var gems_captured: int
 var ammo = Ammo.new()
 var scores_to_update: Array
 var is_tutorial_mode: bool = false
+var tutorial_mode_active: bool = false
 
 signal level_changed(new_level: int)
 signal gem_converted(point_value: int)
@@ -68,7 +70,8 @@ func _initialize() -> void:
 	
 	pickup_manager.yoyo_collected.connect(_on_yoyo_collected)
 	
-	capture_point_manager.initialize_first_spawn()
+	if not (tutorial and tutorial.tutorial_save and tutorial.tutorial_save.show_tutorial):
+		capture_point_manager.initialize_first_spawn()
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("move-left") and last_direction != right:
@@ -96,7 +99,7 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("aim-up"):
 		aim_direction = up
 	if Input.is_action_just_pressed("detach"):
-		trail_manager.release_trail()  # CHANGED!
+		trail_manager.release_trail()
 	if Input.is_action_just_pressed("attack"):
 		is_attacking = true
 
@@ -109,13 +112,16 @@ func _process(_delta: float) -> void:
 		score = score + score_to_add
 		update_score.emit(score)
 		
-	
 	killstreak.emit(kill_count)
 
 func start_game():
+	if game_started:
+		return
+		
 	game_started = true
-	AudioManager.play_music(background_music)
+	
 	if not is_tutorial_mode:
+		AudioManager.play_music(background_music)
 		move_timer.start()
 		capture_point_manager.start_capture_systems()
 		time_counter.start()
@@ -125,7 +131,16 @@ func start_game():
 
 func start_normal_gameplay_loop():
 	is_tutorial_mode = false
-	capture_point_manager.start_capture_systems()
+	tutorial_mode_active = false
+	
+	# Start background music
+	if background_music:
+		AudioManager.play_music(background_music)
+	
+	if capture_point_manager:
+		capture_point_manager.disable_tutorial_mode()
+		capture_point_manager.start_capture_systems()
+	
 	time_counter.start()
 	enemy_manager.start_enemy_systems()
 
@@ -273,10 +288,15 @@ func _on_pause_screen_visibility_changed() -> void:
 		AudioManager.pause(background_music)
 		game_paused = true
 		ui_visible.emit(false)
+		if tutorial:
+			if tutorial.visible:
+				tutorial.hide()
 	else:
 		AudioManager.resume(background_music)
 		game_paused = false
 		ui_visible.emit(true)
+		if tutorial and not tutorial.visible:
+			tutorial.show()
 
 func _on_yoyo_collected() -> void:
 	handle_pickup_yoyo()

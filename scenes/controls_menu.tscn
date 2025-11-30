@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://sqy3ak3goim2"]
+[gd_scene load_steps=5 format=3 uid="uid://sqy3ak3goim2"]
 
 [ext_resource type="Script" uid="uid://14hnvr8qqkfs" path="res://scripts/controls_menu.gd" id="1_5qlyv"]
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="2_d0u3u"]
 [ext_resource type="PackedScene" uid="uid://d18aq1dt35mtn" path="res://scenes/controls_background.tscn" id="2_n0kuk"]
+[ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="4_n0kuk"]
 
 [node name="ControlsMenu" type="Control"]
 z_index = 100
@@ -97,3 +98,11 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_d0u3u")
 theme_override_font_sizes/font_size = 32
 text = "Go Back"
+
+[node name="CRT" parent="." instance=ExtResource("4_n0kuk")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1

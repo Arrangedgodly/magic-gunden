@@ -15,7 +15,9 @@ func _ready() -> void:
 	AudioManager.play_music(high_score_music)
 	scores.hide()
 	no_scores.hide()
-	saved_game = load("user://save.tres") as SavedGame
+	var saved_game_path = "user://save.tres"
+	if FileAccess.file_exists(saved_game_path):
+		saved_game = load(saved_game_path) as SavedGame
 	if saved_game == null:
 		no_scores.show()
 	else:

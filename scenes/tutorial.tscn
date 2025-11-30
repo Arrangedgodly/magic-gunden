@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bes2y8yuoiojf"]
+[gd_scene load_steps=6 format=3 uid="uid://bes2y8yuoiojf"]
 
 [ext_resource type="Script" uid="uid://dtck24pdlebua" path="res://scripts/tutorial.gd" id="1_ph3nu"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="2_4kmhl"]
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="3_cq4me"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ph3nu"]
+bg_color = Color(0, 0, 0, 0.91764706)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ph3nu"]
 
 [node name="Tutorial" type="Control"]
 layout_mode = 3
@@ -14,14 +19,14 @@ grow_vertical = 2
 script = ExtResource("1_ph3nu")
 
 [node name="TutorialPanel" type="Panel" parent="."]
-custom_minimum_size = Vector2(800, 200)
+custom_minimum_size = Vector2(800, 300)
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ph3nu")
 
 [node name="MarginContainer" type="MarginContainer" parent="TutorialPanel"]
 layout_mode = 1
@@ -35,35 +40,67 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TutorialPanel/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TutorialPanel/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 0
+alignment = 1
 
-[node name="ProgressLabel" type="Label" parent="TutorialPanel/MarginContainer/VBoxContainer"]
+[node name="ProgressLabel" type="Label" parent="TutorialPanel/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_4kmhl")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 52
 text = "Step 1/9"
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
-[node name="InstructionLabel" type="Label" parent="TutorialPanel/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialPanel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(900, 0)
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="InstructionLabel" type="Label" parent="TutorialPanel/MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_cq4me")
 theme_override_font_sizes/font_size = 36
 text = "Tutorial Instructions"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="HintLabel" type="Label" parent="TutorialPanel/MarginContainer/VBoxContainer"]
+[node name="HintLabel" type="Label" parent="TutorialPanel/MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_4kmhl")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 text = "Hint goes here"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="SkipButton" type="Button" parent="TutorialPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
+[node name="SkipButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -143.5
+offset_top = -50.0
+offset_right = 143.5
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_fonts/font = ExtResource("3_cq4me")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxTexture_ph3nu")
 text = "Skip Tutorial (ESC)"
+autowrap_mode = 2
+autowrap_trim_flags = 192

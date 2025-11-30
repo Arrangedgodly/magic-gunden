@@ -1,54 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://cb56jyqau1a0p"]
+[gd_scene load_steps=7 format=3 uid="uid://cb56jyqau1a0p"]
 
 [ext_resource type="Texture2D" uid="uid://dp6ns6e5nqynt" path="res://assets/map/Space Background_blue.png" id="1_3g1jk"]
 [ext_resource type="Script" uid="uid://b6km8dn7en4ix" path="res://scripts/pause_screen.gd" id="1_dd2rn"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="2_kxnyn"]
 [ext_resource type="PackedScene" uid="uid://ci3e8foshsdo7" path="res://scenes/confirmation_popup.tscn" id="4_21yeh"]
-[ext_resource type="Shader" uid="uid://dcl3q3676uyh3" path="res://shaders/2d_highlight.gdshader" id="4_esbve"]
+[ext_resource type="Script" uid="uid://d4k3ok8w3g88g" path="res://scripts/ui_button.gd" id="5_k26m1"]
 
 [sub_resource type="Theme" id="Theme_rqf3m"]
 default_font = ExtResource("2_kxnyn")
 default_font_size = 32
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ogx1x"]
-resource_local_to_scene = true
-shader = ExtResource("4_esbve")
-shader_parameter/size_effect = 0.3
-shader_parameter/speed = 0.0
-shader_parameter/highlight_strength = 0.75
-shader_parameter/color_mode_toggle = false
-shader_parameter/is_horizontal = true
-shader_parameter/pause_duration = 0.5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k2sjg"]
-resource_local_to_scene = true
-shader = ExtResource("4_esbve")
-shader_parameter/size_effect = 0.3
-shader_parameter/speed = 0.0
-shader_parameter/highlight_strength = 0.75
-shader_parameter/color_mode_toggle = false
-shader_parameter/is_horizontal = true
-shader_parameter/pause_duration = 0.5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4m5g2"]
-resource_local_to_scene = true
-shader = ExtResource("4_esbve")
-shader_parameter/size_effect = 0.3
-shader_parameter/speed = 0.0
-shader_parameter/highlight_strength = 0.75
-shader_parameter/color_mode_toggle = false
-shader_parameter/is_horizontal = true
-shader_parameter/pause_duration = 0.5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6wn56"]
-resource_local_to_scene = true
-shader = ExtResource("4_esbve")
-shader_parameter/size_effect = 0.3
-shader_parameter/speed = 0.0
-shader_parameter/highlight_strength = 0.75
-shader_parameter/color_mode_toggle = false
-shader_parameter/is_horizontal = true
-shader_parameter/pause_duration = 0.5
 
 [node name="PauseScreen" type="Node2D"]
 z_index = 15
@@ -84,31 +44,35 @@ grow_vertical = 2
 theme = SubResource("Theme_rqf3m")
 
 [node name="Resume" type="Button" parent="HBoxContainer"]
-material = SubResource("ShaderMaterial_ogx1x")
 layout_mode = 2
 text = "Resume"
+script = ExtResource("5_k26m1")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="Restart" type="Button" parent="HBoxContainer"]
-material = SubResource("ShaderMaterial_k2sjg")
 layout_mode = 2
 text = "Restart
 "
+script = ExtResource("5_k26m1")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="Options" type="Button" parent="HBoxContainer"]
-material = SubResource("ShaderMaterial_k2sjg")
 layout_mode = 2
-text = "Options
-"
+text = "OPTIONS"
+script = ExtResource("5_k26m1")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="MainMenu" type="Button" parent="HBoxContainer"]
-material = SubResource("ShaderMaterial_4m5g2")
 layout_mode = 2
 text = "Main Menu"
+script = ExtResource("5_k26m1")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="Quit" type="Button" parent="HBoxContainer"]
-material = SubResource("ShaderMaterial_6wn56")
 layout_mode = 2
 text = "Quit"
+script = ExtResource("5_k26m1")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="RestartWarning" parent="." instance=ExtResource("4_21yeh")]
 visible = false

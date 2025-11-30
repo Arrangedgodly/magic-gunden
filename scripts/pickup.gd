@@ -1,3 +1,4 @@
+@icon("res://assets/icons/icon_potion.png")
 extends Area2D
 class_name Pickup
 
