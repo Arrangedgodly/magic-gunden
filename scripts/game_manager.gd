@@ -133,7 +133,6 @@ func start_normal_gameplay_loop():
 	is_tutorial_mode = false
 	tutorial_mode_active = false
 	
-	# Start background music
 	if background_music:
 		AudioManager.play_music(background_music)
 	

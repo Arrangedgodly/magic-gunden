@@ -155,9 +155,7 @@ func _input(event: InputEvent) -> void:
 func pause_and_wait() -> void:
 	var inputs = get_input_strings()
 	waiting_for_continue = true
-	get_tree().paused = true
-	self.z_index = 300
-	background.show()
+	_show_tutorial()
 
 	var continue_text = hint_label.text + "\n\n[Press %s to continue]" % inputs.accept
 	hint_label.text = continue_text
@@ -171,16 +169,18 @@ func show_step() -> void:
 	
 	match current_step:
 		TutorialStep.WELCOME:
+			get_tree().paused = true
 			instruction_label.text = "Welcome to Magic Garden!"
 			hint_label.text = "Let's learn how to survive."
-			progress_label.text = "1/%d" % total_steps
-			await get_tree().create_timer(2.0).timeout
+			progress_label.text = "Step 1/%d" % total_steps
+			await get_tree().create_timer(3.0).timeout
 			next_step()
 
 		TutorialStep.MOVEMENT:
 			instruction_label.text = "MOVEMENT"
 			hint_label.text = "Use %s to move around the grid." % inputs.move
-			progress_label.text = "2/%d" % total_steps
+			progress_label.text = "Step 2/%d" % total_steps
+			await pause_and_wait()
 
 		TutorialStep.SPAWN_GEM:
 			cleanup_tutorial_spawns()
@@ -188,26 +188,30 @@ func show_step() -> void:
 			next_step()
 
 		TutorialStep.PICKUP_GEM:
+			_show_tutorial()
 			instruction_label.text = "COLLECT GEMS"
-			hint_label.text = "Walk over the gem to pick it up. Gems form a trail behind you."
-			progress_label.text = "3/%d" % total_steps
+			hint_label.text = "This is a gem. Walk over the gem to pick it up! They will form a trail behind you."
+			progress_label.text = "Step 3/%d" % total_steps
+			await pause_and_wait()
 
 		TutorialStep.EXPLAIN_CAPTURE_ZONES:
+			_show_tutorial()
 			instruction_label.text = "CAPTURE ZONES"
-			hint_label.text = "These colored tiles are Capture Zones. They are essential for ammo."
-			progress_label.text = "4/%d" % total_steps
+			hint_label.text = "These colored tiles are Capture Zones! They are essential for ammo."
+			progress_label.text = "Step 4/%d" % total_steps
+			await get_tree().create_timer(3.0).timeout
 			next_step()
 
 		TutorialStep.CAPTURE_GEM:
 			instruction_label.text = "GET AMMO"
 			hint_label.text = "Move so your GEM TRAIL is ON the tiles, then press %s. The trail turns into ammo!" % inputs.detach
-			progress_label.text = "5/%d" % total_steps
+			progress_label.text = "Step 5/%d" % total_steps
 			await pause_and_wait()
 			
 		TutorialStep.EXPLAIN_CAPTURE_MOVEMENT:
 			instruction_label.text = "ZONES MOVE"
 			hint_label.text = "Zones move to a new location when you capture, or if unused too long. Watch them flash!"
-			progress_label.text = "6/%d" % total_steps
+			progress_label.text = "Step 6/%d" % total_steps
 			await pause_and_wait()
 			
 			if capture_manager:
@@ -232,23 +236,25 @@ func show_step() -> void:
 		TutorialStep.PICKUP_GEM_FOR_ENEMY:
 			instruction_label.text = "RELOAD"
 			hint_label.text = "Pick up this gem. You'll use it to create an enemy."
-			progress_label.text = "7/%d" % total_steps
+			progress_label.text = "Step 7/%d" % total_steps
+			await pause_and_wait()
 
 		TutorialStep.MOVE_AWAY_FROM_CAPTURE:
 			instruction_label.text = "MOVE AWAY"
 			hint_label.text = "Move away from the capture zones (at least 2 tiles away)."
-			progress_label.text = "8/%d" % total_steps
+			progress_label.text = "Step 8/%d" % total_steps
+			await get_tree().create_timer(3.0).timeout
 
 		TutorialStep.MAKE_ENEMY:
 			instruction_label.text = "CREATE ENEMIES"
 			hint_label.text = "Press %s while NOT on capture points. Gems off tiles turn into Slimes!" % inputs.detach
-			progress_label.text = "9/%d" % total_steps
+			progress_label.text = "Step 9/%d" % total_steps
 			await pause_and_wait()
 
 		TutorialStep.ENEMY_MOVEMENT_EXPLANATION:
 			instruction_label.text = "ENEMY BEHAVIOR"
 			hint_label.text = "Slimes turn to face their target, then move. Watch closely!"
-			progress_label.text = "10/%d" % total_steps
+			progress_label.text = "Step 10/%d" % total_steps
 			await pause_and_wait()
 			
 			if enemy_manager:
@@ -260,12 +266,14 @@ func show_step() -> void:
 		TutorialStep.AIM_AT_ENEMY:
 			instruction_label.text = "AIMING"
 			hint_label.text = "Use %s to aim at the slime. The crosshair shows your aim direction." % inputs.aim
-			progress_label.text = "11/%d" % total_steps
+			progress_label.text = "Step 11/%d" % total_steps
+			await pause_and_wait()
 
 		TutorialStep.KILL_ENEMY:
 			instruction_label.text = "ATTACK"
 			hint_label.text = "Press %s to shoot at the slime! Kill it before it reaches you!" % inputs.shoot
-			progress_label.text = "12/%d" % total_steps
+			progress_label.text = "Step 12/%d" % total_steps
+			await pause_and_wait()
 
 		TutorialStep.SPAWN_POWERUP:
 			spawn_powerup_near_player()
@@ -275,18 +283,20 @@ func show_step() -> void:
 		TutorialStep.COLLECT_POWERUP:
 			instruction_label.text = "POWERUPS"
 			hint_label.text = "This is a Stomp powerup! Walk over it to collect it."
-			progress_label.text = "13/%d" % total_steps
+			progress_label.text = "Step 13/%d" % total_steps
+			await pause_and_wait()
 
 		TutorialStep.TEST_POWERUP:
 			instruction_label.text = "TEST STOMP"
 			hint_label.text = "Touch the slimes to kill them! Stomp is active for a limited time."
-			progress_label.text = "14/%d" % total_steps
+			progress_label.text = "Step 14/%d" % total_steps
 			spawn_test_enemies(5)
+			await pause_and_wait()
 
 		TutorialStep.FINAL_EXPLANATION:
 			instruction_label.text = "TUTORIAL COMPLETE!"
 			hint_label.text = "You now know the basics. Survive as long as you can!"
-			progress_label.text = "15/%d" % total_steps
+			progress_label.text = "Step 15/%d" % total_steps
 			await pause_and_wait()
 			next_step()
 
@@ -320,10 +330,10 @@ func cleanup_tutorial_spawns() -> void:
 func _process(_delta: float) -> void:
 	if waiting_for_continue:
 		if Input.is_action_just_pressed("ui_accept"):
-			self.z_index = 0
-			background.hide()
-			waiting_for_continue = false
+			_hide_tutorial()
 			get_tree().paused = false
+			await get_tree().create_timer(1.5).timeout
+			waiting_for_continue = false
 		return
 	
 	if not tutorial_active: 
@@ -474,3 +484,12 @@ func _on_skip_pressed() -> void:
 	ResourceSaver.save(tutorial_save, "user://tutorial.tres")
 	
 	finish_tutorial()
+
+func _show_tutorial() -> void:
+	get_tree().paused = true
+	self.z_index = 300
+	background.show()
+
+func _hide_tutorial() -> void:
+	self.z_index = 0
+	background.hide()
