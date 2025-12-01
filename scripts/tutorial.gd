@@ -4,11 +4,10 @@ class_name Tutorial
 var tutorial_save: TutorialSave
 
 @onready var instruction_label: Label = %InstructionLabel
-@onready var hint_label: Label = %HintLabel
+@onready var hint_label: RichTextLabel = %HintLabel
 @onready var progress_label: Label = %ProgressLabel
 @onready var skip_button: Button = %SkipButton
 @onready var background: Panel = $TutorialPanel
-@onready var tutorial_icon: AnimatedSprite2D = %TutorialIcon
 
 var game_manager: Node2D
 var player: CharacterBody2D
@@ -20,6 +19,10 @@ var powerup_manager: PowerupManager
 
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var stomp_scene = preload("res://scenes/powerups/stomp.tscn")
+
+var gem_image_path = "res://assets/items/gemframe1.png"
+var enemy_image_path = "res://assets/enemies/Slime pack/slimeframe1.png"
+var stomp_image_path = "res://assets/items/powerups/stomp.png"
 
 enum TutorialStep {
 	WELCOME,
@@ -168,10 +171,11 @@ func pause_and_wait() -> void:
 func show_step() -> void:
 	var inputs = get_input_strings()
 	var total_steps = 18
+	var width = 128
+	var height = 128
 	
 	match current_step:
 		TutorialStep.WELCOME:
-			tutorial_icon.hide()
 			get_tree().paused = true
 			instruction_label.text = "Welcome to Magic Garden!"
 			hint_label.text = "Let's learn how to survive."
@@ -193,24 +197,20 @@ func show_step() -> void:
 
 		TutorialStep.PICKUP_GEM:
 			_show_tutorial()
-			tutorial_icon.show()
-			tutorial_icon.show_gem()
 			instruction_label.text = "COLLECT GEMS"
-			hint_label.text = "This is a gem. Walk over the gem to pick it up! They will form a trail behind you."
+			hint_label.text = "[center]This is a gem. [img width=%d height=%d]%s[/img] \n \
+			Walk over the gem to pick it up! They will form a trail behind you.[/center]" \
+			% [width, height, gem_image_path]
 			progress_label.text = "Step 3/%d" % total_steps
 			should_wait = true
 			await pause_and_wait()
-			tutorial_icon.hide()
 
 		TutorialStep.EXPLAIN_CAPTURE_ZONES:
 			_show_tutorial()
-			tutorial_icon.show()
-			tutorial_icon.show_capture()
 			instruction_label.text = "CAPTURE ZONES"
 			hint_label.text = "These colored tiles are Capture Zones! They are essential for ammo."
 			progress_label.text = "Step 4/%d" % total_steps
 			await pause_and_wait()
-			tutorial_icon.hide()
 			next_step()
 
 		TutorialStep.CAPTURE_GEM:
@@ -263,14 +263,11 @@ func show_step() -> void:
 			await pause_and_wait()
 
 		TutorialStep.ENEMY_MOVEMENT_EXPLANATION:
-			tutorial_icon.show()
-			tutorial_icon.show_enemy()
 			instruction_label.text = "ENEMY BEHAVIOR"
 			hint_label.text = "Slimes turn to face their target, then move. Watch closely!"
 			progress_label.text = "Step 10/%d" % total_steps
 			await pause_and_wait()
-			tutorial_icon.hide()
-			
+						
 			if enemy_manager:
 				enemy_manager.move_all_enemies()
 			
@@ -451,13 +448,22 @@ func update_skip_button_text() -> void:
 		skip_button.text = "Skip Tutorial (T)"
 
 func get_input_strings() -> Dictionary:
-	if is_using_controller:
+	var controller_type = ControllerManager.get_controller_type_name()
+	if controller_type == "Xbox" or controller_type == "Steam Deck":
 		return {
 			"move": "Left Stick",
 			"detach": "Left Bumper/Trigger",
 			"aim": "Right Stick",
 			"shoot": "Right Bumper/Trigger",
-			"accept": "A/X"
+			"accept": "A"
+		}
+	elif controller_type == "Playstation":
+		return {
+			"move": "Left Stick",
+			"detach": "Left Bumper/Trigger",
+			"aim": "Right Stick",
+			"shoot": "Right Bumper/Trigger",
+			"accept": "X"
 		}
 	else:
 		return {

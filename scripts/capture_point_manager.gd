@@ -157,7 +157,7 @@ func _on_capture_point_timer_timeout() -> void:
 		capture_point_timer.stop()
 		return
 		
-		cycle_capture_points()
+	cycle_capture_points()
 	
 func cycle_capture_points() -> void:
 	await clear_capture_points()

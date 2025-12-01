@@ -3,11 +3,14 @@ extends Node
 enum ControllerType {
 	XBOX,
 	PLAYSTATION,
-	STEAM_DECK
+	STEAM_DECK,
+	KEYBOARD
 }
 
-var current_controller_type: ControllerType = ControllerType.XBOX
+var current_controller_type: ControllerType = ControllerType.KEYBOARD
 var connected_controllers: Dictionary = {}
+
+const MOTION_DEADZONE = 0.2
 
 signal controller_connected(device_id: int, controller_type: ControllerType)
 signal controller_disconnected(device_id: int)
@@ -20,10 +23,28 @@ func _ready() -> void:
 		_detect_controller_type(device_id)
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+	if event is InputEventKey or event is InputEventMouseButton:
+		_set_active_type(ControllerType.KEYBOARD)
+		
+	elif event is InputEventJoypadButton:
 		var device_id = event.device
-		if not connected_controllers.has(device_id):
-			_detect_controller_type(device_id)
+		_ensure_controller_detected(device_id)
+		_set_active_type(connected_controllers.get(device_id, ControllerType.XBOX))
+		
+	elif event is InputEventJoypadMotion:
+		if abs(event.axis_value) > MOTION_DEADZONE:
+			var device_id = event.device
+			_ensure_controller_detected(device_id)
+			_set_active_type(connected_controllers.get(device_id, ControllerType.XBOX))
+
+func _ensure_controller_detected(device_id: int) -> void:
+	if not connected_controllers.has(device_id):
+		_detect_controller_type(device_id)
+
+func _set_active_type(new_type: ControllerType) -> void:
+	if current_controller_type != new_type:
+		current_controller_type = new_type
+		controller_type_changed.emit(current_controller_type)
 
 func _on_joy_connection_changed(device_id: int, connected: bool) -> void:
 	if connected:
@@ -34,11 +55,11 @@ func _on_joy_connection_changed(device_id: int, connected: bool) -> void:
 			connected_controllers.erase(device_id)
 		controller_disconnected.emit(device_id)
 		
-		if connected_controllers.is_empty():
-			current_controller_type = ControllerType.XBOX
-		else:
-			current_controller_type = connected_controllers.values()[0]
-		controller_type_changed.emit(current_controller_type)
+		if current_controller_type != ControllerType.KEYBOARD:
+			if connected_controllers.is_empty():
+				_set_active_type(ControllerType.KEYBOARD)
+			else:
+				_set_active_type(connected_controllers.values()[0])
 
 func _detect_controller_type(device_id: int) -> void:
 	var controller_name = Input.get_joy_name(device_id).to_lower()
@@ -54,11 +75,6 @@ func _detect_controller_type(device_id: int) -> void:
 		detected_type = ControllerType.XBOX
 	
 	connected_controllers[device_id] = detected_type
-	
-	var old_type = current_controller_type
-	current_controller_type = detected_type
-	if old_type != current_controller_type:
-		controller_type_changed.emit(current_controller_type)
 
 func _is_playstation_controller(controller_name: String, guid: String) -> bool:
 	return (
@@ -90,5 +106,7 @@ func get_controller_type_name() -> String:
 			return "PlayStation"
 		ControllerType.STEAM_DECK:
 			return "Steam Deck"
+		ControllerType.KEYBOARD:
+			return "Keyboard"
 		_:
 			return "Xbox"
