@@ -99,5 +99,3 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_ph3nu")
 text = "Skip Tutorial (ESC)"
 autowrap_mode = 2
 autowrap_trim_flags = 192
-
-[node name="SubViewport" type="SubViewport" parent="."]

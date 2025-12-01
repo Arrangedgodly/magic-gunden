@@ -8,6 +8,7 @@ var tutorial_save: TutorialSave
 @onready var progress_label: Label = %ProgressLabel
 @onready var skip_button: Button = %SkipButton
 @onready var background: Panel = $TutorialPanel
+@onready var tutorial_icon: AnimatedSprite2D = %TutorialIcon
 
 var game_manager: Node2D
 var player: CharacterBody2D
@@ -52,6 +53,7 @@ var test_enemies_killed: int = 0
 var waiting_for_continue: bool = false
 var tutorial_spawned_yoyo: Node = null
 var tutorial_spawned_powerup: Node = null
+var should_wait: bool = false
 
 signal tutorial_finished
 
@@ -169,17 +171,19 @@ func show_step() -> void:
 	
 	match current_step:
 		TutorialStep.WELCOME:
+			tutorial_icon.hide()
 			get_tree().paused = true
 			instruction_label.text = "Welcome to Magic Garden!"
 			hint_label.text = "Let's learn how to survive."
 			progress_label.text = "Step 1/%d" % total_steps
-			await get_tree().create_timer(3.0).timeout
+			await pause_and_wait()
 			next_step()
 
 		TutorialStep.MOVEMENT:
 			instruction_label.text = "MOVEMENT"
 			hint_label.text = "Use %s to move around the grid." % inputs.move
 			progress_label.text = "Step 2/%d" % total_steps
+			should_wait = true
 			await pause_and_wait()
 
 		TutorialStep.SPAWN_GEM:
@@ -189,17 +193,24 @@ func show_step() -> void:
 
 		TutorialStep.PICKUP_GEM:
 			_show_tutorial()
+			tutorial_icon.show()
+			tutorial_icon.show_gem()
 			instruction_label.text = "COLLECT GEMS"
 			hint_label.text = "This is a gem. Walk over the gem to pick it up! They will form a trail behind you."
 			progress_label.text = "Step 3/%d" % total_steps
+			should_wait = true
 			await pause_and_wait()
+			tutorial_icon.hide()
 
 		TutorialStep.EXPLAIN_CAPTURE_ZONES:
 			_show_tutorial()
+			tutorial_icon.show()
+			tutorial_icon.show_capture()
 			instruction_label.text = "CAPTURE ZONES"
 			hint_label.text = "These colored tiles are Capture Zones! They are essential for ammo."
 			progress_label.text = "Step 4/%d" % total_steps
-			await get_tree().create_timer(3.0).timeout
+			await pause_and_wait()
+			tutorial_icon.hide()
 			next_step()
 
 		TutorialStep.CAPTURE_GEM:
@@ -241,9 +252,9 @@ func show_step() -> void:
 
 		TutorialStep.MOVE_AWAY_FROM_CAPTURE:
 			instruction_label.text = "MOVE AWAY"
-			hint_label.text = "Move away from the capture zones (at least 2 tiles away)."
+			hint_label.text = "Move away from the capture zones."
 			progress_label.text = "Step 8/%d" % total_steps
-			await get_tree().create_timer(3.0).timeout
+			await pause_and_wait()
 
 		TutorialStep.MAKE_ENEMY:
 			instruction_label.text = "CREATE ENEMIES"
@@ -252,10 +263,13 @@ func show_step() -> void:
 			await pause_and_wait()
 
 		TutorialStep.ENEMY_MOVEMENT_EXPLANATION:
+			tutorial_icon.show()
+			tutorial_icon.show_enemy()
 			instruction_label.text = "ENEMY BEHAVIOR"
 			hint_label.text = "Slimes turn to face their target, then move. Watch closely!"
 			progress_label.text = "Step 10/%d" % total_steps
 			await pause_and_wait()
+			tutorial_icon.hide()
 			
 			if enemy_manager:
 				enemy_manager.move_all_enemies()
@@ -332,7 +346,9 @@ func _process(_delta: float) -> void:
 		if Input.is_action_just_pressed("ui_accept"):
 			_hide_tutorial()
 			get_tree().paused = false
-			await get_tree().create_timer(1.5).timeout
+			if should_wait:
+				await get_tree().create_timer(2.0).timeout
+				should_wait = false
 			waiting_for_continue = false
 		return
 	
