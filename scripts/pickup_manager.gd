@@ -54,29 +54,7 @@ func place_yoyo() -> void:
 		return
 		
 	regen_yoyo = false
-	yoyo_pos = random_pos()
-	var attempts = 0
-	
-	while not is_valid_spawn_position(yoyo_pos) and attempts < 100:
-		yoyo_pos = random_pos()
-		attempts += 1
-	
-	if attempts >= 100:
-		regen_yoyo = true
-		return
-		
-	var yoyo_instance = yoyo_scene.instantiate()
-	yoyo_instance.enable_pickup()
-	yoyo_instance.position = yoyo_pos
-	yoyo_instance.position += Vector2.RIGHT * 16
-	yoyo_instance.position += Vector2.DOWN * 16
-	
-	match level:
-		1: yoyo_instance.play('blue')
-		2: yoyo_instance.play('green')
-		3: yoyo_instance.play('red')
-	
-	game_manager.add_child(yoyo_instance)
+	spawn_gem()
 
 func reset_regen_yoyo() -> void:
 	regen_yoyo = true
@@ -138,7 +116,7 @@ func is_valid_spawn_position(pos: Vector2) -> bool:
 func _on_level_changed(new_level: int) -> void:
 	level = new_level
 
-func force_spawn_yoyo() -> void:
+func spawn_gem() -> void:
 	var pos = random_pos()
 	var attempts = 0
 	

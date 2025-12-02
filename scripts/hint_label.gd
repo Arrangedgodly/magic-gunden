@@ -139,6 +139,10 @@ func prompt_continue() -> void:
 	newline()
 	append_text("[Press %s to continue]" % inputs.accept)
 
+func enemy_convert_blocked() -> void:
+	reset()
+	append_text("That's okay, let's try again.")
+
 func get_input_strings() -> Dictionary:
 	var controller_type = ControllerManager.get_controller_type_name()
 	if controller_type == "Xbox" or controller_type == "Steam Deck":

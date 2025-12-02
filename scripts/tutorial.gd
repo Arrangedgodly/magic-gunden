@@ -79,6 +79,8 @@ func _ready() -> void:
 	if trail_manager:
 		trail_manager.trail_item_converted_to_ammo.connect(_on_trail_converted_to_ammo)
 		trail_manager.trail_item_converted_to_enemy.connect(_on_trail_converted_to_enemy)
+		trail_manager.enemy_convert_blocked.connect(_on_enemy_convert_blocked)
+		trail_manager.tutorial_mode = true
 	
 	if enemy_manager:
 		enemy_manager.slime_killed.connect(_on_test_enemy_killed)
@@ -298,7 +300,7 @@ func spawn_gem_near_player() -> void:
 	if not game_manager or not player or not pickup_manager:
 		return
 	
-	pickup_manager.force_spawn_yoyo()
+	pickup_manager.spawn_gem()
 
 func spawn_powerup_near_player() -> void:
 	if not pickup_manager:
@@ -375,6 +377,7 @@ func _process(_delta: float) -> void:
 
 func _on_trail_converted_to_ammo(_streak, _pos):
 	if current_step == TutorialStep.CAPTURE_GEM:
+		trail_manager.tutorial_capture = true
 		AudioManager.play_sound(game_manager.pickup_sfx)
 		await get_tree().create_timer(0.5).timeout
 
@@ -385,11 +388,14 @@ func _on_trail_converted_to_ammo(_streak, _pos):
 		next_step()
 
 	elif current_step == TutorialStep.MAKE_ENEMY or current_step == TutorialStep.MOVE_AWAY_FROM_CAPTURE:
+		if enemies_spawned_by_trail > 0:
+			return
 		instruction_label.text = "OOPS!"
 		hint_label.text = "You captured it! Try stepping off the glowing tiles."
 		progress_label.text = "Retrying..."
-		await get_tree().create_timer(2.0).timeout
-		current_step = TutorialStep.SPAWN_GEM_FOR_ENEMY
+		_show_tutorial()
+		await pause_and_wait()
+		current_step = TutorialStep.MAKE_ENEMY
 		show_step()
 
 func _on_trail_converted_to_enemy(_pos):
@@ -448,6 +454,9 @@ func finish_tutorial() -> void:
 
 	if game_manager:
 		game_manager.start_normal_gameplay_loop()
+	
+	if trail_manager:
+		trail_manager.tutorial_mode = false
 		
 	tutorial_finished.emit()
 	AudioManager.stop(tutorial_music)
@@ -462,6 +471,14 @@ func _on_skip_pressed() -> void:
 	ResourceSaver.save(tutorial_save, "user://tutorial.tres")
 	
 	finish_tutorial()
+
+func _on_enemy_convert_blocked() -> void:
+	_show_tutorial()
+	progress_label.text = "⚠️ Oops!"
+	instruction_label.text = "You missed the capture point!"
+	hint_label.enemy_convert_blocked()
+	await pause_and_wait()
+	
 
 func _show_tutorial() -> void:
 	get_tree().paused = true

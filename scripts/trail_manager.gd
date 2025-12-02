@@ -4,6 +4,7 @@ class_name TrailManager
 signal trail_item_converted_to_ammo(streak: int, position: Vector2)
 signal trail_item_converted_to_enemy(position: Vector2)
 signal trail_released(items_captured: int)
+signal enemy_convert_blocked
 
 @onready var player: CharacterBody2D = %Player
 @onready var game_manager: Node2D = %GameManager
@@ -14,6 +15,8 @@ var pickup_count: int = 0
 var capture_count: int = 0
 var yoyo_scene_path: String = "res://scenes/yoyo.tscn"
 var blue_slime_scene_path: String = "res://scenes/blue_slime.tscn"
+var tutorial_mode: bool = false
+var tutorial_capture: bool = false
 
 const ANIMATION_SPEED = 5
 var level: int = 1
@@ -104,20 +107,30 @@ func release_trail() -> void:
 			current_streak += 1
 			trail_item_converted_to_ammo.emit(current_streak, item_data.position)
 		else:
-			var blue_slime_scene = load(blue_slime_scene_path)
-			var enemy_instance = blue_slime_scene.instantiate()
-			enemy_instance.position = item_data.position
-			game_manager.add_child(enemy_instance)
-			
-			if game_manager.has_method("increase_slimes_killed"):
-				enemy_instance.was_killed.connect(game_manager.increase_slimes_killed)
-			
-			trail_item_converted_to_enemy.emit(item_data.position)
+			if tutorial_mode:
+				if not tutorial_capture:
+					enemy_convert_blocked.emit()
+				else:
+					_instantiate_enemy(item_data)
+			else:
+				_instantiate_enemy(item_data)
+					
 		
 		if is_instance_valid(item_data.node):
 			item_data.node.queue_free()
 	
 	trail_released.emit(items_captured)
+
+func _instantiate_enemy(item_data) -> void:
+	var blue_slime_scene = load(blue_slime_scene_path)
+	var enemy_instance = blue_slime_scene.instantiate()
+	enemy_instance.position = item_data.position
+	game_manager.add_child(enemy_instance)
+					
+	if game_manager.has_method("increase_slimes_killed"):
+		enemy_instance.was_killed.connect(game_manager.increase_slimes_killed)
+				
+	trail_item_converted_to_enemy.emit(item_data.position)
 
 func is_on_capture_point(item: Node2D) -> bool:
 	var capture_points = game_manager.get_tree().get_nodes_in_group("capture")
