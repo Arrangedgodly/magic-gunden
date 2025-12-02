@@ -1,5 +1,8 @@
 extends Node
 
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
 func play_start(stream: AudioStream):
 	var instance = AudioStreamPlayer.new()
 	instance.stream = stream

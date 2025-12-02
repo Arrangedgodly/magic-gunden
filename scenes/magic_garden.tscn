@@ -614,10 +614,11 @@ offset_bottom = 408.0
 
 [node name="Tutorial" parent="." instance=ExtResource("35_a2mr6")]
 unique_name_in_owner = true
-offset_left = -414.6667
+z_index = 300
+offset_left = -420.0
 offset_top = -250.0
-offset_right = 386.6667
-offset_bottom = 294.6667
+offset_right = 390.0
+offset_bottom = 300.0
 
 [connection signal="timeout" from="AnimatedBackground/BackgroundSwap" to="AnimatedBackground" method="_on_background_swap_timeout"]
 [connection signal="game_ended" from="GameManager" to="EndGameScreen" method="_on_game_manager_game_ended"]

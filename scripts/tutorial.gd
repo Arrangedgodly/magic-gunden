@@ -9,6 +9,10 @@ var tutorial_save: TutorialSave
 @onready var skip_button: Button = %SkipButton
 @onready var background: Panel = $TutorialPanel
 
+@export var tutorial_music: AudioStream
+@export var pickup_sfx: AudioStream
+@export var capture_sfx: AudioStream
+
 var game_manager: Node2D
 var player: CharacterBody2D
 var trail_manager: TrailManager
@@ -19,10 +23,6 @@ var powerup_manager: PowerupManager
 
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var stomp_scene = preload("res://scenes/powerups/stomp.tscn")
-
-var gem_image_path = "res://assets/items/gemframe1.png"
-var enemy_image_path = "res://assets/enemies/Slime pack/slimeframe1.png"
-var stomp_image_path = "res://assets/items/powerups/stomp.png"
 
 enum TutorialStep {
 	WELCOME,
@@ -48,7 +48,7 @@ enum TutorialStep {
 
 var current_step: TutorialStep = TutorialStep.WELCOME
 var tutorial_active: bool = false
-var is_using_controller: bool = false 
+var controller_type: String
 var has_moved: bool = false
 var has_aimed: bool = false
 var enemies_spawned_by_trail: int = 0
@@ -64,9 +64,9 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	self.z_index = 300
-
-	if Input.get_connected_joypads().size() > 0:
-		is_using_controller = true
+	
+	AudioManager.play_music(tutorial_music)
+	controller_type = ControllerManager.get_controller_type_name()
 
 	game_manager = get_node_or_null("/root/MagicGarden/GameManager")
 	player = get_node_or_null("/root/MagicGarden/Player")
@@ -139,53 +139,33 @@ func _input(event: InputEvent) -> void:
 	   event.is_action_pressed("move-left") or event.is_action_pressed("move-right"):
 		has_moved = true
 
-	if event is InputEventJoypadMotion:
-		if abs(event.axis_value) > 0.5 and not is_using_controller:
-			is_using_controller = true
-			refresh_step_text()
-			update_skip_button_text()
-	elif event is InputEventJoypadButton:
-		if event.pressed and not is_using_controller:
-			is_using_controller = true
-			refresh_step_text()
-			update_skip_button_text()
-	elif (event is InputEventKey or event is InputEventMouseButton) and is_using_controller:
-		is_using_controller = false
-		refresh_step_text()
-		update_skip_button_text()
-
 	if event.is_action_pressed("skip"):
 		_on_skip_pressed()
 
 func pause_and_wait() -> void:
-	var inputs = get_input_strings()
 	waiting_for_continue = true
 	_show_tutorial()
 
-	var continue_text = hint_label.text + "\n\n[Press %s to continue]" % inputs.accept
-	hint_label.text = continue_text
+	hint_label.prompt_continue()
 
 	while waiting_for_continue:
 		await get_tree().process_frame
 
 func show_step() -> void:
-	var inputs = get_input_strings()
 	var total_steps = 18
-	var width = 128
-	var height = 128
 	
 	match current_step:
 		TutorialStep.WELCOME:
 			get_tree().paused = true
 			instruction_label.text = "Welcome to Magic Garden!"
-			hint_label.text = "Let's learn how to survive."
+			hint_label.welcome()
 			progress_label.text = "Step 1/%d" % total_steps
 			await pause_and_wait()
 			next_step()
 
 		TutorialStep.MOVEMENT:
 			instruction_label.text = "MOVEMENT"
-			hint_label.text = "Use %s to move around the grid." % inputs.move
+			hint_label.movement()
 			progress_label.text = "Step 2/%d" % total_steps
 			should_wait = true
 			await pause_and_wait()
@@ -198,9 +178,8 @@ func show_step() -> void:
 		TutorialStep.PICKUP_GEM:
 			_show_tutorial()
 			instruction_label.text = "COLLECT GEMS"
-			hint_label.text = "[center]This is a gem. [img width=%d height=%d]%s[/img] \n \
-			Walk over the gem to pick it up! They will form a trail behind you.[/center]" \
-			% [width, height, gem_image_path]
+			hint_label.gem_pickup()
+			AudioManager.play_sound(pickup_sfx)
 			progress_label.text = "Step 3/%d" % total_steps
 			should_wait = true
 			await pause_and_wait()
@@ -208,20 +187,21 @@ func show_step() -> void:
 		TutorialStep.EXPLAIN_CAPTURE_ZONES:
 			_show_tutorial()
 			instruction_label.text = "CAPTURE ZONES"
-			hint_label.text = "These colored tiles are Capture Zones! They are essential for ammo."
+			hint_label.capture_zones()
+			AudioManager.play_sound(capture_sfx)
 			progress_label.text = "Step 4/%d" % total_steps
 			await pause_and_wait()
 			next_step()
 
 		TutorialStep.CAPTURE_GEM:
 			instruction_label.text = "GET AMMO"
-			hint_label.text = "Move so your GEM TRAIL is ON the tiles, then press %s. The trail turns into ammo!" % inputs.detach
+			hint_label.capture_gems()
 			progress_label.text = "Step 5/%d" % total_steps
 			await pause_and_wait()
 			
 		TutorialStep.EXPLAIN_CAPTURE_MOVEMENT:
 			instruction_label.text = "ZONES MOVE"
-			hint_label.text = "Zones move to a new location when you capture, or if unused too long. Watch them flash!"
+			hint_label.zone_movement()
 			progress_label.text = "Step 6/%d" % total_steps
 			await pause_and_wait()
 			
@@ -246,25 +226,25 @@ func show_step() -> void:
 			
 		TutorialStep.PICKUP_GEM_FOR_ENEMY:
 			instruction_label.text = "RELOAD"
-			hint_label.text = "Pick up this gem. You'll use it to create an enemy."
+			hint_label.enemy_gem()
 			progress_label.text = "Step 7/%d" % total_steps
 			await pause_and_wait()
 
 		TutorialStep.MOVE_AWAY_FROM_CAPTURE:
 			instruction_label.text = "MOVE AWAY"
-			hint_label.text = "Move away from the capture zones."
+			hint_label.leave_capture()
 			progress_label.text = "Step 8/%d" % total_steps
 			await pause_and_wait()
 
 		TutorialStep.MAKE_ENEMY:
 			instruction_label.text = "CREATE ENEMIES"
-			hint_label.text = "Press %s while NOT on capture points. Gems off tiles turn into Slimes!" % inputs.detach
+			hint_label.create_enemy()
 			progress_label.text = "Step 9/%d" % total_steps
 			await pause_and_wait()
 
 		TutorialStep.ENEMY_MOVEMENT_EXPLANATION:
 			instruction_label.text = "ENEMY BEHAVIOR"
-			hint_label.text = "Slimes turn to face their target, then move. Watch closely!"
+			hint_label.enemy_movement()
 			progress_label.text = "Step 10/%d" % total_steps
 			await pause_and_wait()
 						
@@ -276,13 +256,13 @@ func show_step() -> void:
 
 		TutorialStep.AIM_AT_ENEMY:
 			instruction_label.text = "AIMING"
-			hint_label.text = "Use %s to aim at the slime. The crosshair shows your aim direction." % inputs.aim
+			hint_label.aiming()
 			progress_label.text = "Step 11/%d" % total_steps
 			await pause_and_wait()
 
 		TutorialStep.KILL_ENEMY:
 			instruction_label.text = "ATTACK"
-			hint_label.text = "Press %s to shoot at the slime! Kill it before it reaches you!" % inputs.shoot
+			hint_label.kill_enemy()
 			progress_label.text = "Step 12/%d" % total_steps
 			await pause_and_wait()
 
@@ -293,20 +273,20 @@ func show_step() -> void:
 
 		TutorialStep.COLLECT_POWERUP:
 			instruction_label.text = "POWERUPS"
-			hint_label.text = "This is a Stomp powerup! Walk over it to collect it."
+			hint_label.stomp_powerup()
 			progress_label.text = "Step 13/%d" % total_steps
 			await pause_and_wait()
 
 		TutorialStep.TEST_POWERUP:
 			instruction_label.text = "TEST STOMP"
-			hint_label.text = "Touch the slimes to kill them! Stomp is active for a limited time."
+			hint_label.test_powerup()
 			progress_label.text = "Step 14/%d" % total_steps
 			spawn_test_enemies(5)
 			await pause_and_wait()
 
 		TutorialStep.FINAL_EXPLANATION:
 			instruction_label.text = "TUTORIAL COMPLETE!"
-			hint_label.text = "You now know the basics. Survive as long as you can!"
+			hint_label.final()
 			progress_label.text = "Step 15/%d" % total_steps
 			await pause_and_wait()
 			next_step()
@@ -442,37 +422,12 @@ func update_skip_button_text() -> void:
 	if not skip_button:
 		return
 	
-	if is_using_controller:
+	if controller_type == "Xbox" or controller_type == "Steam Deck":
 		skip_button.text = "Skip Tutorial (B)"
+	elif controller_type == "Playstation":
+		skip_button.text = "Skip Tutorial (Circle)"
 	else:
 		skip_button.text = "Skip Tutorial (T)"
-
-func get_input_strings() -> Dictionary:
-	var controller_type = ControllerManager.get_controller_type_name()
-	if controller_type == "Xbox" or controller_type == "Steam Deck":
-		return {
-			"move": "Left Stick",
-			"detach": "Left Bumper/Trigger",
-			"aim": "Right Stick",
-			"shoot": "Right Bumper/Trigger",
-			"accept": "A"
-		}
-	elif controller_type == "Playstation":
-		return {
-			"move": "Left Stick",
-			"detach": "Left Bumper/Trigger",
-			"aim": "Right Stick",
-			"shoot": "Right Bumper/Trigger",
-			"accept": "X"
-		}
-	else:
-		return {
-			"move": "WASD",
-			"detach": "E",
-			"aim": "Arrow Keys",
-			"shoot": "Space",
-			"accept": "Enter"
-		}
 
 func finish_tutorial() -> void:
 	cleanup_tutorial_spawns()
@@ -495,6 +450,7 @@ func finish_tutorial() -> void:
 		game_manager.start_normal_gameplay_loop()
 		
 	tutorial_finished.emit()
+	AudioManager.stop(tutorial_music)
 	queue_free()
 
 func _on_skip_pressed() -> void:
@@ -511,7 +467,9 @@ func _show_tutorial() -> void:
 	get_tree().paused = true
 	self.z_index = 300
 	background.show()
+	skip_button.show()
 
 func _hide_tutorial() -> void:
 	self.z_index = 0
 	background.hide()
+	skip_button.hide()

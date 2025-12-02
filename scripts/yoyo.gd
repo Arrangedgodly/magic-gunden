@@ -4,8 +4,11 @@ extends AnimatedSprite2D
 @onready var yoyo_area: Area2D = $YoyoArea
 @onready var pickup_manager: PickupManager
 
+@export var pickup_sfx: AudioStream
+
 var can_pickup: bool
 var collision_active: bool = false
+
 
 func _ready() -> void:
 	pickup_manager = get_node("/root/MagicGarden/PickupManager")
