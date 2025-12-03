@@ -8,6 +8,8 @@ class_name Player
 @onready var crosshair: Sprite2D = $Crosshair
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+var death_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav")
+
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var score_popup_scene = preload("res://scenes/score_popup.tscn")
 var projectile_scene = preload("res://scenes/projectile.tscn")
@@ -95,6 +97,7 @@ func handle_aim_input() -> void:
 			aim_direction = down if aim_vector.y > 0 else up
 
 func die():
+	AudioManager.play_sound(death_sfx)
 	game_manager.end_game()
 	animation_tree.set("parameters/Death/BlendSpace2D/blend_position", last_direction)
 	animation_tree.get("parameters/playback").travel("Death")

@@ -13,8 +13,6 @@ extends Node2D
 @onready var powerup_manager: PowerupManager = %PowerupManager
 
 @export var background_music: AudioStream
-@export var pickup_sfx: AudioStream
-@export var death_sfx: AudioStream
 @export var ammo_error_sfx: AudioStream
 
 var projectile_scene = preload("res://scenes/projectile.tscn")
@@ -145,7 +143,6 @@ func start_normal_gameplay_loop():
 
 func end_game():
 	AudioManager.stop(background_music)
-	AudioManager.play_start(death_sfx)
 	move_timer.stop()
 	capture_point_manager.stop_capture_systems()
 	time_counter.stop()
@@ -204,7 +201,6 @@ func random_pos():
 	return Vector2i(x,y)
 	
 func handle_pickup_yoyo():
-	AudioManager.play_sound(pickup_sfx)
 	pickup_count += 1
 	trail_manager.create_trail_segment()
 

@@ -23,6 +23,7 @@ var regen_yoyo: bool = true
 var yoyo_pos: Vector2i
 var level: int = 1
 var available_pickups: Array[PackedScene]
+var tutorial_mode: bool = false
 
 const TILES = 12
 const TILE_SIZE = 32
@@ -61,11 +62,18 @@ func reset_regen_yoyo() -> void:
 	yoyo_collected.emit()
 
 func spawn_pickup() -> void:
-	var pickup_pos = random_pos()
+	var pickup_pos
+	if tutorial_mode:
+		pickup_pos = random_pos_tutorial()
+	else:
+		pickup_pos = random_pos()
 	var attempts = 0
 	
 	while not is_valid_spawn_position(pickup_pos) and attempts < 100:
-		pickup_pos = random_pos()
+		if tutorial_mode:
+			pickup_pos = random_pos_tutorial()
+		else:
+			pickup_pos = random_pos()
 		attempts += 1
 	
 	if attempts >= 100:
@@ -79,7 +87,11 @@ func spawn_pickup() -> void:
 	powerup_spawned.emit(pickup_pos)
 
 func force_spawn_pickup(index: int) -> void:
-	var pos = random_pos()
+	var pos
+	if tutorial_mode:
+		pos = random_pos_tutorial()
+	else:
+		pos = random_pos()
 	var scene = available_pickups[index]
 	var pickup = scene.instantiate()
 	
@@ -92,6 +104,15 @@ func random_pos() -> Vector2i:
 	randomize()
 	var x = (randi_range(0, TILES - 1) * TILE_SIZE)
 	var y = (randi_range(0, TILES - 1) * TILE_SIZE)
+	return Vector2i(x, y)
+
+func random_pos_tutorial() -> Vector2i:
+	randomize()
+	var min_tile = 2
+	var max_tile = TILES - 1 - 2
+	
+	var x = (randi_range(min_tile, max_tile) * TILE_SIZE)
+	var y = (randi_range(min_tile, max_tile) * TILE_SIZE)
 	return Vector2i(x, y)
 
 func is_valid_spawn_position(pos: Vector2) -> bool:
@@ -117,11 +138,18 @@ func _on_level_changed(new_level: int) -> void:
 	level = new_level
 
 func spawn_gem() -> void:
-	var pos = random_pos()
+	var pos
+	if tutorial_mode:
+		pos = random_pos_tutorial()
+	else:
+		pos = random_pos()
 	var attempts = 0
 	
 	while not is_valid_spawn_position(pos) and attempts < 100:
-		pos = random_pos()
+		if tutorial_mode:
+			pos = random_pos_tutorial()
+		else:
+			pos = random_pos()
 		attempts += 1
 	
 	if attempts >= 100:
@@ -139,3 +167,7 @@ func spawn_gem() -> void:
 		3: yoyo_instance.play('red')
 	
 	game_manager.add_child(yoyo_instance)
+
+func enable_tutorial_mode() -> void:
+	regen_yoyo = false
+	tutorial_mode = true

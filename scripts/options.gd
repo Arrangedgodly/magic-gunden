@@ -10,7 +10,7 @@ extends Control
 @onready var confirmation_popup: Control = %"Confirmation Popup"
 @onready var controls_button: Button = %ControlsButton
 @onready var back_button: Button = %BackButton
-@onready var margin_container: MarginContainer = $MarginContainer
+@onready var v_box: VBoxContainer = $VBoxContainer
 
 @export var options_music: AudioStream
 @export var controls_music: AudioStream
@@ -153,13 +153,13 @@ func _on_controls_pressed() -> void:
 	add_child(controls_instance)
 		
 	controls_instance.controls_closed.connect(_on_controls_closed)
-	margin_container.hide()
+	v_box.hide()
 	
 	AudioManager.stop(options_music)
 	AudioManager.play_music(controls_music)
 
 func _on_controls_closed() -> void:
-	margin_container.show()
+	v_box.show()
 	back_button.grab_focus()
 	
 	AudioManager.stop(controls_music)

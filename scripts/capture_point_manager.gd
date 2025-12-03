@@ -180,7 +180,7 @@ func _on_level_changed(new_level: int) -> void:
 func enable_tutorial_mode() -> void:
 	tutorial_mode = true
 	stop_capture_systems()
-	clear_capture_points()
+	cycle_capture_points()
 
 func disable_tutorial_mode() -> void:
 	tutorial_mode = false

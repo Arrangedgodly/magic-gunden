@@ -4,7 +4,7 @@ extends AnimatedSprite2D
 @onready var yoyo_area: Area2D = $YoyoArea
 @onready var pickup_manager: PickupManager
 
-@export var pickup_sfx: AudioStream
+var pickup_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro PickUp Coin 04.wav")
 
 var can_pickup: bool
 var collision_active: bool = false
@@ -18,6 +18,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if can_pickup:
 		if body is Player:
 			pickup_manager.reset_regen_yoyo()
+			AudioManager.play_sound(pickup_sfx)
 			queue_free()
 		return
 	

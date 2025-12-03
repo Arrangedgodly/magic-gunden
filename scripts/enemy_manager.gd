@@ -11,6 +11,7 @@ signal slime_killed
 
 var blue_slime_scene = preload("res://scenes/blue_slime.tscn")
 var slimes_killed: int = 0
+var tutorial_mode: bool = false
 
 const TILES = 12
 const TILE_SIZE = 32
@@ -20,6 +21,11 @@ func _ready() -> void:
 	game_manager = get_node("/root/MagicGarden/GameManager")
 	enemy_spawn.timeout.connect(_on_enemy_spawn_timeout)
 	enemy_move.timeout.connect(_on_enemy_move_timeout)
+
+func enable_tutorial_mode() -> void:
+	tutorial_mode = true
+	stop_enemy_systems()
+	clear_all_enemies()
 
 func start_enemy_systems() -> void:
 	enemy_spawn.start()
@@ -35,10 +41,16 @@ func spawn_enemy(override_pos: Vector2 = Vector2.ZERO) -> void:
 	if override_pos != Vector2.ZERO:
 		enemy_pos = override_pos
 	else:
-		enemy_pos = random_pos()
+		if tutorial_mode:
+			enemy_pos = random_pos_tutorial()
+		else:
+			enemy_pos = random_pos()
 		var attempts = 0
 		while not is_valid_spawn_position(enemy_pos) and attempts < 100:
-			enemy_pos = random_pos()
+			if tutorial_mode:
+				enemy_pos = random_pos_tutorial()
+			else:
+				enemy_pos = random_pos()
 			attempts += 1
 		if attempts >= 100:
 			return
@@ -108,6 +120,15 @@ func random_pos() -> Vector2i:
 	randomize()
 	var x = (randi_range(0, TILES - 1) * TILE_SIZE)
 	var y = (randi_range(0, TILES - 1) * TILE_SIZE)
+	return Vector2i(x, y)
+
+func random_pos_tutorial() -> Vector2i:
+	randomize()
+	var min_tile = 2
+	var max_tile = TILES - 1 - 2
+	
+	var x = (randi_range(min_tile, max_tile) * TILE_SIZE)
+	var y = (randi_range(min_tile, max_tile) * TILE_SIZE)
 	return Vector2i(x, y)
 
 func is_valid_spawn_position(pos: Vector2) -> bool:

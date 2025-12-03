@@ -4,6 +4,7 @@ class_name Projectile
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var character_body: CharacterBody2D = $CharacterBody2D
+
 @export var projectile_sound: AudioStream
 @export var hit_sound: AudioStream
 

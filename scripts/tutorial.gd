@@ -65,7 +65,6 @@ func _ready() -> void:
 	
 	self.z_index = 300
 	
-	AudioManager.play_music(tutorial_music)
 	controller_type = ControllerManager.get_controller_type_name()
 
 	game_manager = get_node_or_null("/root/MagicGarden/GameManager")
@@ -80,7 +79,6 @@ func _ready() -> void:
 		trail_manager.trail_item_converted_to_ammo.connect(_on_trail_converted_to_ammo)
 		trail_manager.trail_item_converted_to_enemy.connect(_on_trail_converted_to_enemy)
 		trail_manager.enemy_convert_blocked.connect(_on_enemy_convert_blocked)
-		trail_manager.tutorial_mode = true
 	
 	if enemy_manager:
 		enemy_manager.slime_killed.connect(_on_test_enemy_killed)
@@ -93,7 +91,9 @@ func _ready() -> void:
 	
 	if tutorial_save.show_tutorial:
 		start_tutorial_logic()
+		AudioManager.play_music(tutorial_music)
 	else:
+		AudioManager.stop(tutorial_music)
 		tutorial_finished.emit()
 		queue_free()
 		
@@ -112,17 +112,16 @@ func start_tutorial_logic() -> void:
 		game_manager.tutorial_mode_active = true
 		
 		if pickup_manager:
-			pickup_manager.regen_yoyo = false
+			pickup_manager.enable_tutorial_mode()
 
 		if capture_manager:
 			capture_manager.enable_tutorial_mode()
-			capture_manager.clear_capture_points()
-			var spawn_point = capture_manager.find_capture_spawn_point()
-			capture_manager.spawn_capture_points(spawn_point)
 
 		if enemy_manager:
-			enemy_manager.stop_enemy_systems()
-			enemy_manager.clear_all_enemies()
+			enemy_manager.enable_tutorial_mode()
+		
+		if trail_manager:
+			trail_manager.tutorial_mode = true
 
 		game_manager.game_started = true
 		game_manager.move_timer.start()
@@ -378,7 +377,6 @@ func _process(_delta: float) -> void:
 func _on_trail_converted_to_ammo(_streak, _pos):
 	if current_step == TutorialStep.CAPTURE_GEM:
 		trail_manager.tutorial_capture = true
-		AudioManager.play_sound(game_manager.pickup_sfx)
 		await get_tree().create_timer(0.5).timeout
 
 		if capture_manager:

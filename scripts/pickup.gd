@@ -17,6 +17,8 @@ var collision_node: CollisionShape2D
 func _ready() -> void:
 	add_to_group("pickups")
 	
+	z_index = 2
+	
 	collision_node = CollisionShape2D.new()
 	var collision_shape = CircleShape2D.new()
 	collision_shape.radius = 16
