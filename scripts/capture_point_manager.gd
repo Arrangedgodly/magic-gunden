@@ -140,10 +140,12 @@ func clear_capture_points() -> void:
 
 func flash_capture_points() -> void:
 	var capture_points = get_tree().get_nodes_in_group("capture")
-	if capture_sfx:
-		AudioManager.play_sound(capture_sfx)
+	AudioManager.play_sound(capture_sfx)
 	for point in capture_points:
 		point.flash()
+	await get_tree().create_timer(1.5).timeout
+	AudioManager.play_sound(capture_sfx)
+	await get_tree().create_timer(1.5).timeout
 
 func get_capture_point_count() -> int:
 	return get_tree().get_nodes_in_group("capture").size()
@@ -160,16 +162,15 @@ func _on_capture_point_timer_timeout() -> void:
 	cycle_capture_points()
 	
 func cycle_capture_points() -> void:
-	await clear_capture_points()
+	clear_capture_points()
+	await capture_points_cleared
+	
 	var spawn_point = find_capture_spawn_point()
 	spawn_capture_points(spawn_point)
 
 func _on_capture_point_animation_timeout() -> void:
 	if not tutorial_mode:
-		flash_capture_points()
-		await get_tree().create_timer(1.5).timeout
-		if capture_sfx:
-			AudioManager.play_sound(capture_sfx)
+		await flash_capture_points()
 	
 	capture_animation_played.emit()
 	cycle_capture_points()

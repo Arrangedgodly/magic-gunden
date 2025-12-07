@@ -282,7 +282,8 @@ func _on_trail_released(items_captured: int) -> void:
 	if items_captured >= 6:
 		pickup_manager.spawn_pickup()
 	
-	capture_point_manager.reset_capture_timers()
+	if not powerup_manager.is_time_pause_active():
+		capture_point_manager.reset_capture_timers()
 
 func _on_pause_screen_visibility_changed() -> void:
 	if not game_paused:
