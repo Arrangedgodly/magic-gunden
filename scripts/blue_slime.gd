@@ -3,7 +3,7 @@ extends CharacterBody2D
 class_name Slime
 
 @onready var game_manager = get_parent()
-@onready var player: CharacterBody2D = $"../../Player"
+@onready var player: CharacterBody2D
 @onready var detection: RayCast2D = $Detection
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var fire_fx: AnimatedSprite2D = $FireFx
@@ -26,7 +26,8 @@ var current_move_direction: Vector2 = Vector2.ZERO
 signal was_killed
 
 func _ready():
-	powerup_manager = get_node("/root/MagicGarden/PowerupManager")
+	powerup_manager = get_node("/root/MagicGarden/Systems/PowerupManager")
+	player = get_node("/root/MagicGarden/World/GameplayArea/Player")
 	hide_fire()
 	hide_ice()
 	hide_poison()
@@ -75,7 +76,10 @@ func calculate_move(intended_positions: Dictionary) -> Dictionary:
 		var direction_index = directions.find(random_direction)
 		var random_angle = angles[direction_index]
 		
-		var target_position = position + (random_direction * 32)
+		var raw_target = position + (random_direction * 32)
+		var grid_x = floor(raw_target.x / 32)
+		var grid_y = floor(raw_target.y / 32)
+		var target_position = Vector2(grid_x * 32 + 16, grid_y * 32 + 16)
 		
 		detection.rotation_degrees = random_angle
 		detection.force_raycast_update()
@@ -123,7 +127,7 @@ func is_trail_at_position(target_pos: Vector2) -> bool:
 	for piece in trail_pieces:
 		if is_instance_valid(piece):
 			var distance = target_pos.distance_to(piece.global_position)
-			if distance < 16:
+			if distance < 28:
 				return true
 	return false
 

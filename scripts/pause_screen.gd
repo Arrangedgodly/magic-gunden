@@ -11,6 +11,7 @@ var game_paused : bool
 @onready var background: Sprite2D = $Sprite2D
 @onready var paused_label: Label = $PAUSED
 @onready var h_box: HBoxContainer = $HBoxContainer
+@onready var dev_console: Control
 
 signal main_menu_pressed
 
@@ -26,6 +27,9 @@ func _ready():
 	options.pressed.connect(_on_options_pressed)
 	main_menu.pressed.connect(_on_main_menu_pressed)
 	quit.pressed.connect(_on_quit_pressed)
+	
+	dev_console = get_node("/root/MagicGarden/HUD/DevConsole")
+	dev_console.console_opened.connect(_on_dev_console_console_opened)
 	
 	enable_focus()
 	
@@ -97,3 +101,9 @@ func _on_options_closed(options_instance: Control) -> void:
 	paused_label.show()
 	h_box.show()
 	enable_focus()
+
+func _on_dev_console_console_opened(is_open: bool) -> void:
+	if is_open:
+		process_mode = Node.PROCESS_MODE_DISABLED
+	else:
+		process_mode = Node.PROCESS_MODE_ALWAYS

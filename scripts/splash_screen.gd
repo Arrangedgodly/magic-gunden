@@ -28,11 +28,11 @@ func _process(_delta: float) -> void:
 func trigger_godot_splash() -> void:
 	var tween = create_tween()
 	tween.tween_property(godot_splash, "modulate", Color(1, 1, 1, 1), 4).set_trans(Tween.TRANS_SINE)
-	tween.parallel().tween_property(godot_splash, "position", Vector2(-192, -32), 2).set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(godot_splash, "position", Vector2(-140, -32), 2).set_trans(Tween.TRANS_SINE)
 	AudioManager.play_start(godot_sound)
 	tween.tween_callback(trigger_godot_melting_out)
 	tween.tween_property(godot_splash, "modulate", Color(1, 1, 1, 0), 2).set_trans(Tween.TRANS_SINE)
-	tween.parallel().tween_property(godot_splash, "position", Vector2(-192, 250), 2).set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(godot_splash, "position", Vector2(-140, 250), 2).set_trans(Tween.TRANS_SINE)
 	await tween.finished
 
 func trigger_gurpy_games() -> void:

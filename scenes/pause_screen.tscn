@@ -76,9 +76,17 @@ metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="RestartWarning" parent="." instance=ExtResource("4_21yeh")]
 visible = false
+offset_left = -620.0
+offset_top = -400.0
+offset_right = -620.0
+offset_bottom = -400.0
 
 [node name="QuitWarning" parent="." instance=ExtResource("4_21yeh")]
 visible = false
+offset_left = -620.0
+offset_top = -400.0
+offset_right = -620.0
+offset_bottom = -400.0
 
 [connection signal="confirmation" from="RestartWarning" to="." method="_on_restart_warning_confirmation"]
 [connection signal="confirmation" from="QuitWarning" to="." method="_on_quit_warning_confirmation"]

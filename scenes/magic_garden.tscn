@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=4 uid="uid://dm3mim4ak40m5"]
+[gd_scene load_steps=77 format=4 uid="uid://dm3mim4ak40m5"]
 
 [ext_resource type="Texture2D" uid="uid://c1wrf536415ht" path="res://assets/map/colortiles.png" id="1_cmd0n"]
 [ext_resource type="PackedScene" uid="uid://vrr80sg0kivh" path="res://scenes/player.tscn" id="1_l5lwm"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://dv544i0xc6ido" path="res://assets/map/Space Background.png" id="2_0g600"]
 [ext_resource type="Texture2D" uid="uid://b3g0tjtnuhsc3" path="res://assets/map/squares01-Sheet.png" id="3_4v75r"]
 [ext_resource type="Texture2D" uid="uid://k0s2240apcm3" path="res://assets/map/tiles01-Sheet.png" id="3_e2cyf"]
-[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="3_sdpff"]
 [ext_resource type="Texture2D" uid="uid://bfatrvfcurxtk" path="res://assets/map/kaleicospio03-Sheet.png" id="5_84vli"]
 [ext_resource type="Texture2D" uid="uid://c50hvn2fkabc5" path="res://assets/map/lines01-Sheet.png" id="6_f262p"]
 [ext_resource type="PackedScene" uid="uid://ctl0ccri77fwo" path="res://scenes/killzone.tscn" id="6_u0n6b"]
@@ -19,20 +18,16 @@
 [ext_resource type="Script" uid="uid://bekcy8l8rddxk" path="res://scripts/grids.gd" id="11_d8dij"]
 [ext_resource type="Texture2D" uid="uid://bhsf2vijpvvtk" path="res://assets/map/transparent_tile.png" id="13_p54tl"]
 [ext_resource type="Script" uid="uid://d0tb0csmu3il5" path="res://scripts/trail_manager.gd" id="16_4w6kg"]
-[ext_resource type="Texture2D" uid="uid://bmei0eiha30ii" path="res://assets/UI/scorebanner.png" id="17_hmsf0"]
 [ext_resource type="Script" uid="uid://c4qph2t4vtj04" path="res://scripts/pickup_manager.gd" id="17_ixuxk"]
-[ext_resource type="PackedScene" uid="uid://5jfivnerd7rx" path="res://scenes/ammo_bar.tscn" id="17_j7q35"]
 [ext_resource type="PackedScene" uid="uid://dx3lupwb8kn48" path="res://scenes/enemy_manager.tscn" id="18_bxcp7"]
-[ext_resource type="Script" uid="uid://ctndhqmo5h2tg" path="res://scripts/ui.gd" id="18_fqdd6"]
 [ext_resource type="Script" uid="uid://crffvyxw1awba" path="res://scripts/crosshair.gd" id="18_gfqsg"]
 [ext_resource type="Texture2D" uid="uid://ctc8lwfptxqir" path="res://assets/UI/crosshair.png" id="18_r4k4a"]
-[ext_resource type="AudioStream" uid="uid://dl527srvxquki" path="res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav" id="19_ncaqh"]
 [ext_resource type="PackedScene" uid="uid://c7okeh7owghnm" path="res://scenes/capture_point_manager.tscn" id="19_rag3k"]
 [ext_resource type="PackedScene" uid="uid://xuluuy8cronv" path="res://scenes/powerup_manager.tscn" id="20_n3gpv"]
-[ext_resource type="PackedScene" uid="uid://csfcavlmq7m8t" path="res://scenes/controls.tscn" id="21_of0y2"]
 [ext_resource type="PackedScene" uid="uid://cb56jyqau1a0p" path="res://scenes/pause_screen.tscn" id="22_1bpl5"]
 [ext_resource type="PackedScene" uid="uid://ca3e5xaqhn2jb" path="res://scenes/end_game_screen.tscn" id="25_5kf2c"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="26_2xw40"]
+[ext_resource type="PackedScene" uid="uid://bdat2mtqg6bf8" path="res://scenes/ui.tscn" id="29_ixuxk"]
 [ext_resource type="PackedScene" uid="uid://cl28e4ldob2go" path="res://scenes/dev_console.tscn" id="33_a4uvu"]
 [ext_resource type="PackedScene" uid="uid://bes2y8yuoiojf" path="res://scenes/tutorial.tscn" id="35_a2mr6"]
 
@@ -392,241 +387,170 @@ size = Vector2(384.444, 20)
 size = Vector2(386.667, 20)
 
 [node name="MagicGarden" type="Node2D"]
-scale = Vector2(0.75, 0.75)
 
-[node name="AnimatedBackground" type="AnimatedSprite2D" parent="."]
+[node name="World" type="Node2D" parent="."]
+
+[node name="AnimatedBackground" type="AnimatedSprite2D" parent="World"]
 position = Vector2(-13.8889, 26.1111)
-scale = Vector2(3.25, 2.165)
+scale = Vector2(3.5, 2.332)
 sprite_frames = SubResource("SpriteFrames_lh8k6")
-animation = &"hole"
-frame_progress = 0.907802
+animation = &"dots"
 script = ExtResource("10_83lwh")
 
-[node name="BackgroundSwap" type="Timer" parent="AnimatedBackground"]
+[node name="BackgroundSwap" type="Timer" parent="World/AnimatedBackground"]
 wait_time = 30.0
 autostart = true
 
-[node name="Grids" type="Node2D" parent="."]
+[node name="Grids" type="Node2D" parent="World"]
 script = ExtResource("11_d8dij")
 
-[node name="Green" type="TileMapLayer" parent="Grids"]
+[node name="Green" type="TileMapLayer" parent="World/Grids"]
 use_parent_material = true
 tile_map_data = PackedByteArray("AAD1//f/AAAAAAAAAAD1//v/AAAAAAAAAAD1////AAAAAAAAAAD1/wMAAAAAAAAAAAD1/wcAAAAAAAAAAAD5//f/AAAAAAAAAAD5//v/AAAAAAAAAAD5////AAAAAAAAAAD5/wMAAAAAAAAAAAD5/wcAAAAAAAAAAAD9//f/AAAAAAAAAAD9//v/AAAAAAAAAAD9////AAAAAAAAAAD9/wMAAAAAAAAAAAD9/wcAAAAAAAAAAAABAPf/AAAAAAAAAAABAPv/AAAAAAAAAAABAP//AAAAAAAAAAABAAMAAAAAAAAAAAABAAcAAAAAAAAAAAAFAPf/AAAAAAAAAAAFAPv/AAAAAAAAAAAFAP//AAAAAAAAAAAFAAMAAAAAAAAAAAAFAAcAAAAAAAAAAAAJAPf/AAAAAAAAAAAJAPv/AAAAAAAAAAAJAP//AAAAAAAAAAAJAAMAAAAAAAAAAAAJAAcAAAAAAAAAAAD1/wsAAAAAAAAAAAD5/wsAAAAAAAAAAAD9/wsAAAAAAAAAAAABAAsAAAAAAAAAAAAFAAsAAAAAAAAAAAAJAAsAAAAAAAAAAAA=")
 enabled = false
 tile_set = SubResource("TileSet_4uemb")
 collision_enabled = false
 
-[node name="Red" type="TileMapLayer" parent="Grids"]
+[node name="Red" type="TileMapLayer" parent="World/Grids"]
 use_parent_material = true
 tile_map_data = PackedByteArray("AAD1/wsAAAAEAAAAAAD5/wsAAAAEAAAAAAD9/wsAAAAEAAAAAAABAAsAAAAEAAAAAAAFAAsAAAAEAAAAAAAJAAsAAAAEAAAAAAD1/wcAAAAEAAAAAAD5/wcAAAAEAAAAAAD9/wcAAAAEAAAAAAABAAcAAAAEAAAAAAAFAAcAAAAEAAAAAAAJAAcAAAAEAAAAAAD1/wMAAAAEAAAAAAD5/wMAAAAEAAAAAAD9/wMAAAAEAAAAAAABAAMAAAAEAAAAAAAFAAMAAAAEAAAAAAAJAAMAAAAEAAAAAAD1////AAAEAAAAAAD5////AAAEAAAAAAD9////AAAEAAAAAAABAP//AAAEAAAAAAAFAP//AAAEAAAAAAAJAP//AAAEAAAAAAD1//v/AAAEAAAAAAD5//v/AAAEAAAAAAD9//v/AAAEAAAAAAABAPv/AAAEAAAAAAAFAPv/AAAEAAAAAAAJAPv/AAAEAAAAAAD1//f/AAAEAAAAAAD5//f/AAAEAAAAAAD9//f/AAAEAAAAAAABAPf/AAAEAAAAAAAFAPf/AAAEAAAAAAAJAPf/AAAEAAAAAAA=")
 enabled = false
 tile_set = SubResource("TileSet_4uemb")
 collision_enabled = false
 
-[node name="Blue" type="TileMapLayer" parent="Grids"]
+[node name="Blue" type="TileMapLayer" parent="World/Grids"]
 use_parent_material = true
 tile_map_data = PackedByteArray("AAD1/wsAAAAEAAQAAAD5/wsAAAAEAAQAAAD9/wsAAAAEAAQAAAABAAsAAAAEAAQAAAAFAAsAAAAEAAQAAAAJAAsAAAAEAAQAAAD1/wcAAAAEAAQAAAD5/wcAAAAEAAQAAAD9/wcAAAAEAAQAAAABAAcAAAAEAAQAAAAFAAcAAAAEAAQAAAAJAAcAAAAEAAQAAAD1/wMAAAAEAAQAAAD5/wMAAAAEAAQAAAD9/wMAAAAEAAQAAAABAAMAAAAEAAQAAAAFAAMAAAAEAAQAAAAJAAMAAAAEAAQAAAD1////AAAEAAQAAAD5////AAAEAAQAAAD9////AAAEAAQAAAABAP//AAAEAAQAAAAFAP//AAAEAAQAAAAJAP//AAAEAAQAAAD1//v/AAAEAAQAAAD5//v/AAAEAAQAAAD9//v/AAAEAAQAAAABAPv/AAAEAAQAAAAFAPv/AAAEAAQAAAAJAPv/AAAEAAQAAAD1//f/AAAEAAQAAAD5//f/AAAEAAQAAAD9//f/AAAEAAQAAAABAPf/AAAEAAQAAAAFAPf/AAAEAAQAAAAJAPf/AAAEAAQAAAA=")
-enabled = false
 tile_set = SubResource("TileSet_4uemb")
 collision_enabled = false
 
-[node name="GameManager" parent="." instance=ExtResource("1_xu37e")]
-unique_name_in_owner = true
-position = Vector2(-200, -167.778)
+[node name="Killzones" type="Node2D" parent="World"]
 
-[node name="TrailManager" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("16_4w6kg")
+[node name="BottomKillzone" parent="World/Killzones" instance=ExtResource("6_u0n6b")]
 
-[node name="PickupManager" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("17_ixuxk")
+[node name="Bottom" type="CollisionShape2D" parent="World/Killzones/BottomKillzone"]
+position = Vector2(-8, 227)
+shape = SubResource("RectangleShape2D_7t7ub")
 
-[node name="EnemyManager" parent="." instance=ExtResource("18_bxcp7")]
-unique_name_in_owner = true
+[node name="RightKillzone" parent="World/Killzones" instance=ExtResource("6_u0n6b")]
 
-[node name="CapturePointManager" parent="." instance=ExtResource("19_rag3k")]
-unique_name_in_owner = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Killzones/RightKillzone"]
+position = Vector2(194.445, 23.8889)
+rotation = -1.5708
+shape = SubResource("RectangleShape2D_x7on8")
 
-[node name="PowerupManager" parent="." instance=ExtResource("20_n3gpv")]
-unique_name_in_owner = true
+[node name="LeftKillzone" parent="World/Killzones" instance=ExtResource("6_u0n6b")]
 
-[node name="Player" parent="." instance=ExtResource("1_l5lwm")]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Killzones/LeftKillzone"]
+position = Vector2(-211.11, 24.4445)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_k7qjo")
+
+[node name="TopKillzone" parent="World/Killzones" instance=ExtResource("6_u0n6b")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Killzones/TopKillzone"]
+position = Vector2(-7.77779, -178.889)
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_aq7vn")
+
+[node name="GameplayArea" type="Node2D" parent="World"]
+
+[node name="Player" parent="World/GameplayArea" instance=ExtResource("1_l5lwm")]
 unique_name_in_owner = true
 position = Vector2(-120, -122)
 
-[node name="Crosshair" type="Sprite2D" parent="Player"]
+[node name="Crosshair" type="Sprite2D" parent="World/GameplayArea/Player"]
 z_index = 100
 position = Vector2(0, 32)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("18_r4k4a")
 script = ExtResource("18_gfqsg")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-14, 26)
-zoom = Vector2(2, 2)
+[node name="Systems" type="Node2D" parent="."]
 
-[node name="UI" type="Control" parent="Camera2D"]
-z_index = 20
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("18_fqdd6")
+[node name="GameManager" parent="Systems" instance=ExtResource("1_xu37e")]
+unique_name_in_owner = true
+position = Vector2(-200, -167.778)
 
-[node name="ScoreBanner" type="Sprite2D" parent="Camera2D/UI"]
-position = Vector2(14, 230)
-scale = Vector2(2, 2)
-texture = ExtResource("17_hmsf0")
+[node name="TrailManager" type="Node2D" parent="Systems"]
+unique_name_in_owner = true
+script = ExtResource("16_4w6kg")
 
-[node name="Score" type="Label" parent="Camera2D/UI"]
-layout_mode = 0
-offset_left = -26.0
-offset_top = 220.0
-offset_right = 54.0
-offset_bottom = 246.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("3_sdpff")
-theme_override_font_sizes/font_size = 32
-text = "00000"
+[node name="PickupManager" type="Node2D" parent="Systems"]
+unique_name_in_owner = true
+script = ExtResource("17_ixuxk")
 
-[node name="Controls" parent="Camera2D/UI" instance=ExtResource("21_of0y2")]
-visible = false
-layout_mode = 1
-offset_left = -376.667
-offset_top = -271.333
-offset_right = -376.667
-offset_bottom = -271.333
-scale = Vector2(0.7, 0.7)
+[node name="EnemyManager" parent="Systems" instance=ExtResource("18_bxcp7")]
+unique_name_in_owner = true
 
-[node name="AmmoLabel" type="Label" parent="Camera2D/UI"]
-layout_mode = 0
-offset_left = 275.0
-offset_top = 165.0
-offset_right = 336.0
-offset_bottom = 178.0
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("3_sdpff")
-text = "AMMO"
-horizontal_alignment = 1
+[node name="CapturePointManager" parent="Systems" instance=ExtResource("19_rag3k")]
+unique_name_in_owner = true
 
-[node name="AmmoBar" parent="Camera2D/UI" instance=ExtResource("17_j7q35")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 150.0
-offset_top = 200.0
-offset_right = 211.0
-offset_bottom = 200.0
-grow_horizontal = 1
-grow_vertical = 1
-scale = Vector2(5, 5)
-size_flags_vertical = 1
+[node name="PowerupManager" parent="Systems" instance=ExtResource("20_n3gpv")]
+unique_name_in_owner = true
 
-[node name="Killstreak" type="VBoxContainer" parent="Camera2D/UI"]
-layout_mode = 0
-offset_left = -360.0
-offset_top = 165.0
-offset_right = -284.0
-offset_bottom = 228.0
-theme_override_constants/separation = 8
-alignment = 1
-
-[node name="Current_Killstreak_Label" type="Label" parent="Camera2D/UI/Killstreak"]
-layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("3_sdpff")
-theme_override_font_sizes/font_size = 16
-text = "CURRENT
-KILLSTREAK"
-horizontal_alignment = 1
-
-[node name="Current_Killstreak" type="Label" parent="Camera2D/UI/Killstreak"]
-layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("3_sdpff")
-theme_override_font_sizes/font_size = 32
-horizontal_alignment = 1
-
-[node name="PowerupContainer" type="HBoxContainer" parent="Camera2D/UI"]
-layout_mode = 1
-offset_left = -75.0
-offset_top = -250.0
-offset_right = 95.0
-offset_bottom = -200.0
-
-[node name="MoveTimer" type="Timer" parent="."]
+[node name="MoveTimer" type="Timer" parent="Systems"]
+unique_name_in_owner = true
 wait_time = 0.4
 
-[node name="Killzones" type="Node2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-14, 26)
+zoom = Vector2(1.5, 1.5)
 
-[node name="BottomKillzone" parent="Killzones" instance=ExtResource("6_u0n6b")]
+[node name="HUD" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
-[node name="Bottom" type="CollisionShape2D" parent="Killzones/BottomKillzone"]
-position = Vector2(-8, 227)
-shape = SubResource("RectangleShape2D_7t7ub")
-
-[node name="RightKillzone" parent="Killzones" instance=ExtResource("6_u0n6b")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzones/RightKillzone"]
-position = Vector2(194.445, 23.8889)
-rotation = -1.5708
-shape = SubResource("RectangleShape2D_x7on8")
-
-[node name="LeftKillzone" parent="Killzones" instance=ExtResource("6_u0n6b")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzones/LeftKillzone"]
-position = Vector2(-211.11, 24.4445)
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_k7qjo")
-
-[node name="TopKillzone" parent="Killzones" instance=ExtResource("6_u0n6b")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzones/TopKillzone"]
-position = Vector2(-7.77779, -178.889)
-rotation = 3.14159
-shape = SubResource("RectangleShape2D_aq7vn")
-
-[node name="Death" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("19_ncaqh")
-
-[node name="PauseScreen" parent="." instance=ExtResource("22_1bpl5")]
+[node name="PauseScreen" parent="HUD" instance=ExtResource("22_1bpl5")]
+unique_name_in_owner = true
 visible = false
-
-[node name="EndGameScreen" parent="." instance=ExtResource("25_5kf2c")]
-visible = false
-offset_left = -458.667
-offset_top = -288.0
-offset_right = -458.667
-offset_bottom = -288.0
 scale = Vector2(0.75, 0.75)
 
-[node name="CRT" parent="." instance=ExtResource("26_2xw40")]
-z_as_relative = false
-offset_left = -600.0
-offset_top = -392.0
-offset_right = 600.0
-offset_bottom = 408.0
-
-[node name="DevConsole" parent="." instance=ExtResource("33_a4uvu")]
-
-[node name="Tutorial" parent="." instance=ExtResource("35_a2mr6")]
+[node name="EndGameScreen" parent="HUD" instance=ExtResource("25_5kf2c")]
 unique_name_in_owner = true
-z_index = 300
-offset_left = -420.0
+visible = false
+offset_left = -450.0
 offset_top = -250.0
-offset_right = 390.0
-offset_bottom = 300.0
+offset_right = -450.0
+offset_bottom = -250.0
+scale = Vector2(0.75, 0.75)
 
-[connection signal="timeout" from="AnimatedBackground/BackgroundSwap" to="AnimatedBackground" method="_on_background_swap_timeout"]
-[connection signal="game_ended" from="GameManager" to="EndGameScreen" method="_on_game_manager_game_ended"]
-[connection signal="level_changed" from="GameManager" to="Grids" method="_on_game_manager_level_changed"]
-[connection signal="new_high_gems_captured" from="GameManager" to="EndGameScreen" method="_on_game_manager_new_high_gems_captured"]
-[connection signal="new_high_killcount" from="GameManager" to="EndGameScreen" method="_on_game_manager_new_high_killcount"]
-[connection signal="new_high_time_alive" from="GameManager" to="EndGameScreen" method="_on_game_manager_new_high_time_alive"]
-[connection signal="new_highscore" from="GameManager" to="EndGameScreen" method="_on_game_manager_new_highscore"]
-[connection signal="timeout" from="MoveTimer" to="GameManager" method="_on_move_timer_timeout"]
-[connection signal="timeout" from="MoveTimer" to="Player" method="_on_move_timer_timeout"]
-[connection signal="visibility_changed" from="PauseScreen" to="GameManager" method="_on_pause_screen_visibility_changed"]
+[node name="DevConsole" parent="HUD" instance=ExtResource("33_a4uvu")]
+offset_left = -500.0
+offset_top = -275.0
+offset_right = -500.0
+offset_bottom = -275.0
+scale = Vector2(0.75, 0.75)
+
+[node name="Tutorial" parent="HUD" instance=ExtResource("35_a2mr6")]
+unique_name_in_owner = true
+visible = false
+z_index = 300
+offset_left = -460.0
+offset_top = -275.0
+offset_right = -460.0
+offset_bottom = -275.0
+scale = Vector2(0.75, 0.75)
+metadata/_edit_use_anchors_ = true
+
+[node name="UI" parent="HUD" instance=ExtResource("29_ixuxk")]
+unique_name_in_owner = true
+
+[node name="CRT" parent="HUD" instance=ExtResource("26_2xw40")]
+z_as_relative = false
+offset_left = -500.0
+offset_top = -275.0
+offset_right = -500.0
+offset_bottom = -275.0
+scale = Vector2(0.765, 0.765)
+metadata/_edit_use_anchors_ = true
+
+[connection signal="timeout" from="World/AnimatedBackground/BackgroundSwap" to="World/AnimatedBackground" method="_on_background_swap_timeout"]
+[connection signal="game_ended" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_game_ended"]
+[connection signal="level_changed" from="Systems/GameManager" to="World/Grids" method="_on_game_manager_level_changed"]
+[connection signal="new_high_gems_captured" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_new_high_gems_captured"]
+[connection signal="new_high_killcount" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_new_high_killcount"]
+[connection signal="new_high_time_alive" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_new_high_time_alive"]
+[connection signal="new_highscore" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_new_highscore"]
+[connection signal="timeout" from="Systems/MoveTimer" to="World/GameplayArea/Player" method="_on_move_timer_timeout"]
+[connection signal="timeout" from="Systems/MoveTimer" to="Systems/GameManager" method="_on_move_timer_timeout"]
+[connection signal="visibility_changed" from="HUD/PauseScreen" to="Systems/GameManager" method="_on_pause_screen_visibility_changed"]

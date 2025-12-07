@@ -3,8 +3,8 @@ extends CharacterBody2D
 class_name Player
 
 @onready var animation_tree: AnimationTree = $AnimationTree
-@onready var move_timer: Timer = $"../MoveTimer"
-@onready var game_manager: Node2D = $"../GameManager"
+@onready var move_timer: Timer = %MoveTimer
+@onready var game_manager: Node2D = %GameManager
 @onready var crosshair: Sprite2D = $Crosshair
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -20,6 +20,7 @@ var animation_speed = 5
 var powerup_manager: PowerupManager
 var move_deadzone: float = 0.5
 var aim_deadzone: float = 0.5
+var finished_moving: bool = false
 
 const tile_size = 32
 const up = Vector2(0, -1)
@@ -28,7 +29,7 @@ const left = Vector2(-1, 0)
 const right = Vector2(1, 0)
 
 func _ready():
-	powerup_manager = get_node("/root/MagicGarden/PowerupManager")
+	powerup_manager = get_node("/root/MagicGarden/Systems/PowerupManager")
 	position = position.snapped(Vector2.ONE * tile_size)
 	position += Vector2.ONE * 8
 	powerup_active()
@@ -120,6 +121,8 @@ func attack():
 	if powerup_manager and powerup_manager.is_ricochet_active():
 		projectile.can_ricochet = true
 		projectile.max_bounces = powerup_manager.get_ricochet_max_bounces()
+		
+	projectile.shot_missed.connect(game_manager._on_projectile_shot_missed)
 		
 	add_child(projectile)
 

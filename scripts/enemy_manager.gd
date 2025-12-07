@@ -18,7 +18,7 @@ const TILE_SIZE = 32
 const IDLE_ANIMATION_DURATION = 0.5
 
 func _ready() -> void:
-	game_manager = get_node("/root/MagicGarden/GameManager")
+	game_manager = get_node("/root/MagicGarden/Systems/GameManager")
 	enemy_spawn.timeout.connect(_on_enemy_spawn_timeout)
 	enemy_move.timeout.connect(_on_enemy_move_timeout)
 

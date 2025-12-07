@@ -1,29 +1,34 @@
-extends CanvasLayer
+extends Control
 
-@onready var container: Control = $Control
-@onready var main_menu: VBoxContainer = $Control/MainMenu
-@onready var powerup_menu: VBoxContainer = $Control/PowerupMenu
-@onready var enemy_button: Button = $Control/MainMenu/Enemy
-@onready var gem_button: Button = $Control/MainMenu/Gem
-@onready var powerup_button: Button = $Control/MainMenu/Powerup
-@onready var back_button: Button = $Control/PowerupMenu/Back
-@onready var enemy_manager: EnemyManager = %EnemyManager
-@onready var pickup_manager: PickupManager = %PickupManager
+@onready var main_menu: VBoxContainer = %MainMenu
+@onready var powerup_menu: VBoxContainer = %PowerupMenu
+@onready var enemy_button: Button = %Enemy
+@onready var gem_button: Button = %Gem
+@onready var powerup_button: Button = %Powerup
+@onready var back_button: Button = %Back
+@onready var enemy_manager: EnemyManager
+@onready var pickup_manager: PickupManager
 
-@onready var magnet_button: Button = $Control/PowerupMenu/Magnet
-@onready var pierce_button: Button = $Control/PowerupMenu/Pierce
-@onready var ricochet_button: Button = $Control/PowerupMenu/Ricochet
-@onready var stomp_button: Button = $Control/PowerupMenu/Stomp
-@onready var poison_button: Button = $Control/PowerupMenu/Poison
-@onready var auto_aim_button: Button = $Control/PowerupMenu/AutoAim
-@onready var flames_button: Button = $Control/PowerupMenu/Flames
-@onready var free_ammo_button: Button = $Control/PowerupMenu/FreeAmmo
-@onready var ice_button: Button = $Control/PowerupMenu/Ice
-@onready var jump_button: Button = $Control/PowerupMenu/Jump
-@onready var time_pause_button: Button = $Control/PowerupMenu/TimePause
+@onready var magnet_button: Button = %Magnet
+@onready var pierce_button: Button = %Pierce
+@onready var ricochet_button: Button = %Ricochet
+@onready var stomp_button: Button = %Stomp
+@onready var poison_button: Button = %Poison
+@onready var auto_aim_button: Button = %AutoAim
+@onready var flames_button: Button = %Flames
+@onready var free_ammo_button: Button = %FreeAmmo
+@onready var ice_button: Button = %Ice
+@onready var jump_button: Button = %Jump
+@onready var time_pause_button: Button = %TimePause
+
+signal console_opened(is_open: bool)
 
 func _ready() -> void:
-	container.visible = false
+	hide()
+	enemy_manager = get_node("/root/MagicGarden/Systems/EnemyManager")
+	pickup_manager = get_node("/root/MagicGarden/Systems/PickupManager")
+	
+	self.visible = false
 	powerup_menu.visible = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
@@ -49,12 +54,17 @@ func _input(_event: InputEvent) -> void:
 		toggle_console()
 
 func toggle_console() -> void:
-	container.visible = not container.visible
+	self.visible = not self.visible
 	
-	if container.visible:
+	if self.visible:
+		show()
 		show_main_menu()
+		console_opened.emit(true)
+	else:
+		hide()
+		console_opened.emit(false)
 	
-	get_tree().paused = container.visible
+	get_tree().paused = self.visible
 
 func show_main_menu() -> void:
 	main_menu.visible = true
@@ -76,4 +86,4 @@ func _on_spawn_pickup(index: int) -> void:
 	pickup_manager.force_spawn_pickup(index)
 
 func _on_spawn_yoyo() -> void:
-	pickup_manager.force_spawn_yoyo()
+	pickup_manager.spawn_gem()

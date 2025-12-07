@@ -32,7 +32,7 @@ scale = Vector2(2.5, 2.5)
 transform = Transform2D(2.5, 0, 0, 2.5, 0, 400)
 
 [node name="ColorRect" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(1200, 800)
+custom_minimum_size = Vector2(1280, 800)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -59,19 +59,24 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
 theme_override_fonts/font = ExtResource("1_c2u1v")
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 64
 text = "OPTIONS"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="AudioSection" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
 [node name="AudioLabel" type="Label" parent="VBoxContainer/AudioSection"]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("1_c2u1v")
 theme_override_font_sizes/font_size = 48
 text = "AUDIO"
@@ -83,6 +88,7 @@ alignment = 1
 
 [node name="MusicLabel" type="Label" parent="VBoxContainer/AudioSection/MusicControl"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_c2u1v")
 theme_override_font_sizes/font_size = 24
 text = "Music Volume"
@@ -96,6 +102,7 @@ value = 80.0
 [node name="MusicValueLabel" type="Label" parent="VBoxContainer/AudioSection/MusicControl"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/outline_size = 10
 text = "80%"
 
 [node name="SFXControl" type="HBoxContainer" parent="VBoxContainer/AudioSection"]
@@ -104,6 +111,7 @@ alignment = 1
 
 [node name="SFXLabel" type="Label" parent="VBoxContainer/AudioSection/SFXControl"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_c2u1v")
 theme_override_font_sizes/font_size = 24
 text = "SFX Volume"
@@ -117,10 +125,12 @@ value = 80.0
 [node name="SFXValueLabel" type="Label" parent="VBoxContainer/AudioSection/SFXControl"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/outline_size = 10
 text = "80%"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="SaveSection" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -129,6 +139,8 @@ alignment = 1
 
 [node name="SaveLabel" type="Label" parent="VBoxContainer/SaveSection"]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("1_c2u1v")
 theme_override_font_sizes/font_size = 48
 text = "SAVE DATA"
@@ -160,6 +172,7 @@ text = "Reset All"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="ControlsSection" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -167,6 +180,8 @@ size_flags_horizontal = 4
 
 [node name="ControlsLabel" type="Label" parent="VBoxContainer/ControlsSection"]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("1_c2u1v")
 theme_override_font_sizes/font_size = 48
 text = "CONTROLS"
@@ -181,6 +196,7 @@ text = "Edit Controls"
 
 [node name="HSeparator4" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="BackButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
@@ -196,17 +212,15 @@ offset = Vector2(350, 465)
 anchor_mode = 0
 
 [node name="CRT" parent="Camera2D" instance=ExtResource("5_1sggn")]
-offset_left = 175.0
-offset_top = 350.0
-offset_right = 1375.0
-offset_bottom = 1150.0
-scale = Vector2(1.25, 1.25)
+offset_left = 325.0
+offset_top = 420.0
+offset_right = 1525.0
+offset_bottom = 1220.0
+scale = Vector2(1.1, 1.1)
 
 [node name="Confirmation Popup" parent="." instance=ExtResource("3_2iy26")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
-offset_left = 0.0
-offset_top = 0.0
-offset_right = -1200.0
+offset_right = -1280.0
 offset_bottom = -800.0

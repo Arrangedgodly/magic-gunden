@@ -1,20 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://cl28e4ldob2go"]
+[gd_scene load_steps=4 format=3 uid="uid://cl28e4ldob2go"]
 
 [ext_resource type="Script" uid="uid://vf5ol0lca4da" path="res://scripts/dev_console.gd" id="1_gtvys"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="2_qve2q"]
+[ext_resource type="Script" uid="uid://d4k3ok8w3g88g" path="res://scripts/ui_button.gd" id="3_1co7n"]
 
-[node name="DevConsole" type="CanvasLayer"]
-script = ExtResource("1_gtvys")
-
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control"]
+z_index = 200
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_gtvys")
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.8)
 
-[node name="MainMenu" type="VBoxContainer" parent="Control"]
+[node name="MainMenu" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,28 +39,35 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
 
-[node name="Enemy" type="Button" parent="Control/MainMenu"]
+[node name="Enemy" type="Button" parent="MainMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Enemy"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Gem" type="Button" parent="Control/MainMenu"]
+[node name="Gem" type="Button" parent="MainMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Gem"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Powerup" type="Button" parent="Control/MainMenu"]
+[node name="Powerup" type="Button" parent="MainMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Powerup"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="PowerupMenu" type="VBoxContainer" parent="Control"]
+[node name="PowerupMenu" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -74,86 +82,110 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
 
-[node name="Magnet" type="Button" parent="Control/PowerupMenu"]
+[node name="Magnet" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Magnet"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Pierce" type="Button" parent="Control/PowerupMenu"]
+[node name="Pierce" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Pierce"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Ricochet" type="Button" parent="Control/PowerupMenu"]
+[node name="Ricochet" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Ricochet"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Stomp" type="Button" parent="Control/PowerupMenu"]
+[node name="Stomp" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Stomp"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Poison" type="Button" parent="Control/PowerupMenu"]
+[node name="Poison" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Poison"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="AutoAim" type="Button" parent="Control/PowerupMenu"]
+[node name="AutoAim" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Auto Aim"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Flames" type="Button" parent="Control/PowerupMenu"]
+[node name="Flames" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Flames"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="FreeAmmo" type="Button" parent="Control/PowerupMenu"]
+[node name="FreeAmmo" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Free Ammo"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Ice" type="Button" parent="Control/PowerupMenu"]
+[node name="Ice" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Ice"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Jump" type="Button" parent="Control/PowerupMenu"]
+[node name="Jump" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Jump"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="TimePause" type="Button" parent="Control/PowerupMenu"]
+[node name="TimePause" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Spawn Time Pause"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Back" type="Button" parent="Control/PowerupMenu"]
+[node name="Back" type="Button" parent="PowerupMenu"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("2_qve2q")
 theme_override_font_sizes/font_size = 32
 text = "Go Back"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"

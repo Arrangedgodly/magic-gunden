@@ -1,7 +1,7 @@
 extends Control
 @onready var yes: Button = $CenterContainer/VBoxContainer/HBoxContainer/Yes
 @onready var no: Button = $CenterContainer/VBoxContainer/HBoxContainer/No
-@onready var ui: Control = $"../Camera2D/UI"
+@onready var ui: Control = %UI
 @onready var final_score: Label = $CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer/FinalScore
 @onready var final_score_label: Label = $"CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer/Final Score Label"
 @onready var final_killcount_label: Label = $"CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer2/Final Killcount Label"

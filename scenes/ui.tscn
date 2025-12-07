@@ -1,0 +1,149 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdat2mtqg6bf8"]
+
+[ext_resource type="Script" uid="uid://ctndhqmo5h2tg" path="res://scripts/ui.gd" id="1_wm3ai"]
+[ext_resource type="Texture2D" uid="uid://bmei0eiha30ii" path="res://assets/UI/scorebanner.png" id="2_8dubc"]
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="3_p7vwb"]
+[ext_resource type="PackedScene" uid="uid://csfcavlmq7m8t" path="res://scenes/controls.tscn" id="4_ktti3"]
+[ext_resource type="PackedScene" uid="uid://5jfivnerd7rx" path="res://scenes/ammo_bar.tscn" id="5_cgfq5"]
+[ext_resource type="Script" uid="uid://b4kxdpt88ncbw" path="res://scripts/powerup_container.gd" id="6_8dubc"]
+
+[node name="UI" type="Control"]
+z_index = 20
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -600.0
+offset_top = -400.0
+offset_right = -600.0
+offset_bottom = -400.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_wm3ai")
+metadata/_edit_use_anchors_ = true
+
+[node name="Score" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 250.0
+offset_bottom = 290.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreBanner" type="Sprite2D" parent="Score"]
+unique_name_in_owner = true
+scale = Vector2(2, 2)
+texture = ExtResource("2_8dubc")
+
+[node name="ScoreLabel" type="Label" parent="Score"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -30.0
+offset_right = 20.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_p7vwb")
+theme_override_font_sizes/font_size = 32
+text = "00000"
+
+[node name="Controls" parent="." instance=ExtResource("4_ktti3")]
+visible = false
+layout_mode = 1
+offset_left = -376.667
+offset_top = -271.333
+offset_right = -376.667
+offset_bottom = -271.333
+scale = Vector2(0.7, 0.7)
+
+[node name="Ammo" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 870.0
+offset_top = 625.0
+offset_right = 910.0
+offset_bottom = 665.0
+
+[node name="AmmoLabel" type="Label" parent="Ammo"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 5.0
+offset_right = 45.0
+offset_bottom = 13.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_p7vwb")
+text = "AMMO"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AmmoBar" parent="Ammo" instance=ExtResource("5_cgfq5")]
+unique_name_in_owner = true
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -128.0
+offset_top = 40.0
+offset_right = -67.0
+offset_bottom = 40.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(5, 5)
+size_flags_vertical = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Killstreak" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 625.0
+offset_right = 296.0
+offset_bottom = 688.0
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Current_Killstreak_Label" type="Label" parent="Killstreak"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_p7vwb")
+theme_override_font_sizes/font_size = 16
+text = "CURRENT
+KILLSTREAK"
+horizontal_alignment = 1
+
+[node name="Current_Killstreak" type="Label" parent="Killstreak"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_p7vwb")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+
+[node name="PowerupContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -240.0
+offset_right = 110.0
+offset_bottom = -190.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("6_8dubc")

@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://umhfdm6edo2f"]
+
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_hunp8"]
+[ext_resource type="StyleBox" uid="uid://dam6movnxys41" path="res://scenes/button_texture.tres" id="2_3wbiy"]
+[ext_resource type="Texture2D" uid="uid://bxi634ls0bvsp" path="res://assets/UI/button_pushed.png" id="3_efe2e"]
+[ext_resource type="Texture2D" uid="uid://cc2hvnc6rdrre" path="res://assets/UI/button_hovered.png" id="4_omkt5"]
+[ext_resource type="Script" uid="uid://d4k3ok8w3g88g" path="res://scripts/ui_button.gd" id="5_3wbiy"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ho0u5"]
+texture = ExtResource("3_efe2e")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+expand_margin_left = 5.0
+expand_margin_top = 10.0
+expand_margin_right = 5.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jwut6"]
+texture = ExtResource("4_omkt5")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+expand_margin_left = 5.0
+expand_margin_top = 10.0
+expand_margin_right = 5.0
+expand_margin_bottom = 10.0
+
+[node name="MenuButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_fonts/font = ExtResource("1_hunp8")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_3wbiy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ho0u5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jwut6")
+text = "Button text"
+script = ExtResource("5_3wbiy")

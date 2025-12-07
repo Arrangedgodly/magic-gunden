@@ -80,10 +80,18 @@ func release_trail() -> void:
 	capture_count = 0
 	
 	var items_to_convert = []
-	for item in trail:
+	
+	for i in range(trail.size()):
+		var item = trail[i]
+		var spawn_pos = item.position # Fallback
+		
+		if i < move_history.size():
+			var history_pos = move_history[-(i + 1)]
+			spawn_pos = game_manager.to_local(history_pos)
+		
 		var item_data = {
 			"node": item,
-			"position": item.position,
+			"position": spawn_pos,
 			"on_capture": is_on_capture_point(item)
 		}
 		items_to_convert.append(item_data)

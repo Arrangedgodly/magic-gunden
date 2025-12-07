@@ -67,13 +67,13 @@ func _ready() -> void:
 	
 	controller_type = ControllerManager.get_controller_type_name()
 
-	game_manager = get_node_or_null("/root/MagicGarden/GameManager")
-	player = get_node_or_null("/root/MagicGarden/Player")
-	trail_manager = get_node_or_null("/root/MagicGarden/TrailManager")
-	enemy_manager = get_node_or_null("/root/MagicGarden/EnemyManager")
-	capture_manager = get_node_or_null("/root/MagicGarden/CapturePointManager")
-	pickup_manager = get_node_or_null("/root/MagicGarden/PickupManager")
-	powerup_manager = get_node_or_null("/root/MagicGarden/PowerupManager")
+	game_manager = get_node_or_null("/root/MagicGarden/Systems/GameManager")
+	player = get_node_or_null("/root/MagicGarden/World/GameplayArea/Player")
+	trail_manager = get_node_or_null("/root/MagicGarden/Systems/TrailManager")
+	enemy_manager = get_node_or_null("/root/MagicGarden/Systems/EnemyManager")
+	capture_manager = get_node_or_null("/root/MagicGarden/Systems/CapturePointManager")
+	pickup_manager = get_node_or_null("/root/MagicGarden/Systems/PickupManager")
+	powerup_manager = get_node_or_null("/root/MagicGarden/Systems/PowerupManager")
 
 	if trail_manager:
 		trail_manager.trail_item_converted_to_ammo.connect(_on_trail_converted_to_ammo)

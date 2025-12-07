@@ -1,8 +1,8 @@
 extends Node2D
 
-@onready var move_timer: Timer = $"../MoveTimer"
+@onready var move_timer: Timer = %MoveTimer
 @onready var player: CharacterBody2D = %Player
-@onready var pause_screen: Node2D = $"../PauseScreen"
+@onready var pause_screen: Node2D = %PauseScreen
 @onready var time_counter: Timer = $TimeCounter
 @onready var tutorial: Tutorial = %Tutorial
 
@@ -31,9 +31,11 @@ var grid_size
 var game_started: bool = false
 var score : int
 var last_direction = null
+var current_move_direction = Vector2.ZERO
 var aim_direction = down
 var pickup_count : int
 var kill_count : int
+var killstreak_count: int
 var level = 1
 var game_paused : bool
 var is_attacking : bool
@@ -72,19 +74,19 @@ func _initialize() -> void:
 		capture_point_manager.initialize_first_spawn()
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("move-left") and last_direction != right:
+	if Input.is_action_just_pressed("move-left") and current_move_direction != right:
 		last_direction = left
 		if not game_started:
 			start_game()
-	if Input.is_action_just_pressed("move-right") and last_direction != left:
+	if Input.is_action_just_pressed("move-right") and current_move_direction != left:
 		last_direction = right
 		if not game_started:
 			start_game()
-	if Input.is_action_just_pressed("move-up") and last_direction != down:
+	if Input.is_action_just_pressed("move-up") and current_move_direction != down:
 		last_direction = up
 		if not game_started:
 			start_game()
-	if Input.is_action_just_pressed("move-down") and last_direction != up:
+	if Input.is_action_just_pressed("move-down") and current_move_direction != up:
 		last_direction = down
 		if not game_started:
 			start_game()
@@ -110,7 +112,7 @@ func _process(_delta: float) -> void:
 		score = score + score_to_add
 		update_score.emit(score)
 		
-	killstreak.emit(kill_count)
+	killstreak.emit(killstreak_count)
 
 func start_game():
 	if game_started:
@@ -210,7 +212,7 @@ func kill_player():
 func handle_attack():
 	if ammo.ammo_count == 0:
 		AudioManager.play_sound(ammo_error_sfx)
-		kill_count = 0
+		killstreak_count = 0
 		
 	if ammo.ammo_count >= 1:
 		decrease_ammo.emit()
@@ -234,7 +236,10 @@ func move(dir):
 	
 	var tween = create_tween()
 	tween.tween_property(player, "position", new_position, 1.0/animation_speed).set_trans(Tween.TRANS_SINE)
+	
 	trail_manager.move_trail()
+	
+	current_move_direction = dir
 	
 func _on_move_timer_timeout() -> void:
 	if is_attacking:
@@ -245,8 +250,9 @@ func _on_move_timer_timeout() -> void:
 
 func increase_kill_count():
 	kill_count += 1
-	scores_to_update.append(10 * kill_count)
-	player.create_score_popup(10 * kill_count)
+	killstreak_count += 1
+	scores_to_update.append(10 * killstreak_count)
+	player.create_score_popup(10 * killstreak_count)
 
 func increase_level():
 	level += 1
@@ -298,3 +304,7 @@ func _on_yoyo_collected() -> void:
 
 func _on_main_menu_pressed() -> void:
 	AudioManager.stop(background_music)
+
+func _on_projectile_shot_missed() -> void:
+	killstreak_count = 0
+	killstreak.emit(killstreak_count)

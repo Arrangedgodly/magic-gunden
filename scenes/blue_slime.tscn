@@ -26,6 +26,7 @@ collision_mask = 7
 collide_with_areas = true
 
 [node name="FireFx" parent="." instance=ExtResource("3_pwh17")]
+visible = false
 modulate = Color(1, 1, 1, 0.43137255)
 position = Vector2(1, 1.0000007)
 scale = Vector2(0.671875, 0.7578125)
@@ -33,12 +34,14 @@ frame = 3
 frame_progress = 0.23954014
 
 [node name="IceFx" parent="." instance=ExtResource("4_ds7cs")]
+visible = false
 modulate = Color(1, 1, 1, 0.43137255)
 scale = Vector2(0.3, 0.3)
 frame = 2
 frame_progress = 0.74779576
 
 [node name="PoisonFx" parent="." instance=ExtResource("5_7qf5q")]
+visible = false
 modulate = Color(1, 1, 1, 0.43137255)
 scale = Vector2(0.3, 0.3)
 frame_progress = 0.5293466

@@ -4,6 +4,7 @@ class_name Projectile
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var character_body: CharacterBody2D = $CharacterBody2D
+@onready var on_screen_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 @export var projectile_sound: AudioStream
 @export var hit_sound: AudioStream
@@ -16,6 +17,8 @@ var max_bounces: int = 0
 var current_bounces: int = 0
 var ignored_bodies: Array = []
 
+signal shot_missed
+
 func _ready() -> void:
 	add_to_group("projectile")
 	top_level = true
@@ -26,7 +29,9 @@ func _ready() -> void:
 		
 	gpu_particles_2d.emitting = true
 	AudioManager.play_sound(projectile_sound)
+	
 	character_body.on_collision.connect(_on_collision)
+	on_screen_notifier.screen_exited.connect(_on_screen_notifier_screen_exited)
 	
 func set_direction(new_dir: Vector2):
 	direction = new_dir
@@ -91,3 +96,6 @@ func find_nearest_enemy(current_pos: Vector2) -> Node2D:
 			nearest = enemy
 			
 	return nearest
+
+func _on_screen_notifier_screen_exited() -> void:
+	shot_missed.emit()

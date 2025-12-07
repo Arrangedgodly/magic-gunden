@@ -1,6 +1,6 @@
 extends Node
 
-const SEQ_DELAY: float = 0.08
+const SEQ_DELAY: float = 0.03
 
 var _sfx_queues: Dictionary = {}
 
