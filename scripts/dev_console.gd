@@ -1,7 +1,7 @@
 extends Control
 
 @onready var main_menu: VBoxContainer = %MainMenu
-@onready var powerup_menu: VBoxContainer = %PowerupMenu
+@onready var powerup_menu: HBoxContainer = %PowerupMenu
 @onready var enemy_button: Button = %Enemy
 @onready var gem_button: Button = %Gem
 @onready var powerup_button: Button = %Powerup

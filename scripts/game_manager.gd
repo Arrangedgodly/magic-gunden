@@ -62,6 +62,7 @@ signal decrease_ammo
 
 func _ready() -> void:
 	pause_screen.main_menu_pressed.connect(_on_main_menu_pressed)
+	pause_screen.restart_pressed.connect(_on_restart_pressed)
 	call_deferred("_initialize")
 
 func _initialize() -> void:
@@ -304,6 +305,9 @@ func _on_yoyo_collected() -> void:
 	handle_pickup_yoyo()
 
 func _on_main_menu_pressed() -> void:
+	AudioManager.stop(background_music)
+
+func _on_restart_pressed() -> void:
 	AudioManager.stop(background_music)
 
 func _on_projectile_shot_missed() -> void:

@@ -14,6 +14,7 @@ var game_paused : bool
 @onready var dev_console: Control
 
 signal main_menu_pressed
+signal restart_pressed
 
 func _ready():
 	var reset_warning_text = "Are you sure you would like to restart the game? This will delete your current progress!"
@@ -56,6 +57,7 @@ func _on_restart_pressed() -> void:
 
 func _on_restart_warning_confirmation(confirmation: bool) -> void:
 	if confirmation:
+		restart_pressed.emit()
 		unpause_game()
 		get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
 	else:
