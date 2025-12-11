@@ -75,6 +75,9 @@ func handle_movement_input(input_vector: Vector2) -> void:
 		animation_tree["parameters/playback"].travel("Run")
 
 func handle_aim_input() -> void:
+	if powerup_manager.is_auto_aim_active():
+		return
+		
 	var aim_vector = Vector2(
 		Input.get_action_strength("aim-right") - Input.get_action_strength("aim-left"),
 		Input.get_action_strength("aim-down") - Input.get_action_strength("aim-up")

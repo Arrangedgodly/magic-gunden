@@ -43,17 +43,20 @@ func _process(delta: float) -> void:
 	
 	if collision:
 		var collider = collision.get_collider()
-		if collider.has_method("kill"):
-			collider.kill()
-			_on_collision()
-		elif collider.is_in_group("mobs"):
-			collider.kill()
-			
+		
 		if can_ricochet and current_bounces < max_bounces and collider.is_in_group("mobs"):
 			AudioManager.play_sound(hit_sound)
+			collider.kill()
 			attempt_ricochet(collider)
-		else:
-			_on_collision()
+			return
+			
+		if collider.has_method("kill"):
+			collider.kill()
+		elif collider.is_in_group("mobs"):
+			collider.kill()
+		
+		_on_collision()
+		
 	else:
 		position += motion
 	

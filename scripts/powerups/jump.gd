@@ -85,7 +85,7 @@ func find_enemy_at_pos(pos: Vector2) -> Node2D:
 				return enemy
 	return null
 
-func check_enemy_collision(enemy: Node2D) -> bool:
+func check_enemy_collision(_enemy: Node2D) -> bool:
 	return is_active
 
 func is_position_in_bounds(pos: Vector2) -> bool:

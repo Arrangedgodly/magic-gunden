@@ -4,6 +4,7 @@ class_name AutoAimPickup
 var current_target: Node2D = null
 var player: CharacterBody2D
 var game_manager: Node2D
+var crosshair: Sprite2D
 
 func _ready() -> void:
 	super._ready()
@@ -12,9 +13,13 @@ func _ready() -> void:
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)
 	
-	player = manager.player
-	game_manager = manager.game_manager
+	player = get_node_or_null("/root/MagicGarden/World/GameplayArea/Player")
+	if player:
+		crosshair = player.get_node("Crosshair")
+		
+	game_manager = get_node_or_null("/root/MagicGarden/Systems/GameManager")
 	current_target = null
+	
 	
 	manager.register_auto_aim_powerup(self)
 	manager.powerup_activated.emit("AutoAim")
@@ -33,8 +38,8 @@ func process_effect(_delta: float) -> void:
 	
 	if current_target and is_instance_valid(current_target):
 		var direction = (current_target.global_position - player.global_position).normalized()
-		var aim_dir = get_cardinal_direction(direction)
-		update_aim_direction(aim_dir)
+		update_aim_direction(direction)
+		update_crosshair_position(direction)
 
 func find_nearest_enemy() -> Node2D:
 	var enemies = get_tree().get_nodes_in_group("mobs")
@@ -51,19 +56,26 @@ func find_nearest_enemy() -> Node2D:
 	
 	return nearest
 
-func get_cardinal_direction(direction: Vector2) -> Vector2:
-	var abs_x = abs(direction.x)
-	var abs_y = abs(direction.y)
-	
-	if abs_x > abs_y:
-		return Vector2(sign(direction.x), 0)
-	else:
-		return Vector2(0, sign(direction.y))
-
 func update_aim_direction(direction: Vector2) -> void:
-	if game_manager:
-		game_manager.aim_direction = direction
+	player.aim_direction = direction
+
+func update_crosshair_position(direction: Vector2) -> void:
+	if not crosshair:
+		return
+	
+	# Position the crosshair at 32 pixels distance in the aim direction
+	var crosshair_distance = 32.0
+	var target_pos = direction * crosshair_distance
+	
+	# Smoothly tween to the new position
+	var tween = create_tween()
+	tween.tween_property(crosshair, "position", target_pos, 0.1).set_trans(Tween.TRANS_SINE)
 
 func _on_timeout() -> void:
 	current_target = null
+	
+	if crosshair:
+		var tween = create_tween()
+		tween.tween_property(crosshair, "position", Vector2(0, 32), 0.2).set_trans(Tween.TRANS_SINE)
+		
 	super._on_timeout()
