@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://26sdep47xssj"]
+[gd_scene load_steps=16 format=3 uid="uid://26sdep47xssj"]
 
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="1_c2u1v"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_e6vpq"]
@@ -8,6 +8,12 @@
 [ext_resource type="AudioStream" uid="uid://dck7vp50xe2hy" path="res://assets/sounds/music/Tick Tick Haunt.wav" id="3_uon5e"]
 [ext_resource type="AudioStream" uid="uid://ba6brkbsjobi4" path="res://assets/sounds/music/Phantom of the Pocket Operator.wav" id="4_85aq5"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="5_1sggn"]
+[ext_resource type="Texture2D" uid="uid://cygnqj7n7un41" path="res://assets/UI/icons/music.png" id="7_0un6s"]
+[ext_resource type="Texture2D" uid="uid://ud5lox0ovipu" path="res://assets/UI/icons/music_highlight.png" id="8_0un6s"]
+[ext_resource type="Texture2D" uid="uid://nbhv7wopd2tq" path="res://assets/UI/icons/music_disabled.png" id="9_kywri"]
+[ext_resource type="Texture2D" uid="uid://cldjsj06r5xaw" path="res://assets/UI/icons/sfx.png" id="10_kywri"]
+[ext_resource type="Texture2D" uid="uid://bvbw6uvlbx6j8" path="res://assets/UI/icons/sfx_highlight.png" id="11_apvty"]
+[ext_resource type="Texture2D" uid="uid://dqi42jitgwajx" path="res://assets/UI/icons/sfx_disabled.png" id="12_vhp3b"]
 
 [sub_resource type="Theme" id="Theme_o7i7e"]
 default_font = ExtResource("1_e6vpq")
@@ -97,6 +103,9 @@ text = "Music Volume"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 24)
 layout_mode = 2
+theme_override_icons/grabber = ExtResource("7_0un6s")
+theme_override_icons/grabber_highlight = ExtResource("8_0un6s")
+theme_override_icons/grabber_disabled = ExtResource("9_kywri")
 value = 80.0
 
 [node name="MusicValueLabel" type="Label" parent="VBoxContainer/AudioSection/MusicControl"]
@@ -120,6 +129,9 @@ text = "SFX Volume"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 24)
 layout_mode = 2
+theme_override_icons/grabber = ExtResource("10_kywri")
+theme_override_icons/grabber_highlight = ExtResource("11_apvty")
+theme_override_icons/grabber_disabled = ExtResource("12_vhp3b")
 value = 80.0
 
 [node name="SFXValueLabel" type="Label" parent="VBoxContainer/AudioSection/SFXControl"]

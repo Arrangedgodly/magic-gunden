@@ -48,4 +48,5 @@ func process_effect(_delta: float) -> void:
 
 func _on_timeout() -> void:
 	spawned_poison_positions.clear()
+	
 	super._on_timeout()

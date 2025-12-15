@@ -20,6 +20,8 @@ extends Control
 @onready var ice_button: Button = %Ice
 @onready var jump_button: Button = %Jump
 @onready var time_pause_button: Button = %TimePause
+@onready var grenade_button: Button = %Grenade
+@onready var four_way_shot_button: Button = %FourWayShot
 
 signal console_opened(is_open: bool)
 
@@ -48,6 +50,8 @@ func _ready() -> void:
 	ice_button.pressed.connect(_on_spawn_pickup.bind(8))
 	jump_button.pressed.connect(_on_spawn_pickup.bind(9))
 	time_pause_button.pressed.connect(_on_spawn_pickup.bind(10))
+	grenade_button.pressed.connect(_on_spawn_pickup.bind(11))
+	four_way_shot_button.pressed.connect(_on_spawn_pickup.bind(12))
 	
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("console"):

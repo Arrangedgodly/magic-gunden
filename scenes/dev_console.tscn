@@ -186,6 +186,29 @@ text = "Time Pause"
 script = ExtResource("3_1co7n")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
+[node name="Grenade" type="Button" parent="PowerupMenu/Column2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Grenade"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
+
+[node name="Column3" type="VBoxContainer" parent="PowerupMenu"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 25
+
+[node name="FourWayShot" type="Button" parent="PowerupMenu/Column3"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_qve2q")
+theme_override_font_sizes/font_size = 32
+text = "Four Way Shot"
+script = ExtResource("3_1co7n")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
+
 [node name="Back" type="Button" parent="PowerupMenu"]
 unique_name_in_owner = true
 layout_mode = 2

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqjhi2nunh6rp"]
+
+[ext_resource type="Script" uid="uid://bjln08sstnqcv" path="res://scripts/laser_beam.gd" id="1_l1fxn"]
+
+[node name="LaserBeam" type="Area2D"]
+script = ExtResource("1_l1fxn")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 5, -31, -5, -31)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2c4ngh0oy0j7"
-path="res://.godot/imported/flames-invert.png-3503326c106af733a6441249c14a4284.ctex"
+uid="uid://dquiq44qqbct2"
+path="res://.godot/imported/laser_gun.png-2fbab426af55030ae7a4848b369bb1e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/items/powerups/flames-invert.png"
-dest_files=["res://.godot/imported/flames-invert.png-3503326c106af733a6441249c14a4284.ctex"]
+source_file="res://assets/items/powerups/laser_gun.png"
+dest_files=["res://.godot/imported/laser_gun.png-2fbab426af55030ae7a4848b369bb1e7.ctex"]
 
 [params]
 

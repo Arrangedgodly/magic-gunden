@@ -13,7 +13,9 @@ var powerup_icons = {
 	"FreeAmmo" = preload("res://assets/items/powerups/free-ammo.png"),
 	"Ice" = preload("res://assets/items/powerups/ice-new.png"),
 	"Jump" = preload("res://assets/items/powerups/jump.png"),
-	"TimePause" = preload("res://assets/items/powerups/pause.png")
+	"TimePause" = preload("res://assets/items/powerups/pause.png"),
+	"Grenade" = preload("res://assets/items/powerups/grenade.png"),
+	"FourWayShot" = preload("res://assets/items/powerups/four_way_shot.png")
 }
 var active_widgets: Dictionary = {}
 

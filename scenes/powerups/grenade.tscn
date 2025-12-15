@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfinng30qr745"]
+
+[ext_resource type="Script" uid="uid://dbiyafvd1kh57" path="res://scripts/powerups/grenade.gd" id="1_cs1m6"]
+[ext_resource type="Texture2D" uid="uid://b3k3p4fxaqkjh" path="res://assets/items/powerups/grenade.png" id="2_b4vor"]
+
+[node name="Grenade" type="Area2D"]
+script = ExtResource("1_cs1m6")
+icon = ExtResource("2_b4vor")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

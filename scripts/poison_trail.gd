@@ -7,6 +7,8 @@ class_name PoisonTrail
 var damage_interval: float = 0.5
 var damage_timers: Dictionary = {}
 
+var poison_sound: AudioStream = preload("res://assets/sounds/sfx/potion_bubbles_brewing_loop_01.wav")
+
 func _ready() -> void:
 	lifetime_timer.timeout.connect(_on_lifetime_timeout)
 	lifetime_timer.start()
@@ -17,6 +19,8 @@ func _ready() -> void:
 	
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	
+	AudioManager.play_sfx_loop(poison_sound)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Slime:
@@ -54,4 +58,5 @@ func _on_lifetime_timeout() -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 0, 0.5)
 	await tween.finished
+	AudioManager.stop(poison_sound)
 	queue_free()

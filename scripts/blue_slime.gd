@@ -11,7 +11,9 @@ class_name Slime
 @onready var poison_fx: AnimatedSprite2D = $PoisonFx
 @onready var powerup_manager: PowerupManager
 
-@export var hurt_sound: AudioStream
+var hurt_sound: AudioStream = preload("res://assets/sounds/sfx/hurt2.ogg")
+var fire_sound: AudioStream = preload("res://assets/sounds/sfx/fire_burning_flames_crackle_loop_01.wav")
+var ice_sound: AudioStream = preload("res://assets/sounds/sfx/ice_spell_freeze_ground_03.wav")
 
 const up = Vector2(0, -1)
 const down = Vector2(0, 1)
@@ -181,24 +183,35 @@ func kill():
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)
 	was_killed.emit()
+	stop_sounds()
 	queue_free()
 
 func die():
+	AudioManager.play_sound(hurt_sound)
 	sprite.play("death")
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)
+	stop_sounds()
 	queue_free()
 
+func stop_sounds() -> void:
+	AudioManager.stop(fire_sound)
+	AudioManager.stop(ice_sound)
+
 func show_fire() -> void:
+	AudioManager.play_sfx_loop(fire_sound)
 	fire_fx.show()
 
 func hide_fire() -> void:
+	AudioManager.stop(fire_sound)
 	fire_fx.hide()
 
 func show_ice() -> void:
+	AudioManager.play_sfx_loop(ice_sound)
 	ice_fx.show()
 
 func hide_ice() -> void:
+	AudioManager.stop(ice_sound)
 	ice_fx.hide()
 
 func show_poison() -> void:

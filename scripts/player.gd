@@ -21,6 +21,7 @@ var powerup_manager: PowerupManager
 var move_deadzone: float = 0.5
 var aim_deadzone: float = 0.5
 var finished_moving: bool = false
+var four_way_shot_active: bool = false
 
 const tile_size = 32
 const up = Vector2(0, -1)
@@ -115,19 +116,25 @@ func create_score_popup(value):
 	score_popup.handle_popup(value)
 
 func attack():
-	var projectile = projectile_scene.instantiate()
-	projectile.set_direction(aim_direction)
+	var directions_to_shoot = [aim_direction]
 	
-	if powerup_manager and powerup_manager.is_pierce_active():
-		projectile.is_piercing = true
+	if four_way_shot_active:
+		directions_to_shoot = [up, down, left, right]
 	
-	if powerup_manager and powerup_manager.is_ricochet_active():
-		projectile.can_ricochet = true
-		projectile.max_bounces = powerup_manager.get_ricochet_max_bounces()
+	for dir in directions_to_shoot:
+		var projectile = projectile_scene.instantiate()
+		projectile.set_direction(dir)
 		
-	projectile.shot_missed.connect(game_manager._on_projectile_shot_missed)
+		if powerup_manager and powerup_manager.is_pierce_active():
+			projectile.is_piercing = true
 		
-	add_child(projectile)
+		if powerup_manager and powerup_manager.is_ricochet_active():
+			projectile.can_ricochet = true
+			projectile.max_bounces = powerup_manager.get_ricochet_max_bounces()
+			
+		projectile.shot_missed.connect(game_manager._on_projectile_shot_missed)
+			
+		add_child(projectile)
 
 func powerup_active():
 	var tween = create_tween()

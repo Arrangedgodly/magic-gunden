@@ -95,7 +95,7 @@ randomness = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_3fu5c")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["projectile"]]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("9_pl1gp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]

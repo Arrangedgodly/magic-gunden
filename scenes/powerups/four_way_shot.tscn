@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwm2p86trerdi"]
+
+[ext_resource type="Script" uid="uid://cw4e2ah0u43qk" path="res://scripts/powerups/four_way_shot.gd" id="1_ekyqc"]
+[ext_resource type="Texture2D" uid="uid://it2aodp0xdn1" path="res://assets/items/powerups/four_way_shot.png" id="2_1a1tt"]
+
+[node name="FourWayShot" type="Area2D"]
+script = ExtResource("1_ekyqc")
+icon = ExtResource("2_1a1tt")
+metadata/_custom_type_script = "uid://clkylpqky3krt"

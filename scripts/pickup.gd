@@ -4,7 +4,7 @@ class_name Pickup
 
 @export var icon: Texture
 
-enum PickupType {Stomp, Magnet, Ricochet, Pierce, Poison, AutoAim, Health, Flames, FreeAmmo, Ice, Jump, TimePause}
+enum PickupType {Stomp, Magnet, Ricochet, Pierce, Poison, AutoAim, Health, Flames, FreeAmmo, Ice, Jump, TimePause, Grenade, FourWayShot, Laser}
 
 var duration: float = 10.0
 var type: PickupType

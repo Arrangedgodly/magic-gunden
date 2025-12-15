@@ -9,6 +9,7 @@ class_name Projectile
 @export var projectile_sound: AudioStream
 @export var hit_sound: AudioStream
 
+var gameplay_area: Node2D
 var direction : Vector2
 var speed = 1250
 var is_piercing: bool = false
@@ -16,6 +17,9 @@ var can_ricochet: bool = false
 var max_bounces: int = 0
 var current_bounces: int = 0
 var ignored_bodies: Array = []
+var is_explosive: bool = false
+
+var explosion_scene = preload("res://scenes/effects/explosion.tscn")
 
 signal shot_missed
 
@@ -23,6 +27,8 @@ func _ready() -> void:
 	add_to_group("projectile")
 	top_level = true
 	global_position = get_parent().global_position
+	
+	gameplay_area = get_node("/root/MagicGarden/World/GameplayArea")
 	
 	if get_parent() is CharacterBody2D:
 		character_body.add_collision_exception_with(get_parent())
@@ -67,6 +73,9 @@ func _process(delta: float) -> void:
 func _on_collision() -> void:
 	AudioManager.play_sound(hit_sound)
 	
+	if is_explosive:
+		create_explosion()
+	
 	if not is_piercing:
 		queue_free()
 
@@ -102,3 +111,8 @@ func find_nearest_enemy(current_pos: Vector2) -> Node2D:
 
 func _on_screen_notifier_screen_exited() -> void:
 	shot_missed.emit()
+
+func create_explosion() -> void:
+	var explosion_instance = explosion_scene.instantiate()
+	explosion_instance.position = position
+	gameplay_area.add_child(explosion_instance)

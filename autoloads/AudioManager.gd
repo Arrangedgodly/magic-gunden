@@ -28,6 +28,20 @@ func play_sound(stream: AudioStream):
 	_sfx_queues[specific_id] = 0
 	
 	_process_sequence(stream, specific_id, false)
+	
+func play_sfx_loop(stream: AudioStream, pitch: float = 1.0):
+	if stream == null:
+		return
+
+	var instance = AudioStreamPlayer.new()
+	instance.stream = stream
+	instance.bus = "SFX"
+	instance.pitch_scale = pitch
+	
+	instance.finished.connect(instance.play)
+	
+	add_child(instance)
+	instance.play()
 
 func _process_sequence(stream: AudioStream, id: int, is_queued_step: bool):
 	var pitch = 1.0

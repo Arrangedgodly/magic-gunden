@@ -448,6 +448,7 @@ offset_bottom = -250.0
 scale = Vector2(0.75, 0.75)
 
 [node name="DevConsole" parent="HUD" instance=ExtResource("33_a4uvu")]
+visible = false
 offset_left = -500.0
 offset_top = -275.0
 offset_right = -500.0
