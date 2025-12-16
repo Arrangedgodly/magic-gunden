@@ -124,8 +124,12 @@ func attack():
 	
 	for dir in directions_to_shoot:
 		if powerup_manager.is_laser_active():
+			if dir == left or dir == right:
+				dir.x *= -1
+			if dir == up or dir == down:
+				dir.y *= -1
 			var laser = laser_beam_scene.instantiate()
-			var spawn_pos = Vector2.ZERO + (dir * 16)
+			var spawn_pos = Vector2.ZERO
 			add_child(laser)
 			laser.setup(spawn_pos, dir)
 		else:

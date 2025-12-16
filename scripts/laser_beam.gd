@@ -1,14 +1,28 @@
 extends Area2D
 
+@onready var laser: AnimatedSprite2D = %Laser
+
 var damage_delayed: bool = false
 
 func _ready() -> void:
-	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_callback(queue_free)
+	laser.play("fire")
+	
+	await laser.animation_finished
+	
+	laser.play("middle")
+	
+	await laser.animation_looped
+	
+	laser.flip_h = true
+	laser.play("end")
+	
+	await laser.animation_finished
+	
+	queue_free()
 	
 	# 2. Audio
 	# AudioManager.play_sound(laser_sound)
+
 
 func _physics_process(_delta: float) -> void:
 	if not damage_delayed:
