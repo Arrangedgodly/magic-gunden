@@ -1,86 +1,78 @@
-[gd_scene load_steps=24 format=3 uid="uid://b0c274xep40op"]
+[gd_scene load_steps=22 format=3 uid="uid://b0c274xep40op"]
 
 [ext_resource type="Script" uid="uid://508fql2441y8" path="res://scripts/poison_trail.gd" id="1_c3lny"]
-[ext_resource type="Texture2D" uid="uid://bbgc6gpyds3lt" path="res://assets/FX/Particle FX 1.2 Free/Spritesheets/Poison Cloud-Sheet.png" id="2_8jjg4"]
+[ext_resource type="Texture2D" uid="uid://234bb4j6jvgq" path="res://assets/FX/poison.png" id="2_8jjg4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8jjg4"]
 radius = 16.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f0brb"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(0, 0, 144, 144)
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vriwy"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(144, 0, 144, 144)
+region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w87cw"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(288, 0, 144, 144)
+region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1pe78"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(432, 0, 144, 144)
+region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86th6"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(0, 144, 144, 144)
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y3wj7"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(144, 144, 144, 144)
+region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fwjhr"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(288, 144, 144, 144)
+region = Rect2(384, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4oe4i"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(432, 144, 144, 144)
+region = Rect2(448, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_myjo6"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(0, 288, 144, 144)
+region = Rect2(512, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8rhxi"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(144, 288, 144, 144)
+region = Rect2(576, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_olpp7"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(288, 288, 144, 144)
+region = Rect2(640, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_58nq0"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(432, 288, 144, 144)
+region = Rect2(704, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_myw15"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(0, 432, 144, 144)
+region = Rect2(768, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2x73"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(144, 432, 144, 144)
+region = Rect2(832, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vyeqs"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(288, 432, 144, 144)
+region = Rect2(896, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r8ao4"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(432, 432, 144, 144)
+region = Rect2(960, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t2udm"]
 atlas = ExtResource("2_8jjg4")
-region = Rect2(0, 576, 144, 144)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qlgmv"]
-atlas = ExtResource("2_8jjg4")
-region = Rect2(144, 576, 144, 144)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u3phh"]
-atlas = ExtResource("2_8jjg4")
-region = Rect2(288, 576, 144, 144)
+region = Rect2(1024, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tvsnx"]
 animations = [{
@@ -135,16 +127,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t2udm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qlgmv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u3phh")
 }],
 "loop": true,
 "name": &"default",
-"speed": 30.0
+"speed": 15.0
 }]
 
 [node name="PoisonTrail" type="Area2D"]
@@ -154,11 +140,10 @@ script = ExtResource("1_c3lny")
 shape = SubResource("CircleShape2D_8jjg4")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -24)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_tvsnx")
 autoplay = "default"
-frame_progress = 0.6776832
+frame_progress = 0.40567565
 
 [node name="LifetimeTimer" type="Timer" parent="."]
 wait_time = 10.0

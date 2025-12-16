@@ -15,7 +15,8 @@ var powerup_icons = {
 	"Jump" = preload("res://assets/items/powerups/jump.png"),
 	"TimePause" = preload("res://assets/items/powerups/pause.png"),
 	"Grenade" = preload("res://assets/items/powerups/grenade.png"),
-	"FourWayShot" = preload("res://assets/items/powerups/four_way_shot.png")
+	"FourWayShot" = preload("res://assets/items/powerups/four_way_shot.png"),
+	"Laser" = preload("res://assets/items/powerups/laser_gun.png")
 }
 var active_widgets: Dictionary = {}
 

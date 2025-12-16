@@ -19,6 +19,7 @@ var active_ice: IcePickup = null
 var active_time_pause: TimePausePickup = null
 var active_grenade: GrenadePickup = null
 var active_four_way_shot: FourWayShotPickup = null
+var active_laser: LaserPickup = null
 
 signal powerup_activated(type: String)
 
@@ -71,8 +72,11 @@ func register_time_pause_powerup(pickup: TimePausePickup) -> void:
 func register_grenade_powerup(pickup: GrenadePickup) -> void:
 	active_grenade = pickup
 
-func register_four_way_shot_pickup(pickup: FourWayShotPickup) -> void:
+func register_four_way_shot_powerup(pickup: FourWayShotPickup) -> void:
 	active_four_way_shot = pickup
+
+func register_laser_powerup(pickup: LaserPickup) -> void:
+	active_laser = pickup
 
 func is_jump_active() -> bool:
 	return active_jump != null and active_jump.is_active
@@ -112,6 +116,9 @@ func is_grenade_active() -> bool:
 
 func is_four_way_shot_active() -> bool:
 	return active_four_way_shot != null and active_four_way_shot.is_active
+
+func is_laser_active() -> bool:
+	return active_laser != null and active_laser.is_active
 
 func check_jump_movement(target_pos: Vector2, direction: Vector2) -> Vector2:
 	if active_jump and active_jump.is_active:
@@ -156,4 +163,6 @@ func get_powerup_timer(p_name: String) -> Timer:
 			return active_grenade.get_timer() if active_grenade else null
 		"FourWayShot":
 			return active_four_way_shot.get_timer() if active_four_way_shot else null
+		"Laser":
+			return active_laser.get_timer() if active_laser else null
 	return null

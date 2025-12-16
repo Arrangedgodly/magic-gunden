@@ -1,7 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://thal3x8uoghy"]
+[gd_scene load_steps=3 format=3 uid="uid://thal3x8uoghy"]
 
 [ext_resource type="Script" uid="uid://bqabtsinuwbfs" path="res://scripts/powerups/laser.gd" id="1_4xxqm"]
+[ext_resource type="Texture2D" uid="uid://dquiq44qqbct2" path="res://assets/items/powerups/laser_gun.png" id="2_cnsy7"]
 
 [node name="Laser" type="Area2D"]
 script = ExtResource("1_4xxqm")
+icon = ExtResource("2_cnsy7")
 metadata/_custom_type_script = "uid://clkylpqky3krt"

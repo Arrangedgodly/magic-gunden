@@ -13,6 +13,7 @@ var death_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro Negative Mel
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var score_popup_scene = preload("res://scenes/score_popup.tscn")
 var projectile_scene = preload("res://scenes/projectile.tscn")
+var laser_beam_scene = preload("res://scenes/effects/laser_beam.tscn")
 
 var last_direction = null
 var aim_direction = down
@@ -122,19 +123,25 @@ func attack():
 		directions_to_shoot = [up, down, left, right]
 	
 	for dir in directions_to_shoot:
-		var projectile = projectile_scene.instantiate()
-		projectile.set_direction(dir)
-		
-		if powerup_manager and powerup_manager.is_pierce_active():
-			projectile.is_piercing = true
-		
-		if powerup_manager and powerup_manager.is_ricochet_active():
-			projectile.can_ricochet = true
-			projectile.max_bounces = powerup_manager.get_ricochet_max_bounces()
+		if powerup_manager.is_laser_active():
+			var laser = laser_beam_scene.instantiate()
+			var spawn_pos = Vector2.ZERO + (dir * 16)
+			add_child(laser)
+			laser.setup(spawn_pos, dir)
+		else:
+			var projectile = projectile_scene.instantiate()
+			projectile.set_direction(dir)
 			
-		projectile.shot_missed.connect(game_manager._on_projectile_shot_missed)
+			if powerup_manager and powerup_manager.is_pierce_active():
+				projectile.is_piercing = true
 			
-		add_child(projectile)
+			if powerup_manager and powerup_manager.is_ricochet_active():
+				projectile.can_ricochet = true
+				projectile.max_bounces = powerup_manager.get_ricochet_max_bounces()
+				
+			projectile.shot_missed.connect(game_manager._on_projectile_shot_missed)
+				
+			add_child(projectile)
 
 func powerup_active():
 	var tween = create_tween()

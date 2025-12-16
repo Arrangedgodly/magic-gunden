@@ -21,6 +21,7 @@ var jump_scene = preload("res://scenes/powerups/jump.tscn")
 var time_pause_scene = preload("res://scenes/powerups/time_pause.tscn")
 var grenade_scene = preload("res://scenes/powerups/grenade.tscn")
 var four_way_shot_scene = preload("res://scenes/powerups/four_way_shot.tscn")
+var laser_scene = preload("res://scenes/powerups/laser.tscn")
 var regen_yoyo: bool = true
 var yoyo_pos: Vector2i
 var level: int = 1
@@ -47,7 +48,8 @@ func _ready() -> void:
 	jump_scene,
 	time_pause_scene,
 	grenade_scene,
-	four_way_shot_scene
+	four_way_shot_scene,
+	laser_scene
 ]
 
 func _process(_delta: float) -> void:

@@ -14,7 +14,7 @@ func activate(manager: PowerupManager) -> void:
 	
 	player.four_way_shot_active = true
 	
-	manager.register_four_way_shot_pickup(self)
+	manager.register_four_way_shot_powerup(self)
 	manager.powerup_activated.emit("FourWayShot")
 
 func _on_timeout() -> void:
