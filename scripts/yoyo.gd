@@ -11,6 +11,7 @@ var collision_active: bool = false
 
 
 func _ready() -> void:
+	add_to_group("gems")
 	pickup_manager = get_node("/root/MagicGarden/Systems/PickupManager")
 	yoyo_area.body_entered.connect(_on_area_2d_body_entered)
 

@@ -23,6 +23,7 @@ var move_deadzone: float = 0.5
 var aim_deadzone: float = 0.5
 var finished_moving: bool = false
 var four_way_shot_active: bool = false
+var gameplay_area: Node2D
 
 const tile_size = 32
 const up = Vector2(0, -1)
@@ -32,6 +33,8 @@ const right = Vector2(1, 0)
 
 func _ready():
 	powerup_manager = get_node("/root/MagicGarden/Systems/PowerupManager")
+	gameplay_area = get_node("/root/MagicGarden/World/GameplayArea")
+	
 	position = position.snapped(Vector2.ONE * tile_size)
 	position += Vector2.ONE * 8
 	powerup_active()
@@ -124,13 +127,9 @@ func attack():
 	
 	for dir in directions_to_shoot:
 		if powerup_manager.is_laser_active():
-			if dir == left or dir == right:
-				dir.x *= -1
-			if dir == up or dir == down:
-				dir.y *= -1
 			var laser = laser_beam_scene.instantiate()
-			var spawn_pos = Vector2.ZERO
-			add_child(laser)
+			var spawn_pos = global_position
+			gameplay_area.add_child(laser)
 			laser.setup(spawn_pos, dir)
 		else:
 			var projectile = projectile_scene.instantiate()

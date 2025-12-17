@@ -1,11 +1,13 @@
 extends AnimatedSprite2D
 
 @onready var rainbow_shader = preload("res://shaders/rainbow_gradient.gdshader")
+@onready var capture_area: Area2D = %CaptureArea
 
 var detected_body = null
 
 func _ready() -> void:
 	add_to_group("capture")
+	capture_area.add_to_group("capture_area")
 
 func remove():
 	queue_free()
