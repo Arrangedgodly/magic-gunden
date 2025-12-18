@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://byynxq4xt6ldl"]
 
-[ext_resource type="Script" uid="uid://qe1til2n13ue" path="res://scripts/powerup_widget.gd" id="1_tv73g"]
+[ext_resource type="Script" uid="uid://qe1til2n13ue" path="res://scripts/ui/powerup_widget.gd" id="1_tv73g"]
 
 [node name="PowerupWidget" type="VBoxContainer"]
 offset_right = 40.0

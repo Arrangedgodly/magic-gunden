@@ -163,7 +163,8 @@ func _on_capture_point_timer_timeout() -> void:
 	
 func cycle_capture_points() -> void:
 	clear_capture_points()
-	await capture_points_cleared
+	
+	await get_tree().process_frame
 	
 	var spawn_point = find_capture_spawn_point()
 	spawn_capture_points(spawn_point)

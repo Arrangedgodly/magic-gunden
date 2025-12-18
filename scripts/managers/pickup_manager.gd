@@ -92,19 +92,19 @@ func spawn_pickup() -> void:
 	game_manager.add_child(pickup)
 	powerup_spawned.emit(pickup_pos)
 
-func force_spawn_pickup(index: int) -> void:
+func force_spawn_pickup(pickup_scene: PackedScene) -> void:
 	var pos
 	if tutorial_mode:
 		pos = random_pos_tutorial()
 	else:
 		pos = random_pos()
-	var scene = available_pickups[index]
-	var pickup = scene.instantiate()
+		
+	var pickup = pickup_scene.instantiate()
 	
 	pickup.position = pos
 	pickup.position += Vector2(16, 16)
 	game_manager.add_child(pickup)
-	powerup_spawned.emit()
+	powerup_spawned.emit(pos)
 	
 func random_pos() -> Vector2i:
 	randomize()

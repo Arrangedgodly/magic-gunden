@@ -305,7 +305,7 @@ func spawn_powerup_near_player() -> void:
 	if not pickup_manager:
 		return
 
-	pickup_manager.force_spawn_pickup(3)
+	pickup_manager.force_spawn_pickup(stomp_scene)
 
 func spawn_test_enemies(count: int) -> void:
 	if not enemy_manager:

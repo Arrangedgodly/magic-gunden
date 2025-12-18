@@ -32,7 +32,7 @@ func _process(_delta: float) -> void:
 	crt.position.x += .25
 	if Input.is_action_just_pressed("ui_cancel"):
 		AudioManager.stop(high_score_music)
-		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
 
 func convert_time_to_minutes(seconds: int):
 	@warning_ignore("integer_division")

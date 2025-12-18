@@ -16,7 +16,7 @@ const MAX_LENGTH = 1000.0
 
 func _ready() -> void:
 	timer = Timer.new()
-	timer.wait_time = 0.5
+	timer.wait_time = 0.3
 	timer.timeout.connect(_on_timer_timeout)
 	add_child(timer)
 	
@@ -46,8 +46,7 @@ func get_distance_to_wall() -> float:
 	while ray.is_colliding():
 		var collider = ray.get_collider()
 		
-		if collider.is_in_group("mobs") or collider.is_in_group("capture_area") \
-		or collider.is_in_group("gems") or collider.is_in_group("pickups"):
+		if collider.is_in_group("laser_exception"):
 			ray.add_exception(collider)
 			ray.force_raycast_update()
 		else:

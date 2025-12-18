@@ -16,6 +16,7 @@ var collision_node: CollisionShape2D
 
 func _ready() -> void:
 	add_to_group("pickups")
+	add_to_group("laser_exception")
 	
 	z_index = 2
 	

@@ -65,7 +65,7 @@ func _on_restart_warning_confirmation(confirmation: bool) -> void:
 		enable_focus()
 
 func _on_options_pressed() -> void:
-	var options_scene = load("res://scenes/options.tscn")
+	var options_scene = load("res://scenes/menus/options.tscn")
 	var options_instance = options_scene.instantiate()
 	add_child(options_instance)
 	options_instance.options_closed.connect(_on_options_closed.bind(options_instance))
@@ -76,7 +76,7 @@ func _on_options_pressed() -> void:
 func _on_main_menu_pressed() -> void:
 	main_menu_pressed.emit()
 	unpause_game()
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
 
 func _on_quit_pressed() -> void:
 	quit_warning.visible = true

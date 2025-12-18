@@ -113,7 +113,7 @@ func release_trail() -> void:
 	for item_data in items_to_convert:
 		if item_data.on_capture:
 			current_streak += 1
-			trail_item_converted_to_ammo.emit(current_streak, item_data.position)
+			trail_item_converted_to_ammo.emit(current_streak)
 		else:
 			if tutorial_mode:
 				if not tutorial_capture:

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://xuluuy8cronv"]
 
-[ext_resource type="Script" uid="uid://b5g204bd37r44" path="res://scripts/powerup_manager.gd" id="1_gbfpq"]
+[ext_resource type="Script" uid="uid://b5g204bd37r44" path="res://scripts/managers/powerup_manager.gd" id="1_gbfpq"]
 
 [node name="PowerupManager" type="Node2D"]
 script = ExtResource("1_gbfpq")

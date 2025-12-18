@@ -25,7 +25,7 @@ func _on_game_manager_game_ended(new_score: int, new_killcount: int, new_time_al
 
 func _on_no_pressed() -> void:
 	hide()
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
 
 func _on_yes_pressed() -> void:
 	hide()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cw0p0vqmn4qyn"]
 
-[ext_resource type="Script" uid="uid://bbphwfkj5jqil" path="res://scripts/game_manager.gd" id="1_cvlyp"]
+[ext_resource type="Script" uid="uid://bbphwfkj5jqil" path="res://scripts/managers/game_manager.gd" id="1_cvlyp"]
 [ext_resource type="AudioStream" uid="uid://djb66ruw3tbwt" path="res://assets/sounds/sfx/Retro PickUp Coin 04.wav" id="2_77dcg"]
 [ext_resource type="AudioStream" uid="uid://dxk0r36ss37uu" path="res://assets/sounds/music/Broad Day Getaway.wav" id="2_eaq8r"]
 [ext_resource type="AudioStream" uid="uid://dl527srvxquki" path="res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav" id="4_dtfe4"]

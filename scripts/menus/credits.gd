@@ -47,7 +47,7 @@ func move_credits() -> void:
 
 func return_to_main_menu() -> void:
 	AudioManager.stop(credits_music)
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
 
 func fade_credits() -> void:
 	var tween = create_tween()

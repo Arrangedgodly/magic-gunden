@@ -35,6 +35,8 @@ func _ready():
 	hide_poison()
 	
 	add_to_group("mobs")
+	add_to_group("laser_exception")
+	
 	detection.collide_with_bodies = true
 	detection.collide_with_areas = true
 	var capture_points = get_tree().get_nodes_in_group("capture")

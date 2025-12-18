@@ -11,7 +11,7 @@ class_name Player
 var death_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav")
 
 var yoyo_scene = preload("res://scenes/yoyo.tscn")
-var score_popup_scene = preload("res://scenes/score_popup.tscn")
+var score_popup_scene = preload("res://scenes/ui/score_popup.tscn")
 var projectile_scene = preload("res://scenes/projectile.tscn")
 var laser_beam_scene = preload("res://scenes/effects/laser_beam.tscn")
 
@@ -115,7 +115,6 @@ func die():
 
 func create_score_popup(value):
 	var score_popup = score_popup_scene.instantiate()
-	score_popup.position += Vector2(-6, -25)
 	add_child(score_popup)
 	score_popup.handle_popup(value)
 

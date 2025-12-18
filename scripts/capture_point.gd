@@ -7,7 +7,7 @@ var detected_body = null
 
 func _ready() -> void:
 	add_to_group("capture")
-	capture_area.add_to_group("capture_area")
+	capture_area.add_to_group("laser_exception")
 
 func remove():
 	queue_free()

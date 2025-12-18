@@ -1,7 +1,7 @@
 extends Pickup
 class_name PoisonPickup
 
-var poison_trail_scene = preload("res://scenes/poison_trail.tscn")
+var poison_trail_scene = preload("res://scenes/effects/poison_trail.tscn")
 var spawned_poison_positions: Array = []
 var trail_manager: TrailManager
 var game_manager: Node2D

@@ -148,7 +148,7 @@ func reset_all_data() -> void:
 	setup_volume_controls()
 
 func _on_controls_pressed() -> void:
-	var controls_scene = load("res://scenes/controls_menu.tscn")
+	var controls_scene = load("res://scenes/menus/controls_menu.tscn")
 	var controls_instance = controls_scene.instantiate()
 	add_child(controls_instance)
 		

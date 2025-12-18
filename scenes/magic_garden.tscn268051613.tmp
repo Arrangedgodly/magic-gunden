@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bcqcqrny67c3c" path="res://assets/map/circles05-Sheet.png" id="1_mmkel"]
 [ext_resource type="Texture2D" uid="uid://dxkd0je8q38rh" path="res://assets/map/sea02-Sheet.png" id="1_sjcuh"]
 [ext_resource type="Texture2D" uid="uid://dlyqka0q1iker" path="res://assets/map/circles06-Sheet.png" id="1_ucw4w"]
-[ext_resource type="PackedScene" uid="uid://cw0p0vqmn4qyn" path="res://scenes/managers/game_manager.tscn" id="1_xu37e"]
+[ext_resource type="PackedScene" uid="uid://cw0p0vqmn4qyn" path="res://scenes/game_manager.tscn" id="1_xu37e"]
 [ext_resource type="Texture2D" uid="uid://b3g0tjtnuhsc3" path="res://assets/map/squares01-Sheet.png" id="3_4v75r"]
 [ext_resource type="Texture2D" uid="uid://k0s2240apcm3" path="res://assets/map/tiles01-Sheet.png" id="3_e2cyf"]
 [ext_resource type="Texture2D" uid="uid://bfatrvfcurxtk" path="res://assets/map/kaleicospio03-Sheet.png" id="5_84vli"]
@@ -14,14 +14,14 @@
 [ext_resource type="Texture2D" uid="uid://brwcy33ey3yjl" path="res://assets/map/tiles05-Sheet.png" id="9_ntuy8"]
 [ext_resource type="Script" uid="uid://38apjfhr7las" path="res://scripts/animated_background.gd" id="10_83lwh"]
 [ext_resource type="PackedScene" uid="uid://cvuh51kvvoaf" path="res://scenes/grids.tscn" id="11_fqdd6"]
-[ext_resource type="Script" uid="uid://d0tb0csmu3il5" path="res://scripts/managers/trail_manager.gd" id="16_4w6kg"]
-[ext_resource type="Script" uid="uid://c4qph2t4vtj04" path="res://scripts/managers/pickup_manager.gd" id="17_ixuxk"]
-[ext_resource type="PackedScene" uid="uid://dx3lupwb8kn48" path="res://scenes/managers/enemy_manager.tscn" id="18_bxcp7"]
+[ext_resource type="Script" uid="uid://d0tb0csmu3il5" path="res://scripts/trail_manager.gd" id="16_4w6kg"]
+[ext_resource type="Script" uid="uid://c4qph2t4vtj04" path="res://scripts/pickup_manager.gd" id="17_ixuxk"]
+[ext_resource type="PackedScene" uid="uid://dx3lupwb8kn48" path="res://scenes/enemy_manager.tscn" id="18_bxcp7"]
 [ext_resource type="Script" uid="uid://crffvyxw1awba" path="res://scripts/crosshair.gd" id="18_gfqsg"]
 [ext_resource type="Texture2D" uid="uid://ctc8lwfptxqir" path="res://assets/UI/crosshair.png" id="18_r4k4a"]
-[ext_resource type="PackedScene" uid="uid://c7okeh7owghnm" path="res://scenes/managers/capture_point_manager.tscn" id="19_rag3k"]
-[ext_resource type="PackedScene" uid="uid://xuluuy8cronv" path="res://scenes/managers/powerup_manager.tscn" id="20_n3gpv"]
-[ext_resource type="PackedScene" uid="uid://cb56jyqau1a0p" path="res://scenes/menus/pause_screen.tscn" id="22_1bpl5"]
+[ext_resource type="PackedScene" uid="uid://c7okeh7owghnm" path="res://scenes/capture_point_manager.tscn" id="19_rag3k"]
+[ext_resource type="PackedScene" uid="uid://xuluuy8cronv" path="res://scenes/powerup_manager.tscn" id="20_n3gpv"]
+[ext_resource type="PackedScene" uid="uid://cb56jyqau1a0p" path="res://scenes/pause_screen.tscn" id="22_1bpl5"]
 [ext_resource type="PackedScene" uid="uid://ca3e5xaqhn2jb" path="res://scenes/menus/end_game_screen.tscn" id="25_5kf2c"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="26_2xw40"]
 [ext_resource type="PackedScene" uid="uid://bdat2mtqg6bf8" path="res://scenes/ui/ui.tscn" id="29_ixuxk"]
@@ -446,7 +446,6 @@ offset_top = -250.0
 offset_right = -450.0
 offset_bottom = -250.0
 scale = Vector2(0.75, 0.75)
-script = null
 
 [node name="DevConsole" parent="HUD" instance=ExtResource("33_a4uvu")]
 visible = false

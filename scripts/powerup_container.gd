@@ -1,7 +1,7 @@
 extends HBoxContainer
 
 var powerup_manager: PowerupManager
-var powerup_widget_scene = preload("res://scenes/powerup_widget.tscn")
+var powerup_widget_scene = preload("res://scenes/ui/powerup_widget.tscn")
 var powerup_icons = {
 	"Ricochet" = preload("res://assets/items/powerups/ricochet-new.png"),
 	"Pierce" = preload("res://assets/items/powerups/pierce-new.png"),

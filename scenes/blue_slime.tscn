@@ -2,9 +2,9 @@
 
 [ext_resource type="SpriteFrames" uid="uid://6ve4oskmofxo" path="res://scenes/blue_slime.tres" id="2_a7qbt"]
 [ext_resource type="Script" uid="uid://bl06jyust81q0" path="res://scripts/blue_slime.gd" id="2_sr4gb"]
-[ext_resource type="PackedScene" uid="uid://dx3nihiph2q5h" path="res://scenes/fire_fx.tscn" id="3_pwh17"]
-[ext_resource type="PackedScene" uid="uid://bfrhr04y8o55p" path="res://scenes/ice_fx.tscn" id="4_ds7cs"]
-[ext_resource type="PackedScene" uid="uid://cxf2l8rmh848y" path="res://scenes/poison_fx.tscn" id="5_7qf5q"]
+[ext_resource type="PackedScene" path="res://scenes/effects/poison_fx.tscn" id="3_7qf5q"]
+[ext_resource type="PackedScene" uid="uid://dx3nihiph2q5h" path="res://scenes/effects/fire_fx.tscn" id="4_xfb3o"]
+[ext_resource type="PackedScene" uid="uid://bfrhr04y8o55p" path="res://scenes/effects/ice_fx.tscn" id="5_ullxd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3764d"]
 radius = 7.0
@@ -25,23 +25,17 @@ target_position = Vector2(0, 32)
 collision_mask = 7
 collide_with_areas = true
 
-[node name="FireFx" parent="." instance=ExtResource("3_pwh17")]
+[node name="PoisonFx" parent="." instance=ExtResource("3_7qf5q")]
 visible = false
-modulate = Color(1, 1, 1, 0.43137255)
-position = Vector2(1, 1.0000007)
-scale = Vector2(0.671875, 0.7578125)
-frame = 3
-frame_progress = 0.23954014
+scale = Vector2(0.5, 0.5)
+frame = 13
+frame_progress = 0.66736734
 
-[node name="IceFx" parent="." instance=ExtResource("4_ds7cs")]
+[node name="FireFx" parent="." instance=ExtResource("4_xfb3o")]
 visible = false
-modulate = Color(1, 1, 1, 0.43137255)
-scale = Vector2(0.3, 0.3)
-frame = 2
-frame_progress = 0.74779576
 
-[node name="PoisonFx" parent="." instance=ExtResource("5_7qf5q")]
+[node name="IceFx" parent="." instance=ExtResource("5_ullxd")]
 visible = false
-modulate = Color(1, 1, 1, 0.43137255)
-scale = Vector2(0.3, 0.3)
-frame_progress = 0.5293466
+scale = Vector2(0.5, 0.5)
+frame = 64
+frame_progress = 0.8191277

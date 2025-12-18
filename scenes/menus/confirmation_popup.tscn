@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://ci3e8foshsdo7"]
 
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_j1hkq"]
-[ext_resource type="Script" uid="uid://c7nttg02j0ofc" path="res://scripts/confirmation_popup.gd" id="2_euovm"]
+[ext_resource type="Script" uid="uid://c7nttg02j0ofc" path="res://scripts/menus/confirmation_popup.gd" id="2_euovm"]
 [ext_resource type="Shader" uid="uid://dcl3q3676uyh3" path="res://shaders/2d_highlight.gdshader" id="3_827jj"]
 
 [sub_resource type="Theme" id="Theme_1siol"]

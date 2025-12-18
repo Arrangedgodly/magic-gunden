@@ -10,6 +10,8 @@ var damage_timers: Dictionary = {}
 var poison_sound: AudioStream = preload("res://assets/sounds/sfx/potion_bubbles_brewing_loop_01.wav")
 
 func _ready() -> void:
+	add_to_group("laser_exception")
+	
 	lifetime_timer.timeout.connect(_on_lifetime_timeout)
 	lifetime_timer.start()
 	

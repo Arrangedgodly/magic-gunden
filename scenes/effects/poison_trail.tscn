@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b0c274xep40op"]
+[gd_scene load_steps=22 format=3 uid="uid://c0sphygf575im"]
 
 [ext_resource type="Script" uid="uid://508fql2441y8" path="res://scripts/poison_trail.gd" id="1_c3lny"]
 [ext_resource type="Texture2D" uid="uid://234bb4j6jvgq" path="res://assets/FX/poison.png" id="2_8jjg4"]

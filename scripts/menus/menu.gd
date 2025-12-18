@@ -25,7 +25,7 @@ func _on_start_pressed() -> void:
 
 func _on_options_pressed() -> void:
 	AudioManager.stop(menu_music)
-	var options_scene = load("res://scenes/options.tscn")
+	var options_scene = load("res://scenes/menus/options.tscn")
 	var options_instance = options_scene.instantiate()
 	add_child(options_instance)
 	options_instance.options_closed.connect(_on_options_closed.bind(options_instance))
@@ -37,11 +37,11 @@ func _on_quit_pressed() -> void:
 
 func _on_credits_pressed() -> void:
 	AudioManager.stop(menu_music)
-	LoadManager.load_scene("res://scenes/credits.tscn")
+	LoadManager.load_scene("res://scenes/menus/credits.tscn")
 
 func _on_high_score_pressed() -> void:
 	AudioManager.stop(menu_music)
-	get_tree().change_scene_to_file("res://scenes/high_score.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/high_score.tscn")
 
 func _on_options_closed(options_instance: Control) -> void:
 	options_instance.queue_free()

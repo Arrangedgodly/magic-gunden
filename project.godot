@@ -52,6 +52,8 @@ projectile=""
 slimearea=""
 killzone=""
 manager=""
+gems=""
+laser_exception=""
 
 [importer_defaults]
 

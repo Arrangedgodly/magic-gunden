@@ -137,7 +137,8 @@ func is_valid_spawn_position(pos: Vector2) -> bool:
 	
 	var adjusted_pos = pos + Vector2(16, 16)
 	
-	if player.position.distance_to(adjusted_pos) < 32:
+	var diff = (player.position - adjusted_pos).abs()
+	if diff.x < 64 and diff.y < 64:
 		return false
 	
 	var enemies = get_tree().get_nodes_in_group("mobs")

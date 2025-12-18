@@ -16,7 +16,7 @@ extends Node2D
 @export var ammo_error_sfx: AudioStream
 
 var projectile_scene = preload("res://scenes/projectile.tscn")
-var score_popup_scene = preload("res://scenes/score_popup.tscn")
+var score_popup_scene = preload("res://scenes/ui/score_popup.tscn")
 
 const tiles = 12
 const tile_size = 32
@@ -266,11 +266,9 @@ func _on_time_counter_timeout() -> void:
 func _on_gem_converted(point_value: int) -> void:
 	scores_to_update.append(point_value)
 
-func _on_trail_item_converted_to_ammo(streak: int, new_position: Vector2) -> void:
+func _on_trail_item_converted_to_ammo(streak: int) -> void:
 	var score_popup = score_popup_scene.instantiate()
-	score_popup.position = new_position
-	score_popup.position += Vector2(-6, -25)
-	add_child(score_popup)
+	player.add_child(score_popup)
 	score_popup.handle_popup(10 * streak)
 	
 	gems_captured += 1

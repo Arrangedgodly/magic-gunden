@@ -1,10 +1,10 @@
 [gd_scene load_steps=20 format=3 uid="uid://csfcavlmq7m8t"]
 
-[ext_resource type="Script" path="res://scripts/controls.gd" id="1_3dnsp"]
+[ext_resource type="Script" uid="uid://pmcdum87hlsb" path="res://scripts/menus/controls.gd" id="1_3dnsp"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_xk27j"]
 [ext_resource type="Texture2D" uid="uid://c4kui3ri4o0ak" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_up.png" id="2_ppbl8"]
 [ext_resource type="Texture2D" uid="uid://bpl60uvt3py6t" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_down.png" id="3_hwvtx"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_t4n2t"]
+[ext_resource type="Shader" uid="uid://lq80p6loouj4" path="res://shaders/outline.gdshader" id="3_t4n2t"]
 [ext_resource type="Texture2D" uid="uid://beqflajmr5oxh" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_left.png" id="4_q6hcy"]
 [ext_resource type="Texture2D" uid="uid://cb3nqs3yb3rw0" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_right.png" id="5_81dl3"]
 [ext_resource type="Texture2D" uid="uid://cbsy8344jvhc8" path="res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_w.png" id="6_wjlno"]

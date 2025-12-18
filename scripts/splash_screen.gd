@@ -23,7 +23,7 @@ func _process(_delta: float) -> void:
 	if splash_finished or Input.is_action_just_pressed("ui_cancel") or Input.is_action_just_pressed("menu") or Input.is_action_just_pressed("ui_accept"):
 		AudioManager.stop(godot_sound)
 		AudioManager.stop(gurpy_games_sound)
-		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
 	
 func trigger_godot_splash() -> void:
 	var tween = create_tween()

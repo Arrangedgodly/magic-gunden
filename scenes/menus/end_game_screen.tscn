@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://ca3e5xaqhn2jb"]
 
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_l870f"]
-[ext_resource type="Script" path="res://scripts/end_game_screen.gd" id="2_q6pom"]
-[ext_resource type="Shader" path="res://shaders/2d_highlight.gdshader" id="3_bcfar"]
+[ext_resource type="Script" uid="uid://bwx23xkpii5oh" path="res://scripts/menus/end_game_screen.gd" id="2_q6pom"]
+[ext_resource type="Shader" uid="uid://dcl3q3676uyh3" path="res://shaders/2d_highlight.gdshader" id="3_bcfar"]
 
 [sub_resource type="Theme" id="Theme_kln7l"]
 default_font = ExtResource("1_l870f")
