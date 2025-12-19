@@ -5,12 +5,13 @@ class_name EnemyManager
 @onready var enemy_move: Timer = $EnemyMove
 @onready var player: CharacterBody2D = %Player
 @onready var game_manager: Node2D
+@onready var score_manager: Node2D
+@onready var spawn: Node2D = %Spawn
 
 signal enemy_spawned(enemy: Node2D)
 signal slime_killed
 
 var blue_slime_scene = preload("res://scenes/blue_slime.tscn")
-var slimes_killed: int = 0
 var tutorial_mode: bool = false
 
 const TILES = 12
@@ -19,6 +20,7 @@ const IDLE_ANIMATION_DURATION = 0.5
 
 func _ready() -> void:
 	game_manager = get_node("/root/MagicGarden/Systems/GameManager")
+	score_manager = get_node("/root/MagicGarden/Systems/ScoreManager")
 	enemy_spawn.timeout.connect(_on_enemy_spawn_timeout)
 	enemy_move.timeout.connect(_on_enemy_move_timeout)
 
@@ -42,15 +44,15 @@ func spawn_enemy(override_pos: Vector2 = Vector2.ZERO) -> void:
 		enemy_pos = override_pos
 	else:
 		if tutorial_mode:
-			enemy_pos = random_pos_tutorial()
+			enemy_pos = spawn.random_pos_tutorial()
 		else:
-			enemy_pos = random_pos()
+			enemy_pos = spawn.random_pos()
 		var attempts = 0
-		while not is_valid_spawn_position(enemy_pos) and attempts < 100:
+		while not spawn.is_valid_spawn_position(enemy_pos) and attempts < 100:
 			if tutorial_mode:
-				enemy_pos = random_pos_tutorial()
+				enemy_pos = spawn.random_pos_tutorial()
 			else:
-				enemy_pos = random_pos()
+				enemy_pos = spawn.random_pos()
 			attempts += 1
 		if attempts >= 100:
 			return
@@ -116,46 +118,6 @@ func move_all_enemies() -> void:
 		if is_instance_valid(data.enemy) and data.enemy.has_method("execute_movement"):
 			data.enemy.execute_movement(data.target_position)
 
-func random_pos() -> Vector2i:
-	randomize()
-	var x = (randi_range(0, TILES - 1) * TILE_SIZE)
-	var y = (randi_range(0, TILES - 1) * TILE_SIZE)
-	return Vector2i(x, y)
-
-func random_pos_tutorial() -> Vector2i:
-	randomize()
-	var min_tile = 2
-	var max_tile = TILES - 1 - 2
-	
-	var x = (randi_range(min_tile, max_tile) * TILE_SIZE)
-	var y = (randi_range(min_tile, max_tile) * TILE_SIZE)
-	return Vector2i(x, y)
-
-func is_valid_spawn_position(pos: Vector2) -> bool:
-	if not player or not game_manager:
-		return false
-	
-	var adjusted_pos = pos + Vector2(16, 16)
-	
-	var diff = (player.position - adjusted_pos).abs()
-	if diff.x < 64 and diff.y < 64:
-		return false
-	
-	var enemies = get_tree().get_nodes_in_group("mobs")
-	for enemy in enemies:
-		if is_instance_valid(enemy):
-			if enemy.position.distance_to(adjusted_pos) < 32:
-				return false
-	
-	if game_manager.has_node("TrailManager"):
-		var trail_manager = game_manager.get_node("TrailManager")
-		for gem_instance in trail_manager.trail:
-			if is_instance_valid(gem_instance):
-				if gem_instance.position.distance_to(adjusted_pos) < 32:
-					return false
-	
-	return true
-
 func get_enemy_count() -> int:
 	return get_tree().get_nodes_in_group("mobs").size()
 
@@ -163,9 +125,6 @@ func clear_all_enemies() -> void:
 	var enemies = get_tree().get_nodes_in_group("mobs")
 	for enemy in enemies:
 		enemy.queue_free()
-
-func get_slimes_killed() -> int:
-	return slimes_killed
 
 func _on_enemy_spawn_timeout() -> void:
 	spawn_enemy()
@@ -176,5 +135,5 @@ func _on_enemy_move_timeout() -> void:
 	enemy_move.start()
 
 func _on_slime_killed() -> void:
-	slimes_killed += 1
+	score_manager.saved_game.increase_slimes_killed(1)
 	slime_killed.emit()

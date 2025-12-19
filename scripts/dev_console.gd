@@ -8,6 +8,7 @@ extends Control
 @onready var powerup_button: Button = %Powerup
 @onready var enemy_manager: EnemyManager
 @onready var pickup_manager: PickupManager
+@onready var powerup_manager: PowerupManager
 @onready var trail_manager: TrailManager
 
 const BUTTON_SCENE = preload("res://scenes/ui/ui_button.tscn")
@@ -19,6 +20,7 @@ func _ready() -> void:
 	hide()
 	enemy_manager = get_node("/root/MagicGarden/Systems/EnemyManager")
 	pickup_manager = get_node("/root/MagicGarden/Systems/PickupManager")
+	powerup_manager = get_node("/root/MagicGarden/Systems/PowerupManager")
 	trail_manager = get_node("/root/MagicGarden/Systems/TrailManager")
 	
 	self.visible = false
@@ -26,7 +28,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	enemy_button.pressed.connect(_on_spawn_enemy)
-	gem_button.pressed.connect(_on_spawn_yoyo)
+	gem_button.pressed.connect(_on_spawn_gem)
 	trail_gem_button.pressed.connect(_on_spawn_trail_gem)
 	powerup_button.pressed.connect(_on_powerup_menu_open)
 	
@@ -37,7 +39,7 @@ func _generate_powerup_ui() -> void:
 		child.queue_free()
 		
 	var powerup_data = []
-	for scene in pickup_manager.available_pickups:
+	for scene in powerup_manager.available_pickups:
 		var file_name = scene.resource_path.get_file().get_basename()
 		var nice_name = file_name.replace("_", " ").capitalize()
 		
@@ -134,5 +136,5 @@ func _on_spawn_enemy() -> void:
 func _on_spawn_pickup(scene: PackedScene) -> void:
 	pickup_manager.force_spawn_pickup(scene)
 
-func _on_spawn_yoyo() -> void:
+func _on_spawn_gem() -> void:
 	pickup_manager.spawn_gem()

@@ -12,6 +12,7 @@ class_name GameManager
 @onready var enemy_manager: EnemyManager = %EnemyManager
 @onready var capture_point_manager: CapturePointManager = %CapturePointManager
 @onready var powerup_manager: PowerupManager = %PowerupManager
+@onready var score_manager: ScoreManager = %ScoreManager
 
 @export var background_music: AudioStream
 @export var ammo_error_sfx: AudioStream
@@ -29,18 +30,12 @@ const RIGHT = Vector2(1, 0)
 var animation_speed = 5
 var grid_size
 var game_started: bool = false
-var score : int
 var last_direction = null
 var current_move_direction = Vector2.ZERO
 var aim_direction = DOWN
-var pickup_count : int
-var kill_count : int
-var killstreak_count: int
 var level = 1
 var game_paused : bool
 var is_attacking : bool
-var time_alive: int
-var gems_captured: int
 var ammo = Ammo.new()
 var scores_to_update: Array
 var is_tutorial_mode: bool = false
@@ -48,12 +43,7 @@ var tutorial_mode_active: bool = false
 
 signal level_changed(new_level: int)
 signal gem_converted(point_value: int)
-signal game_ended(final_score: int, kill_count: int, time_alive: int, gems_captured: int)
-signal new_highscore(new_score: int)
-signal new_high_killcount(new_killcount: int)
-signal new_high_time_alive(new_time_alive: int)
-signal new_high_gems_captured(new_gems_captured: int)
-signal killstreak(new_killstreak: int)
+signal game_ended
 signal current_ammo(new_ammo: int)
 signal ui_visible(visible: bool)
 signal update_score(new_score: int)
@@ -69,7 +59,7 @@ func _initialize() -> void:
 	trail_manager.trail_item_converted_to_ammo.connect(_on_trail_item_converted_to_ammo)
 	trail_manager.trail_released.connect(_on_trail_released)
 	
-	pickup_manager.yoyo_collected.connect(_on_yoyo_collected)
+	pickup_manager.gem_collected.connect(_on_gem_collected)
 	
 	if not (tutorial and tutorial.tutorial_save and tutorial.tutorial_save.show_tutorial):
 		capture_point_manager.initialize_first_spawn()
@@ -110,10 +100,8 @@ func _process(_delta: float) -> void:
 		for score_item in scores_to_update:
 			score_to_add += score_item
 		scores_to_update.clear()
-		score = score + score_to_add
+		var score = score_manager.saved_game.increase_score(score_to_add)
 		update_score.emit(score)
-		
-	killstreak.emit(killstreak_count)
 
 func start_game():
 	if game_started:
@@ -150,52 +138,8 @@ func end_game():
 	capture_point_manager.stop_capture_systems()
 	time_counter.stop()
 	enemy_manager.stop_enemy_systems()
-	game_ended.emit(score, kill_count, time_alive, gems_captured)
-	save_game()
-
-func save_game():
-	var saved_game_path = "user://save.tres"
-	var saved_game: SavedGame
-	
-	if FileAccess.file_exists(saved_game_path):
-		saved_game = load(saved_game_path)
-	
-	if saved_game == null:
-		saved_game = SavedGame.new()
-		
-	if not saved_game.score == null:
-		if score > saved_game.score:
-			saved_game.score = score
-			new_highscore.emit(score)
-	else:
-		saved_game.score = score
-		new_highscore.emit(score)
-	
-	if not saved_game.slimes_killed == null:
-		if enemy_manager.get_slimes_killed() > saved_game.slimes_killed:
-			saved_game.slimes_killed = enemy_manager.get_slimes_killed()
-			new_high_killcount.emit(enemy_manager.get_slimes_killed())
-	else:
-		saved_game.slimes_killed = enemy_manager.get_slimes_killed()
-		new_high_killcount.emit(enemy_manager.get_slimes_killed())
-		
-	if not saved_game.time_alive == null:
-		if time_alive > saved_game.time_alive:
-			saved_game.time_alive = time_alive
-			new_high_time_alive.emit(time_alive)
-	else:
-		saved_game.time_alive = time_alive
-		new_high_time_alive.emit(time_alive)
-		
-	if not saved_game.gems_captured == null:
-		if gems_captured > saved_game.gems_captured:
-			saved_game.gems_captured = gems_captured
-			new_high_gems_captured.emit(gems_captured)
-	else:
-		saved_game.gems_captured = gems_captured
-		new_high_gems_captured.emit(gems_captured)
-	
-	ResourceSaver.save(saved_game, "user://save.tres")
+	game_ended.emit()
+	score_manager.save_game()
 
 func random_pos():
 	randomize()
@@ -203,8 +147,7 @@ func random_pos():
 	var y = (randi_range(0, TILES - 1) * 32)
 	return Vector2i(x,y)
 	
-func handle_pickup_yoyo():
-	pickup_count += 1
+func handle_pickup_gem():
 	trail_manager.create_trail_segment()
 
 func kill_player():
@@ -213,7 +156,7 @@ func kill_player():
 func handle_attack():
 	if ammo.ammo_count == 0:
 		AudioManager.play_sound(ammo_error_sfx)
-		killstreak_count = 0
+		score_manager.increase_current_killstreak(1)
 		
 	if ammo.ammo_count >= 1:
 		decrease_ammo.emit()
@@ -250,17 +193,17 @@ func _on_move_timer_timeout() -> void:
 		move(last_direction)
 
 func increase_kill_count():
-	kill_count += 1
-	killstreak_count += 1
-	scores_to_update.append(10 * killstreak_count)
-	player.create_score_popup(10 * killstreak_count)
+	score_manager.saved_game.increase_slimes_killed(1)
+	score_manager.increase_current_killstreak(1)
+	scores_to_update.append(10 * score_manager.current_killstreak)
+	player.create_score_popup(10 * score_manager.current_killstreak)
 
 func increase_level():
 	level += 1
 	level_changed.emit(level)
 
 func _on_time_counter_timeout() -> void:
-	time_alive += 1
+	score_manager.saved_game.increase_time_alive(1)
 	time_counter.start()
 
 func _on_gem_converted(point_value: int) -> void:
@@ -271,7 +214,7 @@ func _on_trail_item_converted_to_ammo(streak: int) -> void:
 	player.add_child(score_popup)
 	score_popup.handle_popup(10 * streak)
 	
-	gems_captured += 1
+	score_manager.saved_game.increase_gems_captured(1)
 	increase_ammo.emit()
 	ammo.increase_ammo()
 	current_ammo.emit(ammo.clip_count)
@@ -279,7 +222,7 @@ func _on_trail_item_converted_to_ammo(streak: int) -> void:
 
 func _on_trail_released(items_captured: int) -> void:
 	if items_captured >= 6:
-		pickup_manager.spawn_pickup()
+		powerup_manager.spawn_powerup()
 	
 	if not powerup_manager.is_time_pause_active():
 		capture_point_manager.reset_capture_timers()
@@ -299,8 +242,8 @@ func _on_pause_screen_visibility_changed() -> void:
 		if tutorial and not tutorial.visible:
 			tutorial.show()
 
-func _on_yoyo_collected() -> void:
-	handle_pickup_yoyo()
+func _on_gem_collected() -> void:
+	handle_pickup_gem()
 
 func _on_main_menu_pressed() -> void:
 	AudioManager.stop(background_music)
@@ -309,5 +252,4 @@ func _on_restart_pressed() -> void:
 	AudioManager.stop(background_music)
 
 func _on_projectile_shot_missed() -> void:
-	killstreak_count = 0
-	killstreak.emit(killstreak_count)
+	score_manager.reset_current_killstreak()

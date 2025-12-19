@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqjhi2nunh6rp"]
 
-[ext_resource type="Script" uid="uid://bjln08sstnqcv" path="res://scripts/laser_beam.gd" id="1_l1fxn"]
+[ext_resource type="Script" uid="uid://bjln08sstnqcv" path="res://scripts/effects/laser_beam.gd" id="1_l1fxn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5prab"]
 size = Vector2(382, 40)

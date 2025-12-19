@@ -11,15 +11,29 @@ extends Control
 @onready var gems_captured_label: Label = $"CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer3/Gems Captured Label"
 @onready var gems_captured: Label = $"CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer3/Gems Captured"
 
-var game_manager: GameManager
+var score_manager: ScoreManager
 
 func _ready() -> void:
-	game_manager = get_node("/root/MagicGarden/Systems/GameManager")
-	if not game_manager.game_ended.is_connected(_on_game_manager_game_ended):
-		game_manager.game_ended.connect(_on_game_manager_game_ended)
+	score_manager = get_node("/root/MagicGarden/Systems/ScoreManager")
+	
+	if not score_manager.game_ended.is_connected(_on_score_manager_game_ended):
+		score_manager.game_ended.connect(_on_score_manager_game_ended)
+		
+	if not score_manager.new_highscore.is_connected(_on_score_manager_new_highscore):
+		score_manager.new_highscore.connect(_on_score_manager_new_highscore)
+		
+	if not score_manager.new_high_killcount.is_connected(_on_score_manager_new_high_killcount):
+		score_manager.new_high_killcount.connect(_on_score_manager_new_high_killcount)
+		
+	if not score_manager.new_high_gems_captured.is_connected(_on_score_manager_new_high_gems_captured):
+		score_manager.new_high_gems_captured.connect(_on_score_manager_new_high_gems_captured)
+		
+	if not score_manager.new_high_time_alive.is_connected(_on_score_manager_new_high_time_alive):
+		score_manager.new_high_time_alive.connect(_on_score_manager_new_high_time_alive)
+		
 	hide()
 	
-func _on_game_manager_game_ended(new_score: int, new_killcount: int, new_time_alive: int, new_gems_captured: int) -> void:
+func _on_score_manager_game_ended(new_score: int, new_killcount: int, new_time_alive: int, new_gems_captured: int) -> void:
 	final_score.text = str(new_score)
 	final_killcount.text = str(new_killcount)
 	time_alive.text = convert_time_to_minutes(new_time_alive)
@@ -36,19 +50,19 @@ func _on_yes_pressed() -> void:
 	hide()
 	get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
 
-func _on_game_manager_new_highscore(new_score: int) -> void:
+func _on_score_manager_new_highscore(new_score: int) -> void:
 	final_score_label.text = "NEW BEST HIGH SCORE"
 	final_score.text = str(new_score)
 
-func _on_game_manager_new_high_killcount(new_killcount: int) -> void:
+func _on_score_manager_new_high_killcount(new_killcount: int) -> void:
 	final_killcount_label.text = "NEW TOP KILL COUNT"
 	final_killcount.text = str(new_killcount)
 
-func _on_game_manager_new_high_time_alive(new_time_alive: int) -> void:
+func _on_score_manager_new_high_time_alive(new_time_alive: int) -> void:
 	time_alive_label.text = "NEW LONGEST TIME ALIVE"
 	time_alive.text = str(new_time_alive)
 
-func _on_game_manager_new_high_gems_captured(new_gems_captured: int) -> void:
+func _on_score_manager_new_high_gems_captured(new_gems_captured: int) -> void:
 	gems_captured_label.text = "NEW TOP GEMS CAPTURED"
 	gems_captured.text = str(new_gems_captured)
 	

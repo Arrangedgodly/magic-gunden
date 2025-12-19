@@ -5,6 +5,25 @@ class_name PowerupManager
 @onready var game_manager: Node2D = %GameManager
 @onready var enemy_manager: EnemyManager = %EnemyManager
 @onready var trail_manager: TrailManager = %TrailManager
+@onready var spawn: Node2D = %Spawn
+
+var stomp_scene = preload("res://scenes/powerups/stomp.tscn")
+var magnet_scene = preload("res://scenes/powerups/magnet.tscn")
+var pierce_scene = preload("res://scenes/powerups/pierce.tscn")
+var ricochet_scene = preload("res://scenes/powerups/ricochet.tscn")
+var poison_scene = preload("res://scenes/powerups/poison.tscn")
+var auto_aim_scene = preload("res://scenes/powerups/auto_aim.tscn")
+var flames_scene = preload("res://scenes/powerups/flames.tscn")
+var free_ammo_scene = preload("res://scenes/powerups/free_ammo.tscn")
+var ice_scene = preload("res://scenes/powerups/ice.tscn")
+var jump_scene = preload("res://scenes/powerups/jump.tscn")
+var time_pause_scene = preload("res://scenes/powerups/time_pause.tscn")
+var grenade_scene = preload("res://scenes/powerups/grenade.tscn")
+var four_way_shot_scene = preload("res://scenes/powerups/four_way_shot.tscn")
+var laser_scene = preload("res://scenes/powerups/laser.tscn")
+
+var available_pickups: Array[PackedScene]
+var tutorial_mode: bool = false
 
 var active_jump: JumpPickup = null
 var active_stomp: StompPickup = null
@@ -22,6 +41,25 @@ var active_four_way_shot: FourWayShotPickup = null
 var active_laser: LaserPickup = null
 
 signal powerup_activated(type: String)
+signal powerup_spawned(position: Vector2)
+
+func _ready() -> void:
+	available_pickups = [
+	magnet_scene, 
+	pierce_scene, 
+	ricochet_scene, 
+	stomp_scene,
+	poison_scene,
+	auto_aim_scene,
+	flames_scene,
+	free_ammo_scene,
+	ice_scene,
+	jump_scene,
+	time_pause_scene,
+	grenade_scene,
+	four_way_shot_scene,
+	laser_scene
+]
 
 func _process(delta: float) -> void:
 	if active_magnet and active_magnet.is_active:
@@ -166,3 +204,42 @@ func get_powerup_timer(p_name: String) -> Timer:
 		"Laser":
 			return active_laser.get_timer() if active_laser else null
 	return null
+
+func spawn_powerup() -> void:
+	var pickup_pos
+	if tutorial_mode:
+		pickup_pos = spawn.random_pos_tutorial()
+	else:
+		pickup_pos = spawn.random_pos()
+	var attempts = 0
+	
+	while not spawn.is_valid_spawn_position(pickup_pos) and attempts < 100:
+		if tutorial_mode:
+			pickup_pos = spawn.random_pos_tutorial()
+		else:
+			pickup_pos = spawn.random_pos()
+		attempts += 1
+	
+	if attempts >= 100:
+		return
+	
+	var random_scene = available_pickups.pick_random()
+	var pickup = random_scene.instantiate()
+	pickup.position = pickup_pos
+	pickup.position += Vector2(16, 16)
+	game_manager.add_child(pickup)
+	powerup_spawned.emit(pickup_pos)
+
+func force_spawn_powerup(pickup_scene: PackedScene) -> void:
+	var pos
+	if tutorial_mode:
+		pos = spawn.random_pos_tutorial()
+	else:
+		pos = spawn.random_pos()
+		
+	var pickup = pickup_scene.instantiate()
+	
+	pickup.position = pos
+	pickup.position += Vector2(16, 16)
+	game_manager.add_child(pickup)
+	powerup_spawned.emit(pos)

@@ -24,7 +24,7 @@ func _ready() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if can_pickup:
 		if body is Player:
-			pickup_manager.reset_regen_yoyo()
+			pickup_manager.reset_regen_gem()
 			AudioManager.play_sound(pickup_sfx)
 			queue_free()
 		return
@@ -54,3 +54,6 @@ func flash(flash_color: Color):
 	shader_material.set_shader_parameter("flash_modifier", .75)
 	await get_tree().create_timer(.125).timeout
 	shader_material.set_shader_parameter("flash_modifier", 0)
+
+func on_capture() -> void:
+	captured.emit(point_value, ammo_value)
