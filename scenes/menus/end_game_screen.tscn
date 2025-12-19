@@ -45,31 +45,32 @@ script = ExtResource("2_q6pom")
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(1, 1, 1, 0.588235)
 layout_mode = 0
-offset_right = 1200.0
+offset_right = 1280.0
 offset_bottom = 800.0
 color = Color(0, 0, 0, 1)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0
 offset_top = 2.0
-offset_right = 1201.0
-offset_bottom = 803.0
+offset_right = 1280.0
+offset_bottom = 802.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
 theme_override_constants/separation = 75
 alignment = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="Scores" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 0
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
 layout_mode = 2
 alignment = 1
 
-[node name="Final Score Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="Final Score Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_vertical = 6
@@ -81,7 +82,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="FinalScore" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="FinalScore" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 64
@@ -89,11 +91,12 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
 layout_mode = 2
 alignment = 1
 
-[node name="Final Killcount Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Final Killcount Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer2"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -105,18 +108,45 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="FinalKillcount" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="FinalKillcount" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 1
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+[node name="VBoxContainer5" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
 layout_mode = 2
 alignment = 1
 
-[node name="Gems Captured Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="BestKillstreakLabel" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer5"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 32
+text = "Best
+Killstreak"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BestKillstreak" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
+layout_mode = 2
+alignment = 1
+
+[node name="Gems Captured Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer3"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -128,18 +158,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Gems Captured" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="Gems Captured" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer3"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 1
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
 layout_mode = 2
 alignment = 1
 
-[node name="Time Alive Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer4"]
+[node name="Time Alive Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer4"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -151,7 +183,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Time Alive" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer4"]
+[node name="Time Alive" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer4"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 64
@@ -170,11 +203,13 @@ theme_override_constants/separation = 200
 alignment = 1
 
 [node name="Yes" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_06bp5")
 layout_mode = 2
 text = "YES"
 
 [node name="No" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_tu6bt")
 layout_mode = 2
 text = "NO"

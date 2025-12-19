@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://7whgfpfllwbw"]
 
-[ext_resource type="Script" uid="uid://clkylpqky3krt" path="res://scripts/pickup.gd" id="1_c6228"]
+[ext_resource type="Script" uid="uid://clkylpqky3krt" path="res://scripts/powerups/powerup.gd" id="1_c6228"]
 
 [node name="Pickup" type="Area2D"]
 z_index = 3

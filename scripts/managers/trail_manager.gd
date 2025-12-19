@@ -1,13 +1,17 @@
 extends Node2D
 class_name TrailManager
 
-signal trail_item_converted_to_ammo(streak: int, position: Vector2)
 signal trail_item_converted_to_enemy(position: Vector2)
-signal trail_released(items_captured: int)
+signal trail_item_converted_to_ammo
 signal enemy_convert_blocked
 
 @onready var player: CharacterBody2D = %Player
 @onready var game_manager: Node2D = %GameManager
+@onready var pickup_manager: PickupManager = %PickupManager
+@onready var powerup_manager: PowerupManager = %PowerupManager
+@onready var ammo_manager: AmmoManager = %AmmoManager
+@onready var score_manager: ScoreManager = %ScoreManager
+@onready var capture_point_manager: CapturePointManager = %CapturePointManager
 
 var trail: Array = []
 var move_history: Array = []
@@ -24,6 +28,16 @@ var level: int = 1
 func _ready() -> void:
 	if game_manager:
 		game_manager.level_changed.connect(_on_level_changed)
+	
+	if pickup_manager:
+		pickup_manager.gem_collected.connect(_on_gem_collected)
+
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("detach"):
+		release_trail()
+
+func _on_gem_collected() -> void:
+	create_trail_segment()
 
 func update_move_history(current_position: Vector2) -> void:
 	if len(move_history) > pickup_count:
@@ -74,7 +88,7 @@ func move_trail() -> void:
 
 func release_trail() -> void:
 	if trail.is_empty():
-		trail_released.emit(0)
+		_on_trail_released(0)
 		return
 	
 	capture_count = 0
@@ -113,7 +127,7 @@ func release_trail() -> void:
 	for item_data in items_to_convert:
 		if item_data.on_capture:
 			current_streak += 1
-			trail_item_converted_to_ammo.emit(current_streak)
+			_on_ammo_conversion(current_streak)
 		else:
 			if tutorial_mode:
 				if not tutorial_capture:
@@ -127,7 +141,24 @@ func release_trail() -> void:
 		if is_instance_valid(item_data.node):
 			item_data.node.queue_free()
 	
-	trail_released.emit(items_captured)
+	_on_trail_released(items_captured)
+
+func _on_trail_released(items_captured: int) -> void:
+	if items_captured >= 6:
+		powerup_manager.spawn_powerup()
+	
+	if not powerup_manager.is_time_pause_active():
+		capture_point_manager.reset_capture_timers()
+
+func _on_ammo_conversion(streak: int) -> void:
+	player.create_score_popup(10 * streak)
+	
+	ammo_manager.increase_ammo_count()
+	
+	score_manager.saved_game.increase_gems_captured(1)
+	score_manager.append_scores_to_add(10 * streak)
+	
+	trail_item_converted_to_ammo.emit()
 
 func _instantiate_enemy(item_data) -> void:
 	var blue_slime_scene = load(blue_slime_scene_path)
@@ -169,7 +200,7 @@ func convert_to_ammo(pickup: Node2D, streak: int) -> void:
 	await pickup.flash(Color(0, 255, 0, 255))
 	
 	pickup.queue_free()
-	trail_item_converted_to_ammo.emit(streak, pickup.position)
+	_on_ammo_conversion(streak)
 
 func get_trail_size() -> int:
 	return trail.size()

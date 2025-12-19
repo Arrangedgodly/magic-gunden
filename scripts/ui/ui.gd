@@ -10,6 +10,7 @@ extends Control
 @onready var powerup_container: HBoxContainer = $PowerupContainer
 @onready var game_manager: Node2D = %GameManager
 @onready var score_manager: Node2D = %ScoreManager
+@onready var ammo_manager: AmmoManager = %AmmoManager
 
 var current_display_score: int = 0
 var current_ammo: int = 0
@@ -19,10 +20,10 @@ func _ready() -> void:
 	current_killstreak_label.hide()
 	current_killstreak.hide()
 	
-	game_manager.update_score.connect(_on_game_manager_update_score)
 	game_manager.ui_visible.connect(_on_game_manager_ui_visible)
-	game_manager.current_ammo.connect(_on_game_manager_current_ammo)
+	ammo_manager.current_ammo.connect(_on_game_manager_current_ammo)
 	score_manager.new_killstreak.connect(_on_score_manager_new_killstreak)
+	score_manager.update_score.connect(_on_score_manager_update_score)
 	
 func _input(event: InputEvent) -> void:
 	controls.handle_input_event(event)
@@ -34,7 +35,7 @@ func _on_tutorial_tutorial_finished() -> void:
 	score_banner.show()
 	score_label.show()
 
-func _on_game_manager_update_score(new_score: int) -> void:
+func _on_score_manager_update_score(new_score: int) -> void:
 	var start_score = current_display_score
 	var score_difference = new_score - start_score
 	var steps = 10

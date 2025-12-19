@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bpkrbv3i3it8v"]
 
-[ext_resource type="Script" uid="uid://b7u3xdp1xtifx" path="res://scripts/high_score.gd" id="1_cjn1f"]
+[ext_resource type="Script" uid="uid://b7u3xdp1xtifx" path="res://scripts/menus/high_score.gd" id="1_cjn1f"]
 [ext_resource type="AudioStream" uid="uid://de4xib533vhgt" path="res://assets/sounds/music/70s Jam.wav" id="2_vbgfm"]
-[ext_resource type="PackedScene" uid="uid://bn53kfg46urrt" path="res://scenes/high_score_background.tscn" id="3_vbgfm"]
+[ext_resource type="PackedScene" uid="uid://bn53kfg46urrt" path="res://scenes/menus/high_score_background.tscn" id="3_vbgfm"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="6_g6rs3"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="7_y3ity"]
 
@@ -41,6 +41,7 @@ text = "HIGH SCORE"
 horizontal_alignment = 1
 
 [node name="High Score" type="Label" parent="CenterContainer/Scores/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("6_g6rs3")
@@ -60,6 +61,27 @@ text = "MOST KILLS"
 horizontal_alignment = 1
 
 [node name="Most Kills" type="Label" parent="CenterContainer/Scores/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="CenterContainer/Scores"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BestKillstreakLabel" type="Label" parent="CenterContainer/Scores/VBoxContainer5"]
+layout_mode = 2
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("6_g6rs3")
+theme_override_font_sizes/font_size = 64
+text = "BEST KILLSTREAK"
+horizontal_alignment = 1
+
+[node name="BestKillstreak" type="Label" parent="CenterContainer/Scores/VBoxContainer5"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("6_g6rs3")
@@ -79,6 +101,7 @@ text = "LONGEST TIME ALIVE"
 horizontal_alignment = 1
 
 [node name="Time Alive" type="Label" parent="CenterContainer/Scores/VBoxContainer3"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("6_g6rs3")
@@ -98,6 +121,7 @@ text = "MOST GEMS CAPTURED"
 horizontal_alignment = 1
 
 [node name="Gems Captured" type="Label" parent="CenterContainer/Scores/VBoxContainer4"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = ExtResource("6_g6rs3")
@@ -105,6 +129,7 @@ theme_override_font_sizes/font_size = 64
 horizontal_alignment = 1
 
 [node name="No Scores" type="Label" parent="CenterContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 50
 theme_override_fonts/font = ExtResource("6_g6rs3")

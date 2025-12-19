@@ -1,9 +1,9 @@
-extends Pickup
-class_name GrenadePickup
+extends Powerup
+class_name GrenadePowerup
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Grenade
+	type = PowerupType.Grenade
 
 func _process(_delta: float) -> void:
 	if is_active:

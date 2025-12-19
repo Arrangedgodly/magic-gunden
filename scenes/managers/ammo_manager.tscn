@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7w7ha8j8b5w4"]
+
+[ext_resource type="Script" uid="uid://wftp24pxwxxo" path="res://scripts/managers/ammo_manager.gd" id="1_v75dw"]
+
+[node name="AmmoManager" type="Node2D"]
+script = ExtResource("1_v75dw")

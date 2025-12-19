@@ -1,9 +1,9 @@
-extends Pickup
-class_name StompPickup
+extends Powerup
+class_name StompPowerup
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Stomp
+	type = PowerupType.Stomp
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

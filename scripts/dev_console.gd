@@ -39,7 +39,7 @@ func _generate_powerup_ui() -> void:
 		child.queue_free()
 		
 	var powerup_data = []
-	for scene in powerup_manager.available_pickups:
+	for scene in powerup_manager.available_powerups:
 		var file_name = scene.resource_path.get_file().get_basename()
 		var nice_name = file_name.replace("_", " ").capitalize()
 		
@@ -67,7 +67,7 @@ func _generate_powerup_ui() -> void:
 			
 		var btn = _create_scene_button(data.name)
 		
-		btn.pressed.connect(_on_spawn_pickup.bind(data.scene))
+		btn.pressed.connect(_on_spawn_powerup.bind(data.scene))
 		
 		current_col_vbox.add_child(btn)
 		current_item_count += 1
@@ -133,8 +133,8 @@ func _on_back_to_main() -> void:
 func _on_spawn_enemy() -> void:
 	enemy_manager.spawn_enemy()
 
-func _on_spawn_pickup(scene: PackedScene) -> void:
-	pickup_manager.force_spawn_pickup(scene)
+func _on_spawn_powerup(scene: PackedScene) -> void:
+	powerup_manager.force_spawn_powerup(scene)
 
 func _on_spawn_gem() -> void:
 	pickup_manager.spawn_gem()

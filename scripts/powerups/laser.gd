@@ -1,9 +1,9 @@
-extends Pickup
-class_name LaserPickup
+extends Powerup
+class_name LaserPowerup
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Laser 
+	type = PowerupType.Laser
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

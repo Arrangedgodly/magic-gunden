@@ -1,12 +1,12 @@
-extends Pickup
-class_name FlamesPickup
+extends Powerup
+class_name FlamesPowerup
 
 var flaming_enemies: Dictionary = {}
 var enemy_manager: EnemyManager
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Flames
+	type = PowerupType.Flames
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

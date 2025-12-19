@@ -1,5 +1,5 @@
-extends Pickup
-class_name IcePickup
+extends Powerup
+class_name IcePowerup
 
 var slowed_enemy_list: Array = []
 var enemy_manager: EnemyManager
@@ -7,7 +7,7 @@ var original_move_timer_wait_time: float = 0.0
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Ice
+	type = PowerupType.Ice
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

@@ -730,3 +730,7 @@ parameters/Idle/BlendSpace2D/blend_position = Vector2(-0.289779, 0.311189)
 parameters/Idle/TimeScale/scale = 0.3
 parameters/Run/BlendSpace2D/blend_position = Vector2(0.59431, 0.503497)
 parameters/Run/TimeScale/scale = 0.6
+
+[node name="MoveTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.4

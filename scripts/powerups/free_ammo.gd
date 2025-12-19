@@ -1,18 +1,20 @@
-extends Pickup
-class_name FreeAmmoPickup
+extends Powerup
+class_name FreeAmmoPowerup
 
 var ammo_generation_interval: float = 1.0
 var time_since_last_ammo: float = 0.0
 var game_manager: Node2D
+var ammo_manager: AmmoManager
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.FreeAmmo
+	type = PowerupType.FreeAmmo
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)
 	
 	game_manager = manager.game_manager
+	ammo_manager = get_node("/root/MagicGarden/Systems/AmmoManager")
 	time_since_last_ammo = 0.0
 	
 	manager.register_free_ammo_powerup(self)
@@ -29,8 +31,7 @@ func process_effect(delta: float) -> void:
 	
 	if time_since_last_ammo >= ammo_generation_interval:
 		time_since_last_ammo = 0.0
-		game_manager.increase_ammo.emit()
-		game_manager.ammo.increase_ammo()
+		ammo_manager.increase_ammo_count()
 
 func _on_timeout() -> void:
 	time_since_last_ammo = 0.0

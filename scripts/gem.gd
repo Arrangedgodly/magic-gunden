@@ -4,6 +4,7 @@ class_name Gem
 @onready var game_manager = get_parent()
 @onready var gem_area: Area2D = %GemArea
 @onready var pickup_manager: PickupManager
+@onready var player: Player
 
 var pickup_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro PickUp Coin 04.wav")
 
@@ -19,6 +20,7 @@ func _ready() -> void:
 	add_to_group("gems")
 	add_to_group("laser_exception")
 	pickup_manager = get_node("/root/MagicGarden/Systems/PickupManager")
+	player = get_node("/root/MagicGarden/World/GameplayArea/Player")
 	gem_area.body_entered.connect(_on_area_2d_body_entered)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
@@ -31,7 +33,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	
 	if body is Player:
 		if collision_active:
-			game_manager.kill_player()
+			player.die()
 	
 func negate_pickup():
 	can_pickup = false

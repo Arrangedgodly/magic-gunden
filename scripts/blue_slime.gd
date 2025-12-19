@@ -10,6 +10,7 @@ class_name Slime
 @onready var ice_fx: AnimatedSprite2D = $IceFx
 @onready var poison_fx: AnimatedSprite2D = $PoisonFx
 @onready var powerup_manager: PowerupManager
+@onready var score_manager: ScoreManager
 
 var hurt_sound: AudioStream = preload("res://assets/sounds/sfx/hurt2.ogg")
 var fire_sound: AudioStream = preload("res://assets/sounds/sfx/fire_burning_flames_crackle_loop_01.wav")
@@ -29,6 +30,7 @@ signal was_killed
 
 func _ready():
 	powerup_manager = get_node("/root/MagicGarden/Systems/PowerupManager")
+	score_manager = get_node("/root/MagicGarden/Systems/ScoreManager")
 	player = get_node("/root/MagicGarden/World/GameplayArea/Player")
 	hide_fire()
 	hide_ice()
@@ -180,7 +182,7 @@ func move_direction(dir):
 
 func kill():
 	AudioManager.play_sound(hurt_sound)
-	game_manager.increase_kill_count()
+	score_manager.increase_kill_count()
 	sprite.play("death")
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)

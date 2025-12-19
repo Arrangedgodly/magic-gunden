@@ -5,6 +5,9 @@ class_name Player
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var move_timer: Timer = %MoveTimer
 @onready var game_manager: Node2D = %GameManager
+@onready var ammo_manager: AmmoManager = %AmmoManager
+@onready var trail_manager: TrailManager = %TrailManager
+@onready var score_manager: ScoreManager = %ScoreManager
 @onready var crosshair: Sprite2D = $Crosshair
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -23,6 +26,7 @@ var aim_deadzone: float = 0.5
 var finished_moving: bool = false
 var four_way_shot_active: bool = false
 var gameplay_area: Node2D
+var is_attacking: bool = false
 
 const TILE_SIZE = 32
 const UP = Vector2(0, -1)
@@ -34,11 +38,13 @@ func _ready():
 	powerup_manager = get_node("/root/MagicGarden/Systems/PowerupManager")
 	gameplay_area = get_node("/root/MagicGarden/World/GameplayArea")
 	
+	move_timer.timeout.connect(_on_move_timer_timeout)
+	
 	position = position.snapped(Vector2.ONE * TILE_SIZE)
 	position += Vector2.ONE * 8
 	powerup_active()
 
-func _process(_delta: float) -> void:
+func _input(_event: InputEvent) -> void:
 	var input_vector = Vector2(
 		Input.get_action_strength("move-right") - Input.get_action_strength("move-left"),
 		Input.get_action_strength("move-down") - Input.get_action_strength("move-up")
@@ -46,6 +52,34 @@ func _process(_delta: float) -> void:
 	
 	handle_movement_input(input_vector)
 	handle_aim_input()
+	
+	if Input.is_action_just_pressed("attack"):
+		is_attacking = true
+
+func _on_move_timer_timeout() -> void:
+	if is_attacking:
+		ammo_manager.handle_attack()
+		is_attacking = false
+	if last_direction != null:
+		move(last_direction)
+
+func move(dir):
+	var new_position = position + (dir * TILE_SIZE)
+	
+	if powerup_manager and powerup_manager.is_jump_active:
+		new_position = powerup_manager.check_jump_movement(new_position, dir)
+	
+	if trail_manager.has_trail():
+		var first_trail_position = trail_manager.get_first_trail_position()
+		if first_trail_position.distance_to(to_local(new_position)) < 5.0:
+			return
+	
+	trail_manager.update_move_history(global_position)
+	
+	var tween = create_tween()
+	tween.tween_property(self, "position", new_position, 1.0/animation_speed).set_trans(Tween.TRANS_SINE)
+	
+	trail_manager.move_trail()
 
 func handle_movement_input(input_vector: Vector2) -> void:
 	var new_direction = null
@@ -112,6 +146,9 @@ func die():
 	set_process(false)
 	move_timer.stop()
 
+func _on_projectile_shot_missed() -> void:
+	score_manager.reset_current_killstreak()
+
 func create_score_popup(value):
 	var score_popup = score_popup_scene.instantiate()
 	add_child(score_popup)
@@ -140,7 +177,7 @@ func attack():
 				projectile.can_ricochet = true
 				projectile.max_bounces = powerup_manager.get_ricochet_max_bounces()
 				
-			projectile.shot_missed.connect(game_manager._on_projectile_shot_missed)
+			projectile.shot_missed.connect(_on_projectile_shot_missed)
 				
 			add_child(projectile)
 

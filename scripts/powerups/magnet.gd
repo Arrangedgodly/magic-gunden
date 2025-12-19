@@ -1,5 +1,5 @@
-extends Pickup
-class_name MagnetPickup
+extends Powerup
+class_name MagnetPowerup
 
 const MAGNET_RADIUS = 160.0
 const PULL_SPEED = 300.0
@@ -9,7 +9,7 @@ var game_manager: Node2D
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Magnet
+	type = PowerupType.Magnet
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

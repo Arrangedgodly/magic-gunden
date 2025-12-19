@@ -1,13 +1,13 @@
 @icon("res://assets/icons/icon_potion.png")
 extends Area2D
-class_name Pickup
+class_name Powerup
 
 @export var icon: Texture
 
-enum PickupType {Stomp, Magnet, Ricochet, Pierce, Poison, AutoAim, Health, Flames, FreeAmmo, Ice, Jump, TimePause, Grenade, FourWayShot, Laser}
+enum PowerupType {Stomp, Magnet, Ricochet, Pierce, Poison, AutoAim, Health, Flames, FreeAmmo, Ice, Jump, TimePause, Grenade, FourWayShot, Laser}
 
 var duration: float = 10.0
-var type: PickupType
+var type: PowerupType
 var powerup_manager: PowerupManager
 var is_active: bool = false
 var timer: Timer

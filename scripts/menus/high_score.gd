@@ -1,11 +1,12 @@
 extends Control
 var saved_game:SavedGame
 @onready var scores: VBoxContainer = $CenterContainer/Scores
-@onready var high_score: Label = $"CenterContainer/Scores/VBoxContainer/High Score"
-@onready var most_kills: Label = $"CenterContainer/Scores/VBoxContainer2/Most Kills"
-@onready var time_alive: Label = $"CenterContainer/Scores/VBoxContainer3/Time Alive"
-@onready var gems_captured: Label = $"CenterContainer/Scores/VBoxContainer4/Gems Captured"
-@onready var no_scores: Label = $"CenterContainer/No Scores"
+@onready var high_score: Label = %"High Score"
+@onready var most_kills: Label = %"Most Kills"
+@onready var best_killstreak: Label = %BestKillstreak
+@onready var time_alive: Label = %"Time Alive"
+@onready var gems_captured: Label = %"Gems Captured"
+@onready var no_scores: Label = %"No Scores"
 @onready var center_container: CenterContainer = $CenterContainer
 @onready var crt: ColorRect = $CRT
 
@@ -24,7 +25,8 @@ func _ready() -> void:
 		scores.show()
 		high_score.text = str(saved_game.score)
 		most_kills.text = str(saved_game.slimes_killed)
-		time_alive.text = convert_time_to_minutes(saved_game.time_alive)
+		best_killstreak.text = str(saved_game.killstreak)
+		time_alive.text = saved_game.get_time_alive_in_minutes()
 		gems_captured.text = str(saved_game.gems_captured)
 
 func _process(_delta: float) -> void:
@@ -33,15 +35,3 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		AudioManager.stop(high_score_music)
 		get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
-
-func convert_time_to_minutes(seconds: int):
-	@warning_ignore("integer_division")
-	var minutes = seconds / 60
-	var leftover_seconds = seconds % 60
-	var seconds_string
-	if leftover_seconds < 10:
-		seconds_string = "0" + str(leftover_seconds)
-	else:
-		seconds_string = str(leftover_seconds)
-	var time_string = str(minutes) + ":" + seconds_string
-	return time_string

@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://dm3mim4ak40m5"]
+[gd_scene load_steps=72 format=3 uid="uid://dm3mim4ak40m5"]
 
 [ext_resource type="PackedScene" uid="uid://vrr80sg0kivh" path="res://scenes/player.tscn" id="1_l5lwm"]
 [ext_resource type="Texture2D" uid="uid://bcqcqrny67c3c" path="res://assets/map/circles05-Sheet.png" id="1_mmkel"]
@@ -22,8 +22,9 @@
 [ext_resource type="PackedScene" uid="uid://c7okeh7owghnm" path="res://scenes/managers/capture_point_manager.tscn" id="19_rag3k"]
 [ext_resource type="PackedScene" uid="uid://xuluuy8cronv" path="res://scenes/managers/powerup_manager.tscn" id="20_n3gpv"]
 [ext_resource type="PackedScene" uid="uid://cb56jyqau1a0p" path="res://scenes/menus/pause_screen.tscn" id="22_1bpl5"]
-[ext_resource type="Script" uid="uid://dilgb7mlocodk" path="res://scripts/managers/spawn.gd" id="22_gfqsg"]
-[ext_resource type="Script" uid="uid://ctqydmv3gxk56" path="res://scripts/managers/score_manager.gd" id="23_4w6kg"]
+[ext_resource type="PackedScene" uid="uid://qevi6yvpkqk4" path="res://scenes/managers/spawn.tscn" id="22_ixuxk"]
+[ext_resource type="PackedScene" uid="uid://5jo8b45bituf" path="res://scenes/managers/score_manager.tscn" id="23_bxcp7"]
+[ext_resource type="PackedScene" uid="uid://c7w7ha8j8b5w4" path="res://scenes/managers/ammo_manager.tscn" id="24_rag3k"]
 [ext_resource type="PackedScene" uid="uid://ca3e5xaqhn2jb" path="res://scenes/menus/end_game_screen.tscn" id="25_5kf2c"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="26_2xw40"]
 [ext_resource type="PackedScene" uid="uid://bdat2mtqg6bf8" path="res://scenes/ui/ui.tscn" id="29_ixuxk"]
@@ -424,17 +425,14 @@ unique_name_in_owner = true
 [node name="PowerupManager" parent="Systems" instance=ExtResource("20_n3gpv")]
 unique_name_in_owner = true
 
-[node name="MoveTimer" type="Timer" parent="Systems"]
+[node name="Spawn" parent="Systems" instance=ExtResource("22_ixuxk")]
 unique_name_in_owner = true
-wait_time = 0.4
 
-[node name="Spawn" type="Node2D" parent="Systems"]
+[node name="ScoreManager" parent="Systems" instance=ExtResource("23_bxcp7")]
 unique_name_in_owner = true
-script = ExtResource("22_gfqsg")
 
-[node name="ScoreManager" type="Node2D" parent="Systems"]
+[node name="AmmoManager" parent="Systems" instance=ExtResource("24_rag3k")]
 unique_name_in_owner = true
-script = ExtResource("23_4w6kg")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-14, 26)
@@ -450,10 +448,9 @@ scale = Vector2(0.75, 0.75)
 
 [node name="EndGameScreen" parent="HUD" instance=ExtResource("25_5kf2c")]
 unique_name_in_owner = true
-visible = false
-offset_left = -450.0
+offset_left = -500.0
 offset_top = -250.0
-offset_right = -450.0
+offset_right = -500.0
 offset_bottom = -250.0
 scale = Vector2(0.75, 0.75)
 
@@ -490,6 +487,4 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="timeout" from="World/AnimatedBackground/BackgroundSwap" to="World/AnimatedBackground" method="_on_background_swap_timeout"]
 [connection signal="game_ended" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_game_ended"]
-[connection signal="timeout" from="Systems/MoveTimer" to="World/GameplayArea/Player" method="_on_move_timer_timeout"]
-[connection signal="timeout" from="Systems/MoveTimer" to="Systems/GameManager" method="_on_move_timer_timeout"]
 [connection signal="visibility_changed" from="HUD/PauseScreen" to="Systems/GameManager" method="_on_pause_screen_visibility_changed"]

@@ -1,5 +1,5 @@
-extends Pickup
-class_name PoisonPickup
+extends Powerup
+class_name PoisonPowerup
 
 var poison_trail_scene = preload("res://scenes/effects/poison_trail.tscn")
 var spawned_poison_positions: Array = []
@@ -8,7 +8,7 @@ var game_manager: Node2D
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Poison
+	type = PowerupType.Poison
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

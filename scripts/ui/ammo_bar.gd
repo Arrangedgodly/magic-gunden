@@ -13,7 +13,7 @@ extends Control
 @onready var depleted6: TextureProgressBar = $"Depleted/6"
 @onready var full: HBoxContainer = $Full
 @onready var depleted: HBoxContainer = $Depleted
-@onready var game_manager: Node2D
+@onready var ammo_manager: Node2D
 
 var ammunition : int
 var ammo = Ammo.new()
@@ -25,9 +25,9 @@ var depleted_bars: Array[TextureProgressBar]
 func _ready() -> void:
 	full.position = depleted.position
 	
-	game_manager = get_node("/root/MagicGarden/Systems/GameManager")
-	game_manager.decrease_ammo.connect(decrease_ammo)
-	game_manager.increase_ammo.connect(increase_ammo)
+	ammo_manager = get_node("/root/MagicGarden/Systems/AmmoManager")
+	ammo_manager.decrease_ammo.connect(decrease_ammo)
+	ammo_manager.increase_ammo.connect(increase_ammo)
 	
 	full_bars = [full1, full2, full3, full4, full5, full6]
 	depleted_bars = [depleted1, depleted2, depleted3, depleted4, depleted5, depleted6]

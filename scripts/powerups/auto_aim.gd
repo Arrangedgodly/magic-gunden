@@ -1,5 +1,5 @@
-extends Pickup
-class_name AutoAimPickup
+extends Powerup
+class_name AutoAimPowerup
 
 var current_target: Node2D = null
 var player: CharacterBody2D
@@ -8,7 +8,7 @@ var crosshair: Sprite2D
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.AutoAim
+	type = PowerupType.AutoAim
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)
@@ -62,12 +62,10 @@ func update_aim_direction(direction: Vector2) -> void:
 func update_crosshair_position(direction: Vector2) -> void:
 	if not crosshair:
 		return
-	
-	# Position the crosshair at 32 pixels distance in the aim direction
+
 	var crosshair_distance = 32.0
 	var target_pos = direction * crosshair_distance
 	
-	# Smoothly tween to the new position
 	var tween = create_tween()
 	tween.tween_property(crosshair, "position", target_pos, 0.1).set_trans(Tween.TRANS_SINE)
 

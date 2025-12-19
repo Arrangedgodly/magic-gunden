@@ -139,6 +139,7 @@ func clear_capture_points() -> void:
 	capture_points_cleared.emit()
 
 func flash_capture_points() -> void:
+	capture_point_animation.stop()
 	var capture_points = get_tree().get_nodes_in_group("capture")
 	AudioManager.play_sound(capture_sfx)
 	for point in capture_points:
@@ -173,8 +174,7 @@ func _on_capture_point_animation_timeout() -> void:
 	if not tutorial_mode:
 		await flash_capture_points()
 	
-	capture_animation_played.emit()
-	cycle_capture_points()
+		capture_animation_played.emit()
 
 func _on_level_changed(new_level: int) -> void:
 	level = new_level

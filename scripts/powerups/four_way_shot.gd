@@ -1,11 +1,11 @@
-extends Pickup
-class_name FourWayShotPickup
+extends Powerup
+class_name FourWayShotPowerup
 
 var player: Player
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.FourWayShot
+	type = PowerupType.FourWayShot
 	
 	player = get_node_or_null("/root/MagicGarden/World/GameplayArea/Player")
 

@@ -1,19 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cw0p0vqmn4qyn"]
+[gd_scene load_steps=3 format=3 uid="uid://cw0p0vqmn4qyn"]
 
 [ext_resource type="Script" uid="uid://bbphwfkj5jqil" path="res://scripts/managers/game_manager.gd" id="1_cvlyp"]
-[ext_resource type="AudioStream" uid="uid://djb66ruw3tbwt" path="res://assets/sounds/sfx/Retro PickUp Coin 04.wav" id="2_77dcg"]
 [ext_resource type="AudioStream" uid="uid://dxk0r36ss37uu" path="res://assets/sounds/music/Broad Day Getaway.wav" id="2_eaq8r"]
-[ext_resource type="AudioStream" uid="uid://dl527srvxquki" path="res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav" id="4_dtfe4"]
-[ext_resource type="AudioStream" uid="uid://bwiba7d07plqd" path="res://assets/sounds/sfx/error_style_3_001.wav" id="5_kpxhj"]
 
 [node name="GameManager" type="Node2D" groups=["manager"]]
 script = ExtResource("1_cvlyp")
 background_music = ExtResource("2_eaq8r")
-pickup_sfx = ExtResource("2_77dcg")
-death_sfx = ExtResource("4_dtfe4")
-ammo_error_sfx = ExtResource("5_kpxhj")
-
-[node name="TimeCounter" type="Timer" parent="."]
-
-[connection signal="gem_converted" from="." to="." method="_on_gem_converted"]
-[connection signal="timeout" from="TimeCounter" to="." method="_on_time_counter_timeout"]

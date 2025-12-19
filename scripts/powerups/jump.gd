@@ -1,5 +1,5 @@
-extends Pickup
-class_name JumpPickup
+extends Powerup
+class_name JumpPowerup
 
 const TILE_SIZE = 32
 
@@ -9,7 +9,7 @@ var recently_jumped_enemies: Array = []
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Jump
+	type = PowerupType.Jump
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

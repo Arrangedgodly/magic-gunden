@@ -1,5 +1,5 @@
-extends Pickup
-class_name TimePausePickup
+extends Powerup
+class_name TimePausePowerup
 
 @onready var grayscale_shader: Shader = preload("res://shaders/black_and_white.gdshader")
 
@@ -14,7 +14,7 @@ const WARNING_TIME: float = 2.0
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.TimePause
+	type = PowerupType.TimePause
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

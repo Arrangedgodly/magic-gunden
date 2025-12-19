@@ -1,9 +1,9 @@
-extends Pickup
-class_name PiercePickup
+extends Powerup
+class_name PiercePowerup
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Pierce
+	type = PowerupType.Pierce
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

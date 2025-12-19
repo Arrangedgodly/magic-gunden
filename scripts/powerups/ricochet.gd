@@ -1,9 +1,9 @@
-extends Pickup
-class_name RicochetPickup
+extends Powerup
+class_name RicochetPowerup
 
 func _ready() -> void:
 	super._ready()
-	type = PickupType.Ricochet
+	type = PowerupType.Ricochet
 
 func activate(manager: PowerupManager) -> void:
 	super.activate(manager)

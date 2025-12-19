@@ -373,7 +373,7 @@ func _process(_delta: float) -> void:
 			if test_enemies_killed >= 1:
 				next_step()
 
-func _on_trail_converted_to_ammo(_streak, _pos):
+func _on_trail_converted_to_ammo():
 	if current_step == TutorialStep.CAPTURE_GEM:
 		trail_manager.tutorial_capture = true
 		await get_tree().create_timer(0.5).timeout

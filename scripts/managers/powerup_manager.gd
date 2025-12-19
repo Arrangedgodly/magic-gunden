@@ -22,29 +22,29 @@ var grenade_scene = preload("res://scenes/powerups/grenade.tscn")
 var four_way_shot_scene = preload("res://scenes/powerups/four_way_shot.tscn")
 var laser_scene = preload("res://scenes/powerups/laser.tscn")
 
-var available_pickups: Array[PackedScene]
+var available_powerups: Array[PackedScene]
 var tutorial_mode: bool = false
 
-var active_jump: JumpPickup = null
-var active_stomp: StompPickup = null
-var active_pierce: PiercePickup = null
-var active_ricochet: RicochetPickup = null
-var active_magnet: MagnetPickup = null
-var active_poison: PoisonPickup = null
-var active_auto_aim: AutoAimPickup = null
-var active_flames: FlamesPickup = null
-var active_free_ammo: FreeAmmoPickup = null
-var active_ice: IcePickup = null
-var active_time_pause: TimePausePickup = null
-var active_grenade: GrenadePickup = null
-var active_four_way_shot: FourWayShotPickup = null
-var active_laser: LaserPickup = null
+var active_jump: JumpPowerup = null
+var active_stomp: StompPowerup = null
+var active_pierce: PiercePowerup = null
+var active_ricochet: RicochetPowerup = null
+var active_magnet: MagnetPowerup = null
+var active_poison: PoisonPowerup = null
+var active_auto_aim: AutoAimPowerup = null
+var active_flames: FlamesPowerup = null
+var active_free_ammo: FreeAmmoPowerup = null
+var active_ice: IcePowerup = null
+var active_time_pause: TimePausePowerup = null
+var active_grenade: GrenadePowerup = null
+var active_four_way_shot: FourWayShotPowerup = null
+var active_laser: LaserPowerup = null
 
 signal powerup_activated(type: String)
 signal powerup_spawned(position: Vector2)
 
 func _ready() -> void:
-	available_pickups = [
+	available_powerups = [
 	magnet_scene, 
 	pierce_scene, 
 	ricochet_scene, 
@@ -74,47 +74,47 @@ func _process(delta: float) -> void:
 	if active_free_ammo and active_free_ammo.is_active:
 		active_free_ammo.process_effect(delta)
 
-func register_jump_powerup(pickup: JumpPickup) -> void:
-	active_jump = pickup
+func register_jump_powerup(powerup: JumpPowerup) -> void:
+	active_jump = powerup
 
-func register_stomp_powerup(pickup: StompPickup) -> void:
-	active_stomp = pickup
+func register_stomp_powerup(powerup: StompPowerup) -> void:
+	active_stomp = powerup
 
-func register_pierce_powerup(pickup: PiercePickup) -> void:
-	active_pierce = pickup
+func register_pierce_powerup(powerup: PiercePowerup) -> void:
+	active_pierce = powerup
 
-func register_ricochet_powerup(pickup: RicochetPickup) -> void:
-	active_ricochet = pickup
+func register_ricochet_powerup(powerup: RicochetPowerup) -> void:
+	active_ricochet = powerup
 
-func register_magnet_powerup(pickup: MagnetPickup) -> void:
-	active_magnet = pickup
+func register_magnet_powerup(powerup: MagnetPowerup) -> void:
+	active_magnet = powerup
 
-func register_poison_powerup(pickup: PoisonPickup) -> void:
-	active_poison = pickup
+func register_poison_powerup(powerup: PoisonPowerup) -> void:
+	active_poison = powerup
 
-func register_auto_aim_powerup(pickup: AutoAimPickup) -> void:
-	active_auto_aim = pickup
+func register_auto_aim_powerup(powerup: AutoAimPowerup) -> void:
+	active_auto_aim = powerup
 
-func register_flames_powerup(pickup: FlamesPickup) -> void:
-	active_flames = pickup
+func register_flames_powerup(powerup: FlamesPowerup) -> void:
+	active_flames = powerup
 
-func register_free_ammo_powerup(pickup: FreeAmmoPickup) -> void:
-	active_free_ammo = pickup
+func register_free_ammo_powerup(powerup: FreeAmmoPowerup) -> void:
+	active_free_ammo = powerup
 
-func register_ice_powerup(pickup: IcePickup) -> void:
-	active_ice = pickup
+func register_ice_powerup(powerup: IcePowerup) -> void:
+	active_ice = powerup
 
-func register_time_pause_powerup(pickup: TimePausePickup) -> void:
-	active_time_pause = pickup
+func register_time_pause_powerup(powerup: TimePausePowerup) -> void:
+	active_time_pause = powerup
 
-func register_grenade_powerup(pickup: GrenadePickup) -> void:
-	active_grenade = pickup
+func register_grenade_powerup(powerup: GrenadePowerup) -> void:
+	active_grenade = powerup
 
-func register_four_way_shot_powerup(pickup: FourWayShotPickup) -> void:
-	active_four_way_shot = pickup
+func register_four_way_shot_powerup(powerup: FourWayShotPowerup) -> void:
+	active_four_way_shot = powerup
 
-func register_laser_powerup(pickup: LaserPickup) -> void:
-	active_laser = pickup
+func register_laser_powerup(powerup: LaserPowerup) -> void:
+	active_laser = powerup
 
 func is_jump_active() -> bool:
 	return active_jump != null and active_jump.is_active
@@ -206,40 +206,40 @@ func get_powerup_timer(p_name: String) -> Timer:
 	return null
 
 func spawn_powerup() -> void:
-	var pickup_pos
+	var powerup_pos
 	if tutorial_mode:
-		pickup_pos = spawn.random_pos_tutorial()
+		powerup_pos = spawn.random_pos_tutorial()
 	else:
-		pickup_pos = spawn.random_pos()
+		powerup_pos = spawn.random_pos()
 	var attempts = 0
 	
-	while not spawn.is_valid_spawn_position(pickup_pos) and attempts < 100:
+	while not spawn.is_valid_spawn_position(powerup_pos) and attempts < 100:
 		if tutorial_mode:
-			pickup_pos = spawn.random_pos_tutorial()
+			powerup_pos = spawn.random_pos_tutorial()
 		else:
-			pickup_pos = spawn.random_pos()
+			powerup_pos = spawn.random_pos()
 		attempts += 1
 	
 	if attempts >= 100:
 		return
 	
-	var random_scene = available_pickups.pick_random()
-	var pickup = random_scene.instantiate()
-	pickup.position = pickup_pos
-	pickup.position += Vector2(16, 16)
-	game_manager.add_child(pickup)
-	powerup_spawned.emit(pickup_pos)
+	var random_scene = available_powerups.pick_random()
+	var powerup = random_scene.instantiate()
+	powerup.position = powerup_pos
+	powerup.position += Vector2(16, 16)
+	game_manager.add_child(powerup)
+	powerup_spawned.emit(powerup_pos)
 
-func force_spawn_powerup(pickup_scene: PackedScene) -> void:
+func force_spawn_powerup(powerup_scene: PackedScene) -> void:
 	var pos
 	if tutorial_mode:
 		pos = spawn.random_pos_tutorial()
 	else:
 		pos = spawn.random_pos()
 		
-	var pickup = pickup_scene.instantiate()
+	var powerup = powerup_scene.instantiate()
 	
-	pickup.position = pos
-	pickup.position += Vector2(16, 16)
-	game_manager.add_child(pickup)
+	powerup.position = pos
+	powerup.position += Vector2(16, 16)
+	game_manager.add_child(powerup)
 	powerup_spawned.emit(pos)
