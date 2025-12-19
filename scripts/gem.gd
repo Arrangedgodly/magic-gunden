@@ -1,20 +1,25 @@
 extends AnimatedSprite2D
+class_name Gem
 
 @onready var game_manager = get_parent()
-@onready var yoyo_area: Area2D = $YoyoArea
+@onready var gem_area: Area2D = %GemArea
 @onready var pickup_manager: PickupManager
 
 var pickup_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro PickUp Coin 04.wav")
 
 var can_pickup: bool
 var collision_active: bool = false
+var point_value: int
+var ammo_value: int
+
+signal captured(point_value: int, ammo_value: int)
 
 
 func _ready() -> void:
 	add_to_group("gems")
 	add_to_group("laser_exception")
 	pickup_manager = get_node("/root/MagicGarden/Systems/PickupManager")
-	yoyo_area.body_entered.connect(_on_area_2d_body_entered)
+	gem_area.body_entered.connect(_on_area_2d_body_entered)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if can_pickup:

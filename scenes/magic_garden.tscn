@@ -446,7 +446,6 @@ offset_top = -250.0
 offset_right = -450.0
 offset_bottom = -250.0
 scale = Vector2(0.75, 0.75)
-script = null
 
 [node name="DevConsole" parent="HUD" instance=ExtResource("33_a4uvu")]
 visible = false
@@ -483,8 +482,6 @@ metadata/_edit_use_anchors_ = true
 [connection signal="game_ended" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_game_ended"]
 [connection signal="new_high_gems_captured" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_new_high_gems_captured"]
 [connection signal="new_high_killcount" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_new_high_killcount"]
-[connection signal="new_high_time_alive" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_new_high_time_alive"]
-[connection signal="new_highscore" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_new_highscore"]
 [connection signal="timeout" from="Systems/MoveTimer" to="World/GameplayArea/Player" method="_on_move_timer_timeout"]
 [connection signal="timeout" from="Systems/MoveTimer" to="Systems/GameManager" method="_on_move_timer_timeout"]
 [connection signal="visibility_changed" from="HUD/PauseScreen" to="Systems/GameManager" method="_on_pause_screen_visibility_changed"]

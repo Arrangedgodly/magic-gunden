@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://bdat2mtqg6bf8"]
 
-[ext_resource type="Script" uid="uid://ctndhqmo5h2tg" path="res://scripts/ui.gd" id="1_wm3ai"]
+[ext_resource type="Script" uid="uid://ctndhqmo5h2tg" path="res://scripts/ui/ui.gd" id="1_wm3ai"]
 [ext_resource type="Texture2D" uid="uid://bmei0eiha30ii" path="res://assets/UI/scorebanner.png" id="2_8dubc"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="3_p7vwb"]
-[ext_resource type="PackedScene" uid="uid://csfcavlmq7m8t" path="res://scenes/controls.tscn" id="4_ktti3"]
-[ext_resource type="PackedScene" uid="uid://5jfivnerd7rx" path="res://scenes/ammo_bar.tscn" id="5_cgfq5"]
-[ext_resource type="Script" uid="uid://b4kxdpt88ncbw" path="res://scripts/powerup_container.gd" id="6_8dubc"]
+[ext_resource type="PackedScene" uid="uid://csfcavlmq7m8t" path="res://scenes/menus/controls.tscn" id="4_ktti3"]
+[ext_resource type="PackedScene" uid="uid://5jfivnerd7rx" path="res://scenes/ui/ammo_bar.tscn" id="5_cgfq5"]
+[ext_resource type="Script" uid="uid://b4kxdpt88ncbw" path="res://scripts/ui/powerup_container.gd" id="6_8dubc"]
 
 [node name="UI" type="Control"]
 z_index = 20

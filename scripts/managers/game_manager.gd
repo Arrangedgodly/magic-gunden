@@ -1,4 +1,5 @@
 extends Node2D
+class_name GameManager
 
 @onready var move_timer: Timer = %MoveTimer
 @onready var player: CharacterBody2D = %Player
@@ -18,13 +19,12 @@ extends Node2D
 var projectile_scene = preload("res://scenes/projectile.tscn")
 var score_popup_scene = preload("res://scenes/ui/score_popup.tscn")
 
-const tiles = 12
-const tile_size = 32
-const cell_size = Vector2i(32, 32)
-const up = Vector2(0, -1)
-const down = Vector2(0, 1)
-const left = Vector2(-1, 0)
-const right = Vector2(1, 0)
+const TILES = 12
+const TILE_SIZE = 32
+const UP = Vector2(0, -1)
+const DOWN = Vector2(0, 1)
+const LEFT = Vector2(-1, 0)
+const RIGHT = Vector2(1, 0)
 
 var animation_speed = 5
 var grid_size
@@ -32,7 +32,7 @@ var game_started: bool = false
 var score : int
 var last_direction = null
 var current_move_direction = Vector2.ZERO
-var aim_direction = down
+var aim_direction = DOWN
 var pickup_count : int
 var kill_count : int
 var killstreak_count: int
@@ -75,30 +75,30 @@ func _initialize() -> void:
 		capture_point_manager.initialize_first_spawn()
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("move-left") and current_move_direction != right:
-		last_direction = left
+	if Input.is_action_just_pressed("move-left") and current_move_direction != RIGHT:
+		last_direction = LEFT
 		if not game_started:
 			start_game()
-	if Input.is_action_just_pressed("move-right") and current_move_direction != left:
-		last_direction = right
+	if Input.is_action_just_pressed("move-right") and current_move_direction != LEFT:
+		last_direction = RIGHT
 		if not game_started:
 			start_game()
-	if Input.is_action_just_pressed("move-up") and current_move_direction != down:
-		last_direction = up
+	if Input.is_action_just_pressed("move-up") and current_move_direction != DOWN:
+		last_direction = UP
 		if not game_started:
 			start_game()
-	if Input.is_action_just_pressed("move-down") and current_move_direction != up:
-		last_direction = down
+	if Input.is_action_just_pressed("move-down") and current_move_direction != UP:
+		last_direction = DOWN
 		if not game_started:
 			start_game()
 	if Input.is_action_just_pressed("aim-left"):
-		aim_direction = left
+		aim_direction = LEFT
 	if Input.is_action_just_pressed("aim-right"):
-		aim_direction = right
+		aim_direction = RIGHT
 	if Input.is_action_just_pressed("aim-down"):
-		aim_direction = down
+		aim_direction = DOWN
 	if Input.is_action_just_pressed("aim-up"):
-		aim_direction = up
+		aim_direction = UP
 	if Input.is_action_just_pressed("detach"):
 		trail_manager.release_trail()
 	if Input.is_action_just_pressed("attack"):
@@ -199,8 +199,8 @@ func save_game():
 
 func random_pos():
 	randomize()
-	var x = (randi_range(0, tiles - 1) * 32)
-	var y = (randi_range(0, tiles - 1) * 32)
+	var x = (randi_range(0, TILES - 1) * 32)
+	var y = (randi_range(0, TILES - 1) * 32)
 	return Vector2i(x,y)
 	
 func handle_pickup_yoyo():
@@ -223,7 +223,7 @@ func handle_attack():
 	current_ammo.emit(ammo.ammo_count)
 		
 func move(dir):
-	var new_position = player.position + (dir * tile_size)
+	var new_position = player.position + (dir * TILE_SIZE)
 	
 	if powerup_manager and powerup_manager.is_jump_active:
 		new_position = powerup_manager.check_jump_movement(new_position, dir)

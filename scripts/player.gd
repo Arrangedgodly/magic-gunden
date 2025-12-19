@@ -10,13 +10,12 @@ class_name Player
 
 var death_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro Negative Melody 02 - space voice pad.wav")
 
-var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var score_popup_scene = preload("res://scenes/ui/score_popup.tscn")
 var projectile_scene = preload("res://scenes/projectile.tscn")
 var laser_beam_scene = preload("res://scenes/effects/laser_beam.tscn")
 
 var last_direction = null
-var aim_direction = down
+var aim_direction = DOWN
 var animation_speed = 5
 var powerup_manager: PowerupManager
 var move_deadzone: float = 0.5
@@ -25,17 +24,17 @@ var finished_moving: bool = false
 var four_way_shot_active: bool = false
 var gameplay_area: Node2D
 
-const tile_size = 32
-const up = Vector2(0, -1)
-const down = Vector2(0, 1)
-const left = Vector2(-1, 0)
-const right = Vector2(1, 0)
+const TILE_SIZE = 32
+const UP = Vector2(0, -1)
+const DOWN = Vector2(0, 1)
+const LEFT = Vector2(-1, 0)
+const RIGHT = Vector2(1, 0)
 
 func _ready():
 	powerup_manager = get_node("/root/MagicGarden/Systems/PowerupManager")
 	gameplay_area = get_node("/root/MagicGarden/World/GameplayArea")
 	
-	position = position.snapped(Vector2.ONE * tile_size)
+	position = position.snapped(Vector2.ONE * TILE_SIZE)
 	position += Vector2.ONE * 8
 	powerup_active()
 
@@ -51,28 +50,28 @@ func _process(_delta: float) -> void:
 func handle_movement_input(input_vector: Vector2) -> void:
 	var new_direction = null
 	
-	if Input.is_action_just_pressed("move-left") and last_direction != right:
-		new_direction = left
-	elif Input.is_action_just_pressed("move-right") and last_direction != left:
-		new_direction = right
-	elif Input.is_action_just_pressed("move-up") and last_direction != down:
-		new_direction = up
-	elif Input.is_action_just_pressed("move-down") and last_direction != up:
-		new_direction = down
+	if Input.is_action_just_pressed("move-left") and last_direction != RIGHT:
+		new_direction = LEFT
+	elif Input.is_action_just_pressed("move-right") and last_direction != LEFT:
+		new_direction = RIGHT
+	elif Input.is_action_just_pressed("move-up") and last_direction != DOWN:
+		new_direction = UP
+	elif Input.is_action_just_pressed("move-down") and last_direction != UP:
+		new_direction = DOWN
 	elif input_vector.length() > move_deadzone:
 		var abs_x = abs(input_vector.x)
 		var abs_y = abs(input_vector.y)
 		
 		if abs_x > abs_y:
-			if input_vector.x > 0 and last_direction != left:
-				new_direction = right
-			elif input_vector.x < 0 and last_direction != right:
-				new_direction = left
+			if input_vector.x > 0 and last_direction != LEFT:
+				new_direction = RIGHT
+			elif input_vector.x < 0 and last_direction != RIGHT:
+				new_direction = LEFT
 		else:
-			if input_vector.y > 0 and last_direction != up:
-				new_direction = down
-			elif input_vector.y < 0 and last_direction != down:
-				new_direction = up
+			if input_vector.y > 0 and last_direction != UP:
+				new_direction = DOWN
+			elif input_vector.y < 0 and last_direction != DOWN:
+				new_direction = UP
 	
 	if new_direction != null and new_direction != last_direction:
 		last_direction = new_direction
@@ -89,21 +88,21 @@ func handle_aim_input() -> void:
 	)
 	
 	if Input.is_action_just_pressed("aim-down"):
-		aim_direction = down
+		aim_direction = DOWN
 	elif Input.is_action_just_pressed("aim-up"):
-		aim_direction = up
+		aim_direction = UP
 	elif Input.is_action_just_pressed("aim-left"):
-		aim_direction = left
+		aim_direction = LEFT
 	elif Input.is_action_just_pressed("aim-right"):
-		aim_direction = right
+		aim_direction = RIGHT
 	elif aim_vector.length() > aim_deadzone:
 		var abs_x = abs(aim_vector.x)
 		var abs_y = abs(aim_vector.y)
 		
 		if abs_x > abs_y:
-			aim_direction = right if aim_vector.x > 0 else left
+			aim_direction = RIGHT if aim_vector.x > 0 else LEFT
 		else:
-			aim_direction = down if aim_vector.y > 0 else up
+			aim_direction = DOWN if aim_vector.y > 0 else UP
 
 func die():
 	AudioManager.play_sound(death_sfx)
@@ -122,7 +121,7 @@ func attack():
 	var directions_to_shoot = [aim_direction]
 	
 	if four_way_shot_active:
-		directions_to_shoot = [up, down, left, right]
+		directions_to_shoot = [UP, DOWN, LEFT, RIGHT]
 	
 	for dir in directions_to_shoot:
 		if powerup_manager.is_laser_active():

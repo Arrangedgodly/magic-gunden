@@ -4,21 +4,28 @@ extends Node2D
 @export var stream: AudioStream
 
 var can_flash : bool
-
 var velocity: Vector2 = Vector2.ZERO
 var gravity: float = 600.0
 var friction: float = 300.0
 
 func _ready() -> void:
 	self.visible = false
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	label.grow_vertical = Control.GROW_DIRECTION_BOTH
+	label.anchors_preset = Control.PRESET_CENTER
+	label.position = Vector2.ZERO
 
 func handle_popup(value: int) -> void:
 	self.visible = true
 	AudioManager.play_sound(stream)
 	label.text = str(value)
 	
+	label.pivot_offset = label.size / 2
+	
 	var x_jitter = randf_range(-10, 10)
-	position = Vector2(x_jitter, -50)
+	position = Vector2(x_jitter, -20)
 	velocity = Vector2(randf_range(-120, 120), randf_range(-250, -320))
 
 	var tween = create_tween().set_parallel(true)

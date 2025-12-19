@@ -21,7 +21,6 @@ var capture_manager: CapturePointManager
 var pickup_manager: PickupManager
 var powerup_manager: PowerupManager
 
-var yoyo_scene = preload("res://scenes/yoyo.tscn")
 var stomp_scene = preload("res://scenes/powerups/stomp.tscn")
 
 enum TutorialStep {

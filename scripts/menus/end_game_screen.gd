@@ -11,7 +11,12 @@ extends Control
 @onready var gems_captured_label: Label = $"CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer3/Gems Captured Label"
 @onready var gems_captured: Label = $"CenterContainer/VBoxContainer/HBoxContainer3/VBoxContainer3/Gems Captured"
 
+var game_manager: GameManager
+
 func _ready() -> void:
+	game_manager = get_node("/root/MagicGarden/Systems/GameManager")
+	if not game_manager.game_ended.is_connected(_on_game_manager_game_ended):
+		game_manager.game_ended.connect(_on_game_manager_game_ended)
 	hide()
 	
 func _on_game_manager_game_ended(new_score: int, new_killcount: int, new_time_alive: int, new_gems_captured: int) -> void:

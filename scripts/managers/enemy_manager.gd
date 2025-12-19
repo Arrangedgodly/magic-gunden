@@ -149,9 +149,9 @@ func is_valid_spawn_position(pos: Vector2) -> bool:
 	
 	if game_manager.has_node("TrailManager"):
 		var trail_manager = game_manager.get_node("TrailManager")
-		for yoyo_instance in trail_manager.trail:
-			if is_instance_valid(yoyo_instance):
-				if yoyo_instance.position.distance_to(adjusted_pos) < 32:
+		for gem_instance in trail_manager.trail:
+			if is_instance_valid(gem_instance):
+				if gem_instance.position.distance_to(adjusted_pos) < 32:
 					return false
 	
 	return true

@@ -13,7 +13,7 @@ var trail: Array = []
 var move_history: Array = []
 var pickup_count: int = 0
 var capture_count: int = 0
-var yoyo_scene_path: String = "res://scenes/yoyo.tscn"
+var gem_scene_path: String = "res://scenes/gem.tscn"
 var blue_slime_scene_path: String = "res://scenes/blue_slime.tscn"
 var tutorial_mode: bool = false
 var tutorial_capture: bool = false
@@ -43,22 +43,22 @@ func create_trail_segment() -> void:
 	if move_history.is_empty():
 		return
 	
-	var yoyo_scene = load(yoyo_scene_path)
-	var yoyo_instance = yoyo_scene.instantiate()
+	var gem_scene = load(gem_scene_path)
+	var gem_instance = gem_scene.instantiate()
 	var last_position = move_history[len(move_history) - 1]
 	var local_position = game_manager.to_local(last_position)
 	
-	yoyo_instance.position = local_position
-	yoyo_instance.negate_pickup()
+	gem_instance.position = local_position
+	gem_instance.negate_pickup()
 	
 	match level:
-		1: yoyo_instance.play("blue")
-		2: yoyo_instance.play("green")
-		3: yoyo_instance.play("red")
+		1: gem_instance.play("blue")
+		2: gem_instance.play("green")
+		3: gem_instance.play("red")
 	
-	game_manager.call_deferred("add_child", yoyo_instance)
-	yoyo_instance.add_to_group("equipped")
-	trail.append(yoyo_instance)
+	game_manager.call_deferred("add_child", gem_instance)
+	gem_instance.add_to_group("equipped")
+	trail.append(gem_instance)
 	pickup_count += 1
 
 func move_trail() -> void:

@@ -7,7 +7,7 @@ signal powerup_spawned(position: Vector2)
 @onready var player: CharacterBody2D = %Player
 @onready var game_manager: Node2D = %GameManager
 
-var yoyo_scene = preload("res://scenes/yoyo.tscn")
+var gem_scene = preload("res://scenes/gem.tscn")
 var stomp_scene = preload("res://scenes/powerups/stomp.tscn")
 var magnet_scene = preload("res://scenes/powerups/magnet.tscn")
 var pierce_scene = preload("res://scenes/powerups/pierce.tscn")
@@ -161,18 +161,18 @@ func spawn_gem() -> void:
 	if attempts >= 100:
 		return
 	
-	var yoyo_instance = yoyo_scene.instantiate()
-	yoyo_instance.enable_pickup()
-	yoyo_instance.position = pos
-	yoyo_instance.position += Vector2.RIGHT * 16
-	yoyo_instance.position += Vector2.DOWN * 16
+	var gem_instance = gem_scene.instantiate()
+	gem_instance.enable_pickup()
+	gem_instance.position = pos
+	gem_instance.position += Vector2.RIGHT * 16
+	gem_instance.position += Vector2.DOWN * 16
 	
 	match level:
-		1: yoyo_instance.play('blue')
-		2: yoyo_instance.play('green')
-		3: yoyo_instance.play('red')
+		1: gem_instance.play('blue')
+		2: gem_instance.play('green')
+		3: gem_instance.play('red')
 	
-	game_manager.add_child(yoyo_instance)
+	game_manager.add_child(gem_instance)
 
 func enable_tutorial_mode() -> void:
 	regen_yoyo = false
