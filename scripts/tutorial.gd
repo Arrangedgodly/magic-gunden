@@ -123,7 +123,7 @@ func start_tutorial_logic() -> void:
 			trail_manager.tutorial_mode = true
 
 		game_manager.game_started = true
-		game_manager.move_timer.start()
+		player.move_timer.start()
 
 	current_step = TutorialStep.WELCOME
 	show_step()
