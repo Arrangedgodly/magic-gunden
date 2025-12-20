@@ -17,6 +17,7 @@ var level: int = 1
 var capture_pattern_bar: bool = false
 var bars_vertical: bool = true
 var tutorial_mode: bool = false
+var tutorial_pattern: bool = false
 
 const TILES = 12
 const TILE_SIZE = 32
@@ -41,10 +42,29 @@ func reset_capture_timers() -> void:
 	capture_point_timer.emit_signal("timeout")
 	capture_point_animation.stop()
 
+func spawn_tutorial_pattern(starting_pos: Vector2i) -> int:
+	var count = 0
+	
+	for i in range(3):
+		var capture_point_instance = capture_point_scene.instantiate()
+		capture_point_instance.position = starting_pos
+		capture_point_instance.position += Vector2.DOWN * 16
+		capture_point_instance.position += Vector2.RIGHT * 16
+		
+		capture_point_instance.position.x += i * TILE_SIZE
+		
+		set_capture_point_color(capture_point_instance)
+		game_manager.add_child(capture_point_instance)
+		count += 1
+	
+	return count
+
 func spawn_capture_points(starting_pos: Vector2i) -> void:
 	var points_spawned = 0
 	
-	if capture_pattern_bar:
+	if tutorial_pattern:
+		points_spawned = spawn_tutorial_pattern(starting_pos)
+	elif capture_pattern_bar:
 		points_spawned = spawn_bar_pattern(starting_pos)
 	else:
 		points_spawned = spawn_cross_pattern(starting_pos)

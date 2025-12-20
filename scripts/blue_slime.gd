@@ -27,6 +27,7 @@ var can_animation_change : bool
 var current_move_direction: Vector2 = Vector2.ZERO
 
 signal was_killed
+signal player_hit_by_enemy
 
 func _ready():
 	powerup_manager = get_node("/root/MagicGarden/Systems/PowerupManager")
@@ -59,6 +60,7 @@ func _physics_process(delta: float) -> void:
 			if powerup_manager and powerup_manager.is_stomp_active():
 				kill()
 			else:
+				player_hit_by_enemy.emit()
 				player.die()
 		elif collider is Projectile:
 			kill()

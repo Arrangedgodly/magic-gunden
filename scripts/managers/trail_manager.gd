@@ -75,6 +75,10 @@ func create_trail_segment() -> void:
 	trail.append(gem_instance)
 	pickup_count += 1
 
+func create_multiple_trail_segments(segment_count: int) -> void:
+	for i in range(segment_count):
+		create_trail_segment()
+
 func move_trail() -> void:
 	if trail.is_empty():
 		return

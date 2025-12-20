@@ -19,7 +19,7 @@ func _ready() -> void:
 		game_manager.level_changed.connect(_on_level_changed)
 
 func _process(_delta: float) -> void:
-	if regen_gem:
+	if regen_gem and not tutorial_mode:
 		spawn_gem()
 
 func reset_regen_gem() -> void:
@@ -28,6 +28,12 @@ func reset_regen_gem() -> void:
 
 func _on_level_changed(new_level: int) -> void:
 	level = new_level
+
+func force_spawn_gem() -> void:
+	var was_regen = regen_gem
+	regen_gem = true
+	spawn_gem()
+	regen_gem = was_regen
 
 func spawn_gem() -> void:
 	if not regen_gem:

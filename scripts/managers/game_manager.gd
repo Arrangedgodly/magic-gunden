@@ -23,6 +23,7 @@ var tutorial_mode_active: bool = false
 signal level_changed(new_level: int)
 signal game_ended
 signal ui_visible(visible: bool)
+signal tutorial_player_died
 
 func _ready() -> void:
 	pause_screen.main_menu_pressed.connect(_on_main_menu_pressed)
@@ -101,3 +102,6 @@ func _on_main_menu_pressed() -> void:
 
 func _on_restart_pressed() -> void:
 	AudioManager.stop(background_music)
+
+func handle_tutorial_death() -> void:
+	tutorial_player_died.emit()

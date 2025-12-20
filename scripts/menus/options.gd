@@ -5,7 +5,7 @@ extends Control
 @onready var music_value_label: Label = %MusicValueLabel
 @onready var sfx_value_label: Label = %SFXValueLabel
 @onready var reset_save_button: Button = %ResetSaveButton
-@onready var reset_tutorial_button: Button = %ResetTutorialButton
+@onready var replay_tutorial_button: Button = %ReplayTutorialButton
 @onready var reset_all_button: Button = %ResetAllButton
 @onready var confirmation_popup: Control = %"Confirmation Popup"
 @onready var controls_button: Button = %ControlsButton
@@ -28,7 +28,7 @@ func _ready() -> void:
 	setup_volume_controls()
 	
 	reset_save_button.pressed.connect(_on_reset_save_pressed)
-	reset_tutorial_button.pressed.connect(_on_reset_tutorial_pressed)
+	replay_tutorial_button.pressed.connect(_on_replay_tutorial_pressed)
 	reset_all_button.pressed.connect(_on_reset_all_pressed)
 	controls_button.pressed.connect(_on_controls_pressed)
 	back_button.pressed.connect(_on_back_pressed)
@@ -100,12 +100,12 @@ func _on_reset_save_pressed() -> void:
 	show_confirmation("Are you sure you want to reset your game save data?\nThis will delete your high scores and progress!", 
 		func(): reset_game_save())
 
-func _on_reset_tutorial_pressed() -> void:
-	show_confirmation("Are you sure you want to reset the tutorial?\nYou will see it again next time you play.", 
-		func(): reset_tutorial_save())
+func _on_replay_tutorial_pressed() -> void:
+	show_confirmation("Are you sure you want to replay the tutorial?\nThis will restart the game immediately.", 
+		func(): start_tutorial_replay())
 
 func _on_reset_all_pressed() -> void:
-	show_confirmation("Are you sure you want to reset ALL data?\nThis will delete everything including settings!", 
+	show_confirmation("Are you sure you want to reset to defaults?\nThis will delete everything including settings!", 
 		func(): reset_all_data())
 
 func show_confirmation(message: String, callback: Callable) -> void:
@@ -172,3 +172,15 @@ func _on_back_pressed() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		_on_back_pressed()
+
+func start_tutorial_replay() -> void:
+	var tutorial_path = "user://tutorial.tres"
+	var tutorial_save_data = TutorialSave.new()
+	tutorial_save_data.show_tutorial = true
+	tutorial_save_data.has_played = false 
+	ResourceSaver.save(tutorial_save_data, tutorial_path)
+	
+	get_tree().paused = false
+	
+	AudioManager.stop(options_music)
+	get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")

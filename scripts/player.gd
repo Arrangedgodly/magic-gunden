@@ -27,6 +27,8 @@ var finished_moving: bool = false
 var four_way_shot_active: bool = false
 var gameplay_area: Node2D
 var is_attacking: bool = false
+var start_position: Vector2
+var movement_tween: Tween
 
 const TILE_SIZE = 32
 const UP = Vector2(0, -1)
@@ -42,6 +44,8 @@ func _ready():
 	
 	position = position.snapped(Vector2.ONE * TILE_SIZE)
 	position += Vector2.ONE * 8
+	start_position = position
+	
 	powerup_active()
 
 func _input(_event: InputEvent) -> void:
@@ -76,8 +80,11 @@ func move(dir):
 	
 	trail_manager.update_move_history(global_position)
 	
-	var tween = create_tween()
-	tween.tween_property(self, "position", new_position, 1.0/animation_speed).set_trans(Tween.TRANS_SINE)
+	if movement_tween and movement_tween.is_valid():
+		movement_tween.kill()
+	
+	movement_tween = create_tween()
+	movement_tween.tween_property(self, "position", new_position, 1.0/animation_speed).set_trans(Tween.TRANS_SINE)
 	
 	trail_manager.move_trail()
 
@@ -139,6 +146,12 @@ func handle_aim_input() -> void:
 			aim_direction = DOWN if aim_vector.y > 0 else UP
 
 func die():
+	move_timer.stop()
+	
+	if game_manager.is_tutorial_mode:
+		game_manager.handle_tutorial_death()
+		return
+		
 	AudioManager.play_sound(death_sfx)
 	game_manager.end_game()
 	animation_tree.set("parameters/Death/BlendSpace2D/blend_position", last_direction)
@@ -193,3 +206,12 @@ func powerup_active():
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1), .5).set_trans(Tween.TRANS_SINE)
 	tween.tween_property(sprite, "modulate", Color(1, 0, 0), .5).set_trans(Tween.TRANS_SINE)
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1), .5).set_trans(Tween.TRANS_SINE)
+
+func reset_to_start() -> void:
+	if movement_tween and movement_tween.is_valid():
+		movement_tween.kill()
+		
+	position = start_position
+	
+	if move_timer.is_stopped():
+		move_timer.start()

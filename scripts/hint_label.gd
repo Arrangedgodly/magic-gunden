@@ -94,17 +94,20 @@ func zone_movement() -> void:
 	reset()
 	append_text("Zones swap positions when you capture gems, or if unused too long. Watch how they flash before timing out!")
 
-func enemy_gem() -> void:
+func attempt_capture_practice() -> void:
 	reset()
-	append_text("Pick up another gem. You'll use it to create an enemy.")
+	append_text("If you capture more than one gem at a time, every gem beyond the first gets a score multiplier!")
+	newline()
+	append_text("Try to position yourself over the glowing tiles and capture multiple gems at once.")
 
-func leave_capture() -> void:
+func explain_enemy_spawn() -> void:
 	reset()
-	append_text("Move away from the capture zones. We aren't going to capture this gem!")
-
-func create_enemy() -> void:
-	reset()
-	append_text("Press %s while NOT on capture points. Gems off tiles turn into Slimes!" % inputs.detach)
+	append_text("Notice how the gems you [color=red]missed[/color] turned into enemies!")
+	newline()
+	newline()
+	append_text("This is one of the core challenges you will face:")
+	newline()
+	append_text("You must carefully position yourself to capture all your gems, or face the consequences.")
 
 func enemy_movement() -> void:
 	reset()
@@ -142,6 +145,33 @@ func prompt_continue() -> void:
 func enemy_convert_blocked() -> void:
 	reset()
 	append_text("That's okay, let's try again.")
+
+func shot_missed() -> void:
+	reset()
+	append_text("You missed the target!")
+	newline()
+	newline()
+	append_text("Don't worry, we refilled your ammo.")
+	newline()
+	append_text("Take your time and aim carefully.")
+
+func off_map() -> void:
+	reset()
+	append_text("Careful!")
+	newline()
+	append_text("You went off the path.")
+	newline()
+	newline()
+	append_text("Let's get you back to safety.")
+
+func enemy_collision() -> void:
+	reset()
+	append_text("Ouch!")
+	newline()
+	append_text("You ran into a slime.")
+	newline()
+	newline()
+	append_text("Keep your distance!")
 
 func get_input_strings() -> Dictionary:
 	var controller_type = ControllerManager.get_controller_type_name()
