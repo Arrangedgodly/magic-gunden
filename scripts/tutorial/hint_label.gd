@@ -155,6 +155,15 @@ func shot_missed() -> void:
 	newline()
 	append_text("Take your time and aim carefully.")
 
+func trail_collision() -> void:
+	reset()
+	append_text("Too close!")
+	newline()
+	append_text("You hit your own trail.")
+	newline()
+	newline()
+	append_text("Don't cross your own path!")
+
 func off_map() -> void:
 	reset()
 	append_text("Careful!")

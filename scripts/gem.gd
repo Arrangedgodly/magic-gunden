@@ -14,7 +14,7 @@ var point_value: int
 var ammo_value: int
 
 signal captured(point_value: int, ammo_value: int)
-
+signal player_hit_trail
 
 func _ready() -> void:
 	add_to_group("gems")
@@ -33,6 +33,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	
 	if body is Player:
 		if collision_active:
+			player_hit_trail.emit()
 			player.die()
 	
 func negate_pickup():

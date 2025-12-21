@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://bes2y8yuoiojf"]
 
-[ext_resource type="Script" uid="uid://dtck24pdlebua" path="res://scripts/tutorial.gd" id="1_ph3nu"]
+[ext_resource type="Script" uid="uid://dtck24pdlebua" path="res://scripts/tutorial/tutorial.gd" id="1_ph3nu"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="2_4kmhl"]
 [ext_resource type="AudioStream" uid="uid://cxb1cs354ee14" path="res://assets/sounds/music/Bank Balance $13.27.wav" id="2_6yjpi"]
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="3_cq4me"]
 [ext_resource type="AudioStream" uid="uid://djb66ruw3tbwt" path="res://assets/sounds/sfx/Retro PickUp Coin 04.wav" id="3_gbqnl"]
-[ext_resource type="Script" uid="uid://chml87gd28pqb" path="res://scripts/hint_label.gd" id="4_4kmhl"]
+[ext_resource type="Script" uid="uid://chml87gd28pqb" path="res://scripts/tutorial/hint_label.gd" id="4_4kmhl"]
 [ext_resource type="AudioStream" uid="uid://d3facckunh1y0" path="res://assets/sounds/sfx/Spell_Casting_3.wav" id="4_gbqnl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ph3nu"]

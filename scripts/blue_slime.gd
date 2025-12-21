@@ -93,7 +93,14 @@ func calculate_move(intended_positions: Dictionary) -> Dictionary:
 		detection.force_raycast_update()
 		
 		if detection.is_colliding():
-			continue
+			var collider = detection.get_collider()
+
+			var is_capture_point = false
+			if collider.get_parent() and collider.get_parent().is_in_group("capture"):
+				is_capture_point = true
+
+			if not is_capture_point:
+				continue
 		
 		if is_trail_at_position(target_position):
 			continue

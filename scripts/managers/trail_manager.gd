@@ -89,6 +89,7 @@ func move_trail() -> void:
 			var local_position = game_manager.to_local(target_position)
 			var tween = game_manager.create_tween()
 			tween.tween_property(trail[i], "position", local_position, 1.0/ANIMATION_SPEED).set_trans(Tween.TRANS_SINE)
+			trail[i].set_meta("movement_tween", tween)
 
 func release_trail() -> void:
 	if trail.is_empty():
@@ -228,3 +229,22 @@ func clear_trail() -> void:
 
 func _on_level_changed(new_level: int) -> void:
 	level = new_level
+
+func reset_trail_visuals(new_position: Vector2) -> void:
+	move_history.clear()
+	
+	for i in range(pickup_count + 5):
+		move_history.append(new_position)
+	
+	var local_pos = game_manager.to_local(new_position)
+	for item in trail:
+		if is_instance_valid(item):
+			if item.has_meta("movement_tween"):
+				var t = item.get_meta("movement_tween") as Tween
+				if t and t.is_valid():
+					t.kill()
+			item.collision_active = false
+			item.position = local_pos
+	
+	await get_tree().create_timer(1.0).timeout
+	activate_trail_collisions()
