@@ -85,7 +85,7 @@ func construct_beam(length: float) -> void:
 
 func update_collision_shape(length: float) -> void:
 	var rect = RectangleShape2D.new()
-	rect.size = Vector2(length, TARGET_SIZE * 0.5) 
+	rect.size = Vector2(length, TARGET_SIZE * 1.25) 
 	collision_shape.shape = rect
 	collision_shape.position = Vector2(length / 2.0, 0)
 

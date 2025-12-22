@@ -1,10 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://cb56jyqau1a0p"]
+[gd_scene load_steps=9 format=3 uid="uid://cb56jyqau1a0p"]
 
 [ext_resource type="Texture2D" uid="uid://dp6ns6e5nqynt" path="res://assets/map/Space Background_blue.png" id="1_3g1jk"]
 [ext_resource type="Script" uid="uid://b6km8dn7en4ix" path="res://scripts/menus/pause_screen.gd" id="1_dd2rn"]
+[ext_resource type="Shader" uid="uid://clb5qaes170x3" path="res://shaders/rainbow_gradient.gdshader" id="2_5354r"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="2_kxnyn"]
 [ext_resource type="PackedScene" uid="uid://ci3e8foshsdo7" path="res://scenes/menus/confirmation_popup.tscn" id="4_21yeh"]
 [ext_resource type="Script" uid="uid://d4k3ok8w3g88g" path="res://scripts/ui/ui_button.gd" id="5_k26m1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ikf3j"]
+shader = ExtResource("2_5354r")
+shader_parameter/strength = 0.10000000475
+shader_parameter/speed = 0.750000035625
+shader_parameter/angle = 45.0000021375
 
 [sub_resource type="Theme" id="Theme_rqf3m"]
 default_font = ExtResource("2_kxnyn")
@@ -20,89 +27,90 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dd2rn")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ikf3j")
 position = Vector2(-300, -200)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_3g1jk")
 centered = false
 
-[node name="PAUSED" type="Label" parent="."]
+[node name="Menu" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -144.0
-offset_top = -60.0
-offset_right = 144.0
-offset_bottom = 18.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="PAUSED" type="Label" parent="Menu"]
+unique_name_in_owner = true
+layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("2_kxnyn")
-theme_override_font_sizes/font_size = 96
+theme_override_font_sizes/font_size = 128
 text = "PAUSED"
+horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -290.0
-offset_top = 50.0
-offset_right = 290.0
-offset_bottom = 84.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ButtonContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 2
+size_flags_horizontal = 4
 theme = SubResource("Theme_rqf3m")
 theme_override_constants/separation = 25
 
-[node name="Resume" type="Button" parent="HBoxContainer"]
+[node name="Resume" type="Button" parent="Menu/ButtonContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 64
 text = "Resume"
 script = ExtResource("5_k26m1")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Restart" type="Button" parent="HBoxContainer"]
+[node name="Restart" type="Button" parent="Menu/ButtonContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 64
 text = "Restart
 "
 script = ExtResource("5_k26m1")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Options" type="Button" parent="HBoxContainer"]
+[node name="Options" type="Button" parent="Menu/ButtonContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 64
 text = "OPTIONS"
 script = ExtResource("5_k26m1")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="MainMenu" type="Button" parent="HBoxContainer"]
+[node name="MainMenu" type="Button" parent="Menu/ButtonContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 64
 text = "Main Menu"
 script = ExtResource("5_k26m1")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
-[node name="Quit" type="Button" parent="HBoxContainer"]
+[node name="Quit" type="Button" parent="Menu/ButtonContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 64
 text = "Quit"
 script = ExtResource("5_k26m1")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="RestartWarning" parent="." instance=ExtResource("4_21yeh")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
 [node name="QuitWarning" parent="." instance=ExtResource("4_21yeh")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 

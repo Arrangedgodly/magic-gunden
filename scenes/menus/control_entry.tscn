@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwvbtiuhj7uu1"]
+
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_fm0lj"]
+[ext_resource type="Script" uid="uid://bmmvv808lpwfp" path="res://scripts/menus/control_entry.gd" id="1_g7w5k"]
+
+[sub_resource type="Theme" id="Theme_6r7dr"]
+default_font = ExtResource("1_fm0lj")
+default_font_size = 32
+
+[node name="ControlEntry" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+theme = SubResource("Theme_6r7dr")
+script = ExtResource("1_g7w5k")
+
+[node name="ActionLabel" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 10
+text = "Test Label"
+
+[node name="InputContainer" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RemapButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Remap"

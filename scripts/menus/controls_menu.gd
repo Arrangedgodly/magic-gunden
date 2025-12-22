@@ -1,9 +1,11 @@
 extends Control
 
-@onready var controls_list: VBoxContainer = %ControlsList
+@onready var controls_list: GridContainer = %ControlsList
 @onready var reset_controls_button: Button = %ResetControlsButton
 @onready var back_button: Button = %BackButton
 @onready var listening_label: Label = %ListeningLabel
+
+var control_entry_scene = preload("res://scenes/menus/control_entry.tscn")
 
 var settings_save: SettingsSave
 var currently_remapping: String = ""
@@ -57,6 +59,7 @@ func save_settings() -> void:
 	ResourceSaver.save(settings_save, "user://settings.tres")
 
 func populate_controls() -> void:
+	# Clear existing entries
 	for child in controls_list.get_children():
 		child.queue_free()
 	
@@ -64,45 +67,25 @@ func populate_controls() -> void:
 	var is_controller_mode = current_type != ControllerManager.ControllerType.KEYBOARD
 	
 	for action_data in remappable_actions:
-		create_control_entry(action_data["action"], action_data["display"], is_controller_mode)
+		var entry = control_entry_scene.instantiate()
+		controls_list.add_child(entry)
+		
+		entry.setup(action_data["action"], action_data["display"], is_controller_mode)
+		
+		entry.remap_requested.connect(_on_remap_requested.bind(is_controller_mode))
 
-func create_control_entry(action: String, display_name: String, is_controller_mode: bool) -> void:
-	var entry = HBoxContainer.new()
-	entry.custom_minimum_size.x = 750
-
-	var name_label = Label.new()
-	name_label.text = display_name
-	name_label.custom_minimum_size.x = 250
-	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	entry.add_child(name_label)
-
-	var input_display_container = HBoxContainer.new()
-	input_display_container.custom_minimum_size.x = 350
-	input_display_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	input_display_container.add_theme_constant_override("separation", 10)
-
-	var inputs_found = 0
+func _on_remap_requested(action: String, is_controller: bool) -> void:
+	if is_listening:
+		return
 	
-	if is_controller_mode:
-		inputs_found = populate_controller_inputs(input_display_container, action)
-	else:
-		inputs_found = populate_keyboard_inputs(input_display_container, action)
-
-	if inputs_found == 0:
-		var none_label = Label.new()
-		none_label.text = "Unbound"
-		none_label.modulate = Color(0.5, 0.5, 0.5)
-		input_display_container.add_child(none_label)
-
-	entry.add_child(input_display_container)
-
-	var change_button = Button.new()
-	change_button.text = "Remap"
-	change_button.custom_minimum_size.x = 100
-	change_button.pressed.connect(_on_remap_button_pressed.bind(action, is_controller_mode))
-	entry.add_child(change_button)
+	currently_remapping = action
+	remapping_is_controller = is_controller
+	is_listening = true
 	
-	controls_list.add_child(entry)
+	if listening_label:
+		var input_type = "button" if is_controller else "key"
+		listening_label.text = "Press %s for: %s" % [input_type, action]
+		listening_label.show()
 
 func populate_keyboard_inputs(container: Container, action: String) -> int:
 	var events = InputMap.action_get_events(action)

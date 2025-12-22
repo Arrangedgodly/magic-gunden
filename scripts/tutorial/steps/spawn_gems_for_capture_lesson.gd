@@ -12,7 +12,7 @@ func _execute_step() -> void:
 	
 	if capture_manager:
 		capture_manager.tutorial_pattern = true
-		var spawn_point = Vector2i(96, 96)
+		var spawn_point = _choose_random_spawn_point()
 		capture_manager.spawn_capture_points(spawn_point)
 	
 	await tutorial.get_tree().create_timer(0.5).timeout
@@ -22,3 +22,8 @@ func _execute_step() -> void:
 	
 	await tutorial.get_tree().create_timer(0.5).timeout
 	advance_to_next()
+
+func _choose_random_spawn_point() -> Vector2i:
+	var x = randi_range(1, 6) * 32
+	var y = randi_range(1, 6) * 32
+	return Vector2i(x, y)

@@ -1,16 +1,15 @@
 extends Control
 
 var game_paused : bool
-@onready var resume: Button = $HBoxContainer/Resume
-@onready var restart: Button = $HBoxContainer/Restart
-@onready var options: Button = $HBoxContainer/Options
-@onready var main_menu: Button = $HBoxContainer/MainMenu
-@onready var quit: Button = $HBoxContainer/Quit
-@onready var restart_warning: Control = $RestartWarning
-@onready var quit_warning: Control = $QuitWarning
-@onready var background: Sprite2D = $Sprite2D
-@onready var paused_label: Label = $PAUSED
-@onready var h_box: HBoxContainer = $HBoxContainer
+@onready var resume: Button = %Resume
+@onready var restart: Button = %Restart
+@onready var options: Button = %Options
+@onready var main_menu: Button = %MainMenu
+@onready var quit: Button = %Quit
+@onready var restart_warning: Control = %RestartWarning
+@onready var quit_warning: Control = %QuitWarning
+@onready var background: Sprite2D = %Sprite
+@onready var menu: VBoxContainer = %Menu
 @onready var dev_console: Control
 @onready var menu_layer: CanvasLayer = %MenuLayer
 
@@ -53,6 +52,7 @@ func _on_resume_pressed() -> void:
 	unpause_game()
 
 func _on_restart_pressed() -> void:
+	set_main_menu_focus(false)
 	restart_warning.visible = true
 	restart_warning.enable_focus()
 
@@ -62,7 +62,8 @@ func _on_restart_warning_confirmation(confirmation: bool) -> void:
 		unpause_game()
 		get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
 	else:
-		remove_child(restart_warning)
+		restart_warning.visible = false
+		set_main_menu_focus(true)
 		enable_focus()
 
 func _on_options_pressed() -> void:
@@ -71,8 +72,7 @@ func _on_options_pressed() -> void:
 	menu_layer.add_child(options_instance)
 	options_instance.options_closed.connect(_on_options_closed.bind(options_instance))
 	background.hide()
-	paused_label.hide()
-	h_box.hide()
+	menu.hide()
 
 func _on_main_menu_pressed() -> void:
 	main_menu_pressed.emit()
@@ -80,6 +80,7 @@ func _on_main_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
 
 func _on_quit_pressed() -> void:
+	set_main_menu_focus(false)
 	quit_warning.visible = true
 	quit_warning.enable_focus()
 	
@@ -87,7 +88,8 @@ func _on_quit_warning_confirmation(confirmation: bool) -> void:
 	if confirmation:
 		get_tree().quit()
 	else:
-		remove_child(quit_warning)
+		quit_warning.visible = false
+		set_main_menu_focus(true)
 		enable_focus()
 
 func unpause_game():
@@ -96,13 +98,13 @@ func unpause_game():
 	self.visible = false
 
 func enable_focus():
+	set_main_menu_focus(true)
 	resume.grab_focus()
 
 func _on_options_closed(options_instance: Control) -> void:
 	options_instance.queue_free()
 	background.show()
-	paused_label.show()
-	h_box.show()
+	menu.show()
 	enable_focus()
 
 func _on_dev_console_console_opened(is_open: bool) -> void:
@@ -110,3 +112,11 @@ func _on_dev_console_console_opened(is_open: bool) -> void:
 		process_mode = Node.PROCESS_MODE_DISABLED
 	else:
 		process_mode = Node.PROCESS_MODE_ALWAYS
+
+func set_main_menu_focus(enabled: bool):
+	var mode = Control.FOCUS_ALL if enabled else Control.FOCUS_NONE
+	resume.focus_mode = mode
+	restart.focus_mode = mode
+	options.focus_mode = mode
+	main_menu.focus_mode = mode
+	quit.focus_mode = mode

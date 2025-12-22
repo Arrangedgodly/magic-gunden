@@ -10,7 +10,7 @@ extends Control
 @onready var confirmation_popup: Control = %"Confirmation Popup"
 @onready var controls_button: Button = %ControlsButton
 @onready var back_button: Button = %BackButton
-@onready var v_box: VBoxContainer = $VBoxContainer
+@onready var v_box: VBoxContainer = $CanvasLayer/VBoxContainer
 
 @export var options_music: AudioStream
 @export var controls_music: AudioStream
@@ -109,6 +109,7 @@ func _on_reset_all_pressed() -> void:
 		func(): reset_all_data())
 
 func show_confirmation(message: String, callback: Callable) -> void:
+	set_options_focus(false)
 	if confirmation_popup:
 		confirmation_popup.set_warning_text(message)
 		confirmation_popup.show()
@@ -124,7 +125,10 @@ func _on_confirmation_received(confirmed: bool, callback: Callable) -> void:
 		callback.call()
 	
 	confirmation_popup.hide()
-	back_button.grab_focus()
+	set_options_focus(true)
+	
+	if is_inside_tree():
+		back_button.grab_focus()
 
 func reset_game_save() -> void:
 	var save_path = "user://save.tres"
@@ -184,3 +188,14 @@ func start_tutorial_replay() -> void:
 	
 	AudioManager.stop(options_music)
 	get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
+
+func set_options_focus(enabled: bool):
+	var mode = Control.FOCUS_ALL if enabled else Control.FOCUS_NONE
+	music_slider.focus_mode = mode
+	sfx_slider.focus_mode = mode
+	reset_save_button.focus_mode = mode
+	replay_tutorial_button.focus_mode = mode
+	reset_all_button.focus_mode = mode
+	controls_button.focus_mode = mode
+	back_button.focus_mode = mode
+	v_box.visible = enabled
