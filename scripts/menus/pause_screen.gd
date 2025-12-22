@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 var game_paused : bool
 @onready var resume: Button = $HBoxContainer/Resume
@@ -12,6 +12,7 @@ var game_paused : bool
 @onready var paused_label: Label = $PAUSED
 @onready var h_box: HBoxContainer = $HBoxContainer
 @onready var dev_console: Control
+@onready var menu_layer: CanvasLayer = %MenuLayer
 
 signal main_menu_pressed
 signal restart_pressed
@@ -67,7 +68,7 @@ func _on_restart_warning_confirmation(confirmation: bool) -> void:
 func _on_options_pressed() -> void:
 	var options_scene = load("res://scenes/menus/options.tscn")
 	var options_instance = options_scene.instantiate()
-	add_child(options_instance)
+	menu_layer.add_child(options_instance)
 	options_instance.options_closed.connect(_on_options_closed.bind(options_instance))
 	background.hide()
 	paused_label.hide()

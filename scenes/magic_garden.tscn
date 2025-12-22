@@ -438,21 +438,29 @@ unique_name_in_owner = true
 position = Vector2(-14, 26)
 zoom = Vector2(1.5, 1.5)
 
-[node name="HUD" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+layer = 2
 
-[node name="PauseScreen" parent="HUD" instance=ExtResource("22_1bpl5")]
+[node name="Tutorial" parent="MenuLayer" instance=ExtResource("35_a2mr6")]
 unique_name_in_owner = true
 visible = false
-scale = Vector2(0.75, 0.75)
+z_index = 300
+metadata/_edit_use_anchors_ = true
 
-[node name="EndGameScreen" parent="HUD" instance=ExtResource("25_5kf2c")]
+[node name="PauseScreen" parent="MenuLayer" instance=ExtResource("22_1bpl5")]
 unique_name_in_owner = true
-offset_left = -500.0
-offset_top = -250.0
-offset_right = -500.0
-offset_bottom = -250.0
-scale = Vector2(0.75, 0.75)
+visible = false
+
+[node name="EndGameScreen" parent="MenuLayer" instance=ExtResource("25_5kf2c")]
+unique_name_in_owner = true
+visible = false
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 3
+follow_viewport_enabled = true
 
 [node name="DevConsole" parent="HUD" instance=ExtResource("33_a4uvu")]
 visible = false
@@ -461,17 +469,6 @@ offset_top = -275.0
 offset_right = -500.0
 offset_bottom = -275.0
 scale = Vector2(0.75, 0.75)
-
-[node name="Tutorial" parent="HUD" instance=ExtResource("35_a2mr6")]
-unique_name_in_owner = true
-visible = false
-z_index = 300
-offset_left = -460.0
-offset_top = -275.0
-offset_right = -460.0
-offset_bottom = -275.0
-scale = Vector2(0.75, 0.75)
-metadata/_edit_use_anchors_ = true
 
 [node name="UI" parent="HUD" instance=ExtResource("29_ixuxk")]
 unique_name_in_owner = true
@@ -486,5 +483,5 @@ scale = Vector2(0.765, 0.765)
 metadata/_edit_use_anchors_ = true
 
 [connection signal="timeout" from="World/AnimatedBackground/BackgroundSwap" to="World/AnimatedBackground" method="_on_background_swap_timeout"]
-[connection signal="game_ended" from="Systems/GameManager" to="HUD/EndGameScreen" method="_on_game_manager_game_ended"]
-[connection signal="visibility_changed" from="HUD/PauseScreen" to="Systems/GameManager" method="_on_pause_screen_visibility_changed"]
+[connection signal="game_ended" from="Systems/GameManager" to="MenuLayer/EndGameScreen" method="_on_game_manager_game_ended"]
+[connection signal="visibility_changed" from="MenuLayer/PauseScreen" to="Systems/GameManager" method="_on_pause_screen_visibility_changed"]

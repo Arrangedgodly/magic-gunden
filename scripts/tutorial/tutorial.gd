@@ -156,6 +156,9 @@ func _execute_current_step() -> void:
 func _input(event: InputEvent) -> void:
 	if not tutorial_active: 
 		return
+		
+	if event.is_action_pressed("skip"):
+		_on_skip_pressed()
 
 	if waiting_for_continue:
 		return
@@ -163,9 +166,6 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("move-up") or event.is_action_pressed("move-down") or \
 	   event.is_action_pressed("move-left") or event.is_action_pressed("move-right"):
 		has_moved = true
-
-	if event.is_action_pressed("skip"):
-		_on_skip_pressed()
 
 func _process(_delta: float) -> void:
 	if waiting_for_continue:
@@ -211,6 +211,9 @@ func update_skip_button_text() -> void:
 		skip_button.text = "Skip Tutorial (T)"
 
 func finish_tutorial() -> void:
+	if get_tree().paused:
+		get_tree().paused = false
+		
 	cleanup_tutorial_spawns()
 	
 	tutorial_active = false

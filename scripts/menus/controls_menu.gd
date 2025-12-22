@@ -36,10 +36,10 @@ func _ready() -> void:
 	if listening_label:
 		listening_label.hide()
 	
-	populate_controls()
-	
 	ControllerManager.controller_type_changed.connect(_on_controller_type_changed)
 	ControllerManager.controller_connected.connect(_on_controller_connected)
+	
+	populate_controls()
 	
 	if reset_controls_button:
 		reset_controls_button.pressed.connect(_on_reset_controls_pressed)
@@ -60,121 +60,105 @@ func populate_controls() -> void:
 	for child in controls_list.get_children():
 		child.queue_free()
 	
+	var current_type = ControllerManager.get_controller_type()
+	var is_controller_mode = current_type != ControllerManager.ControllerType.KEYBOARD
+	
 	for action_data in remappable_actions:
-		create_control_entry(action_data["action"], action_data["display"])
+		create_control_entry(action_data["action"], action_data["display"], is_controller_mode)
 
-func create_control_entry(action: String, display_name: String) -> void:
+func create_control_entry(action: String, display_name: String, is_controller_mode: bool) -> void:
 	var entry = HBoxContainer.new()
 	entry.custom_minimum_size.x = 750
-	
+
 	var name_label = Label.new()
 	name_label.text = display_name
-	name_label.custom_minimum_size.x = 200
+	name_label.custom_minimum_size.x = 250
+	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	entry.add_child(name_label)
+
+	var input_display_container = HBoxContainer.new()
+	input_display_container.custom_minimum_size.x = 350
+	input_display_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	input_display_container.add_theme_constant_override("separation", 10)
+
+	var inputs_found = 0
 	
-	var keyboard_container = VBoxContainer.new()
-	keyboard_container.custom_minimum_size.x = 250
-	
-	var kb_label = Label.new()
-	kb_label.text = "Keyboard:"
-	kb_label.add_theme_font_size_override("font_size", 16)
-	keyboard_container.add_child(kb_label)
-	
-	var kb_display = HBoxContainer.new()
-	var kb_glyph = get_keyboard_glyph_for_action(action)
-	if kb_glyph:
-		var glyph_texture = TextureRect.new()
-		glyph_texture.texture = kb_glyph
-		glyph_texture.custom_minimum_size = Vector2(32, 32)
-		glyph_texture.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
-		glyph_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		kb_display.add_child(glyph_texture)
+	if is_controller_mode:
+		inputs_found = populate_controller_inputs(input_display_container, action)
 	else:
-		var kb_text = Label.new()
-		kb_text.text = get_keyboard_name(action)
-		kb_display.add_child(kb_text)
-	
-	var kb_button = Button.new()
-	kb_button.text = "Change"
-	kb_button.custom_minimum_size.x = 80
-	kb_button.pressed.connect(_on_remap_button_pressed.bind(action, false))
-	kb_display.add_child(kb_button)
-	
-	keyboard_container.add_child(kb_display)
-	entry.add_child(keyboard_container)
-	
-	# Controller section
-	var controller_container = VBoxContainer.new()
-	controller_container.custom_minimum_size.x = 250
-	
-	var ctrl_label = Label.new()
-	ctrl_label.text = "Controller:"
-	ctrl_label.add_theme_font_size_override("font_size", 16)
-	controller_container.add_child(ctrl_label)
-	
-	var ctrl_display = HBoxContainer.new()
-	var ctrl_glyph = get_controller_glyph_for_action(action)
-	if ctrl_glyph:
-		var glyph_texture = TextureRect.new()
-		glyph_texture.texture = ctrl_glyph
-		glyph_texture.custom_minimum_size = Vector2(32, 32)
-		glyph_texture.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
-		glyph_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		ctrl_display.add_child(glyph_texture)
-	else:
-		var ctrl_text = Label.new()
-		ctrl_text.text = get_controller_name(action)
-		ctrl_display.add_child(ctrl_text)
-	
-	var ctrl_button = Button.new()
-	ctrl_button.text = "Change"
-	ctrl_button.custom_minimum_size.x = 80
-	ctrl_button.pressed.connect(_on_remap_button_pressed.bind(action, true))
-	ctrl_display.add_child(ctrl_button)
-	
-	controller_container.add_child(ctrl_display)
-	entry.add_child(controller_container)
+		inputs_found = populate_keyboard_inputs(input_display_container, action)
+
+	if inputs_found == 0:
+		var none_label = Label.new()
+		none_label.text = "Unbound"
+		none_label.modulate = Color(0.5, 0.5, 0.5)
+		input_display_container.add_child(none_label)
+
+	entry.add_child(input_display_container)
+
+	var change_button = Button.new()
+	change_button.text = "Remap"
+	change_button.custom_minimum_size.x = 100
+	change_button.pressed.connect(_on_remap_button_pressed.bind(action, is_controller_mode))
+	entry.add_child(change_button)
 	
 	controls_list.add_child(entry)
 
-func get_keyboard_glyph_for_action(action: String) -> Texture2D:
+func populate_keyboard_inputs(container: Container, action: String) -> int:
 	var events = InputMap.action_get_events(action)
+	var count = 0
+	
 	for event in events:
 		if event is InputEventKey:
-			return ControlDisplayData.get_keyboard_glyph(event.physical_keycode)
-	return null
+			add_input_icon(container, event)
+			count += 1
+	return count
 
-func get_controller_glyph_for_action(action: String) -> Texture2D:
+func populate_controller_inputs(container: Container, action: String) -> int:
 	var events = InputMap.action_get_events(action)
+	var count = 0
+	
 	for event in events:
-		if event is InputEventJoypadButton:
-			return ControlDisplayData.get_controller_button_glyph(event.button_index)
-		elif event is InputEventJoypadMotion:
-			var axis_name = get_axis_name(event)
-			if axis_name:
-				return ControlDisplayData.get_controller_axis_glyph(axis_name)
-	return null
+		if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+			add_input_icon(container, event)
+			count += 1
+	return count
 
-func get_keyboard_name(action: String) -> String:
-	var events = InputMap.action_get_events(action)
-	for event in events:
-		if event is InputEventKey:
-			return OS.get_keycode_string(event.physical_keycode)
-	return "Unbound"
+func add_input_icon(container: Container, event: InputEvent) -> void:
+	var glyph: Texture2D = null
+	var text_fallback: String = ""
+	
+	if event is InputEventKey:
+		glyph = ControlDisplayData.get_keyboard_glyph(event.physical_keycode)
+		if not glyph:
+			text_fallback = OS.get_keycode_string(event.physical_keycode)
+			
+	elif event is InputEventJoypadButton:
+		glyph = ControlDisplayData.get_controller_button_glyph(event.button_index)
+		if not glyph:
+			text_fallback = "Btn " + str(event.button_index)
+			
+	elif event is InputEventJoypadMotion:
+		var axis_name = get_axis_name(event)
+		if axis_name:
+			glyph = ControlDisplayData.get_controller_axis_glyph(axis_name)
+		if not glyph:
+			text_fallback = "Axis " + str(event.axis)
 
-func get_controller_name(action: String) -> String:
-	var events = InputMap.action_get_events(action)
-	for event in events:
-		if event is InputEventJoypadButton:
-			return "Button " + str(event.button_index)
-		elif event is InputEventJoypadMotion:
-			var axis_name = "Axis " + str(event.axis)
-			if event.axis_value > 0:
-				axis_name += " +"
-			else:
-				axis_name += " -"
-			return axis_name
-	return "Unbound"
+	if glyph:
+		var texture_rect = TextureRect.new()
+		texture_rect.texture = glyph
+		texture_rect.custom_minimum_size = Vector2(40, 40)
+		texture_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		container.add_child(texture_rect)
+	else:
+		var panel = PanelContainer.new()
+		var lbl = Label.new()
+		lbl.text = text_fallback
+		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		panel.add_child(lbl)
+		container.add_child(panel)
 
 func get_axis_name(event: InputEventJoypadMotion) -> String:
 	match event.axis:
@@ -198,9 +182,9 @@ func _on_remap_button_pressed(action: String, is_controller: bool) -> void:
 	
 	if listening_label:
 		if is_controller:
-			listening_label.text = "Press any button/axis for: " + action
+			listening_label.text = "Press button for: " + action
 		else:
-			listening_label.text = "Press any key for: " + action
+			listening_label.text = "Press key for: " + action
 		listening_label.show()
 
 func _input(event: InputEvent) -> void:
@@ -228,10 +212,9 @@ func _input(event: InputEvent) -> void:
 		
 		remap_controller_button_action(currently_remapping, event.button_index)
 		finish_remapping()
-		
-	# Handle controller axis remapping
+
 	elif remapping_is_controller and event is InputEventJoypadMotion:
-		if abs(event.axis_value) > 0.5:  # Threshold to avoid drift
+		if abs(event.axis_value) > 0.5:
 			var conflict = check_controller_axis_conflict(event.axis, event.axis_value, currently_remapping)
 			if conflict != "":
 				cancel_remapping()

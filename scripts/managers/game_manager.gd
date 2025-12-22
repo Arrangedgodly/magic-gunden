@@ -2,7 +2,7 @@ extends Node2D
 class_name GameManager
 
 @onready var player: CharacterBody2D = %Player
-@onready var pause_screen: Node2D = %PauseScreen
+@onready var pause_screen: Control = %PauseScreen
 @onready var tutorial: Tutorial = %Tutorial
 @onready var pickup_manager: PickupManager = %PickupManager
 @onready var enemy_manager: EnemyManager = %EnemyManager
