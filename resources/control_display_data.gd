@@ -2,43 +2,43 @@ class_name ControlDisplayData
 extends Resource
 
 const KEYBOARD_GLYPHS = {
-	KEY_A: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_a.png",
-	KEY_B: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_b.png",
-	KEY_C: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_c.png",
-	KEY_D: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_d.png",
-	KEY_E: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_e.png",
-	KEY_F: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f.png",
-	KEY_G: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_g.png",
-	KEY_H: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_h.png",
-	KEY_I: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_i.png",
-	KEY_J: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_j.png",
-	KEY_K: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_k.png",
-	KEY_L: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_l.png",
-	KEY_M: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_m.png",
-	KEY_N: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_n.png",
-	KEY_O: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_o.png",
-	KEY_P: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_p.png",
-	KEY_Q: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_q.png",
-	KEY_R: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_r.png",
-	KEY_S: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_s.png",
-	KEY_T: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_t.png",
-	KEY_U: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_u.png",
-	KEY_V: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_v.png",
-	KEY_W: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_w.png",
-	KEY_X: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_x.png",
-	KEY_Y: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_y.png",
-	KEY_Z: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_z.png",
-	KEY_0: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_0.png",
-	KEY_1: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_1.png",
-	KEY_2: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_2.png",
-	KEY_3: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_3.png",
-	KEY_4: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_4.png",
-	KEY_5: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_5.png",
-	KEY_6: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_6.png",
-	KEY_7: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_7.png",
-	KEY_8: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_8.png",
-	KEY_9: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_9.png",
-	KEY_F1: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f1.png",
+	KEY_A: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_a.png"),
+	KEY_B: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_b.png"),
+	KEY_C: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_c.png"),
+	KEY_D: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_d.png"),
+	KEY_E: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_e.png"),
+	KEY_F: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f.png"),
+	KEY_G: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_g.png"),
+	KEY_H: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_h.png"),
+	KEY_I: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_i.png"),
+	KEY_J: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_j.png"),
+	KEY_K: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_k.png"),
+	KEY_L: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_l.png"),
+	KEY_M: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_m.png"),
+	KEY_N: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_n.png"),
+	KEY_O: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_o.png"),
+	KEY_P: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_p.png"),
+	KEY_Q: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_q.png"),
+	KEY_R: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_r.png"),
+	KEY_S: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_s.png"),
+	KEY_T: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_t.png"),
+	KEY_U: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_u.png"),
+	KEY_V: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_v.png"),
+	KEY_W: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_w.png"),
+	KEY_X: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_x.png"),
+	KEY_Y: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_y.png"),
+	KEY_Z: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_z.png"),
+	KEY_0: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_0.png"),
+	KEY_1: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_1.png"),
+	KEY_2: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_2.png"),
+	KEY_3: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_3.png"),
+	KEY_4: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_4.png"),
+	KEY_5: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_5.png"),
+	KEY_6: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_6.png"),
+	KEY_7: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_7.png"),
+	KEY_8: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_8.png"),
+	KEY_9: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_9.png"),
+	KEY_F1: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f1.png"),
 	KEY_F2: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f2.png",
 	KEY_F3: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f3.png",
 	KEY_F4: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f4.png",
@@ -170,8 +170,7 @@ static func get_controller_button_glyph(button: int, controller_type = null) -> 
 	
 	if path and FileAccess.file_exists(path):
 		return load(path)
-	
-	# Fallback to Xbox if not found (standard practice)
+
 	if controller_type != ControllerManager.ControllerType.XBOX:
 		path = XBOX_GLYPHS.get(button, "")
 		if path and FileAccess.file_exists(path):
@@ -188,8 +187,7 @@ static func get_controller_axis_glyph(axis_name: String, controller_type = null)
 	
 	if path and FileAccess.file_exists(path):
 		return load(path)
-		
-	# Fallback to Xbox
+
 	if controller_type != ControllerManager.ControllerType.XBOX:
 		path = XBOX_AXIS_GLYPHS.get(axis_name, "")
 		if path and FileAccess.file_exists(path):
