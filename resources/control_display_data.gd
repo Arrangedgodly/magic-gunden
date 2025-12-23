@@ -39,142 +39,137 @@ const KEYBOARD_GLYPHS = {
 	KEY_8: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_8.png"),
 	KEY_9: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_9.png"),
 	KEY_F1: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f1.png"),
-	KEY_F2: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f2.png",
-	KEY_F3: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f3.png",
-	KEY_F4: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f4.png",
-	KEY_F5: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f5.png",
-	KEY_F6: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f6.png",
-	KEY_F7: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f7.png",
-	KEY_F8: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f8.png",
-	KEY_F9: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f9.png",
-	KEY_F10: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f10.png",
-	KEY_F11: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f11.png",
-	KEY_F12: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f12.png",
-	KEY_UP: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_up.png",
-	KEY_DOWN: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_down.png",
-	KEY_LEFT: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_left.png",
-	KEY_RIGHT: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_right.png",
-	KEY_SPACE: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_space.png",
-	KEY_ENTER: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_enter.png",
-	KEY_ESCAPE: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_escape.png",
-	KEY_BACKSPACE: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_backspace.png",
-	KEY_TAB: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_tab.png",
-	KEY_SHIFT: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_shift.png",
-	KEY_CTRL: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_ctrl.png",
-	KEY_ALT: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_alt.png",
-	KEY_QUOTELEFT: "res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_tilde.png",
+	KEY_F2: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f2.png"),
+	KEY_F3: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f3.png"),
+	KEY_F4: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f4.png"),
+	KEY_F5: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f5.png"),
+	KEY_F6: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f6.png"),
+	KEY_F7: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f7.png"),
+	KEY_F8: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f8.png"),
+	KEY_F9: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f9.png"),
+	KEY_F10: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f10.png"),
+	KEY_F11: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f11.png"),
+	KEY_F12: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f12.png"),
+	KEY_UP: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_up.png"),
+	KEY_DOWN: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_down.png"),
+	KEY_LEFT: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_left.png"),
+	KEY_RIGHT: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_arrow_right.png"),
+	KEY_SPACE: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_space.png"),
+	KEY_ENTER: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_enter.png"),
+	KEY_ESCAPE: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_escape.png"),
+	KEY_BACKSPACE: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_backspace.png"),
+	KEY_TAB: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_tab.png"),
+	KEY_SHIFT: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_shift.png"),
+	KEY_CTRL: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_ctrl.png"),
+	KEY_ALT: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_alt.png"),
+	KEY_QUOTELEFT: preload("res://assets/UI/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_tilde.png"),
 }
 
 const XBOX_GLYPHS = {
-	JOY_BUTTON_A: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_a.png",
-	JOY_BUTTON_B: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_b.png",
-	JOY_BUTTON_X: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_x.png",
-	JOY_BUTTON_Y: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_y.png",
-	JOY_BUTTON_LEFT_SHOULDER: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_lb.png",
-	JOY_BUTTON_RIGHT_SHOULDER: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_rb.png",
-	JOY_BUTTON_START: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_menu.png",
-	JOY_BUTTON_BACK: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_view.png",
-	JOY_BUTTON_DPAD_UP: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_dpad_up.png",
-	JOY_BUTTON_DPAD_DOWN: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_dpad_down.png",
-	JOY_BUTTON_DPAD_LEFT: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_dpad_left.png",
-	JOY_BUTTON_DPAD_RIGHT: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_dpad_right.png",
-	JOY_BUTTON_LEFT_STICK: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_l_click.png",
-	JOY_BUTTON_RIGHT_STICK: "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_r_click.png",
+	JOY_BUTTON_A: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_color_a.png"),
+	JOY_BUTTON_B: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_color_b.png"),
+	JOY_BUTTON_X: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_color_x.png"),
+	JOY_BUTTON_Y: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_color_y.png"),
+	JOY_BUTTON_LEFT_SHOULDER: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_lb.png"),
+	JOY_BUTTON_RIGHT_SHOULDER: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_rb.png"),
+	JOY_BUTTON_START: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_menu.png"),
+	JOY_BUTTON_BACK: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_button_view.png"),
+	JOY_BUTTON_DPAD_UP: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_dpad_up.png"),
+	JOY_BUTTON_DPAD_DOWN: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_dpad_down.png"),
+	JOY_BUTTON_DPAD_LEFT: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_dpad_left.png"),
+	JOY_BUTTON_DPAD_RIGHT: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_dpad_right.png"),
+	JOY_BUTTON_LEFT_STICK: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_ls.png"),
+	JOY_BUTTON_RIGHT_STICK: preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_rs.png"),
 }
 
 const PLAYSTATION_GLYPHS = {
-	JOY_BUTTON_A: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_cross.png",
-	JOY_BUTTON_B: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_circle.png",
-	JOY_BUTTON_X: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_square.png",
-	JOY_BUTTON_Y: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_triangle.png",
-	JOY_BUTTON_LEFT_SHOULDER: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_trigger_l1.png",
-	JOY_BUTTON_RIGHT_SHOULDER: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_trigger_r1.png",
-	JOY_BUTTON_START: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_start.png",
-	JOY_BUTTON_BACK: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_select.png",
-	JOY_BUTTON_DPAD_UP: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_dpad_up.png",
-	JOY_BUTTON_DPAD_DOWN: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_dpad_down.png",
-	JOY_BUTTON_DPAD_LEFT: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_dpad_left.png",
-	JOY_BUTTON_DPAD_RIGHT: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_dpad_right.png",
-	JOY_BUTTON_LEFT_STICK: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_click.png",
-	JOY_BUTTON_RIGHT_STICK: "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_click.png",
+	JOY_BUTTON_A: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_color_cross.png"),
+	JOY_BUTTON_B: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_color_circle.png"),
+	JOY_BUTTON_X: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_color_square.png"),
+	JOY_BUTTON_Y: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_button_color_triangle.png"),
+	JOY_BUTTON_LEFT_SHOULDER: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_trigger_l1.png"),
+	JOY_BUTTON_RIGHT_SHOULDER: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_trigger_r1.png"),
+	JOY_BUTTON_START: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation3_button_start.png"),
+	JOY_BUTTON_BACK: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation3_button_select.png"),
+	JOY_BUTTON_DPAD_UP: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_dpad_up.png"),
+	JOY_BUTTON_DPAD_DOWN: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_dpad_down.png"),
+	JOY_BUTTON_DPAD_LEFT: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_dpad_left.png"),
+	JOY_BUTTON_DPAD_RIGHT: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_dpad_right.png"),
+	JOY_BUTTON_LEFT_STICK: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_press.png"),
+	JOY_BUTTON_RIGHT_STICK: preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_press.png"),
 }
 
 const STEAM_DECK_GLYPHS = {
-	JOY_BUTTON_A: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_a.png",
-	JOY_BUTTON_B: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_b.png",
-	JOY_BUTTON_X: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_x.png",
-	JOY_BUTTON_Y: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_y.png",
-	JOY_BUTTON_LEFT_SHOULDER: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_l1.png",
-	JOY_BUTTON_RIGHT_SHOULDER: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_r1.png",
-	JOY_BUTTON_START: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_menu.png",
-	JOY_BUTTON_BACK: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_view.png",
-	JOY_BUTTON_DPAD_UP: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_dpad_up.png",
-	JOY_BUTTON_DPAD_DOWN: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_dpad_down.png",
-	JOY_BUTTON_DPAD_LEFT: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_dpad_left.png",
-	JOY_BUTTON_DPAD_RIGHT: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_dpad_right.png",
-	JOY_BUTTON_LEFT_STICK: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_click.png",
-	JOY_BUTTON_RIGHT_STICK: "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_click.png",
+	JOY_BUTTON_A: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_a.png"),
+	JOY_BUTTON_B: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_b.png"),
+	JOY_BUTTON_X: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_x.png"),
+	JOY_BUTTON_Y: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_y.png"),
+	JOY_BUTTON_LEFT_SHOULDER: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_l1.png"),
+	JOY_BUTTON_RIGHT_SHOULDER: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_r1.png"),
+	JOY_BUTTON_START: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_options.png"),
+	JOY_BUTTON_BACK: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_view.png"),
+	JOY_BUTTON_DPAD_UP: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_dpad_up.png"),
+	JOY_BUTTON_DPAD_DOWN: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_dpad_down.png"),
+	JOY_BUTTON_DPAD_LEFT: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_dpad_left.png"),
+	JOY_BUTTON_DPAD_RIGHT: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_dpad_right.png"),
+	JOY_BUTTON_LEFT_STICK: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_press.png"),
+	JOY_BUTTON_RIGHT_STICK: preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_press.png"),
 }
 
 const XBOX_AXIS_GLYPHS = {
-	"left_stick_up": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_l_up.png",
-	"left_stick_down": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_l_down.png",
-	"left_stick_left": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_l_left.png",
-	"left_stick_right": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_l_right.png",
-	"right_stick_up": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_r_up.png",
-	"right_stick_down": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_r_down.png",
-	"right_stick_left": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_r_left.png",
-	"right_stick_right": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_r_right.png",
-	"trigger_left": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_lt.png",
-	"trigger_right": "res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_rt.png",
+	"left_stick_up": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_l_up.png"),
+	"left_stick_down": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_l_down.png"),
+	"left_stick_left": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_l_left.png"),
+	"left_stick_right": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_l_right.png"),
+	"right_stick_up": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_r_up.png"),
+	"right_stick_down": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_r_down.png"),
+	"right_stick_left": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_r_left.png"),
+	"right_stick_right": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_stick_r_right.png"),
+	"trigger_left": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_lt.png"),
+	"trigger_right": preload("res://assets/UI/kenney_input-prompts/Xbox Series/Double/xbox_rt.png"),
 }
 
 const PLAYSTATION_AXIS_GLYPHS = {
-	"left_stick_up": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_up.png",
-	"left_stick_down": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_down.png",
-	"left_stick_left": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_left.png",
-	"left_stick_right": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_right.png",
-	"right_stick_up": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_up.png",
-	"right_stick_down": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_down.png",
-	"right_stick_left": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_left.png",
-	"right_stick_right": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_right.png",
-	"trigger_left": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_trigger_l2.png",
-	"trigger_right": "res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_trigger_r2.png",
+	"left_stick_up": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_up.png"),
+	"left_stick_down": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_down.png"),
+	"left_stick_left": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_left.png"),
+	"left_stick_right": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_l_right.png"),
+	"right_stick_up": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_up.png"),
+	"right_stick_down": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_down.png"),
+	"right_stick_left": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_left.png"),
+	"right_stick_right": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_stick_r_right.png"),
+	"trigger_left": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_trigger_l2.png"),
+	"trigger_right": preload("res://assets/UI/kenney_input-prompts/PlayStation Series/Double/playstation_trigger_r2.png"),
 }
 
 const STEAM_DECK_AXIS_GLYPHS = {
-	"left_stick_up": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_up.png",
-	"left_stick_down": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_down.png",
-	"left_stick_left": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_left.png",
-	"left_stick_right": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_right.png",
-	"right_stick_up": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_up.png",
-	"right_stick_down": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_down.png",
-	"right_stick_left": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_left.png",
-	"right_stick_right": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_right.png",
-	"trigger_left": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_trigger_l2.png",
-	"trigger_right": "res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_trigger_r2.png",
+	"left_stick_up": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_up.png"),
+	"left_stick_down": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_down.png"),
+	"left_stick_left": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_left.png"),
+	"left_stick_right": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_l_right.png"),
+	"right_stick_up": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_up.png"),
+	"right_stick_down": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_down.png"),
+	"right_stick_left": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_left.png"),
+	"right_stick_right": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_stick_r_right.png"),
+	"trigger_left": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_l2.png"),
+	"trigger_right": preload("res://assets/UI/kenney_input-prompts/Steam Deck/Double/steamdeck_button_r2.png"),
 }
 
 static func get_keyboard_glyph(keycode: int) -> Texture2D:
-	var path = KEYBOARD_GLYPHS.get(keycode, "")
-	if path and FileAccess.file_exists(path):
-		return load(path)
-	return null
+	return KEYBOARD_GLYPHS.get(keycode, null)
 
 static func get_controller_button_glyph(button: int, controller_type = null) -> Texture2D:
 	if controller_type == null:
 		controller_type = ControllerManager.get_controller_type()
 	
 	var glyph_set = _get_button_glyph_set(controller_type)
-	var path = glyph_set.get(button, "")
+	var texture = glyph_set.get(button, null)
 	
-	if path and FileAccess.file_exists(path):
-		return load(path)
+	if texture:
+		return texture
 
 	if controller_type != ControllerManager.ControllerType.XBOX:
-		path = XBOX_GLYPHS.get(button, "")
-		if path and FileAccess.file_exists(path):
-			return load(path)
+		return XBOX_GLYPHS.get(button, null)
 	
 	return null
 
@@ -183,15 +178,13 @@ static func get_controller_axis_glyph(axis_name: String, controller_type = null)
 		controller_type = ControllerManager.get_controller_type()
 		
 	var glyph_set = _get_axis_glyph_set(controller_type)
-	var path = glyph_set.get(axis_name, "")
+	var texture = glyph_set.get(axis_name, null)
 	
-	if path and FileAccess.file_exists(path):
-		return load(path)
+	if texture:
+		return texture
 
 	if controller_type != ControllerManager.ControllerType.XBOX:
-		path = XBOX_AXIS_GLYPHS.get(axis_name, "")
-		if path and FileAccess.file_exists(path):
-			return load(path)
+		return XBOX_AXIS_GLYPHS.get(axis_name, null)
 	
 	return null
 

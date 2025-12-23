@@ -71,7 +71,7 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 30
 theme_override_fonts/font = ExtResource("1_c2u1v")
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 80
 text = "OPTIONS"
 horizontal_alignment = 1
 
@@ -97,9 +97,9 @@ alignment = 1
 
 [node name="MusicLabel" type="Label" parent="CanvasLayer/VBoxContainer/AudioSection/MusicControl"]
 layout_mode = 2
-theme_override_constants/outline_size = 10
+theme_override_constants/outline_size = 15
 theme_override_fonts/font = ExtResource("1_c2u1v")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 48
 text = "Music Volume"
 
 [node name="MusicSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/AudioSection/MusicControl"]
@@ -115,6 +115,8 @@ value = 80.0
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_e6vpq")
+theme_override_font_sizes/font_size = 48
 text = "80%"
 
 [node name="SFXControl" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/AudioSection"]
@@ -123,9 +125,9 @@ alignment = 1
 
 [node name="SFXLabel" type="Label" parent="CanvasLayer/VBoxContainer/AudioSection/SFXControl"]
 layout_mode = 2
-theme_override_constants/outline_size = 10
+theme_override_constants/outline_size = 15
 theme_override_fonts/font = ExtResource("1_c2u1v")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 48
 text = "SFX Volume"
 
 [node name="SFXSlider" type="HSlider" parent="CanvasLayer/VBoxContainer/AudioSection/SFXControl"]
@@ -141,6 +143,8 @@ value = 80.0
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_e6vpq")
+theme_override_font_sizes/font_size = 48
 text = "80%"
 
 [node name="HSeparator2" type="HSeparator" parent="CanvasLayer/VBoxContainer"]
@@ -154,26 +158,29 @@ alignment = 1
 
 [node name="ResetSaveButton" type="Button" parent="CanvasLayer/VBoxContainer/SaveSection"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 60)
 layout_mode = 2
 tooltip_text = "Resets high scores and progress"
-theme_override_fonts/font = ExtResource("1_c2u1v")
-theme_override_font_sizes/font_size = 32
+theme_override_fonts/font = ExtResource("1_e6vpq")
+theme_override_font_sizes/font_size = 48
 text = "Reset Save"
 
 [node name="ReplayTutorialButton" type="Button" parent="CanvasLayer/VBoxContainer/SaveSection"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 60)
 layout_mode = 2
 tooltip_text = "Show tutorial again on next play"
-theme_override_fonts/font = ExtResource("1_c2u1v")
-theme_override_font_sizes/font_size = 32
+theme_override_fonts/font = ExtResource("1_e6vpq")
+theme_override_font_sizes/font_size = 48
 text = "Replay Tutorial"
 
 [node name="ResetAllButton" type="Button" parent="CanvasLayer/VBoxContainer/SaveSection"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 60)
 layout_mode = 2
 tooltip_text = "Show tutorial again on next play"
-theme_override_fonts/font = ExtResource("1_c2u1v")
-theme_override_font_sizes/font_size = 32
+theme_override_fonts/font = ExtResource("1_e6vpq")
+theme_override_font_sizes/font_size = 48
 text = "Reset to Defaults"
 
 [node name="HSeparator3" type="HSeparator" parent="CanvasLayer/VBoxContainer"]
@@ -195,9 +202,10 @@ horizontal_alignment = 1
 
 [node name="ControlsButton" type="Button" parent="CanvasLayer/VBoxContainer/ControlsSection"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 60)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_c2u1v")
-theme_override_font_sizes/font_size = 32
+theme_override_fonts/font = ExtResource("1_e6vpq")
+theme_override_font_sizes/font_size = 48
 text = "Edit Controls"
 
 [node name="HSeparator4" type="HSeparator" parent="CanvasLayer/VBoxContainer"]
@@ -208,8 +216,8 @@ size_flags_horizontal = 4
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_c2u1v")
-theme_override_font_sizes/font_size = 48
+theme_override_fonts/font = ExtResource("1_e6vpq")
+theme_override_font_sizes/font_size = 64
 text = "Go Back"
 
 [node name="Camera2D" type="Camera2D" parent="CanvasLayer"]

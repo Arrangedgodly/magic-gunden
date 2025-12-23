@@ -51,8 +51,9 @@ theme_override_constants/separation = 10
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 30
 theme_override_fonts/font = ExtResource("2_d0u3u")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 80
 text = "CONTROLS"
 horizontal_alignment = 1
 
@@ -87,14 +88,14 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_d0u3u")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
 text = "Reset to Defaults"
 
 [node name="BackButton" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_d0u3u")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
 text = "Go Back"
 
 [node name="CRT" parent="CanvasLayer" instance=ExtResource("4_n0kuk")]

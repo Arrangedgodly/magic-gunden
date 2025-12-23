@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends GridContainer
 class_name ControlEntry
 
 signal remap_requested(action: String)
@@ -91,7 +91,7 @@ func _add_input_icon(event: InputEvent) -> void:
 
 		var texture_rect = TextureRect.new()
 		texture_rect.texture = glyph
-		texture_rect.custom_minimum_size = Vector2(40, 40)
+		texture_rect.custom_minimum_size = Vector2(64, 64)
 		texture_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 		texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 

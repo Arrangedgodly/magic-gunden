@@ -7,24 +7,29 @@
 default_font = ExtResource("1_fm0lj")
 default_font_size = 32
 
-[node name="ControlEntry" type="HBoxContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ControlEntry" type="GridContainer"]
+offset_right = 258.0
+offset_bottom = 68.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = SubResource("Theme_6r7dr")
+columns = 3
 script = ExtResource("1_g7w5k")
 
 [node name="ActionLabel" type="Label" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_constants/outline_size = 10
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 48
 text = "Test Label"
+horizontal_alignment = 1
 
 [node name="InputContainer" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+alignment = 2
 
 [node name="RemapButton" type="Button" parent="."]
 unique_name_in_owner = true
