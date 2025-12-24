@@ -42,11 +42,15 @@ var current_death_reason: String = "enemy"
 signal tutorial_finished
 
 func _ready() -> void:
+	DebugLogger.log_info("=== TUTORIAL READY START ===")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	self.z_index = 300
 	
 	controller_type = ControllerManager.get_controller_type_name()
+	DebugLogger.log_info("Controller type: " + controller_type)
+
+	DebugLogger.log_info("Getting node references...")
 
 	game_manager = get_node_or_null("/root/MagicGarden/Systems/GameManager")
 	player = get_node_or_null("/root/MagicGarden/World/GameplayArea/Player")
@@ -56,41 +60,74 @@ func _ready() -> void:
 	pickup_manager = get_node_or_null("/root/MagicGarden/Systems/PickupManager")
 	powerup_manager = get_node_or_null("/root/MagicGarden/Systems/PowerupManager")
 	ammo_manager = get_node_or_null("/root/MagicGarden/Systems/AmmoManager")
-
-	trail_manager.enemy_convert_blocked.connect(_on_enemy_convert_blocked)
 	
-	enemy_manager.slime_killed.connect(_on_test_enemy_killed)
-	enemy_manager.enemy_spawned.connect(_on_enemy_spawned_for_tutorial)
+	DebugLogger.log_info("Nodes found - GM: " + str(game_manager != null) + 
+						  ", Player: " + str(player != null) + 
+						  ", Trail: " + str(trail_manager != null))
 	
-	game_manager.tutorial_player_died.connect(_on_tutorial_player_died)
-	game_manager.child_entered_tree.connect(_on_game_manager_child_added)
+	DebugLogger.log_info("Connecting trail manager signals...")
+	if trail_manager:
+		trail_manager.enemy_convert_blocked.connect(_on_enemy_convert_blocked)
 	
+	DebugLogger.log_info("Connecting enemy manager signals...")
+	if enemy_manager:
+		enemy_manager.slime_killed.connect(_on_test_enemy_killed)
+		enemy_manager.enemy_spawned.connect(_on_enemy_spawned_for_tutorial)
+	
+	DebugLogger.log_info("Connecting game manager signals...")
+	if game_manager:
+		game_manager.tutorial_player_died.connect(_on_tutorial_player_died)
+		game_manager.child_entered_tree.connect(_on_game_manager_child_added)
+	
+	DebugLogger.log_info("Getting killzones...")
 	var killzones = get_tree().get_nodes_in_group("killzone")
+	DebugLogger.log_info("Found " + str(killzones.size()) + " killzones")
 	for kz in killzones:
 		if not kz.player_fell_off_map.is_connected(_on_killzone_triggered):
 			kz.player_fell_off_map.connect(_on_killzone_triggered)
 	
-	player.child_entered_tree.connect(_on_player_child_added)
-
+	DebugLogger.log_info("Connecting player signals...")
+	if player:
+		player.child_entered_tree.connect(_on_player_child_added)
+	
+	DebugLogger.log_info("Loading tutorial save...")
 	var tutorial_path = "user://tutorial.tres"
-	if FileAccess.file_exists(tutorial_path):
+	
+	var file_exists = false
+	if OS.has_feature("web"):
+		DebugLogger.log_info("Web build - skipping tutorial save file check")
+	else:
+		file_exists = FileAccess.file_exists(tutorial_path)
+		DebugLogger.log_info("Tutorial save exists: " + str(file_exists))
+	
+	if file_exists:
 		tutorial_save = load(tutorial_path)
+		DebugLogger.log_info("Loaded tutorial save")
+	
 	if tutorial_save == null:
+		DebugLogger.log_info("Creating new tutorial save")
 		tutorial_save = TutorialSave.new()
 	
+	DebugLogger.log_info("Tutorial save show_tutorial: " + str(tutorial_save.show_tutorial))
+	
+	DebugLogger.log_info("Initializing tutorial steps...")
 	_initialize_steps()
 	
 	if tutorial_save.show_tutorial:
+		DebugLogger.log_info("Starting tutorial logic...")
 		start_tutorial_logic()
 		AudioManager.play_music(tutorial_music)
 	else:
+		DebugLogger.log_info("Skipping tutorial, emitting finished signal...")
 		AudioManager.stop(tutorial_music)
 		tutorial_finished.emit()
 		queue_free()
-		
+	
 	if skip_button:
 		skip_button.pressed.connect(_on_skip_pressed)
 		update_skip_button_text()
+	
+	DebugLogger.log_info("=== TUTORIAL READY COMPLETE ===")
 
 func _initialize_steps() -> void:
 	tutorial_steps = [

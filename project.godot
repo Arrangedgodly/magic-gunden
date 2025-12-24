@@ -19,10 +19,12 @@ config/icon="uid://bhsfjkkt5hkjw"
 
 [autoload]
 
+ErrorHandler="*res://autoloads/ErrorHandler.gd"
+DebugLogger="*res://autoloads/DebugLogger.gd"
+ControllerManager="*res://autoloads/ControllerManager.gd"
+SettingsManager="*res://autoloads/SettingsManager.gd"
 AudioManager="*res://autoloads/AudioManager.gd"
 LoadManager="*res://autoloads/LoadManager.gd"
-SettingsManager="*res://autoloads/SettingsManager.gd"
-ControllerManager="*res://autoloads/ControllerManager.gd"
 
 [debug]
 

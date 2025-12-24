@@ -5,7 +5,9 @@ const SEQ_DELAY: float = 0.03
 var _sfx_queues: Dictionary = {}
 
 func _ready() -> void:
+	DebugLogger.log_manager_init("AudioManager - START")
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	DebugLogger.log_manager_init("AudioManager - COMPLETE")
 
 func play_start(stream: AudioStream):
 	var instance = AudioStreamPlayer.new()

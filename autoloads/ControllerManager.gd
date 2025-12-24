@@ -17,10 +17,13 @@ signal controller_disconnected(device_id: int)
 signal controller_type_changed(new_type: ControllerType)
 
 func _ready() -> void:
+	DebugLogger.log_manager_init("ControllerManager - START")
 	Input.joy_connection_changed.connect(_on_joy_connection_changed)
 	
 	for device_id in Input.get_connected_joypads():
 		_detect_controller_type(device_id)
+	
+	DebugLogger.log_manager_init("ControllerManager - COMPLETE")
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey or event is InputEventMouseButton:

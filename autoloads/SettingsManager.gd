@@ -3,22 +3,37 @@ extends Node
 var settings_save: SettingsSave
 
 func _ready() -> void:
+	DebugLogger.log_manager_init("AudioManager - START")
 	load_and_apply_settings()
+	DebugLogger.log_manager_init("SettingsManager - COMPLETE")
 
 func load_and_apply_settings() -> void:
+	DebugLogger.log_info("Loading settings...")
 	var save_path = "user://settings.tres"
 	
-	if FileAccess.file_exists(save_path):
+	var file_exists = false
+	if OS.has_feature("web"):
+		DebugLogger.log_info("Web build - skipping file check")
+	else:
+		file_exists = FileAccess.file_exists(save_path)
+		DebugLogger.log_info("Settings file exists: " + str(file_exists))
+	
+	if file_exists:
 		settings_save = load(save_path) as SettingsSave
+		DebugLogger.log_info("Loaded settings from file")
 	
 	if settings_save == null:
+		DebugLogger.log_info("Creating new settings")
 		settings_save = SettingsSave.new()
 		if settings_save.control_mappings.is_empty():
 			settings_save.set_default_controls()
 		save_settings()
 	
+	DebugLogger.log_info("Applying audio settings...")
 	apply_audio_settings()
+	DebugLogger.log_info("Applying control mappings...")
 	apply_control_mappings()
+	DebugLogger.log_info("Settings loaded successfully")
 
 func apply_audio_settings() -> void:
 	var music_db = linear_to_db(settings_save.music_volume / 100.0)
@@ -29,9 +44,15 @@ func apply_audio_settings() -> void:
 	
 	if music_bus_idx >= 0:
 		AudioServer.set_bus_volume_db(music_bus_idx, music_db)
+		DebugLogger.log_info("Music volume set: " + str(music_db))
+	else:
+		DebugLogger.log_warning("Music bus not found!")
 	
 	if sfx_bus_idx >= 0:
 		AudioServer.set_bus_volume_db(sfx_bus_idx, sfx_db)
+		DebugLogger.log_info("SFX volume set: " + str(sfx_db))
+	else:
+		DebugLogger.log_warning("SFX bus not found!")
 
 func apply_control_mappings() -> void:
 	var actions = InputMap.get_actions()

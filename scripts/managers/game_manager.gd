@@ -26,13 +26,38 @@ signal ui_visible(visible: bool)
 signal tutorial_player_died
 
 func _ready() -> void:
+	ErrorHandler.mark_safe_point("GameManager._ready START")
+	DebugLogger.log_info("=== GAME MANAGER READY START ===")
+	
+	DebugLogger.log_info("Connecting pause screen signals...")
 	pause_screen.main_menu_pressed.connect(_on_main_menu_pressed)
 	pause_screen.restart_pressed.connect(_on_restart_pressed)
+	ErrorHandler.mark_safe_point("GameManager._ready signals connected")
+	
+	DebugLogger.log_info("Calling deferred initialize...")
 	call_deferred("_initialize")
 
 func _initialize() -> void:
-	if not (tutorial and tutorial.tutorial_save and tutorial.tutorial_save.show_tutorial):
-		capture_point_manager.initialize_first_spawn()
+	ErrorHandler.mark_safe_point("GameManager._initialize START")
+	DebugLogger.log_info("=== GAME MANAGER INITIALIZE START ===")
+	
+	if tutorial:
+		DebugLogger.log_info("Tutorial found, checking settings...")
+		if tutorial.tutorial_save:
+			DebugLogger.log_info("Tutorial save exists, show_tutorial: " + str(tutorial.tutorial_save.show_tutorial))
+		else:
+			DebugLogger.log_warning("Tutorial save is null")
+			
+		if not (tutorial and tutorial.tutorial_save and tutorial.tutorial_save.show_tutorial):
+			DebugLogger.log_info("Initializing first spawn...")
+			capture_point_manager.initialize_first_spawn()
+		else:
+			DebugLogger.log_info("Skipping first spawn - tutorial active")
+	else:
+		DebugLogger.log_warning("Tutorial not found")
+	
+	ErrorHandler.mark_safe_point("GameManager._initialize COMPLETE")
+	DebugLogger.log_info("=== GAME MANAGER INITIALIZE COMPLETE ===")
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("move-left") or Input.is_action_just_pressed("move-right") \

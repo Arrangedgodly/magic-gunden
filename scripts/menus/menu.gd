@@ -9,6 +9,9 @@ extends Control
 @export var menu_music: AudioStream
 
 func _ready() -> void:
+	DebugLogger.log_info("=== MAIN MENU READY START ===")
+	DebugLogger.log_info("Platform: " + ("Web" if OS.has_feature("web") else "Desktop"))
+	
 	start.pressed.connect(_on_start_pressed)
 	high_score.pressed.connect(_on_high_score_pressed)
 	options.pressed.connect(_on_options_pressed)
@@ -17,11 +20,21 @@ func _ready() -> void:
 	
 	start.grab_focus()
 	
+	DebugLogger.log_info("Playing menu music...")
 	AudioManager.play_music(menu_music)
+	
+	DebugLogger.log_info("=== MAIN MENU READY COMPLETE ===")
 
 func _on_start_pressed() -> void:
+	DebugLogger.log_info("=== START BUTTON PRESSED ===")
 	AudioManager.stop(menu_music)
-	get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
+	DebugLogger.log_info("Attempting to change scene to magic_garden...")
+	var result = get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
+	
+	if result != OK:
+		DebugLogger.log_error("Scene change failed with error: " + str(result))
+	else:
+		DebugLogger.log_info("Scene change initiated successfully")
 
 func _on_options_pressed() -> void:
 	AudioManager.stop(menu_music)

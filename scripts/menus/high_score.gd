@@ -17,8 +17,17 @@ func _ready() -> void:
 	scores.hide()
 	no_scores.hide()
 	var saved_game_path = "user://save.tres"
-	if FileAccess.file_exists(saved_game_path):
+	var file_exists = false
+	if OS.has_feature("web"):
+		DebugLogger.log_info("Web build - skipping high score save file check")
+	else:
+		file_exists = FileAccess.file_exists(saved_game_path)
+		DebugLogger.log_info("High score save exists: " + str(file_exists))
+	
+	if file_exists:
 		saved_game = load(saved_game_path) as SavedGame
+		DebugLogger.log_info("Loaded high score save")
+	
 	if saved_game == null:
 		no_scores.show()
 	else:
