@@ -60,7 +60,7 @@ func _on_restart_warning_confirmation(confirmation: bool) -> void:
 	if confirmation:
 		restart_pressed.emit()
 		unpause_game()
-		get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
+		LoadManager.quick_load("res://scenes/magic_garden.tscn")
 	else:
 		restart_warning.visible = false
 		set_main_menu_focus(true)
@@ -77,7 +77,7 @@ func _on_options_pressed() -> void:
 func _on_main_menu_pressed() -> void:
 	main_menu_pressed.emit()
 	unpause_game()
-	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
+	LoadManager.quick_load("res://scenes/menus/main_menu.tscn")
 
 func _on_quit_pressed() -> void:
 	set_main_menu_focus(false)

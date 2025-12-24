@@ -90,23 +90,7 @@ func _ready() -> void:
 	if player:
 		player.child_entered_tree.connect(_on_player_child_added)
 	
-	DebugLogger.log_info("Loading tutorial save...")
-	var tutorial_path = "user://tutorial.tres"
-	
-	var file_exists = false
-	if OS.has_feature("web"):
-		DebugLogger.log_info("Web build - skipping tutorial save file check")
-	else:
-		file_exists = FileAccess.file_exists(tutorial_path)
-		DebugLogger.log_info("Tutorial save exists: " + str(file_exists))
-	
-	if file_exists:
-		tutorial_save = load(tutorial_path)
-		DebugLogger.log_info("Loaded tutorial save")
-	
-	if tutorial_save == null:
-		DebugLogger.log_info("Creating new tutorial save")
-		tutorial_save = TutorialSave.new()
+	tutorial_save = SaveHelper.load_tutorial_save()
 	
 	DebugLogger.log_info("Tutorial save show_tutorial: " + str(tutorial_save.show_tutorial))
 	
@@ -256,7 +240,7 @@ func finish_tutorial() -> void:
 	tutorial_active = false
 	tutorial_protection_active = false
 	tutorial_save.show_tutorial = false
-	ResourceSaver.save(tutorial_save, "user://tutorial.tres")
+	SaveHelper.save_tutorial_save(tutorial_save)
 
 	if pickup_manager:
 		pickup_manager.regen_gem = true
@@ -286,7 +270,7 @@ func _on_skip_pressed() -> void:
 		get_tree().paused = false
 	
 	tutorial_save.show_tutorial = false
-	ResourceSaver.save(tutorial_save, "user://tutorial.tres")
+	SaveHelper.save_tutorial_save(tutorial_save)
 	
 	finish_tutorial()
 

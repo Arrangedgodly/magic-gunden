@@ -50,16 +50,12 @@ func _ready() -> void:
 		back_button.grab_focus()
 
 func load_settings() -> void:
-	settings_save = load("user://settings.tres") as SettingsSave
-	if settings_save == null:
-		settings_save = SettingsSave.new()
-		settings_save.set_default_controls()
+	settings_save = SaveHelper.load_settings()
 
 func save_settings() -> void:
-	ResourceSaver.save(settings_save, "user://settings.tres")
+	SaveHelper.save_settings(settings_save)
 
 func populate_controls() -> void:
-	# Clear existing entries
 	for child in controls_list.get_children():
 		child.queue_free()
 	

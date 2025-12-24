@@ -21,6 +21,7 @@ config/icon="uid://bhsfjkkt5hkjw"
 
 ErrorHandler="*res://autoloads/ErrorHandler.gd"
 DebugLogger="*res://autoloads/DebugLogger.gd"
+SaveHelper="*res://autoloads/SaveHelper.gd"
 ControllerManager="*res://autoloads/ControllerManager.gd"
 SettingsManager="*res://autoloads/SettingsManager.gd"
 AudioManager="*res://autoloads/AudioManager.gd"

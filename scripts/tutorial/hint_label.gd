@@ -73,7 +73,6 @@ func _add_keyboard_glyph(action: String) -> void:
 		if glyph:
 			add_image(glyph, GLYPH_WIDTH, GLYPH_HEIGHT)
 		else:
-			# Fallback to text
 			append_text("[%s]" % OS.get_keycode_string(keycode))
 	else:
 		append_text("[Unbound]")
@@ -81,7 +80,6 @@ func _add_keyboard_glyph(action: String) -> void:
 func _add_controller_glyph(action: String) -> void:
 	var controller_type = ControllerManager.get_controller_type()
 	
-	# Try button binding first
 	var button_index = settings_save.get_controller_button(action)
 	if button_index != -1:
 		var glyph = ControlDisplayData.get_controller_button_glyph(button_index, controller_type)
@@ -89,7 +87,6 @@ func _add_controller_glyph(action: String) -> void:
 			add_image(glyph, GLYPH_WIDTH, GLYPH_HEIGHT)
 			return
 	
-	# Try axis binding
 	var axis_data = settings_save.get_controller_axis(action)
 	if not axis_data.is_empty():
 		var axis_name = _get_axis_name_from_data(axis_data)
@@ -98,8 +95,7 @@ func _add_controller_glyph(action: String) -> void:
 			if glyph:
 				add_image(glyph, GLYPH_WIDTH, GLYPH_HEIGHT)
 				return
-	
-	# Fallback
+
 	append_text("[Unbound]")
 
 func _get_axis_name_from_data(axis_data: Dictionary) -> String:
@@ -277,30 +273,3 @@ func enemy_collision() -> void:
 	newline()
 	newline()
 	append_text("Keep your distance!")
-
-func get_input_strings() -> Dictionary:
-	var controller_type = ControllerManager.get_controller_type_name()
-	if controller_type == "Xbox" or controller_type == "Steam Deck":
-		return {
-			"move": "Left Stick/D-Pad",
-			"detach": "Left Bumper/Trigger",
-			"aim": "Right Stick",
-			"shoot": "Right Bumper/Trigger",
-			"accept": "A"
-		}
-	elif controller_type == "Playstation":
-		return {
-			"move": "Left Stick/D-Pad",
-			"detach": "Left Bumper/Trigger",
-			"aim": "Right Stick",
-			"shoot": "Right Bumper/Trigger",
-			"accept": "X"
-		}
-	else:
-		return {
-			"move": "WASD",
-			"detach": "E",
-			"aim": "Arrow Keys",
-			"shoot": "Space",
-			"accept": "Enter"
-		}

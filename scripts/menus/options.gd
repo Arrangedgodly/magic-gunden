@@ -37,13 +37,11 @@ func _ready() -> void:
 	AudioManager.play_music(options_music)
 
 func load_settings() -> void:
-	settings_save = load("user://settings.tres") as SettingsSave
-	if settings_save == null:
-		settings_save = SettingsSave.new()
+		settings_save = SaveHelper.load_settings()
 		save_settings()
 
 func save_settings() -> void:
-	ResourceSaver.save(settings_save, "user://settings.tres")
+	SaveHelper.save_settings(settings_save)
 
 func setup_volume_controls() -> void:
 	music_slider.min_value = 0
@@ -187,7 +185,7 @@ func start_tutorial_replay() -> void:
 	get_tree().paused = false
 	
 	AudioManager.stop(options_music)
-	get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
+	LoadManager.quick_load("res://scenes/magic_garden.tscn")
 
 func set_options_focus(enabled: bool):
 	var mode = Control.FOCUS_ALL if enabled else Control.FOCUS_NONE

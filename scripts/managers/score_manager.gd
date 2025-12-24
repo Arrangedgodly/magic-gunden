@@ -61,14 +61,7 @@ func reset_current_killstreak() -> void:
 	new_killstreak.emit(0)
 
 func save_game():
-	var high_scores_path = "user://save.tres"
-	var high_scores: SavedGame
-	
-	if FileAccess.file_exists(high_scores_path):
-		high_scores = load(high_scores_path)
-	
-	if high_scores == null:
-		high_scores = SavedGame.new()
+	var high_scores = SaveHelper.load_high_scores()
 		
 	if not high_scores.score == null:
 		if saved_game.score > high_scores.score:
@@ -118,4 +111,4 @@ func save_game():
 		high_scores.set_killstreak(saved_game.killstreak)
 		new_high_killstreak.emit(saved_game.killstreak)
 	
-	ResourceSaver.save(high_scores, "user://save.tres")
+	SaveHelper.save_high_scores(saved_game)

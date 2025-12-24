@@ -28,13 +28,7 @@ func _ready() -> void:
 func _on_start_pressed() -> void:
 	DebugLogger.log_info("=== START BUTTON PRESSED ===")
 	AudioManager.stop(menu_music)
-	DebugLogger.log_info("Attempting to change scene to magic_garden...")
-	var result = get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
-	
-	if result != OK:
-		DebugLogger.log_error("Scene change failed with error: " + str(result))
-	else:
-		DebugLogger.log_info("Scene change initiated successfully")
+	LoadManager.load_scene("res://scenes/magic_garden.tscn")
 
 func _on_options_pressed() -> void:
 	AudioManager.stop(menu_music)
@@ -54,7 +48,7 @@ func _on_credits_pressed() -> void:
 
 func _on_high_score_pressed() -> void:
 	AudioManager.stop(menu_music)
-	get_tree().change_scene_to_file("res://scenes/menus/high_score.tscn")
+	LoadManager.load_scene("res://scenes/menus/high_score.tscn")
 
 func _on_options_closed(options_instance: Control) -> void:
 	options_instance.queue_free()
