@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ca3e5xaqhn2jb"]
+[gd_scene load_steps=9 format=3 uid="uid://ca3e5xaqhn2jb"]
 
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_l870f"]
 [ext_resource type="Script" uid="uid://bwx23xkpii5oh" path="res://scripts/menus/end_game_screen.gd" id="2_q6pom"]
 [ext_resource type="Shader" uid="uid://dcl3q3676uyh3" path="res://shaders/2d_highlight.gdshader" id="3_bcfar"]
+[ext_resource type="Script" uid="uid://cvbp2kldx7u6a" path="res://scenes/menus/flash_score.gd" id="3_dw25k"]
+[ext_resource type="Script" uid="uid://oow25kw71vjr" path="res://scenes/menus/final_scores.gd" id="3_tyhoh"]
 
 [sub_resource type="Theme" id="Theme_kln7l"]
 default_font = ExtResource("1_l870f")
@@ -35,8 +37,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1200.0
-offset_bottom = -800.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_kln7l")
@@ -49,27 +49,66 @@ offset_right = 1280.0
 offset_bottom = 800.0
 color = Color(0, 0, 0, 1)
 
+[node name="FlashScore" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_dw25k")
+
+[node name="Scorename" type="Label" parent="FlashScore"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1280, 500)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 256
+text = "FINAL 
+KILL COUNT"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Scoreamount" type="Label" parent="FlashScore"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1280, 300)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 256
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 0
-offset_top = 2.0
-offset_right = 1280.0
-offset_bottom = 802.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
 theme_override_constants/separation = 75
 alignment = 1
 
-[node name="Scores" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="Scores" type="Control" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1280, 125)
 layout_mode = 2
-theme_override_constants/separation = 0
+size_flags_vertical = 3
+script = ExtResource("3_tyhoh")
+
+[node name="FinalScore" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 111.0
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
-layout_mode = 2
-alignment = 1
-
-[node name="Final Score Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer"]
+[node name="Final Score Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/FinalScore"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -82,7 +121,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="FinalScore" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer"]
+[node name="FinalScore" type="Label" parent="CenterContainer/VBoxContainer/Scores/FinalScore"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
@@ -91,11 +130,14 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
-layout_mode = 2
+[node name="FinalKillcount" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
+layout_mode = 0
+offset_left = 250.0
+offset_right = 500.0
+offset_bottom = 111.0
 alignment = 1
 
-[node name="Final Killcount Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer2"]
+[node name="Final Killcount Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/FinalKillcount"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -108,7 +150,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="FinalKillcount" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer2"]
+[node name="FinalKillcount" type="Label" parent="CenterContainer/VBoxContainer/Scores/FinalKillcount"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
@@ -116,11 +158,14 @@ theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 1
 
-[node name="VBoxContainer5" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
-layout_mode = 2
+[node name="BestKillstreak" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
+layout_mode = 0
+offset_left = 500.0
+offset_right = 750.0
+offset_bottom = 111.0
 alignment = 1
 
-[node name="BestKillstreakLabel" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer5"]
+[node name="BestKillstreakLabel" type="Label" parent="CenterContainer/VBoxContainer/Scores/BestKillstreak"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -133,7 +178,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BestKillstreak" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer5"]
+[node name="BestKillstreak" type="Label" parent="CenterContainer/VBoxContainer/Scores/BestKillstreak"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
@@ -141,11 +186,14 @@ theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 1
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
-layout_mode = 2
+[node name="GemsCaptured" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
+layout_mode = 0
+offset_left = 750.0
+offset_right = 1000.0
+offset_bottom = 111.0
 alignment = 1
 
-[node name="Gems Captured Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer3"]
+[node name="Gems Captured Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/GemsCaptured"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -158,7 +206,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Gems Captured" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer3"]
+[node name="Gems Captured" type="Label" parent="CenterContainer/VBoxContainer/Scores/GemsCaptured"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
@@ -166,11 +214,14 @@ theme_override_font_sizes/font_size = 64
 text = "0"
 horizontal_alignment = 1
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
-layout_mode = 2
+[node name="TimeAlive" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Scores"]
+layout_mode = 0
+offset_left = 1000.0
+offset_right = 1250.0
+offset_bottom = 111.0
 alignment = 1
 
-[node name="Time Alive Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer4"]
+[node name="Time Alive Label" type="Label" parent="CenterContainer/VBoxContainer/Scores/TimeAlive"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -183,7 +234,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Time Alive" type="Label" parent="CenterContainer/VBoxContainer/Scores/VBoxContainer4"]
+[node name="Time Alive" type="Label" parent="CenterContainer/VBoxContainer/Scores/TimeAlive"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 20
@@ -192,13 +243,16 @@ text = "0"
 horizontal_alignment = 1
 
 [node name="Try Again?" type="Label" parent="CenterContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/outline_size = 25
 text = "Try again?"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 200
 alignment = 1
 

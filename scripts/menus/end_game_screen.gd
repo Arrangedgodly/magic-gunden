@@ -2,6 +2,8 @@ extends Control
 @onready var yes: Button = %Yes
 @onready var no: Button = %No
 @onready var ui: CanvasLayer = %UI
+@onready var flash_score: VBoxContainer = %FlashScore
+@onready var scores: Control = %Scores
 @onready var final_score: Label = %FinalScore
 @onready var final_score_label: Label = %"Final Score Label"
 @onready var final_killcount_label: Label = %"Final Killcount Label"

@@ -127,6 +127,7 @@ func move_all_enemies() -> void:
 				"direction": move_info.direction,
 				"target_position": move_info.target_position
 			})
+			await get_tree().create_timer(0.05).timeout
 		else:
 			DebugLogger.log_error("Enemy does not have can_move set to true")
 	
