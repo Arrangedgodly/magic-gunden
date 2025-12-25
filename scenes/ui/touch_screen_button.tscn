@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6a7nah6v736l"]
+
+[ext_resource type="Texture2D" uid="uid://k808grjg1sxv" path="res://assets/UI/LargeHandleFilled.png" id="1_0yvcg"]
+[ext_resource type="Texture2D" uid="uid://cmhbiuacw32j5" path="res://assets/UI/LargeHandleFilledGrey.png" id="2_8utu3"]
+[ext_resource type="Script" uid="uid://dtnni1evnasy" path="res://scripts/ui/touch_screen_button.gd" id="3_8utu3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0yvcg"]
+radius = 104.0
+
+[node name="TouchScreenButton" type="TouchScreenButton"]
+texture_normal = ExtResource("1_0yvcg")
+texture_pressed = ExtResource("2_8utu3")
+shape = SubResource("CircleShape2D_0yvcg")
+script = ExtResource("3_8utu3")

@@ -1,6 +1,6 @@
-extends Control
+extends CanvasLayer
 
-@onready var score_banner: Sprite2D = %ScoreBanner
+@onready var score_banner: TextureRect = %ScoreBanner
 @onready var score_label: Label = %ScoreLabel
 @onready var controls: Control = $Controls
 @onready var ammo_bar: Control = %AmmoBar
@@ -11,6 +11,11 @@ extends Control
 @onready var game_manager: Node2D = %GameManager
 @onready var score_manager: Node2D = %ScoreManager
 @onready var ammo_manager: AmmoManager = %AmmoManager
+@onready var trail_manager: TrailManager = %TrailManager
+@onready var move_joystick: TouchScreenButton = %MoveJoystick
+@onready var aim_joystick: TouchScreenButton = %AimJoystick
+@onready var detach_button: TouchScreenButton = %Detach
+@onready var fire_button: TouchScreenButton = %Fire
 
 var current_display_score: int = 0
 var current_ammo: int = 0
@@ -24,6 +29,9 @@ func _ready() -> void:
 	ammo_manager.current_ammo.connect(_on_game_manager_current_ammo)
 	score_manager.new_killstreak.connect(_on_score_manager_new_killstreak)
 	score_manager.update_score.connect(_on_score_manager_update_score)
+	
+	fire_button.button_pressed.connect(_on_fire_button_pressed)
+	detach_button.button_pressed.connect(_on_detach_button_pressed)
 	
 func _input(event: InputEvent) -> void:
 	controls.handle_input_event(event)
@@ -63,3 +71,9 @@ func _on_score_manager_new_killstreak(new_killstreak: int) -> void:
 
 func _on_game_manager_current_ammo(new_ammo: int) -> void:
 	current_ammo = new_ammo
+
+func _on_fire_button_pressed() -> void:
+	player.trigger_attack()
+
+func _on_detach_button_pressed() -> void:
+	trail_manager.release_trail()

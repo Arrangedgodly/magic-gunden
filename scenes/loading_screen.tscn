@@ -1,12 +1,13 @@
-[gd_scene load_steps=23 format=4 uid="uid://do1tt8u0tbmu5"]
+[gd_scene load_steps=24 format=4 uid="uid://do1tt8u0tbmu5"]
 
 [ext_resource type="Script" uid="uid://do33kp1vfaerp" path="res://scripts/loading_screen.gd" id="1_ffvt4"]
-[ext_resource type="Shader" path="res://shaders/adaptive_sliding_gradient_background.gdshader" id="2_djmwj"]
+[ext_resource type="Shader" uid="uid://m2tpo8qfm0ln" path="res://shaders/adaptive_sliding_gradient_background.gdshader" id="2_djmwj"]
 [ext_resource type="Texture2D" uid="uid://bsidjl7lsq8xu" path="res://assets/loading_background_white.png" id="3_qygbf"]
-[ext_resource type="Shader" path="res://shaders/dynamic_progress.gdshader" id="4_qygbf"]
+[ext_resource type="Shader" uid="uid://pa4s3ahwe562" path="res://shaders/dynamic_progress.gdshader" id="4_qygbf"]
 [ext_resource type="Texture2D" uid="uid://ddkdafryprv46" path="res://assets/UI/UI_Flat_IconCross01a.png" id="5_fb1qm"]
 [ext_resource type="Texture2D" uid="uid://craykw7rgfy7n" path="res://assets/UI/UI_Flat_IconCheck01a.png" id="6_07j0d"]
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="7_pu4a1"]
+[ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="8_if62a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pu4a1"]
 shader = ExtResource("2_djmwj")
@@ -1768,5 +1769,12 @@ theme_override_fonts/font = ExtResource("7_pu4a1")
 theme_override_font_sizes/font_size = 80
 text = "Loading..."
 horizontal_alignment = 1
+
+[node name="CRT" parent="." instance=ExtResource("8_if62a")]
+offset_left = -150.0
+offset_top = -100.0
+offset_right = -150.0
+offset_bottom = -100.0
+scale = Vector2(1.25, 1.25)
 
 [connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]

@@ -55,6 +55,7 @@ func _initialize() -> void:
 			DebugLogger.log_info("Skipping first spawn - tutorial active")
 	else:
 		DebugLogger.log_warning("Tutorial not found")
+		capture_point_manager.initialize_first_spawn()
 	
 	ErrorHandler.mark_safe_point("GameManager._initialize COMPLETE")
 	DebugLogger.log_info("=== GAME MANAGER INITIALIZE COMPLETE ===")

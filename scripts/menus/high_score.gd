@@ -9,6 +9,7 @@ var saved_game:SavedGame
 @onready var no_scores: Label = %"No Scores"
 @onready var center_container: CenterContainer = $CenterContainer
 @onready var crt: ColorRect = $CRT
+@onready var exit_button: Button = %Exit
 
 @export var high_score_music: AudioStream
 
@@ -17,6 +18,8 @@ func _ready() -> void:
 	scores.hide()
 	no_scores.hide()
 	saved_game = SaveHelper.load_high_scores()
+	
+	exit_button.pressed.connect(exit)
 	
 	if saved_game == null:
 		no_scores.show()
@@ -29,8 +32,9 @@ func _ready() -> void:
 		gems_captured.text = str(saved_game.gems_captured)
 
 func _process(_delta: float) -> void:
-	center_container.position.x += .25
-	crt.position.x += .25
 	if Input.is_action_just_pressed("ui_cancel"):
-		AudioManager.stop(high_score_music)
-		get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
+		exit()
+
+func exit() -> void:
+	AudioManager.stop(high_score_music)
+	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")

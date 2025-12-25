@@ -8,12 +8,14 @@ const TILE_SIZE = 32
 @onready var trail_manager: Node2D = %TrailManager
 
 func random_pos() -> Vector2i:
+	DebugLogger.log_info("Spawn Manager finding random position...")
 	randomize()
 	var x = (randi_range(0, TILES - 1) * TILE_SIZE)
 	var y = (randi_range(0, TILES - 1) * TILE_SIZE)
 	return Vector2i(x, y)
 
 func random_pos_tutorial() -> Vector2i:
+	DebugLogger.log_info("Spawn Manager finding tutorial position...")
 	randomize()
 	var min_tile = 2
 	var max_tile = TILES - 1 - 2
@@ -23,18 +25,23 @@ func random_pos_tutorial() -> Vector2i:
 	return Vector2i(x, y)
 
 func is_valid_spawn_position(pos: Vector2) -> bool:
+	DebugLogger.log_info("Spawn Manager checking position validity...")
 	if not player:
+		DebugLogger.log_error("Spawn manager player node is null!")
 		return false
-		
-	if player.position == pos:
+	
+	var diff = (pos - player.position).abs()
+	if diff.x <= TILE_SIZE + 5 and diff.y <= TILE_SIZE + 5:
 		return false
 	
 	for child in game_manager.get_children():
-		if child is AnimatedSprite2D and child.position == pos:
+		if child is AnimatedSprite2D and pos.distance_to(child.position) < TILE_SIZE / 2.0:
+			return false
+		if child is CharacterBody2D and pos.distance_to(child.position) < TILE_SIZE / 2.0:
 			return false
 	
 	for gem_instance in trail_manager.trail:
-		if is_instance_valid(gem_instance) and gem_instance.position == pos:
+		if is_instance_valid(gem_instance) and pos.distance_to(gem_instance.position) < TILE_SIZE / 2.0:
 			return false
 	
 	return true

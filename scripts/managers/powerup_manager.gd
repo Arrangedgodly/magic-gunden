@@ -44,6 +44,8 @@ signal powerup_activated(type: String)
 signal powerup_spawned(position: Vector2)
 
 func _ready() -> void:
+	DebugLogger.log_info("=== POWERUP MANAGER READY START ===")
+	
 	available_powerups = [
 	magnet_scene, 
 	pierce_scene, 
@@ -61,6 +63,8 @@ func _ready() -> void:
 	laser_scene
 ]
 
+	DebugLogger.log_info("=== POWERUP MANAGER READY COMPLETE ===")
+
 func _process(delta: float) -> void:
 	if active_magnet and active_magnet.is_active:
 		active_magnet.process_effect(delta)
@@ -75,45 +79,59 @@ func _process(delta: float) -> void:
 		active_free_ammo.process_effect(delta)
 
 func register_jump_powerup(powerup: JumpPowerup) -> void:
+	DebugLogger.log_info("Registering jump powerup...")
 	active_jump = powerup
 
 func register_stomp_powerup(powerup: StompPowerup) -> void:
+	DebugLogger.log_info("Registering stomp powerup...")
 	active_stomp = powerup
 
 func register_pierce_powerup(powerup: PiercePowerup) -> void:
+	DebugLogger.log_info("Registering pierce powerup...")
 	active_pierce = powerup
 
 func register_ricochet_powerup(powerup: RicochetPowerup) -> void:
+	DebugLogger.log_info("Registering ricochet powerup...")
 	active_ricochet = powerup
 
 func register_magnet_powerup(powerup: MagnetPowerup) -> void:
+	DebugLogger.log_info("Registering magnet powerup...")
 	active_magnet = powerup
 
 func register_poison_powerup(powerup: PoisonPowerup) -> void:
+	DebugLogger.log_info("Registering poison powerup...")
 	active_poison = powerup
 
 func register_auto_aim_powerup(powerup: AutoAimPowerup) -> void:
+	DebugLogger.log_info("Registering auto aim powerup...")
 	active_auto_aim = powerup
 
 func register_flames_powerup(powerup: FlamesPowerup) -> void:
+	DebugLogger.log_info("Registering flames powerup...")
 	active_flames = powerup
 
 func register_free_ammo_powerup(powerup: FreeAmmoPowerup) -> void:
+	DebugLogger.log_info("Registering free ammo powerup...")
 	active_free_ammo = powerup
 
 func register_ice_powerup(powerup: IcePowerup) -> void:
+	DebugLogger.log_info("Registering ice powerup...")
 	active_ice = powerup
 
 func register_time_pause_powerup(powerup: TimePausePowerup) -> void:
+	DebugLogger.log_info("Registering time pause powerup...")
 	active_time_pause = powerup
 
 func register_grenade_powerup(powerup: GrenadePowerup) -> void:
+	DebugLogger.log_info("Registering grenade powerup...")
 	active_grenade = powerup
 
 func register_four_way_shot_powerup(powerup: FourWayShotPowerup) -> void:
+	DebugLogger.log_info("Registering four way shot powerup...")
 	active_four_way_shot = powerup
 
 func register_laser_powerup(powerup: LaserPowerup) -> void:
+	DebugLogger.log_info("Registering laser powerup...")
 	active_laser = powerup
 
 func is_jump_active() -> bool:
@@ -206,21 +224,27 @@ func get_powerup_timer(p_name: String) -> Timer:
 	return null
 
 func spawn_powerup() -> void:
+	DebugLogger.log_info("Spawning powerup...")
 	var powerup_pos
 	if tutorial_mode:
+		DebugLogger.log_info("Utilizing tutorial random position...")
 		powerup_pos = spawn.random_pos_tutorial()
 	else:
+		DebugLogger.log_info("Utilizing regular random position...")
 		powerup_pos = spawn.random_pos()
 	var attempts = 0
 	
 	while not spawn.is_valid_spawn_position(powerup_pos) and attempts < 100:
 		if tutorial_mode:
+			DebugLogger.log_info("Position conflict. Re-utilizing tutorial random position...")
 			powerup_pos = spawn.random_pos_tutorial()
 		else:
+			DebugLogger.log_info("Position conflict. Re-utilizing regular random position...")
 			powerup_pos = spawn.random_pos()
 		attempts += 1
 	
 	if attempts >= 100:
+		DebugLogger.log_info("Position conflict. Failed over 100 times.")
 		return
 	
 	var random_scene = available_powerups.pick_random()
@@ -228,13 +252,18 @@ func spawn_powerup() -> void:
 	powerup.position = powerup_pos
 	powerup.position += Vector2(16, 16)
 	game_manager.add_child(powerup)
+	DebugLogger.log_info("Powerup added to game manager")
 	powerup_spawned.emit(powerup_pos)
+	DebugLogger.log_info("Powerup spawned successfully!")
 
 func force_spawn_powerup(powerup_scene: PackedScene) -> void:
+	DebugLogger.log_info("Force spawning powerup...")
 	var pos
 	if tutorial_mode:
+		DebugLogger.log_info("Utilizing tutorial random position...")
 		pos = spawn.random_pos_tutorial()
 	else:
+		DebugLogger.log_info("Utilizing regular random position...")
 		pos = spawn.random_pos()
 		
 	var powerup = powerup_scene.instantiate()
@@ -242,4 +271,6 @@ func force_spawn_powerup(powerup_scene: PackedScene) -> void:
 	powerup.position = pos
 	powerup.position += Vector2(16, 16)
 	game_manager.add_child(powerup)
+	DebugLogger.log_info("Powerup added to game manager")
 	powerup_spawned.emit(pos)
+	DebugLogger.log_info("Powerup force spawned successfully!")

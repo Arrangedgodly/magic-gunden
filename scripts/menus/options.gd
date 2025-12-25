@@ -8,6 +8,7 @@ extends Control
 @onready var replay_tutorial_button: Button = %ReplayTutorialButton
 @onready var reset_all_button: Button = %ResetAllButton
 @onready var confirmation_popup: Control = %"Confirmation Popup"
+@onready var controls_section: VBoxContainer = %ControlsSection
 @onready var controls_button: Button = %ControlsButton
 @onready var back_button: Button = %BackButton
 @onready var v_box: VBoxContainer = $CanvasLayer/VBoxContainer
@@ -33,6 +34,9 @@ func _ready() -> void:
 	controls_button.pressed.connect(_on_controls_pressed)
 	back_button.pressed.connect(_on_back_pressed)
 	back_button.grab_focus()
+	
+	if OS.has_feature("web_android") or OS.has_feature("web_ios"):
+		controls_section.visible = false
 	
 	AudioManager.play_music(options_music)
 

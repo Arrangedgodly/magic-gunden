@@ -1,7 +1,7 @@
 extends Control
 @onready var yes: Button = %Yes
 @onready var no: Button = %No
-@onready var ui: Control = %UI
+@onready var ui: CanvasLayer = %UI
 @onready var final_score: Label = %FinalScore
 @onready var final_score_label: Label = %"Final Score Label"
 @onready var final_killcount_label: Label = %"Final Killcount Label"

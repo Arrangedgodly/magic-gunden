@@ -31,6 +31,7 @@ var remappable_actions = [
 signal controls_closed
 
 func _ready() -> void:
+	DebugLogger.log_info("=== CONTROLS MENU READY START ===")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	load_settings()
@@ -48,6 +49,8 @@ func _ready() -> void:
 	if back_button:
 		back_button.pressed.connect(_on_back_pressed)
 		back_button.grab_focus()
+	
+	DebugLogger.log_info("=== CONTROLS MENU READY COMPLETE ===")
 
 func load_settings() -> void:
 	settings_save = SaveHelper.load_settings()
@@ -56,6 +59,7 @@ func save_settings() -> void:
 	SaveHelper.save_settings(settings_save)
 
 func populate_controls() -> void:
+	DebugLogger.log_info("Populating controls...")
 	for child in controls_list.get_children():
 		child.queue_free()
 	
@@ -69,8 +73,11 @@ func populate_controls() -> void:
 		entry.setup(action_data["action"], action_data["display"], is_controller_mode)
 		
 		entry.remap_requested.connect(_on_remap_requested.bind(is_controller_mode))
+	
+	DebugLogger.log_info("Controls populated")
 
 func _on_remap_requested(action: String, is_controller: bool) -> void:
+	DebugLogger.log_info("Remap request initiated...")
 	if is_listening:
 		return
 	
@@ -82,8 +89,11 @@ func _on_remap_requested(action: String, is_controller: bool) -> void:
 		var input_type = "button" if is_controller else "key"
 		listening_label.text = "Press %s for: %s" % [input_type, action]
 		listening_label.show()
+	
+	DebugLogger.log_info("Remap request complete")
 
 func populate_keyboard_inputs(container: Container, action: String) -> int:
+	DebugLogger.log_info("Populating keyboard controls...")
 	var events = InputMap.action_get_events(action)
 	var count = 0
 	
@@ -91,9 +101,12 @@ func populate_keyboard_inputs(container: Container, action: String) -> int:
 		if event is InputEventKey:
 			add_input_icon(container, event)
 			count += 1
+	
+	DebugLogger.log_info("Keyboard controls populated")
 	return count
 
 func populate_controller_inputs(container: Container, action: String) -> int:
+	DebugLogger.log_info("Populating controller controls...")
 	var events = InputMap.action_get_events(action)
 	var count = 0
 	
@@ -101,6 +114,8 @@ func populate_controller_inputs(container: Container, action: String) -> int:
 		if event is InputEventJoypadButton or event is InputEventJoypadMotion:
 			add_input_icon(container, event)
 			count += 1
+	
+	DebugLogger.log_info("Controller controls populated")
 	return count
 
 func add_input_icon(container: Container, event: InputEvent) -> void:

@@ -182,6 +182,13 @@ func _input(event: InputEvent) -> void:
 		_on_skip_pressed()
 
 	if waiting_for_continue:
+		var is_touch = (event is InputEventScreenTouch and event.pressed)
+		var is_accept_key = event.is_action_pressed("ui_accept")
+		
+		if is_touch or is_accept_key:
+			_hide_tutorial()
+			get_tree().paused = false
+			waiting_for_continue = false
 		return
 
 	if event.is_action_pressed("move-up") or event.is_action_pressed("move-down") or \
@@ -189,13 +196,6 @@ func _input(event: InputEvent) -> void:
 		has_moved = true
 
 func _process(_delta: float) -> void:
-	if waiting_for_continue:
-		if Input.is_action_just_pressed("ui_accept"):
-			_hide_tutorial()
-			get_tree().paused = false
-			waiting_for_continue = false
-			return
-	
 	if disable_auto_advance:
 		return
 		
@@ -223,6 +223,9 @@ func cleanup_tutorial_spawns() -> void:
 func update_skip_button_text() -> void:
 	if not skip_button:
 		return
+	
+	if DisplayServer.is_touchscreen_available() or OS.has_feature("web_android") or OS.has_feature("web_ios"):
+		skip_button.text = "Skip Tutorial"
 	
 	if controller_type == "Xbox" or controller_type == "Steam Deck":
 		skip_button.text = "Skip Tutorial (B)"

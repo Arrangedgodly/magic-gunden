@@ -5,17 +5,17 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v0df1"]
 shader = ExtResource("1_tadfo")
 shader_parameter/overlay = true
-shader_parameter/scanlines_opacity = 0.2
+shader_parameter/scanlines_opacity = 0.10000000475
 shader_parameter/scanlines_width = 0.25
 shader_parameter/grille_opacity = 0.3
-shader_parameter/resolution = Vector2(1200, 800)
+shader_parameter/resolution = Vector2(1280, 800)
 shader_parameter/pixelate = false
 shader_parameter/roll = false
 shader_parameter/roll_speed = 8.0
 shader_parameter/roll_size = 0.0
 shader_parameter/roll_variation = 5.0
-shader_parameter/distort_intensity = 0.2
-shader_parameter/noise_opacity = 0.05
+shader_parameter/distort_intensity = 0.050000002375
+shader_parameter/noise_opacity = 0.02000000095
 shader_parameter/noise_speed = 0.5
 shader_parameter/static_noise_intensity = 0.03
 shader_parameter/aberration = 0.00600005
@@ -28,11 +28,20 @@ shader_parameter/vignette_opacity = 0.5
 
 [sub_resource type="Environment" id="Environment_dagn0"]
 background_mode = 3
+background_energy_multiplier = 0.6
+tonemap_mode = 1
+tonemap_exposure = 0.7
 glow_enabled = true
 glow_intensity = 0.5
 glow_strength = 0.5
-glow_bloom = 0.3
+glow_bloom = 0.05
+glow_hdr_threshold = 1.5
+glow_hdr_scale = 1.0
+glow_hdr_luminance_cap = 8.0
 glow_map_strength = 0.5
+adjustment_enabled = true
+adjustment_brightness = 0.9
+adjustment_saturation = 0.9
 
 [node name="CRT" type="ColorRect"]
 z_index = 1000

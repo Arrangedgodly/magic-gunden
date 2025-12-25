@@ -29,6 +29,8 @@ var gameplay_area: Node2D
 var is_attacking: bool = false
 var start_position: Vector2
 var movement_tween: Tween
+var virtual_move_input: Vector2 = Vector2.ZERO
+var virtual_aim_input: Vector2 = Vector2.ZERO
 
 const TILE_SIZE = 32
 const UP = Vector2(0, -1)
@@ -48,17 +50,24 @@ func _ready():
 	
 	powerup_active()
 
-func _input(_event: InputEvent) -> void:
-	var input_vector = Vector2(
+func _process(_delta: float) -> void:
+	var move_vector = Vector2(
 		Input.get_action_strength("move-right") - Input.get_action_strength("move-left"),
-		Input.get_action_strength("move-down") - Input.get_action_strength("move-up")
-	)
+		Input.get_action_strength("move-down") - Input.get_action_strength("move-up")) + virtual_move_input
 	
-	handle_movement_input(input_vector)
-	handle_aim_input()
-	
+	if move_vector.length() > 1.0:
+		move_vector = move_vector.normalized()
+
+	handle_movement_input(move_vector)
+
+	var aim_vector_input = Vector2(
+		Input.get_action_strength("aim-right") - Input.get_action_strength("aim-left"),
+		Input.get_action_strength("aim-down") - Input.get_action_strength("aim-up")) + virtual_aim_input
+
+	handle_aim_input(aim_vector_input)
+
 	if Input.is_action_just_pressed("attack"):
-		is_attacking = true
+		trigger_attack()
 
 func _on_move_timer_timeout() -> void:
 	if is_attacking:
@@ -119,14 +128,9 @@ func handle_movement_input(input_vector: Vector2) -> void:
 		animation_tree.set("parameters/Run/BlendSpace2D/blend_position", input_vector)
 		animation_tree["parameters/playback"].travel("Run")
 
-func handle_aim_input() -> void:
+func handle_aim_input(aim_vector: Vector2) -> void:
 	if powerup_manager.is_auto_aim_active():
 		return
-		
-	var aim_vector = Vector2(
-		Input.get_action_strength("aim-right") - Input.get_action_strength("aim-left"),
-		Input.get_action_strength("aim-down") - Input.get_action_strength("aim-up")
-	)
 	
 	if Input.is_action_just_pressed("aim-down"):
 		aim_direction = DOWN
@@ -215,3 +219,6 @@ func reset_to_start() -> void:
 	
 	if move_timer.is_stopped():
 		move_timer.start()
+
+func trigger_attack() -> void:
+	is_attacking = true

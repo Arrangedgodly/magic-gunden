@@ -228,11 +228,16 @@ func final() -> void:
 	append_text("You now know the basics. Survive as long as you can!")
 
 func prompt_continue() -> void:
-	newline()
-	newline()
-	append_text("[Press ")
-	add_control_glyph("ui_accept")
-	append_text(" to continue]")
+	if OS.has_feature("web_android") or OS.has_feature("web_ios"):
+		newline()
+		newline()
+		append_text("[Tap anywhere to continue]")
+	else:
+		newline()
+		newline()
+		append_text("[Press ")
+		add_control_glyph("ui_accept")
+		append_text(" to continue]")
 
 func enemy_convert_blocked() -> void:
 	reset()

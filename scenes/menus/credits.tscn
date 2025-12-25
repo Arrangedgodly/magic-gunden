@@ -1,6 +1,6 @@
-[gd_scene load_steps=40 format=3 uid="uid://b6n0dup30delf"]
+[gd_scene load_steps=44 format=3 uid="uid://b6n0dup30delf"]
 
-[ext_resource type="Script" uid="uid://j81xtfthil7b" path="res://scripts/credits.gd" id="1_w6cxx"]
+[ext_resource type="Script" uid="uid://j81xtfthil7b" path="res://scripts/menus/credits.gd" id="1_w6cxx"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_xdy3h"]
 [ext_resource type="AudioStream" uid="uid://bt68qq04jj871" path="res://assets/sounds/music/Eyes in the Shadow.wav" id="2_4t8yx"]
 [ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="3_hn13o"]
@@ -22,6 +22,7 @@
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="20_4t8yx"]
 [ext_resource type="Texture2D" uid="uid://dj8xc3dvht4eo" path="res://assets/items/gemframe5.png" id="20_s0pv8"]
 [ext_resource type="Texture2D" uid="uid://dknedvws0nqm6" path="res://assets/items/gemframe6.png" id="21_yvyb6"]
+[ext_resource type="Texture2D" uid="uid://c5ndsa11lwbhj" path="res://assets/UI/exit.png" id="23_80d65"]
 
 [sub_resource type="Curve" id="Curve_51ntx"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -98,9 +99,6 @@ scale_over_velocity_max = 20.0
 color_ramp = SubResource("GradientTexture1D_1y46a")
 turbulence_noise_strength = 20.0
 turbulence_noise_speed = Vector3(30, 30, 0)
-collision_mode = 1
-collision_friction = 1.0
-collision_bounce = 1.0
 collision_use_scale = true
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_o57cf"]
@@ -134,9 +132,6 @@ hue_variation_min = -2.23517e-08
 hue_variation_max = -2.23517e-08
 turbulence_noise_strength = 20.0
 turbulence_noise_speed = Vector3(30, 30, 0)
-collision_mode = 1
-collision_friction = 1.0
-collision_bounce = 1.0
 collision_use_scale = true
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_u7y6m"]
@@ -171,9 +166,6 @@ color_ramp = SubResource("GradientTexture1D_1y46a")
 turbulence_noise_strength = 5.0
 turbulence_noise_scale = 3.0
 turbulence_noise_speed = Vector3(100, 100, 0)
-collision_mode = 1
-collision_friction = 1.0
-collision_bounce = 1.0
 collision_use_scale = true
 
 [sub_resource type="Gradient" id="Gradient_twbtj"]
@@ -183,22 +175,32 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_twbtj")
 use_hdr = true
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8m0g6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_15bd4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iw4f1"]
+
 [node name="Credits" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_w6cxx")
 credits_music = ExtResource("2_4t8yx")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_right = 1200.0
+offset_right = 1280.0
 offset_bottom = 800.0
 color = Color(0, 0, 0, 1)
 
 [node name="CenterContainer" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 1200.0
-offset_bottom = 871.0
+offset_right = 1280.0
+offset_bottom = 800.0
 
 [node name="Particle Effects" type="Node2D" parent="CenterContainer"]
 
@@ -208,7 +210,7 @@ scale = Vector2(7, 7)
 amount = 200
 texture = ExtResource("5_52ucs")
 lifetime = 10.0
-preprocess = 60.0
+preprocess = 5.0
 explosiveness = 0.5
 randomness = 1.0
 fixed_fps = 60
@@ -222,12 +224,11 @@ emitting = false
 amount = 5
 texture = SubResource("AnimatedTexture_vlvvl")
 lifetime = 1.75
-one_shot = true
-preprocess = 60.0
 speed_scale = 0.2
 fixed_fps = 60
 interpolate = false
 collision_base_size = 30.0
+visibility_rect = Rect2(-600, 0, 1300, 1000)
 process_material = SubResource("ParticleProcessMaterial_1hctx")
 
 [node name="SlimeParticle" type="GPUParticles2D" parent="CenterContainer/Particle Effects"]
@@ -237,12 +238,11 @@ emitting = false
 amount = 5
 texture = SubResource("AnimatedTexture_o57cf")
 lifetime = 1.5
-one_shot = true
-preprocess = 60.0
 speed_scale = 0.2
 fixed_fps = 60
 interpolate = false
 collision_base_size = 30.0
+visibility_rect = Rect2(-600, 0, 1300, 1000)
 trail_lifetime = 3.66
 process_material = SubResource("ParticleProcessMaterial_aeked")
 
@@ -252,19 +252,19 @@ emitting = false
 amount = 5
 texture = SubResource("AnimatedTexture_u7y6m")
 lifetime = 1.25
-one_shot = true
-preprocess = 60.0
 speed_scale = 0.2
 fixed_fps = 60
 interpolate = false
 collision_base_size = 30.0
+visibility_rect = Rect2(-600, 0, 1300, 1000)
 process_material = SubResource("ParticleProcessMaterial_btx1x")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-layout_mode = 0
-offset_left = 162.0
-offset_right = 1038.0
-offset_bottom = 871.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 2454.0
+grow_horizontal = 2
 theme_override_constants/separation = 25
 
 [node name="Art Assets" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
@@ -543,6 +543,30 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_xdy3h")
 theme_override_font_sizes/font_size = 28
 text = "edermunizz - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VirtualJoystick" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Art Assets"]
+layout_mode = 2
+
+[node name="VirtualJoystick" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/VirtualJoystick"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Virtual Joystick Pack"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hannemann" type="Label" parent="CenterContainer/VBoxContainer/Art Assets/VirtualJoystick"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "hannemann - Itch.io"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -997,7 +1021,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="CenterContainer"]
-position = Vector2(600, 400)
+position = Vector2(640, 400)
 
 [node name="CRT" parent="CenterContainer/Camera2D" instance=ExtResource("3_hn13o")]
 offset_left = -750.0
@@ -1013,3 +1037,16 @@ shadow_enabled = true
 texture = SubResource("GradientTexture1D_gfgri")
 texture_scale = 50.0
 height = 1000.0
+
+[node name="Exit" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 65.0
+offset_bottom = 65.0
+scale = Vector2(2.5, 2.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8m0g6")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_15bd4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_iw4f1")
+icon = ExtResource("23_80d65")

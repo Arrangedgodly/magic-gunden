@@ -26,11 +26,14 @@ const ANIMATION_SPEED = 5
 var level: int = 1
 
 func _ready() -> void:
+	DebugLogger.log_info("=== TRAIL MANAGER READY START ===")
 	if game_manager:
 		game_manager.level_changed.connect(_on_level_changed)
 	
 	if pickup_manager:
 		pickup_manager.gem_collected.connect(_on_gem_collected)
+	
+	DebugLogger.log_info("=== TRAIL MANAGER READY COMPLETE ===")
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("detach"):
@@ -40,23 +43,33 @@ func _on_gem_collected() -> void:
 	create_trail_segment()
 
 func update_move_history(current_position: Vector2) -> void:
+	DebugLogger.log_info("Updating trail move history...")
 	if len(move_history) > pickup_count:
 		move_history.pop_front()
 	move_history.append(current_position)
 	
 	activate_trail_collisions()
+	DebugLogger.log_info("Trail move history updated successfully!")
 
 func activate_trail_collisions() -> void:
+	DebugLogger.log_info("Activating trail collisions...")
 	for i in range(trail.size()):
 		if i < trail.size() - 1:
 			var piece = trail[i]
 			if is_instance_valid(piece) and piece.has_method("activate_collision"):
 				piece.activate_collision()
+			else:
+				DebugLogger.log_error("Trail gem not valid or does not have method activate collision")
+	
+	DebugLogger.log_info("Trail collisions activated successfully!")
 
 func create_trail_segment() -> void:
+	DebugLogger.log_info("Creating trail segment...")
 	if move_history.is_empty():
+		DebugLogger.log_error("No move history found!")
 		return
 	
+	DebugLogger.log_info("Instantiating gem...")
 	var gem_scene = load(gem_scene_path)
 	var gem_instance = gem_scene.instantiate()
 	var last_position = move_history[len(move_history) - 1]
@@ -71,16 +84,20 @@ func create_trail_segment() -> void:
 		3: gem_instance.play("red")
 	
 	game_manager.call_deferred("add_child", gem_instance)
+	DebugLogger.log_info("Gem added to game manager")
 	gem_instance.add_to_group("equipped")
 	trail.append(gem_instance)
 	pickup_count += 1
+	DebugLogger.log_info("Trail segment instantiated successfully!")
 
 func create_multiple_trail_segments(segment_count: int) -> void:
 	for i in range(segment_count):
 		create_trail_segment()
 
 func move_trail() -> void:
+	DebugLogger.log_info("Moving trail...")
 	if trail.is_empty():
+		DebugLogger.log_info("Trail is empty")
 		return
 		
 	for i in range(len(trail)):
@@ -90,9 +107,13 @@ func move_trail() -> void:
 			var tween = game_manager.create_tween()
 			tween.tween_property(trail[i], "position", local_position, 1.0/ANIMATION_SPEED).set_trans(Tween.TRANS_SINE)
 			trail[i].set_meta("movement_tween", tween)
-
+	
+	DebugLogger.log_info("Trail moved successfully!")
+	
 func release_trail() -> void:
+	DebugLogger.log_info("Releasing trail...")
 	if trail.is_empty():
+		DebugLogger.log_info("Trail is empty")
 		_on_trail_released(0)
 		return
 	
@@ -102,7 +123,7 @@ func release_trail() -> void:
 	
 	for i in range(trail.size()):
 		var item = trail[i]
-		var spawn_pos = item.position # Fallback
+		var spawn_pos = item.position
 		
 		if i < move_history.size():
 			var history_pos = move_history[-(i + 1)]
@@ -147,15 +168,20 @@ func release_trail() -> void:
 			item_data.node.queue_free()
 	
 	_on_trail_released(items_captured)
+	
+	DebugLogger.log_info("Trail released successfully!")
 
 func _on_trail_released(items_captured: int) -> void:
+	DebugLogger.log_info("Checking trail released...")
 	if items_captured >= 6:
 		powerup_manager.spawn_powerup()
 	
 	if not powerup_manager.is_time_pause_active():
 		capture_point_manager.reset_capture_timers()
+	DebugLogger.log_info("Trail release checked successfully!")
 
 func _on_ammo_conversion(streak: int) -> void:
+	DebugLogger.log_info("Trail manager initiating ammo conversion...")
 	player.create_score_popup(10 * streak)
 	
 	ammo_manager.increase_ammo_count()
@@ -164,17 +190,21 @@ func _on_ammo_conversion(streak: int) -> void:
 	score_manager.append_scores_to_add(10 * streak)
 	
 	trail_item_converted_to_ammo.emit()
+	DebugLogger.log_info("Trail manager ammo conversion completed!")
 
 func _instantiate_enemy(item_data) -> void:
+	DebugLogger.log_info("Trail manager initiating enemy instantiation...")
 	var blue_slime_scene = load(blue_slime_scene_path)
 	var enemy_instance = blue_slime_scene.instantiate()
 	enemy_instance.position = item_data.position
 	game_manager.add_child(enemy_instance)
+	DebugLogger.log_info("Enemy added to game manager")
 					
 	if game_manager.has_method("increase_slimes_killed"):
 		enemy_instance.was_killed.connect(game_manager.increase_slimes_killed)
 				
 	trail_item_converted_to_enemy.emit(item_data.position)
+	DebugLogger.log_info("Trail manager enemy instantiation completed!")
 
 func is_on_capture_point(item: Node2D) -> bool:
 	var capture_points = game_manager.get_tree().get_nodes_in_group("capture")
@@ -188,24 +218,29 @@ func is_on_capture_point(item: Node2D) -> bool:
 	return false
 
 func convert_to_enemy(pickup: Node2D) -> void:
+	DebugLogger.log_info("Trail manager converting gem to enemy...")
 	await pickup.flash(Color(255, 0, 0, 255))
 	
 	var blue_slime_scene = load(blue_slime_scene_path)
 	var enemy_instance = blue_slime_scene.instantiate()
 	enemy_instance.position = pickup.position
 	game_manager.add_child(enemy_instance)
+	DebugLogger.log_info("Enemy added to game manager")
 	
 	if game_manager.has_method("increase_slimes_killed"):
 		enemy_instance.was_killed.connect(game_manager.increase_slimes_killed)
 	
 	pickup.queue_free()
 	trail_item_converted_to_enemy.emit(pickup.position)
+	DebugLogger.log_info("Trail manager converted gem to enemy successfully!")
 
 func convert_to_ammo(pickup: Node2D, streak: int) -> void:
+	DebugLogger.log_info("Trail manager converting gem to ammo...")
 	await pickup.flash(Color(0, 255, 0, 255))
 	
 	pickup.queue_free()
 	_on_ammo_conversion(streak)
+	DebugLogger.log_info("Trail manager converted gem to ammo successfully!")
 
 func get_trail_size() -> int:
 	return trail.size()
@@ -221,16 +256,19 @@ func get_first_trail_position() -> Vector2:
 	return Vector2.ZERO
 
 func clear_trail() -> void:
+	DebugLogger.log_info("Clearing trail...")
 	for item in trail:
 		item.queue_free()
 	trail.clear()
 	pickup_count = 0
 	capture_count = 0
+	DebugLogger.log_info("Trail cleared successfully!")
 
 func _on_level_changed(new_level: int) -> void:
 	level = new_level
 
 func reset_trail_visuals(new_position: Vector2) -> void:
+	DebugLogger.log_info("Resetting trail visuals...")
 	move_history.clear()
 	
 	for i in range(pickup_count + 5):
@@ -248,3 +286,4 @@ func reset_trail_visuals(new_position: Vector2) -> void:
 	
 	await get_tree().create_timer(1.0).timeout
 	activate_trail_collisions()
+	DebugLogger.log_info("Trail visuals reset successfully!")

@@ -112,10 +112,12 @@ func _change_to_loaded_scene() -> void:
 			tween.tween_property(visual_root, "modulate:a", 0.0, 0.3)
 			await tween.finished
 	
+	get_tree().change_scene_to_packed(_loaded_resource)
+	
+	await get_tree().create_timer(0.25).timeout
+	
 	current_loading_screen_instance.queue_free()
 	current_loading_screen_instance = null
-	
-	get_tree().change_scene_to_packed(_loaded_resource)
 
 func quick_load(scene_path: String) -> void:
 	var scene = ResourceLoader.load(scene_path)

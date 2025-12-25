@@ -188,6 +188,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="ControlsSection" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -226,9 +227,9 @@ offset = Vector2(350, 465)
 anchor_mode = 0
 
 [node name="CRT" parent="CanvasLayer/Camera2D" instance=ExtResource("5_1sggn")]
-offset_left = 325.0
+offset_left = 300.0
 offset_top = 420.0
-offset_right = 1525.0
+offset_right = 1580.0
 offset_bottom = 1220.0
 scale = Vector2(1.1, 1.1)
 
