@@ -39,6 +39,7 @@ var missed_capture_explained: bool = false
 var should_wait: bool = false
 var current_death_reason: String = "enemy"
 
+signal can_fire
 signal tutorial_finished
 
 func _ready() -> void:
@@ -159,6 +160,7 @@ func start_tutorial_logic() -> void:
 
 		game_manager.game_started = true
 		player.move_timer.start()
+		player.can_fire = false
 
 	current_step_index = 0
 	_execute_current_step()
@@ -262,6 +264,9 @@ func finish_tutorial() -> void:
 	if trail_manager:
 		trail_manager.tutorial_mode = false
 		trail_manager.clear_trail()
+	
+	if not player.can_fire:
+		player.can_fire = true
 		
 	tutorial_finished.emit()
 	AudioManager.stop(tutorial_music)
@@ -270,7 +275,8 @@ func finish_tutorial() -> void:
 func _on_skip_pressed() -> void:
 	if waiting_for_continue:
 		waiting_for_continue = false
-		get_tree().paused = false
+	
+	get_tree().paused = false
 	
 	tutorial_save.show_tutorial = false
 	SaveHelper.save_tutorial_save(tutorial_save)

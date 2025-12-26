@@ -9,6 +9,7 @@ func _init(tutorial_ref: Tutorial) -> void:
 
 func _execute_step() -> void:
 	tutorial.tutorial_protection_active = true
+	tutorial.can_fire.emit()
 	tutorial.test_enemies_killed = 0
 	show_instruction("ATTACK", "kill_enemy")
 	await pause_and_wait()

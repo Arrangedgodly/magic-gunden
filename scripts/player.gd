@@ -8,6 +8,7 @@ class_name Player
 @onready var ammo_manager: AmmoManager = %AmmoManager
 @onready var trail_manager: TrailManager = %TrailManager
 @onready var score_manager: ScoreManager = %ScoreManager
+@onready var tutorial: Tutorial = %Tutorial
 @onready var crosshair: Sprite2D = $Crosshair
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -31,6 +32,7 @@ var start_position: Vector2
 var movement_tween: Tween
 var virtual_move_input: Vector2 = Vector2.ZERO
 var virtual_aim_input: Vector2 = Vector2.ZERO
+var can_fire: bool = true
 
 const TILE_SIZE = 32
 const UP = Vector2(0, -1)
@@ -41,6 +43,8 @@ const RIGHT = Vector2(1, 0)
 func _ready():
 	powerup_manager = get_node("/root/MagicGarden/Systems/PowerupManager")
 	gameplay_area = get_node("/root/MagicGarden/World/GameplayArea")
+	
+	tutorial.can_fire.connect(_on_tutorial_can_fire)
 	
 	move_timer.timeout.connect(_on_move_timer_timeout)
 	
@@ -71,10 +75,14 @@ func _process(_delta: float) -> void:
 
 func _on_move_timer_timeout() -> void:
 	if is_attacking:
-		ammo_manager.handle_attack()
+		if can_fire:
+			ammo_manager.handle_attack()
 		is_attacking = false
 	if last_direction != null:
 		move(last_direction)
+
+func _on_tutorial_can_fire() -> void:
+	can_fire = true
 
 func move(dir):
 	var new_position = position + (dir * TILE_SIZE)
@@ -177,6 +185,9 @@ func create_score_popup(value):
 	score_popup.handle_popup(value)
 
 func attack():
+	if not can_fire:
+		return
+		
 	var directions_to_shoot = [aim_direction]
 	
 	if four_way_shot_active:
