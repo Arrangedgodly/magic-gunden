@@ -455,8 +455,6 @@ visible = false
 [node name="EndGameScreen" parent="MenuLayer" instance=ExtResource("25_5kf2c")]
 unique_name_in_owner = true
 visible = false
-offset_right = 0.0
-offset_bottom = 0.0
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 3

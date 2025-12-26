@@ -12,10 +12,10 @@ var scores_to_update: Array
 
 signal game_ended(final_saved_game: SavedGame)
 signal new_highscore(new_score: int)
-signal new_high_killcount(new_killcount: int)
-signal new_high_time_alive(new_time_alive: int)
-signal new_high_gems_captured(new_gems_captured: int)
-signal new_high_killstreak(new_killstreak: int)
+signal new_high_killcount
+signal new_high_time_alive
+signal new_high_gems_captured
+signal new_high_killstreak
 signal new_killstreak(new_killstreak_count: int)
 signal update_score(new_score: int)
 
@@ -66,49 +66,50 @@ func save_game():
 	if not high_scores.score == null:
 		if saved_game.score > high_scores.score:
 			high_scores.set_score(saved_game.score)
-			new_highscore.emit(saved_game.score)
+			new_highscore.emit()
 	else:
-		new_highscore.emit(saved_game.score)
+		high_scores.set_score(saved_game.score)
+		new_highscore.emit()
 	
 	if not high_scores.slimes_killed == null:
 		if saved_game.slimes_killed > high_scores.slimes_killed:
 			high_scores.set_slimes_killed(saved_game.slimes_killed)
-			new_high_killcount.emit(saved_game.slimes_killed)
+			new_high_killcount.emit()
 	else:
 		high_scores.set_slimes_killed(saved_game.slimes_killed)
-		new_high_killcount.emit(saved_game.slimes_killed)
+		new_high_killcount.emit()
 	
 	if not high_scores.killstreak == null:
 		if saved_game.killstreak > high_scores.killstreak:
 			high_scores.set_killstreak(saved_game.killstreak)
-			new_high_killstreak.emit(saved_game.killstreak)
+			new_high_killstreak.emit()
 	else:
 		high_scores.set_killstreak(saved_game.killstreak)
-		new_high_killstreak.emit(saved_game.killstreak)
+		new_high_killstreak.emit()
 		
 	if not high_scores.time_alive == null:
 		if saved_game.time_alive > high_scores.time_alive:
 			high_scores.set_time_alive(saved_game.time_alive)
-			new_high_time_alive.emit(saved_game.time_alive)
+			new_high_time_alive.emit()
 	else:
 		high_scores.set_time_alive(saved_game.time_alive)
-		new_high_time_alive.emit(saved_game.time_alive)
+		new_high_time_alive.emit()
 		
 	if not high_scores.gems_captured == null:
 		if saved_game.gems_captured > high_scores.gems_captured:
 			high_scores.set_gems_captured(saved_game.gems_captured)
-			new_high_gems_captured.emit(saved_game.gems_captured)
+			new_high_gems_captured.emit()
 	else:
 		high_scores.set_gems_captured(saved_game.gems_captured)
-		new_high_gems_captured.emit(saved_game.gems_captured)
+		new_high_gems_captured.emit()
 	
 	if not high_scores.killstreak == null:
 		if saved_game.killstreak > high_scores.killstreak:
 			high_scores.set_killstreak(saved_game.killstreak)
-			new_high_killstreak.emit(saved_game.killstreak)
+			new_high_killstreak.emit()
 	
 	else:
 		high_scores.set_killstreak(saved_game.killstreak)
-		new_high_killstreak.emit(saved_game.killstreak)
+		new_high_killstreak.emit()
 	
 	SaveHelper.save_high_scores(saved_game)

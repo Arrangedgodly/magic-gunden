@@ -14,8 +14,13 @@ extends Control
 @onready var time_alive: Label = %"Time Alive"
 @onready var gems_captured_label: Label = %"Gems Captured Label"
 @onready var gems_captured: Label = %"Gems Captured"
+@onready var try_again: Label = %"Try Again?"
+@onready var yes_no_container: HBoxContainer = %YesNoContainer
+@onready var curve_shader = preload("res://shaders/curved_and_vertical_motion.gdshader")
 
 var score_manager: ScoreManager
+var try_again_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro Ring 04.wav")
+var high_score_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro PowerUP 09.wav")
 
 func _ready() -> void:
 	score_manager = get_node("/root/MagicGarden/Systems/ScoreManager")
@@ -37,6 +42,9 @@ func _ready() -> void:
 		
 	if not score_manager.new_high_time_alive.is_connected(_on_score_manager_new_high_time_alive):
 		score_manager.new_high_time_alive.connect(_on_score_manager_new_high_time_alive)
+	
+	if not flash_score.animation_finished.is_connected(_on_flash_score_animation_finished):
+		flash_score.animation_finished.connect(_on_flash_score_animation_finished)
 		
 	hide()
 	
@@ -47,7 +55,6 @@ func _on_score_manager_game_ended(final_saved_game) -> void:
 	time_alive.text = final_saved_game.get_time_alive_in_minutes()
 	gems_captured.text = str(final_saved_game.gems_captured)
 	show()
-	yes.grab_focus()
 	ui.hide()
 
 func _on_no_pressed() -> void:
@@ -58,34 +65,52 @@ func _on_yes_pressed() -> void:
 	hide()
 	get_tree().change_scene_to_file("res://scenes/magic_garden.tscn")
 
-func _on_score_manager_new_highscore(new_score: int) -> void:
+func _on_score_manager_new_highscore() -> void:
+	await flash_score.animation_finished
 	final_score_label.text = "NEW BEST HIGH SCORE"
-	final_score.text = str(new_score)
+	_set_shader(final_score_label)
+	_set_shader(final_score)
+	AudioManager.play_sound(high_score_sfx)
 
-func _on_score_manager_new_high_killcount(new_killcount: int) -> void:
+func _on_score_manager_new_high_killcount() -> void:
+	await flash_score.animation_finished
 	final_killcount_label.text = "NEW TOP KILL COUNT"
-	final_killcount.text = str(new_killcount)
+	_set_shader(final_killcount_label)
+	_set_shader(final_killcount)
+	AudioManager.play_sound(high_score_sfx)
 
-func _on_score_manager_new_high_killstreak(new_killstreak: int) -> void:
+func _on_score_manager_new_high_killstreak() -> void:
+	await flash_score.animation_finished
 	best_killstreak_label.text = "NEW BEST KILLSTREAK"
-	best_killstreak.text = str(new_killstreak)
+	_set_shader(best_killstreak_label)
+	_set_shader(best_killstreak)
+	AudioManager.play_sound(high_score_sfx)
 
-func _on_score_manager_new_high_time_alive(new_time_alive: int) -> void:
+func _on_score_manager_new_high_time_alive() -> void:
+	await flash_score.animation_finished
 	time_alive_label.text = "NEW LONGEST TIME ALIVE"
-	time_alive.text = str(new_time_alive)
+	_set_shader(time_alive_label)
+	_set_shader(time_alive)
+	AudioManager.play_sound(high_score_sfx)
 
-func _on_score_manager_new_high_gems_captured(new_gems_captured: int) -> void:
+func _on_score_manager_new_high_gems_captured() -> void:
+	await flash_score.animation_finished
 	gems_captured_label.text = "NEW TOP GEMS CAPTURED"
-	gems_captured.text = str(new_gems_captured)
+	_set_shader(gems_captured_label)
+	_set_shader(gems_captured)
+	AudioManager.play_sound(high_score_sfx)
 
-func _on_yes_focus_entered() -> void:
-	yes.get_material().set_shader_parameter("speed", 2)
+func _on_flash_score_animation_finished() -> void:
+	AudioManager.play_sound(try_again_sfx)
+	try_again.show()
+	yes_no_container.show()
+	yes.grab_focus()
 
-func _on_yes_focus_exited() -> void:
-	yes.get_material().set_shader_parameter("speed", 0)
-
-func _on_no_focus_entered() -> void:
-	no.get_material().set_shader_parameter("speed", 2)
-
-func _on_no_focus_exited() -> void:
-	no.get_material().set_shader_parameter("speed", 0)
+func _set_shader(target_label: Label) -> void:
+	var new_material = ShaderMaterial.new()
+	new_material.shader = curve_shader
+	target_label.material = new_material
+	target_label.material.set_shader_parameter("wave_amplitude", 30.0)
+	target_label.material.set_shader_parameter("wave_frequency", 75.0)
+	target_label.material.set_shader_parameter("movement_speed", 3.0)
+	target_label.material.set_shader_parameter("movement_amplitude", 8.0)

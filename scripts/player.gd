@@ -160,8 +160,13 @@ func die():
 	game_manager.end_game()
 	animation_tree.set("parameters/Death/BlendSpace2D/blend_position", last_direction)
 	animation_tree.get("parameters/playback").travel("Death")
-	set_process(false)
 	move_timer.stop()
+	
+	await animation_tree.animation_finished
+	
+	process_mode = Node.PROCESS_MODE_DISABLED
+	crosshair.visible = false
+	crosshair.process_mode = Node.PROCESS_MODE_DISABLED
 
 func _on_projectile_shot_missed() -> void:
 	score_manager.reset_current_killstreak()

@@ -924,6 +924,30 @@ text = "Kostilus - godotshaders.com"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="CurvedShader" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Shaders"]
+layout_mode = 2
+
+[node name="CurveShader" type="Label" parent="CenterContainer/VBoxContainer/Shaders/CurvedShader"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Curved and Vertical Motion for Text Shader"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="phrbmr" type="Label" parent="CenterContainer/VBoxContainer/Shaders/CurvedShader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "phrbmr - godotshaders.com"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="MovingRainbow Shader" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Shaders"]
 layout_mode = 2
 
