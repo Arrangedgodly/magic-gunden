@@ -5,10 +5,10 @@ var saved_game = SavedGame.new()
 var current_killstreak: int = 0
 var scores_to_update: Array
 
-@onready var game_manager: GameManager = %GameManager
-@onready var enemy_manager: EnemyManager = %EnemyManager
+@onready var game_manager = %GameManager
+@onready var enemy_manager = %EnemyManager
 @onready var time_counter: Timer = $TimeCounter
-@onready var player: Player = %Player
+@onready var player = %Player
 
 signal game_ended(final_saved_game: SavedGame)
 signal new_highscore(new_score: int)

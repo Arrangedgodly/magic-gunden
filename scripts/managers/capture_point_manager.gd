@@ -5,7 +5,7 @@ signal capture_points_spawned(count: int)
 signal capture_points_cleared
 signal capture_animation_played
 
-@onready var game_manager: Node2D = %GameManager
+@onready var game_manager = %GameManager
 @onready var capture_point_timer: Timer = $CapturePointTimer
 @onready var capture_point_animation: Timer = $CapturePointAnimation
 

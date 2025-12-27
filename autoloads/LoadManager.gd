@@ -8,7 +8,7 @@ var _load_screen_packed: PackedScene
 var _scene_path: String
 var _progress: Array = []
 var _loaded_resource: PackedScene
-var use_sub_threads: bool = OS.has_feature("web") == false
+var use_sub_threads: bool = not (OS.has_feature("web") or OS.has_feature("mobile"))
 var current_loading_screen_instance: Node = null
 var is_web_loading: bool = false
 
@@ -30,7 +30,7 @@ func load_scene(scene_path: String) -> void:
 	if new_loading_screen.has_method("update_progress"):
 		self.progress_changed.connect(new_loading_screen.update_progress)
 	
-	if OS.has_feature("web"):
+	if OS.has_feature("web") or OS.has_feature("mobile"):
 		DebugLogger.log_info("Using web-safe loading...")
 		_start_web_load()
 	else:
@@ -103,21 +103,42 @@ func _change_to_loaded_scene() -> void:
 	
 	if _loaded_resource == null:
 		DebugLogger.log_error("Cannot change scene: loaded resource is null!")
+		_cleanup_loading_screen()
 		return
+
+	if is_instance_valid(current_loading_screen_instance):
+		if current_loading_screen_instance.get_child_count() > 0:
+			var visual_root = current_loading_screen_instance.get_child(0)
+			if visual_root and "modulate" in visual_root:
+				var tween = create_tween()
+				tween.tween_property(visual_root, "modulate:a", 0.0, 0.3)
+				await tween.finished
+
+	var old_scene = get_tree().current_scene
+	if old_scene:
+		DebugLogger.log_info("Freeing old scene: " + old_scene.name)
+		old_scene.queue_free()
+
+		await get_tree().process_frame
+		await get_tree().process_frame
+
+	DebugLogger.log_info("Instantiating new scene...")
+	var new_scene_instance = _loaded_resource.instantiate()
+
+	_loaded_resource = null 
 	
-	if current_loading_screen_instance:
-		var visual_root = current_loading_screen_instance.get_child(0)
-		if visual_root and "modulate" in visual_root:
-			var tween = create_tween()
-			tween.tween_property(visual_root, "modulate:a", 0.0, 0.3)
-			await tween.finished
+	get_tree().root.add_child(new_scene_instance)
+	get_tree().current_scene = new_scene_instance
 	
-	get_tree().change_scene_to_packed(_loaded_resource)
+	DebugLogger.log_info("Scene swap complete")
 	
 	await get_tree().create_timer(0.25).timeout
-	
-	current_loading_screen_instance.queue_free()
-	current_loading_screen_instance = null
+	_cleanup_loading_screen()
+
+func _cleanup_loading_screen() -> void:
+	if is_instance_valid(current_loading_screen_instance):
+		current_loading_screen_instance.queue_free()
+		current_loading_screen_instance = null
 
 func quick_load(scene_path: String) -> void:
 	var scene = ResourceLoader.load(scene_path)

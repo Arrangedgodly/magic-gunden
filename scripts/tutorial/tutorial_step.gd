@@ -23,7 +23,7 @@ var requires_wait_after_continue: bool = false
 
 var _connected_signals: Array[Dictionary] = []
 
-func _init(tutorial_ref: Tutorial) -> void:
+func _init(tutorial_ref) -> void:
 	tutorial = tutorial_ref
 	_setup_references()
 
@@ -106,5 +106,13 @@ func advance_to_next() -> void:
 	tutorial.next_step()
 
 func show_instruction(title: String, hint_method: String) -> void:
+	if not instruction_label or not hint_label:
+		push_error("Labels not initialized in TutorialStep")
+		return
+		
 	instruction_label.text = title
-	hint_label.call(hint_method)
+	
+	if hint_label.has_method(hint_method):
+		hint_label.call(hint_method)
+	else:
+		push_error("hint_label missing method: " + hint_method)

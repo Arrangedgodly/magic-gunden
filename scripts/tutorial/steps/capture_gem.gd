@@ -1,9 +1,8 @@
 extends TutorialStep
-class_name CaptureGemStep
 
 var _signal_received: bool = false
 
-func _init(tutorial_ref: Tutorial) -> void:
+func _init(tutorial_ref) -> void:
 	super(tutorial_ref)
 	step_number = 5
 	should_pause = true
@@ -26,7 +25,8 @@ func _on_trail_converted() -> void:
 	if trail_manager:
 		trail_manager.tutorial_capture = true
 	
-	await tutorial.get_tree().create_timer(0.5).timeout
+	if tutorial and tutorial.get_tree():
+		await tutorial.get_tree().create_timer(0.5).timeout
 	
 	if capture_manager:
 		capture_manager.clear_capture_points()

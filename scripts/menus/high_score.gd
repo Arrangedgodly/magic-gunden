@@ -37,4 +37,4 @@ func _process(_delta: float) -> void:
 
 func exit() -> void:
 	AudioManager.stop(high_score_music)
-	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
+	LoadManager.quick_load("res://scenes/menus/main_menu.tscn")

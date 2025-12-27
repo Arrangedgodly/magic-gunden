@@ -8,18 +8,22 @@ extends CanvasLayer
 @onready var current_killstreak_label: Label = %Current_Killstreak_Label
 @onready var current_killstreak: Label = %Current_Killstreak
 @onready var powerup_container: HBoxContainer = $PowerupContainer
-@onready var game_manager: Node2D = %GameManager
-@onready var score_manager: Node2D = %ScoreManager
-@onready var ammo_manager: AmmoManager = %AmmoManager
-@onready var trail_manager: TrailManager = %TrailManager
-@onready var move_joystick: TouchScreenButton = %MoveJoystick
-@onready var aim_joystick: TouchScreenButton = %AimJoystick
-@onready var detach_button: TouchScreenButton = %Detach
-@onready var fire_button: TouchScreenButton = %Fire
+@onready var game_manager = %GameManager
+@onready var score_manager = %ScoreManager
+@onready var ammo_manager = %AmmoManager
+@onready var trail_manager = %TrailManager
+@onready var move_joystick = %MoveJoystick
+@onready var aim_joystick = %AimJoystick
+@onready var detach_button = %Detach
+@onready var fire_button = %Fire
 
 var current_display_score: int = 0
 var current_ammo: int = 0
 var player
+var notification_queue: Array[AchievementData] = []
+var is_showing_notification: bool = false
+
+var notification_banner_scene = preload("res://scenes/ui/notification_banner.tscn")
 
 func _ready() -> void:
 	current_killstreak_label.hide()
@@ -32,6 +36,8 @@ func _ready() -> void:
 	
 	fire_button.button_pressed.connect(_on_fire_button_pressed)
 	detach_button.button_pressed.connect(_on_detach_button_pressed)
+	
+	AchievementManager.achievement_unlocked.connect(_on_achievement_unlocked)
 	
 func _input(event: InputEvent) -> void:
 	controls.handle_input_event(event)
@@ -73,7 +79,34 @@ func _on_game_manager_current_ammo(new_ammo: int) -> void:
 	current_ammo = new_ammo
 
 func _on_fire_button_pressed() -> void:
+	DebugLogger.log_info("Mobile fire button pressed")
 	player.trigger_attack()
 
 func _on_detach_button_pressed() -> void:
+	DebugLogger.log_info("Mobile detach button pressed")
 	trail_manager.release_trail()
+
+func _on_achievement_unlocked(achievement: AchievementData) -> void:
+	notification_queue.append(achievement)
+	_check_notification_queue()
+
+func _check_notification_queue() -> void:
+	if is_showing_notification or notification_queue.is_empty():
+		return
+	
+	var next_achievement = notification_queue.pop_front()
+	_show_notification(next_achievement)
+
+func _show_notification(achievement: AchievementData) -> void:
+	is_showing_notification = true
+	
+	var banner = notification_banner_scene.instantiate()
+	add_child(banner)
+	
+	banner.position.y = -150
+	banner.setup(achievement)
+	
+	await get_tree().create_timer(4.0).timeout
+	
+	is_showing_notification = false
+	_check_notification_queue()

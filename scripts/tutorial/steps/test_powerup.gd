@@ -1,7 +1,6 @@
 extends TutorialStep
-class_name TestPowerupStep
 
-func _init(tutorial_ref: Tutorial) -> void:
+func _init(tutorial_ref) -> void:
 	super(tutorial_ref)
 	step_number = 13
 	should_pause = true
@@ -24,8 +23,9 @@ func spawn_test_enemies(count: int) -> void:
 		return
 
 	for i in range(count):
-		await tutorial.get_tree().create_timer(0.3).timeout
-		enemy_manager.spawn_enemy()
+		if tutorial and tutorial.get_tree():
+			await tutorial.get_tree().create_timer(0.3).timeout
+			enemy_manager.spawn_enemy()
 
 func check_auto_advance() -> bool:
 	return tutorial.test_enemies_killed >= 1

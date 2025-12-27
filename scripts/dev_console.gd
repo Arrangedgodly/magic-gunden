@@ -137,4 +137,4 @@ func _on_spawn_powerup(scene: PackedScene) -> void:
 	powerup_manager.force_spawn_powerup(scene)
 
 func _on_spawn_gem() -> void:
-	pickup_manager.spawn_gem()
+	pickup_manager.force_spawn_gem()

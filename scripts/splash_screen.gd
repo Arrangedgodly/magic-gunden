@@ -7,6 +7,7 @@ extends Control
 @export var godot_sound: AudioStream
 @export var gurpy_games_sound: AudioStream
 
+var skip_splash: bool = false
 var splash_finished : bool = false
 
 func _ready() -> void:
@@ -19,8 +20,15 @@ func _ready() -> void:
 	await get_tree().create_timer(1).timeout
 	splash_finished = true
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("menu") or event.is_action_pressed("ui_accept"):
+		skip_splash = true
+	
+	if event is InputEventScreenTouch or event is InputEventScreenDrag:
+		skip_splash = true
+
 func _process(_delta: float) -> void:
-	if splash_finished or Input.is_action_just_pressed("ui_cancel") or Input.is_action_just_pressed("menu") or Input.is_action_just_pressed("ui_accept"):
+	if splash_finished or skip_splash:
 		AudioManager.stop(godot_sound)
 		AudioManager.stop(gurpy_games_sound)
 		get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")

@@ -153,6 +153,10 @@ scale = Vector2(0.75, 0.75)
 unique_name_in_owner = true
 position = Vector2(1000, 500)
 scale = Vector2(0.75, 0.75)
+action_left = "aim-left"
+action_right = "aim-right"
+action_up = "aim-up"
+action_down = "aim-down"
 
 [node name="Detach" parent="." instance=ExtResource("8_jcn1r")]
 unique_name_in_owner = true

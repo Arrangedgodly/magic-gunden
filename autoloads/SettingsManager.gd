@@ -12,15 +12,26 @@ func load_and_apply_settings() -> void:
 	var save_path = "user://settings.tres"
 	
 	var file_exists = false
+
 	if OS.has_feature("web"):
 		DebugLogger.log_info("Web build - skipping file check")
+	elif OS.has_feature("android") or OS.has_feature("ios"):
+		DebugLogger.log_info("Mobile build - checking file with FileAccess")
+		var file = FileAccess.open(save_path, FileAccess.READ)
+		file_exists = file != null
+		if file:
+			file.close()
+		DebugLogger.log_info("Settings file exists: " + str(file_exists))
 	else:
 		file_exists = FileAccess.file_exists(save_path)
 		DebugLogger.log_info("Settings file exists: " + str(file_exists))
 	
 	if file_exists:
-		settings_save = load(save_path) as SettingsSave
-		DebugLogger.log_info("Loaded settings from file")
+		settings_save = ResourceLoader.load(save_path, "", ResourceLoader.CACHE_MODE_IGNORE) as SettingsSave
+		if settings_save:
+			DebugLogger.log_info("Loaded settings from file")
+		else:
+			DebugLogger.log_warning("Settings file exists but failed to load")
 	
 	if settings_save == null:
 		DebugLogger.log_info("Creating new settings")

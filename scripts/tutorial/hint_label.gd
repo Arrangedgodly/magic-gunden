@@ -45,8 +45,13 @@ func _ready() -> void:
 	_create_animation(gem_frames, gem_animated)
 	_create_animation(enemy_frames, enemy_animated)
 	_create_animation(capture_frames, capture_animated)
-	
-	settings_save = SettingsManager.get_settings()
+
+func _ensure_settings_loaded() -> void:
+	if not settings_save:
+		await get_tree().process_frame
+		settings_save = SettingsManager.get_settings()
+		if not settings_save:
+			push_error("Failed to load settings_save in hint_label")
 
 func _create_animation(frames: Array, animation: AnimatedTexture) -> void:
 	animation.frames = frames.size()
@@ -57,6 +62,12 @@ func _create_animation(frames: Array, animation: AnimatedTexture) -> void:
 		animation.set_frame_duration(i, 1.0)
 
 func add_control_glyph(action: String) -> void:
+	_ensure_settings_loaded()
+	
+	if not settings_save:
+		append_text("[???]")
+		return
+	
 	var controller_type = ControllerManager.get_controller_type()
 	var is_keyboard = controller_type == ControllerManager.ControllerType.KEYBOARD
 	
@@ -228,7 +239,7 @@ func final() -> void:
 	append_text("You now know the basics. Survive as long as you can!")
 
 func prompt_continue() -> void:
-	if OS.has_feature("web_android") or OS.has_feature("web_ios"):
+	if OS.has_feature("mobile"):
 		newline()
 		newline()
 		append_text("[Tap anywhere to continue]")

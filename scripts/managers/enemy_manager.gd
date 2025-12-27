@@ -3,10 +3,11 @@ class_name EnemyManager
 
 @onready var enemy_spawn: Timer = $EnemySpawn
 @onready var enemy_move: Timer = $EnemyMove
-@onready var player: CharacterBody2D = %Player
-@onready var game_manager: Node2D
-@onready var score_manager: Node2D
-@onready var spawn: Node2D = %Spawn
+@onready var player = %Player
+@onready var spawn = %Spawn
+
+var game_manager: Node2D
+var score_manager: Node2D
 
 signal enemy_spawned(enemy: Node2D)
 signal slime_killed

@@ -1,10 +1,9 @@
 extends TutorialStep
-class_name AttemptCaptureStep
 
 var has_started_trail: bool = false
 var step_finished: bool = false
 
-func _init(tutorial_ref: Tutorial) -> void:
+func _init(tutorial_ref) -> void:
 	super(tutorial_ref)
 	step_number = 7
 	should_pause = true
@@ -31,6 +30,8 @@ func check_auto_advance() -> bool:
 		step_finished = true
 		tutorial.disable_auto_advance = true
 		
-		tutorial.get_tree().create_timer(1.5).timeout.connect(advance_to_next)
+		if tutorial and tutorial.get_tree():
+			var timer = tutorial.get_tree().create_timer(1.5)
+			timer.timeout.connect(func(): advance_to_next())
 
 	return false

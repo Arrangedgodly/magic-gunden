@@ -3,10 +3,13 @@ extends TouchScreenButton
 signal button_pressed
 
 func _ready() -> void:
-	if not (OS.has_feature("web_android") or OS.has_feature("web_ios")):
-		self.visible = false
-		
-func _input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch:
-		if event.pressed:
-			button_pressed.emit()
+	var controller_type = ControllerManager.get_controller_type_name()
+	
+	if controller_type != "Touch":
+		hide()
+		return
+	
+	pressed.connect(_on_pressed)
+
+func _on_pressed() -> void:
+	button_pressed.emit()

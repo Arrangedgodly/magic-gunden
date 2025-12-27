@@ -4,7 +4,8 @@ enum ControllerType {
 	XBOX,
 	PLAYSTATION,
 	STEAM_DECK,
-	KEYBOARD
+	KEYBOARD,
+	TOUCH
 }
 
 var current_controller_type: ControllerType = ControllerType.KEYBOARD
@@ -17,17 +18,23 @@ signal controller_disconnected(device_id: int)
 signal controller_type_changed(new_type: ControllerType)
 
 func _ready() -> void:
-	DebugLogger.log_manager_init("ControllerManager - START")
+	DebugLogger.log_info("ControllerManager - START")
 	Input.joy_connection_changed.connect(_on_joy_connection_changed)
 	
 	for device_id in Input.get_connected_joypads():
 		_detect_controller_type(device_id)
 	
-	DebugLogger.log_manager_init("ControllerManager - COMPLETE")
+	if connected_controllers.is_empty() and _is_touch_device():
+		_set_active_type(ControllerType.TOUCH)
+	
+	DebugLogger.log_info("ControllerManager - COMPLETE")
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey or event is InputEventMouseButton:
 		_set_active_type(ControllerType.KEYBOARD)
+	
+	elif event is InputEventScreenTouch or event is InputEventScreenDrag:
+		_set_active_type(ControllerType.TOUCH)
 		
 	elif event is InputEventJoypadButton:
 		var device_id = event.device
@@ -79,6 +86,9 @@ func _detect_controller_type(device_id: int) -> void:
 	
 	connected_controllers[device_id] = detected_type
 
+func _is_touch_device() -> bool:
+	return DisplayServer.is_touchscreen_available()
+
 func _is_playstation_controller(controller_name: String, guid: String) -> bool:
 	return (
 		"playstation" in controller_name or
@@ -111,5 +121,7 @@ func get_controller_type_name() -> String:
 			return "Steam Deck"
 		ControllerType.KEYBOARD:
 			return "Keyboard"
+		ControllerType.TOUCH:
+			return "Touch"
 		_:
 			return "Xbox"

@@ -7,11 +7,9 @@ var log_label: Label = null
 var log_container: PanelContainer = null
 
 func _ready() -> void:
-	is_web = OS.has_feature("web")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
-	if is_web:
-		_create_log_ui()
+	_create_log_ui()
 	
 	log_info("DebugLogger initialized")
 	log_info("Platform: " + ("WEB" if is_web else "DESKTOP"))
@@ -24,7 +22,7 @@ func _create_log_ui() -> void:
 
 	log_container = PanelContainer.new()
 	log_container.position = Vector2(10, 10)
-	log_container.custom_minimum_size = Vector2(400, 300)
+	log_container.custom_minimum_size = Vector2(600, 400)
 	canvas.add_child(log_container)
 
 	var scroll = ScrollContainer.new()
@@ -32,13 +30,12 @@ func _create_log_ui() -> void:
 	log_container.add_child(scroll)
 
 	log_label = Label.new()
-	log_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	scroll.add_child(log_label)
 
 	log_container.hide()
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and event.keycode == KEY_F12:
+	if event is InputEventKey and event.is_action_pressed("debug"):
 		if log_container:
 			log_container.visible = !log_container.visible
 

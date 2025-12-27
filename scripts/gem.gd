@@ -3,8 +3,8 @@ class_name Gem
 
 @onready var game_manager = get_parent()
 @onready var gem_area: Area2D = %GemArea
-@onready var pickup_manager: PickupManager
-@onready var player: Player
+@onready var pickup_manager
+@onready var player
 
 var pickup_sfx: AudioStream = preload("res://assets/sounds/sfx/Retro PickUp Coin 04.wav")
 

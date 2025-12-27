@@ -4,11 +4,11 @@ class_name Player
 
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var move_timer: Timer = %MoveTimer
-@onready var game_manager: Node2D = %GameManager
-@onready var ammo_manager: AmmoManager = %AmmoManager
-@onready var trail_manager: TrailManager = %TrailManager
-@onready var score_manager: ScoreManager = %ScoreManager
-@onready var tutorial: Tutorial = %Tutorial
+@onready var game_manager = %GameManager
+@onready var ammo_manager = %AmmoManager
+@onready var trail_manager = %TrailManager
+@onready var score_manager = %ScoreManager
+@onready var tutorial = %Tutorial
 @onready var crosshair: Sprite2D = $Crosshair
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 

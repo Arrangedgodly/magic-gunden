@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dr56s5wnp1bbk"]
+[gd_scene load_steps=23 format=3 uid="uid://dr56s5wnp1bbk"]
 
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="1_pei80"]
 [ext_resource type="Script" uid="uid://c7gkmjowho335" path="res://scripts/menus/menu.gd" id="2_3vcad"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://d4k3ok8w3g88g" path="res://scripts/ui/ui_button.gd" id="7_tbmy8"]
 [ext_resource type="Texture2D" uid="uid://kljwj0xb3t6c" path="res://assets/UI/settings.png" id="9_3w8rc"]
 [ext_resource type="Texture2D" uid="uid://bcie2tcepalvs" path="res://assets/UI/hiscore.png" id="10_uxao6"]
+[ext_resource type="Texture2D" uid="uid://k5ubbv6ua546" path="res://assets/UI/achievements.png" id="11_3w8rc"]
 [ext_resource type="Texture2D" uid="uid://bl2onto5rp6ai" path="res://assets/UI/credits.png" id="11_vr0hv"]
 [ext_resource type="Texture2D" uid="uid://c5ndsa11lwbhj" path="res://assets/UI/exit.png" id="12_a3hrp"]
 [ext_resource type="Shader" uid="uid://clb5qaes170x3" path="res://shaders/rainbow_gradient.gdshader" id="12_kgamo"]
@@ -132,8 +133,9 @@ text = "GUNDEN"
 horizontal_alignment = 1
 
 [node name="Start" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_0nd02")
-custom_minimum_size = Vector2(400, 75)
+custom_minimum_size = Vector2(475, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 64
@@ -144,8 +146,9 @@ script = ExtResource("7_tbmy8")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="Options" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_truad")
-custom_minimum_size = Vector2(400, 75)
+custom_minimum_size = Vector2(475, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 64
@@ -156,8 +159,9 @@ script = ExtResource("7_tbmy8")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="HighScore" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_pe02v")
-custom_minimum_size = Vector2(400, 75)
+custom_minimum_size = Vector2(475, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 64
@@ -167,9 +171,23 @@ expand_icon = true
 script = ExtResource("7_tbmy8")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
+[node name="Achievements" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_pe02v")
+custom_minimum_size = Vector2(475, 75)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Achievements"
+icon = ExtResource("11_3w8rc")
+expand_icon = true
+script = ExtResource("7_tbmy8")
+metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
+
 [node name="Credits" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_soldt")
-custom_minimum_size = Vector2(400, 75)
+custom_minimum_size = Vector2(475, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 64
@@ -181,8 +199,9 @@ script = ExtResource("7_tbmy8")
 metadata/_custom_type_script = "uid://d4k3ok8w3g88g"
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_162w6")
-custom_minimum_size = Vector2(400, 75)
+custom_minimum_size = Vector2(475, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 64

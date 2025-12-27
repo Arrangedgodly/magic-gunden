@@ -1,0 +1,170 @@
+[gd_scene load_steps=12 format=3 uid="uid://b358oqt40aay3"]
+
+[ext_resource type="Script" uid="uid://dqwe4yqcoxw8" path="res://scripts/ui/achievements_menu.gd" id="1_ai0em"]
+[ext_resource type="PackedScene" uid="uid://pbq177swboeh" path="res://scenes/menus/achievement_background.tscn" id="2_cv4sc"]
+[ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="2_xsqes"]
+[ext_resource type="Texture2D" uid="uid://c5ndsa11lwbhj" path="res://assets/UI/exit.png" id="4_q8pag"]
+[ext_resource type="PackedScene" uid="uid://bk6j0x0hdlfb6" path="res://scenes/crt.tscn" id="5_t5h7i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7khdh"]
+bg_color = Color(0, 0, 0, 0.6117647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xsqes"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cv4sc"]
+bg_color = Color(0.3084464, 0.7075034, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wux65"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h1ovb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qarrl"]
+
+[node name="AchievementsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ai0em")
+
+[node name="AchievementBackground" parent="." instance=ExtResource("2_cv4sc")]
+offset = Vector2(640, 400)
+scale = Vector2(2.525, 2.525)
+transform = Transform2D(2.525, 0, 0, 2.525, 640, 400)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7khdh")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(0, 450)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="InfoPanel" type="VBoxContainer" parent="HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="IconPreview" type="TextureRect" parent="HBoxContainer/MarginContainer/InfoPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="HBoxContainer/MarginContainer/InfoPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_xsqes")
+theme_override_font_sizes/font_size = 64
+text = "Achievement NAme"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Description" type="RichTextLabel" parent="HBoxContainer/MarginContainer/InfoPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_xsqes")
+theme_override_font_sizes/normal_font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/MarginContainer/InfoPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(350, 75)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_xsqes")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/background = SubResource("StyleBoxFlat_xsqes")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cv4sc")
+show_percentage = false
+
+[node name="ProgressLabel" type="Label" parent="HBoxContainer/MarginContainer/InfoPanel/ProgressBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(350, 75)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_xsqes")
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(1280, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Grid" type="GridContainer" parent="HBoxContainer/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 5
+
+[node name="Exit" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 65.0
+offset_bottom = 65.0
+scale = Vector2(2.5, 2.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_wux65")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h1ovb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qarrl")
+icon = ExtResource("4_q8pag")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(640, 400)
+
+[node name="CRT" parent="." instance=ExtResource("5_t5h7i")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 1300.0
+offset_bottom = 900.0
+grow_horizontal = 1
+grow_vertical = 1

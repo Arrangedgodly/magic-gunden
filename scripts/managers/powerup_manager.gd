@@ -7,20 +7,20 @@ class_name PowerupManager
 @onready var trail_manager: TrailManager = %TrailManager
 @onready var spawn: Node2D = %Spawn
 
-var stomp_scene = preload("res://scenes/powerups/stomp.tscn")
-var magnet_scene = preload("res://scenes/powerups/magnet.tscn")
-var pierce_scene = preload("res://scenes/powerups/pierce.tscn")
-var ricochet_scene = preload("res://scenes/powerups/ricochet.tscn")
-var poison_scene = preload("res://scenes/powerups/poison.tscn")
-var auto_aim_scene = preload("res://scenes/powerups/auto_aim.tscn")
-var flames_scene = preload("res://scenes/powerups/flames.tscn")
-var free_ammo_scene = preload("res://scenes/powerups/free_ammo.tscn")
-var ice_scene = preload("res://scenes/powerups/ice.tscn")
-var jump_scene = preload("res://scenes/powerups/jump.tscn")
-var time_pause_scene = preload("res://scenes/powerups/time_pause.tscn")
-var grenade_scene = preload("res://scenes/powerups/grenade.tscn")
-var four_way_shot_scene = preload("res://scenes/powerups/four_way_shot.tscn")
-var laser_scene = preload("res://scenes/powerups/laser.tscn")
+var stomp_scene: PackedScene
+var magnet_scene: PackedScene
+var pierce_scene: PackedScene
+var ricochet_scene: PackedScene
+var poison_scene: PackedScene
+var auto_aim_scene: PackedScene
+var flames_scene: PackedScene
+var free_ammo_scene: PackedScene
+var ice_scene: PackedScene
+var jump_scene: PackedScene
+var time_pause_scene: PackedScene
+var grenade_scene: PackedScene
+var four_way_shot_scene: PackedScene
+var laser_scene: PackedScene
 
 var available_powerups: Array[PackedScene]
 var tutorial_mode: bool = false
@@ -46,24 +46,40 @@ signal powerup_spawned(position: Vector2)
 func _ready() -> void:
 	DebugLogger.log_info("=== POWERUP MANAGER READY START ===")
 	
-	available_powerups = [
-	magnet_scene, 
-	pierce_scene, 
-	ricochet_scene, 
-	stomp_scene,
-	poison_scene,
-	auto_aim_scene,
-	flames_scene,
-	free_ammo_scene,
-	ice_scene,
-	jump_scene,
-	time_pause_scene,
-	grenade_scene,
-	four_way_shot_scene,
-	laser_scene
-]
+	stomp_scene = _safe_load("res://scenes/powerups/stomp.tscn")
+	magnet_scene = _safe_load("res://scenes/powerups/magnet.tscn")
+	pierce_scene = _safe_load("res://scenes/powerups/pierce.tscn")
+	ricochet_scene = _safe_load("res://scenes/powerups/ricochet.tscn")
+	poison_scene = _safe_load("res://scenes/powerups/poison.tscn")
+	auto_aim_scene = _safe_load("res://scenes/powerups/auto_aim.tscn")
+	flames_scene = _safe_load("res://scenes/powerups/flames.tscn")
+	free_ammo_scene = _safe_load("res://scenes/powerups/free_ammo.tscn")
+	ice_scene = _safe_load("res://scenes/powerups/ice.tscn")
+	jump_scene = _safe_load("res://scenes/powerups/jump.tscn")
+	time_pause_scene = _safe_load("res://scenes/powerups/time_pause.tscn")
+	grenade_scene = _safe_load("res://scenes/powerups/grenade.tscn")
+	four_way_shot_scene = _safe_load("res://scenes/powerups/four_way_shot.tscn")
+	laser_scene = _safe_load("res://scenes/powerups/laser.tscn")
+	
+	var all_scenes = [
+		stomp_scene, magnet_scene, pierce_scene, ricochet_scene,
+		poison_scene, auto_aim_scene, flames_scene, free_ammo_scene,
+		ice_scene, jump_scene, time_pause_scene, grenade_scene,
+		four_way_shot_scene, laser_scene
+	]
+	
+	for scn in all_scenes:
+		if scn != null:
+			available_powerups.append(scn)
 
 	DebugLogger.log_info("=== POWERUP MANAGER READY COMPLETE ===")
+
+func _safe_load(path: String) -> PackedScene:
+	if ResourceLoader.exists(path):
+		return load(path) as PackedScene
+	else:
+		DebugLogger.log_error("CRITICAL: Failed to load powerup at: " + path)
+		return null
 
 func _process(delta: float) -> void:
 	if active_magnet and active_magnet.is_active:

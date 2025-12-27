@@ -4,8 +4,8 @@ class_name PickupManager
 signal gem_collected
 
 @onready var player: CharacterBody2D = %Player
-@onready var game_manager: Node2D = %GameManager
-@onready var spawn: Node2D = %Spawn
+@onready var game_manager = %GameManager
+@onready var spawn = %Spawn
 
 var gem_scene = preload("res://scenes/gem.tscn")
 

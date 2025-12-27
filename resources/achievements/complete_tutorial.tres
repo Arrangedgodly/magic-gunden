@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://b7ijclheqdwj5"]
+
+[ext_resource type="Texture2D" uid="uid://bc1pr1q4gcly0" path="res://assets/achievements/first.png" id="1_ey0j6"]
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_k7xup"]
+
+[resource]
+script = ExtResource("1_k7xup")
+id = "complete_tutorial"
+title = "Complete Tutorial"
+description = "Finish the tutorial completely!"
+icon = ExtResource("1_ey0j6")
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

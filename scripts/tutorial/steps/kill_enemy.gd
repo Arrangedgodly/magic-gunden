@@ -1,7 +1,6 @@
 extends TutorialStep
-class_name KillEnemyStep
 
-func _init(tutorial_ref: Tutorial) -> void:
+func _init(tutorial_ref) -> void:
 	super(tutorial_ref)
 	step_number = 11
 	should_pause = true

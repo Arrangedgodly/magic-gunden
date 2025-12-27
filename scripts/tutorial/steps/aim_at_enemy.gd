@@ -1,11 +1,10 @@
 extends TutorialStep
-class_name AimAtEnemyStep
 
 var initial_aim: Vector2
 var input_delay_active: bool = true
 var success_detected: bool = false
 
-func _init(tutorial_ref: Tutorial) -> void:
+func _init(tutorial_ref) -> void:
 	super(tutorial_ref)
 	step_number = 10
 	should_pause = true
@@ -37,6 +36,6 @@ func _trigger_delayed_success() -> void:
 	success_detected = true
 	tutorial.has_aimed = true
 
-	await tutorial.get_tree().create_timer(2.0).timeout
-
-	advance_to_next()
+	if tutorial and tutorial.get_tree():
+		await tutorial.get_tree().create_timer(2.0).timeout
+		advance_to_next()

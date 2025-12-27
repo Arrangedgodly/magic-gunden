@@ -1,7 +1,6 @@
 extends TutorialStep
-class_name SpawnGemStep
 
-func _init(tutorial_ref: Tutorial) -> void:
+func _init(tutorial_ref) -> void:
 	super(tutorial_ref)
 
 func _execute_step() -> void:

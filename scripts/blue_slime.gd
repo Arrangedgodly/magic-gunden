@@ -9,8 +9,8 @@ class_name Slime
 @onready var fire_fx: AnimatedSprite2D = $FireFx
 @onready var ice_fx: AnimatedSprite2D = $IceFx
 @onready var poison_fx: AnimatedSprite2D = $PoisonFx
-@onready var powerup_manager: PowerupManager
-@onready var score_manager: ScoreManager
+@onready var powerup_manager
+@onready var score_manager
 
 var hurt_sound: AudioStream = preload("res://assets/sounds/sfx/hurt2.ogg")
 var fire_sound: AudioStream = preload("res://assets/sounds/sfx/fire_burning_flames_crackle_loop_01.wav")

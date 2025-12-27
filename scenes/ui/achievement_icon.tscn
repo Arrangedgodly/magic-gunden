@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhpw7dfb64muh"]
+
+[ext_resource type="Shader" uid="uid://b721of1jp60rf" path="res://shaders/silhouette.gdshader" id="1_etawm"]
+[ext_resource type="Script" uid="uid://dgx15o6temo10" path="res://scripts/ui/achievement_icon.gd" id="2_cpsmc"]
+[ext_resource type="Texture2D" uid="uid://b3ranfcf2s417" path="res://assets/achievements/questionmark.png" id="3_s2hn2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cpsmc"]
+shader = ExtResource("1_etawm")
+shader_parameter/is_locked = false
+
+[node name="AchievementIcon" type="TextureRect"]
+material = SubResource("ShaderMaterial_cpsmc")
+custom_minimum_size = Vector2(126, 126)
+offset_right = 40.0
+offset_bottom = 40.0
+expand_mode = 1
+script = ExtResource("2_cpsmc")
+hidden_icon = ExtResource("3_s2hn2")

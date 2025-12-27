@@ -224,6 +224,7 @@ emitting = false
 amount = 5
 texture = SubResource("AnimatedTexture_vlvvl")
 lifetime = 1.75
+preprocess = 0.2
 speed_scale = 0.2
 fixed_fps = 60
 interpolate = false
@@ -238,6 +239,7 @@ emitting = false
 amount = 5
 texture = SubResource("AnimatedTexture_o57cf")
 lifetime = 1.5
+preprocess = 0.2
 speed_scale = 0.2
 fixed_fps = 60
 interpolate = false
@@ -252,6 +254,7 @@ emitting = false
 amount = 5
 texture = SubResource("AnimatedTexture_u7y6m")
 lifetime = 1.25
+preprocess = 0.2
 speed_scale = 0.2
 fixed_fps = 60
 interpolate = false
@@ -629,6 +632,30 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_xdy3h")
 theme_override_font_sizes/font_size = 28
 text = "KennyAssets - Itch.io"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AchievementMusic" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Audio Assets"]
+layout_mode = 2
+
+[node name="AchievementMusic" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/AchievementMusic"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 32
+text = "Achievements Menu Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gnomal Festivities" type="Label" parent="CenterContainer/VBoxContainer/Audio Assets/AchievementMusic"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6495557, 2.1779165e-06, 2.4065375e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_xdy3h")
+theme_override_font_sizes/font_size = 28
+text = "Gnomal Festivities - Peu IMPORTE"
 horizontal_alignment = 1
 vertical_alignment = 1
 

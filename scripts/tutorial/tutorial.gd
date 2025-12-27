@@ -13,14 +13,14 @@ var tutorial_save: TutorialSave
 @export var pickup_sfx: AudioStream
 @export var capture_sfx: AudioStream
 
-var game_manager: Node2D
-var player: CharacterBody2D
-var trail_manager: TrailManager
-var enemy_manager: EnemyManager
-var capture_manager: CapturePointManager
-var pickup_manager: PickupManager
-var powerup_manager: PowerupManager
-var ammo_manager: AmmoManager
+var game_manager
+var player
+var trail_manager
+var enemy_manager
+var capture_manager
+var pickup_manager
+var powerup_manager
+var ammo_manager
 
 var tutorial_steps: Array[TutorialStep] = []
 var current_step_index: int = 0
@@ -39,12 +39,32 @@ var missed_capture_explained: bool = false
 var should_wait: bool = false
 var current_death_reason: String = "enemy"
 
+const WelcomeStep = preload("res://scripts/tutorial/steps/welcome.gd")
+const MovementStep = preload("res://scripts/tutorial/steps/movement_step.gd")
+const SpawnGemStep = preload("res://scripts/tutorial/steps/spawn_gem.gd")
+const PickupGemStep = preload("res://scripts/tutorial/steps/pickup_gem.gd")
+const ExplainCaptureZonesStep = preload("res://scripts/tutorial/steps/explain_capture_zones.gd")
+const CaptureGemStep = preload("res://scripts/tutorial/steps/capture_gem.gd")
+const ExplainCaptureMovementStep = preload("res://scripts/tutorial/steps/explain_capture_movement.gd")
+const SpawnGemsForCaptureLessonStep = preload("res://scripts/tutorial/steps/spawn_gems_for_capture_lesson.gd")
+const AttemptCaptureStep = preload("res://scripts/tutorial/steps/attempt_capture.gd")
+const ExplainEnemySpawnStep = preload("res://scripts/tutorial/steps/explain_enemy_spawn.gd")
+const EnemyMovementExplanationStep = preload("res://scripts/tutorial/steps/enemy_movement.gd")
+const AimAtEnemyStep = preload("res://scripts/tutorial/steps/aim_at_enemy.gd")
+const KillEnemyStep = preload("res://scripts/tutorial/steps/kill_enemy.gd")
+const SpawnPowerupStep = preload("res://scripts/tutorial/steps/spawn_powerup.gd")
+const CollectPowerupStep = preload("res://scripts/tutorial/steps/collect_powerup.gd")
+const TestPowerupStep = preload("res://scripts/tutorial/steps/test_powerup.gd")
+const FinalExplanationStep = preload("res://scripts/tutorial/steps/final_explanation.gd")
+
 signal can_fire
 signal tutorial_finished
 
 func _ready() -> void:
 	DebugLogger.log_info("=== TUTORIAL READY START ===")
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	await get_tree().process_frame
 	
 	self.z_index = 300
 	
@@ -68,7 +88,10 @@ func _ready() -> void:
 	
 	DebugLogger.log_info("Connecting trail manager signals...")
 	if trail_manager:
-		trail_manager.enemy_convert_blocked.connect(_on_enemy_convert_blocked)
+		if trail_manager.has_signal("enemy_convert_blocked"):
+			trail_manager.enemy_convert_blocked.connect(_on_enemy_convert_blocked)
+		else:
+			DebugLogger.log_error("CRITICAL: TrailManager Node found, but signal 'enemy_convert_blocked' is missing! Script may have failed to load.")
 	
 	DebugLogger.log_info("Connecting enemy manager signals...")
 	if enemy_manager:
@@ -115,25 +138,61 @@ func _ready() -> void:
 	DebugLogger.log_info("=== TUTORIAL READY COMPLETE ===")
 
 func _initialize_steps() -> void:
-	tutorial_steps = [
-		WelcomeStep.new(self),
-		MovementStep.new(self),
-		SpawnGemStep.new(self),
-		PickupGemStep.new(self),
-		ExplainCaptureZonesStep.new(self),
-		CaptureGemStep.new(self),
-		ExplainCaptureMovementStep.new(self),
-		SpawnGemsForCaptureLessonStep.new(self),
-		AttemptCaptureStep.new(self),
-		ExplainEnemySpawnStep.new(self),
-		EnemyMovementExplanationStep.new(self),
-		AimAtEnemyStep.new(self),
-		KillEnemyStep.new(self),
-		SpawnPowerupStep.new(self),
-		CollectPowerupStep.new(self),
-		TestPowerupStep.new(self),
-		FinalExplanationStep.new(self)
-	]
+	DebugLogger.log_info("--- STEP INIT START ---")
+	tutorial_steps.clear()
+	
+	DebugLogger.log_info("1. Creating WelcomeStep...")
+	tutorial_steps.append(WelcomeStep.new(self))
+	
+	DebugLogger.log_info("2. Creating MovementStep...")
+	tutorial_steps.append(MovementStep.new(self))
+	
+	DebugLogger.log_info("3. Creating SpawnGemStep...")
+	tutorial_steps.append(SpawnGemStep.new(self))
+	
+	DebugLogger.log_info("4. Creating PickupGemStep...")
+	tutorial_steps.append(PickupGemStep.new(self))
+	
+	DebugLogger.log_info("5. Creating ExplainCaptureZonesStep...")
+	tutorial_steps.append(ExplainCaptureZonesStep.new(self))
+	
+	DebugLogger.log_info("6. Creating CaptureGemStep...")
+	tutorial_steps.append(CaptureGemStep.new(self))
+	
+	DebugLogger.log_info("7. Creating ExplainCaptureMovementStep...")
+	tutorial_steps.append(ExplainCaptureMovementStep.new(self))
+	
+	DebugLogger.log_info("8. Creating SpawnGemsForCaptureLessonStep...")
+	tutorial_steps.append(SpawnGemsForCaptureLessonStep.new(self))
+	
+	DebugLogger.log_info("9. Creating AttemptCaptureStep...")
+	tutorial_steps.append(AttemptCaptureStep.new(self))
+	
+	DebugLogger.log_info("10. Creating ExplainEnemySpawnStep...")
+	tutorial_steps.append(ExplainEnemySpawnStep.new(self))
+	
+	DebugLogger.log_info("11. Creating EnemyMovementExplanationStep...")
+	tutorial_steps.append(EnemyMovementExplanationStep.new(self))
+	
+	DebugLogger.log_info("12. Creating AimAtEnemyStep...")
+	tutorial_steps.append(AimAtEnemyStep.new(self))
+	
+	DebugLogger.log_info("13. Creating KillEnemyStep...")
+	tutorial_steps.append(KillEnemyStep.new(self))
+	
+	DebugLogger.log_info("14. Creating SpawnPowerupStep...")
+	tutorial_steps.append(SpawnPowerupStep.new(self))
+	
+	DebugLogger.log_info("15. Creating CollectPowerupStep...")
+	tutorial_steps.append(CollectPowerupStep.new(self))
+	
+	DebugLogger.log_info("16. Creating TestPowerupStep...")
+	tutorial_steps.append(TestPowerupStep.new(self))
+	
+	DebugLogger.log_info("17. Creating FinalExplanationStep...")
+	tutorial_steps.append(FinalExplanationStep.new(self))
+	
+	DebugLogger.log_info("--- STEP INIT COMPLETE ---")
 
 func start_tutorial_logic() -> void:
 	tutorial_active = true
@@ -148,15 +207,23 @@ func start_tutorial_logic() -> void:
 		
 		if pickup_manager:
 			pickup_manager.enable_tutorial_mode()
+		else:
+			DebugLogger.log_error("Pickup manager is null")
 
 		if capture_manager:
 			capture_manager.enable_tutorial_mode()
+		else:
+			DebugLogger.log_error("Capture manager is null")
 
 		if enemy_manager:
 			enemy_manager.enable_tutorial_mode()
+		else:
+			DebugLogger.log_error("Enemy manager is null")
 		
 		if trail_manager:
 			trail_manager.tutorial_mode = true
+		else:
+			DebugLogger.log_error("Trail manager is null")
 
 		game_manager.game_started = true
 		player.move_timer.start()
@@ -193,16 +260,17 @@ func _input(event: InputEvent) -> void:
 			waiting_for_continue = false
 		return
 
-	if event.is_action_pressed("move-up") or event.is_action_pressed("move-down") or \
-	   event.is_action_pressed("move-left") or event.is_action_pressed("move-right"):
-		has_moved = true
-
 func _process(_delta: float) -> void:
 	if disable_auto_advance:
 		return
 		
 	if not tutorial_active:
 		return
+	
+	if not has_moved:
+		var move_input = Input.get_vector("move-left", "move-right", "move-up", "move-down")
+		if move_input.length() > 0.1:
+			has_moved = true
 		
 	if current_step and current_step.can_auto_advance:
 		if current_step.check_auto_advance():
