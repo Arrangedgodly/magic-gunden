@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://cciw8ejlghwjc"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_2rbas"]
+[ext_resource type="Texture2D" uid="uid://dquiq44qqbct2" path="res://assets/items/powerups/laser_gun.png" id="1_nd3s1"]
+
+[resource]
+script = ExtResource("1_2rbas")
+id = "unlock_laser"
+title = "Unlock Laser Powerup"
+description = "You found the laser powerup!"
+icon = ExtResource("1_nd3s1")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

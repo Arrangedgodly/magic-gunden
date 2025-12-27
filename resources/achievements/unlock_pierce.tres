@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://dau616e6ehkhm"]
+
+[ext_resource type="Texture2D" uid="uid://diqqufccghbbt" path="res://assets/items/powerups/pierce-new.png" id="1_5td36"]
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_fbt5i"]
+
+[resource]
+script = ExtResource("1_fbt5i")
+id = "unlock_pierce"
+title = "Unlock Pierce Powerup"
+description = "You found the pierce powerup!"
+icon = ExtResource("1_5td36")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

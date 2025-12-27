@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://bx3b8xluqmkhg"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_o76wm"]
+[ext_resource type="Texture2D" uid="uid://ceuymmnnp5eyc" path="res://assets/items/powerups/stomp.png" id="1_xls75"]
+
+[resource]
+script = ExtResource("1_o76wm")
+id = "unlock_stomp"
+title = "Unlock Stomp Powerup"
+description = "You found the stomp powerup!"
+icon = ExtResource("1_xls75")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

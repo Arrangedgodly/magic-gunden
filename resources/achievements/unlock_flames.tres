@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://p6ixn22fb6ju"]
+
+[ext_resource type="Texture2D" uid="uid://cflohbel7ie5a" path="res://assets/items/powerups/flames-new.png" id="1_abags"]
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_pp5ow"]
+
+[resource]
+script = ExtResource("1_pp5ow")
+id = "unlock_flames"
+title = "Unlock Flames Powerup"
+description = "You found the flames powerup!"
+icon = ExtResource("1_abags")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

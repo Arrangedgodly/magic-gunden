@@ -9,6 +9,7 @@ extends Control
 @onready var exit_button: Button = %Exit
 
 var icon_scene = preload("res://scenes/ui/achievement_icon.tscn")
+var hidden_icon = preload("res://assets/achievements/questionmark.png")
 var achievement_music: AudioStream = preload("res://assets/sounds/music/Gnomal Festivities.wav")
 
 var unknown_title: String = "???"
@@ -26,6 +27,7 @@ func _process(_delta: float) -> void:
 		exit()
 
 func exit() -> void:
+	set_process(false)
 	AudioManager.stop(achievement_music)
 	LoadManager.quick_load("res://scenes/menus/main_menu.tscn")
 
@@ -46,15 +48,24 @@ func _populate_grid() -> void:
 		icon_instance.unhovered.connect(_on_icon_unhovered)
 
 func _on_icon_hovered(data: AchievementData) -> void:
+	if not is_inside_tree(): 
+		return
+		
 	if data.hidden and not data.is_unlocked:
 		title_label.text = unknown_title
 		desc_label.text = unknown_desc
-		icon_preview.texture = null
+		icon_preview.texture = hidden_icon
 		progress_bar.hide()
+		_set_preview_shader(false)
 	else:
 		title_label.text = data.title
 		desc_label.text = data.description
 		icon_preview.texture = data.icon
+		_set_preview_shader(not data.is_unlocked)
+		
+		if data.icon == null:
+			icon_preview.texture = hidden_icon
+			_set_preview_shader(false)
 		
 		if data.is_unlocked:
 			progress_bar.value = 100
@@ -66,6 +77,9 @@ func _on_icon_hovered(data: AchievementData) -> void:
 			progress_text.text = "%d / %d" % [data.current_progress, data.goal]
 
 func _on_icon_unhovered() -> void:
+	if not is_inside_tree(): 
+		return
+		
 	_clear_info()
 
 func _clear_info() -> void:
@@ -73,3 +87,10 @@ func _clear_info() -> void:
 	desc_label.text = ""
 	icon_preview.texture = null
 	progress_bar.hide()
+	_set_preview_shader(false)
+
+func _set_preview_shader(is_locked: bool) -> void:
+	if not is_instance_valid(icon_preview):
+		return
+		
+	icon_preview.material.set_shader_parameter("is_locked", is_locked)

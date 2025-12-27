@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=2 format=3 uid="uid://dio6jrasyfy2m"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_yco7k"]
+
+[resource]
+script = ExtResource("1_yco7k")
+id = "kill_1000_slimes"
+title = "Kill 1000 Slimes"
+description = "Slay 1000 slimes over the course of your game!"
+goal = 1000
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

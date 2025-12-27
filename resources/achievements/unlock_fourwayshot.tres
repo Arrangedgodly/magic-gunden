@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://cvcyqk7em3a2w"]
+
+[ext_resource type="Texture2D" uid="uid://it2aodp0xdn1" path="res://assets/items/powerups/four_way_shot.png" id="1_7iqvb"]
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_uswcf"]
+
+[resource]
+script = ExtResource("1_uswcf")
+id = "unlock_fourwayshot"
+title = "Unlock Four Way Shot Powerup"
+description = "You found the Four Way Shot powerup!"
+icon = ExtResource("1_7iqvb")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

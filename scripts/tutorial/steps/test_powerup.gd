@@ -24,11 +24,11 @@ func spawn_test_enemies(count: int) -> void:
 
 	for i in range(count):
 		if tutorial and tutorial.get_tree():
-			await tutorial.get_tree().create_timer(0.3).timeout
 			enemy_manager.spawn_enemy()
+			await tutorial.get_tree().create_timer(0.3).timeout
 
 func check_auto_advance() -> bool:
-	return tutorial.test_enemies_killed >= 1
+	return tutorial.test_enemies_killed >= 5
 
 func exit() -> void:
 	super.exit()

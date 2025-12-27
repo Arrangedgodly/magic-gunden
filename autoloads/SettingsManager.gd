@@ -9,7 +9,7 @@ func _ready() -> void:
 
 func load_and_apply_settings() -> void:
 	DebugLogger.log_info("Loading settings...")
-	var save_path = "user://settings.tres"
+	var save_path = "user://settings.save"
 	
 	var file_exists = false
 
@@ -125,7 +125,7 @@ func _add_joy_axis(action: String, axis: int, val: float) -> void:
 	InputMap.action_add_event(action, evt)
 
 func save_settings() -> void:
-	ResourceSaver.save(settings_save, "user://settings.tres")
+	ResourceSaver.save(settings_save, "user://settings.save")
 
 func get_settings() -> SettingsSave:
 	return settings_save

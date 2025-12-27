@@ -120,3 +120,6 @@ func set_main_menu_focus(enabled: bool):
 	options.focus_mode = mode
 	main_menu.focus_mode = mode
 	quit.focus_mode = mode
+
+func disable() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED

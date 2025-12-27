@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://bu5d6s7qq68a1"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_dtcf1"]
+[ext_resource type="Texture2D" uid="uid://dpysn2itlp55v" path="res://assets/items/powerups/free-ammo.png" id="1_lbuil"]
+
+[resource]
+script = ExtResource("1_dtcf1")
+id = "unlock_freeammo"
+title = "Unlock Free Ammo Powerup!"
+description = "You found the free ammo powerup!"
+icon = ExtResource("1_lbuil")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

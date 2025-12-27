@@ -1,10 +1,6 @@
 extends Node
 
 func load_resource(path: String, expected_type = null) -> Resource:
-	"""
-	Safely load a resource from user:// directory
-	Returns null if file doesn't exist or fails to load
-	"""
 	DebugLogger.log_info("Attempting to load: " + path)
 	
 	if not ResourceLoader.exists(path):
@@ -25,10 +21,6 @@ func load_resource(path: String, expected_type = null) -> Resource:
 	return resource
 
 func save_resource(resource: Resource, path: String) -> bool:
-	"""
-	Safely save a resource to user:// directory
-	Returns true if successful, false otherwise
-	"""
 	DebugLogger.log_info("Attempting to save: " + path)
 	
 	if resource == null:
@@ -45,10 +37,6 @@ func save_resource(resource: Resource, path: String) -> bool:
 		return false
 
 func delete_save(path: String) -> bool:
-	"""
-	Delete a saved resource
-	Returns true if successful or file didn't exist
-	"""
 	DebugLogger.log_info("Attempting to delete: " + path)
 	
 	if not ResourceLoader.exists(path):
@@ -68,9 +56,6 @@ func delete_save(path: String) -> bool:
 			return false
 
 func save_exists(path: String) -> bool:
-	"""
-	Check if a save file exists
-	"""
 	return ResourceLoader.exists(path)
 
 func load_settings() -> SettingsSave:
@@ -97,18 +82,32 @@ func save_tutorial_save(tutorial: TutorialSave) -> bool:
 	return save_resource(tutorial, "user://tutorial.tres")
 
 func load_high_scores() -> SavedGame:
-	var scores = load_resource("user://save.tres", SavedGame) as SavedGame
+	var scores = load_resource("user://highscores.tres", SavedGame) as SavedGame
 	if scores == null:
 		DebugLogger.log_info("No high scores found")
 		scores = SavedGame.new()
 	return scores
 
 func save_high_scores(scores: SavedGame) -> bool:
-	return save_resource(scores, "user://save.tres")
+	return save_resource(scores, "user://highscores.tres")
+
+func load_achievement_save() -> AchievementSave:
+	var path = "user://achievements.tres"
+	var save = load_resource(path, AchievementSave) as AchievementSave
+	
+	if save == null:
+		DebugLogger.log_info("Creating new achievement save")
+		save = AchievementSave.new()
+		
+	return save
+
+func save_achievement_save(save: AchievementSave) -> bool:
+	return save_resource(save, "user://achievements.tres")
 
 func reset_all_saves() -> void:
 	DebugLogger.log_info("Resetting all saves...")
 	delete_save("user://settings.tres")
 	delete_save("user://tutorial.tres")
-	delete_save("user://save.tres")
+	delete_save("user:/highscores.tres")
+	delete_save("user://achievements.tres")
 	DebugLogger.log_info("All saves reset")

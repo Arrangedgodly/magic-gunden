@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://b0f0ja0y23qvd"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_g5kxy"]
+[ext_resource type="Texture2D" uid="uid://1lnjume8gy8n" path="res://assets/items/powerups/auto_aim.png" id="1_s48kw"]
+
+[resource]
+script = ExtResource("1_g5kxy")
+id = "unlock_autoaim"
+title = "Unlock Auto Aim"
+description = "You found the auto aim powerup!"
+icon = ExtResource("1_s48kw")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

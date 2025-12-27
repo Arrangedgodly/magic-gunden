@@ -52,10 +52,10 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		var collider = collision.get_collider()
 		if collider is Player:
-			if powerup_manager and powerup_manager.is_jump_active():
-				var can_jump = powerup_manager.check_jump_enemy_collision(self)
-				if can_jump:
-					return
+#			if powerup_manager and powerup_manager.is_jump_active():
+#				var can_jump = powerup_manager.check_jump_enemy_collision(self)
+#				if can_jump:
+#					return
 			
 			if powerup_manager and powerup_manager.is_stomp_active():
 				kill()
@@ -190,20 +190,14 @@ func move_direction(dir):
 		sprite.play("idle_down")
 
 func kill():
+	AchievementManager.progress_achievement("kill_100_slimes", 1)
+	AchievementManager.progress_achievement("kill_1000_slimes", 1)
 	AudioManager.play_sound(hurt_sound)
 	score_manager.increase_kill_count()
 	sprite.play("death")
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)
 	was_killed.emit()
-	stop_sounds()
-	queue_free()
-
-func die():
-	AudioManager.play_sound(hurt_sound)
-	sprite.play("death")
-	var tween = create_tween()
-	tween.tween_property(sprite, "modulate", Color(10, 10, 10, 1), 1.0)
 	stop_sounds()
 	queue_free()
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://b2iqnwb1lwt7v"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_2pc5s"]
+[ext_resource type="Texture2D" uid="uid://iermdnmnsuv4" path="res://assets/items/powerups/magnet.png" id="1_60648"]
+
+[resource]
+script = ExtResource("1_2pc5s")
+id = "unlock_magnet"
+title = "Unlock Magnet Powerup"
+description = "You found the magnet powerup!"
+icon = ExtResource("1_60648")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

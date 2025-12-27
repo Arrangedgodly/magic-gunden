@@ -4,7 +4,7 @@
 [ext_resource type="FontFile" uid="uid://e0dk132vrmf8" path="res://assets/Pixel Bug.otf" id="2_vfb2u"]
 
 [node name="NotificationBanner" type="PanelContainer"]
-custom_minimum_size = Vector2(350, 0)
+custom_minimum_size = Vector2(425, 100)
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -33,7 +33,7 @@ alignment = 1
 [node name="TitleLabel" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_vfb2u")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 text = "ACHIEVEMENT UNLOCKED"
 horizontal_alignment = 1
 
@@ -41,6 +41,6 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_vfb2u")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 text = "Achievement Name"
 horizontal_alignment = 1

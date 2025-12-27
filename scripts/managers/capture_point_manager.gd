@@ -36,16 +36,12 @@ func _ready() -> void:
 	DebugLogger.log_info("=== CAPTURE MANAGER READY COMPLETE ===")
 
 func start_capture_systems() -> void:
-	DebugLogger.log_info("Starting capture systems...")
 	capture_point_timer.start()
 	capture_point_animation.start()
-	DebugLogger.log_info("Capture systems started successfully!")
 
 func stop_capture_systems() -> void:
-	DebugLogger.log_info("Stopping capture systems...")
 	capture_point_timer.stop()
 	capture_point_animation.stop()
-	DebugLogger.log_info("Capture systems stopped.")
 
 func reset_capture_timers() -> void:
 	capture_point_timer.stop()
@@ -70,7 +66,6 @@ func spawn_tutorial_pattern(starting_pos: Vector2i) -> int:
 	return count
 
 func spawn_capture_points(starting_pos: Vector2i) -> void:
-	DebugLogger.log_info("Spawning capture points...")
 	var points_spawned = 0
 	
 	if tutorial_pattern:
@@ -83,10 +78,8 @@ func spawn_capture_points(starting_pos: Vector2i) -> void:
 	capture_points_spawned.emit(points_spawned)
 	capture_point_timer.start()
 	capture_point_animation.start()
-	DebugLogger.log_info("Capture points spawned successfully!")
 
 func spawn_bar_pattern(starting_pos: Vector2i) -> int:
-	DebugLogger.log_info("Spawning bar pattern capture points...")
 	capture_pattern_bar = false
 	var count = 0
 	
@@ -108,7 +101,6 @@ func spawn_bar_pattern(starting_pos: Vector2i) -> int:
 	return count
 
 func spawn_cross_pattern(starting_pos: Vector2i) -> int:
-	DebugLogger.log_info("Spawning cross pattern capture points...")
 	capture_pattern_bar = true
 	var count = 0
 	
@@ -167,15 +159,12 @@ func find_capture_spawn_point() -> Vector2i:
 	return Vector2i(x, y)
 
 func clear_capture_points() -> void:
-	DebugLogger.log_info("Clearing capture points...")
 	var capture_points = get_tree().get_nodes_in_group("capture")
 	for point in capture_points:
 		point.queue_free()
 	capture_points_cleared.emit()
-	DebugLogger.log_info("Capture points cleared successfully!")
 
 func flash_capture_points() -> void:
-	DebugLogger.log_info("Flashing capture points...")
 	capture_point_animation.stop()
 	var capture_points = get_tree().get_nodes_in_group("capture")
 	AudioManager.play_sound(capture_sfx)
@@ -184,7 +173,6 @@ func flash_capture_points() -> void:
 	await get_tree().create_timer(1.5).timeout
 	AudioManager.play_sound(capture_sfx)
 	await get_tree().create_timer(1.5).timeout
-	DebugLogger.log_info("Capture points flashed successfully!")
 
 func get_capture_point_count() -> int:
 	return get_tree().get_nodes_in_group("capture").size()
@@ -201,14 +189,12 @@ func _on_capture_point_timer_timeout() -> void:
 	cycle_capture_points()
 	
 func cycle_capture_points() -> void:
-	DebugLogger.log_info("Cycling capture points...")
 	clear_capture_points()
 	
 	await get_tree().process_frame
 	
 	var spawn_point = find_capture_spawn_point()
 	spawn_capture_points(spawn_point)
-	DebugLogger.log_info("Capture points cycled successfully!")
 
 func _on_capture_point_animation_timeout() -> void:
 	if not tutorial_mode:
@@ -229,4 +215,6 @@ func enable_tutorial_mode() -> void:
 func disable_tutorial_mode() -> void:
 	DebugLogger.log_info("Disabling capture point manager tutorial mode")
 	tutorial_mode = false
+	start_capture_systems()
+	cycle_capture_points()
 	DebugLogger.log_info("Capture point manager tutorial mode successfully disabled")

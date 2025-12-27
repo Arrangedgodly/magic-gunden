@@ -9,7 +9,7 @@ signal gem_collected
 
 var gem_scene = preload("res://scenes/gem.tscn")
 
-var regen_gem: bool = true
+var regen_gem: bool = false
 var gem_pos: Vector2i
 var level: int = 1
 var tutorial_mode: bool = false
@@ -30,41 +30,32 @@ func _on_level_changed(new_level: int) -> void:
 	level = new_level
 
 func force_spawn_gem() -> void:
-	DebugLogger.log_info("Force spawn gem initiated...")
 	var was_regen = regen_gem
 	regen_gem = true
 	spawn_gem()
 	regen_gem = was_regen
-	DebugLogger.log_info("Force spawn gem completed!")
 
 func spawn_gem() -> void:
-	DebugLogger.log_info("Spawn gem initiated...")
 	if not regen_gem:
-		DebugLogger.log_info("Regen gem set to false")
 		return
 		
 	regen_gem = false
 	
 	var pos
 	if tutorial_mode:
-		DebugLogger.log_info("Utilizing tutorial random position...")
 		pos = spawn.random_pos_tutorial()
 	else:
-		DebugLogger.log_info("Utilizing regular random position...")
 		pos = spawn.random_pos()
 	var attempts = 0
 	
 	while not spawn.is_valid_spawn_position(pos) and attempts < 100:
 		if tutorial_mode:
-			DebugLogger.log_info("Position conflict. Re-utilizing tutorial random position...")
 			pos = spawn.random_pos_tutorial()
 		else:
-			DebugLogger.log_info("Position conflict. Re-utilizing regular random position...")
 			pos = spawn.random_pos()
 		attempts += 1
 	
 	if attempts >= 100:
-		DebugLogger.log_info("Position conflict. Failed over 100 times.")
 		return
 	
 	var gem_instance = gem_scene.instantiate()
@@ -79,12 +70,11 @@ func spawn_gem() -> void:
 		3: gem_instance.play('red')
 	
 	game_manager.add_child(gem_instance)
-	DebugLogger.log_info("Gem added to game manager")
-	
-	DebugLogger.log_info("Gem spawned successfully!")
 
 func enable_tutorial_mode() -> void:
-	DebugLogger.log_info("Enabling pickup manager tutorial mode")
 	regen_gem = false
 	tutorial_mode = true
-	DebugLogger.log_info("Pickup manager tutorial mode enabled!")
+
+func disable_tutorial_mode() -> void:
+	regen_gem = true
+	tutorial_mode = false

@@ -144,6 +144,6 @@ func quick_load(scene_path: String) -> void:
 	var scene = ResourceLoader.load(scene_path)
 	if scene:
 		DebugLogger.log_info("Successfully loaded %s" % scene_path)
-		get_tree().change_scene_to_packed(scene)
+		get_tree().call_deferred("change_scene_to_packed", scene)
 	else:
 		DebugLogger.log_error("Failed to load %s scene" % scene_path)

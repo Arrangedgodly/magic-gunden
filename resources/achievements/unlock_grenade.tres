@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://bnf4uu1ibddqm"]
+
+[ext_resource type="Texture2D" uid="uid://b3k3p4fxaqkjh" path="res://assets/items/powerups/grenade.png" id="1_ekasj"]
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_ulhir"]
+
+[resource]
+script = ExtResource("1_ulhir")
+id = "unlock_grenade"
+title = "Unlock Grenade Powerup"
+description = "You found the grenade powerup!"
+icon = ExtResource("1_ekasj")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

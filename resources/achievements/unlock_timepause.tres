@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://be8o2vwu1qn87"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_56w3y"]
+[ext_resource type="Texture2D" uid="uid://by5q8qh7f0fp8" path="res://assets/items/powerups/pause.png" id="1_ysunw"]
+
+[resource]
+script = ExtResource("1_56w3y")
+id = "unlock_timepause"
+title = "Unlock Time Pause Powerup"
+description = "You found the time pause powerup!"
+icon = ExtResource("1_ysunw")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

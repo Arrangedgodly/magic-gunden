@@ -87,8 +87,8 @@ func _on_tutorial_can_fire() -> void:
 func move(dir):
 	var new_position = position + (dir * TILE_SIZE)
 	
-	if powerup_manager and powerup_manager.is_jump_active:
-		new_position = powerup_manager.check_jump_movement(new_position, dir)
+#	if powerup_manager and powerup_manager.is_jump_active:
+#		new_position = powerup_manager.check_jump_movement(new_position, dir)
 	
 	if trail_manager.has_trail():
 		var first_trail_position = trail_manager.get_first_trail_position()
@@ -160,7 +160,7 @@ func handle_aim_input(aim_vector: Vector2) -> void:
 func die():
 	move_timer.stop()
 	
-	if game_manager.is_tutorial_mode:
+	if game_manager.tutorial_mode:
 		game_manager.handle_tutorial_death()
 		return
 		

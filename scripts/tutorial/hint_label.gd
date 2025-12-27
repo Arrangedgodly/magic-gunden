@@ -48,10 +48,9 @@ func _ready() -> void:
 
 func _ensure_settings_loaded() -> void:
 	if not settings_save:
-		await get_tree().process_frame
 		settings_save = SettingsManager.get_settings()
 		if not settings_save:
-			push_error("Failed to load settings_save in hint_label")
+			DebugLogger.log_error("Failed to load settings_save in hint_label")
 
 func _create_animation(frames: Array, animation: AnimatedTexture) -> void:
 	animation.frames = frames.size()
@@ -236,6 +235,9 @@ func test_powerup() -> void:
 
 func final() -> void:
 	reset()
+	append_text("When you capture at least 6 gems at once, you will receive a random powerup.")
+	newline()
+	newline()
 	append_text("You now know the basics. Survive as long as you can!")
 
 func prompt_continue() -> void:

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=3 format=3 uid="uid://brn7ypbi6n7ae"]
+
+[ext_resource type="Texture2D" uid="uid://dwweo3ixhd0qb" path="res://assets/items/powerups/poison-new.png" id="1_6p6rw"]
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_33fw3"]
+
+[resource]
+script = ExtResource("1_33fw3")
+id = "unlock_poison"
+title = "Unlock Poison"
+description = "You found the poison powerup!"
+icon = ExtResource("1_6p6rw")
+hidden = true
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

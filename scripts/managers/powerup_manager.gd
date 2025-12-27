@@ -16,7 +16,7 @@ var auto_aim_scene: PackedScene
 var flames_scene: PackedScene
 var free_ammo_scene: PackedScene
 var ice_scene: PackedScene
-var jump_scene: PackedScene
+#var jump_scene: PackedScene
 var time_pause_scene: PackedScene
 var grenade_scene: PackedScene
 var four_way_shot_scene: PackedScene
@@ -25,7 +25,7 @@ var laser_scene: PackedScene
 var available_powerups: Array[PackedScene]
 var tutorial_mode: bool = false
 
-var active_jump: JumpPowerup = null
+#var active_jump: JumpPowerup = null
 var active_stomp: StompPowerup = null
 var active_pierce: PiercePowerup = null
 var active_ricochet: RicochetPowerup = null
@@ -55,7 +55,7 @@ func _ready() -> void:
 	flames_scene = _safe_load("res://scenes/powerups/flames.tscn")
 	free_ammo_scene = _safe_load("res://scenes/powerups/free_ammo.tscn")
 	ice_scene = _safe_load("res://scenes/powerups/ice.tscn")
-	jump_scene = _safe_load("res://scenes/powerups/jump.tscn")
+#	jump_scene = _safe_load("res://scenes/powerups/jump.tscn")
 	time_pause_scene = _safe_load("res://scenes/powerups/time_pause.tscn")
 	grenade_scene = _safe_load("res://scenes/powerups/grenade.tscn")
 	four_way_shot_scene = _safe_load("res://scenes/powerups/four_way_shot.tscn")
@@ -64,7 +64,7 @@ func _ready() -> void:
 	var all_scenes = [
 		stomp_scene, magnet_scene, pierce_scene, ricochet_scene,
 		poison_scene, auto_aim_scene, flames_scene, free_ammo_scene,
-		ice_scene, jump_scene, time_pause_scene, grenade_scene,
+		ice_scene, time_pause_scene, grenade_scene,
 		four_way_shot_scene, laser_scene
 	]
 	
@@ -94,64 +94,64 @@ func _process(delta: float) -> void:
 	if active_free_ammo and active_free_ammo.is_active:
 		active_free_ammo.process_effect(delta)
 
-func register_jump_powerup(powerup: JumpPowerup) -> void:
-	DebugLogger.log_info("Registering jump powerup...")
-	active_jump = powerup
+#func register_jump_powerup(powerup: JumpPowerup) -> void:
+#	active_jump = powerup
 
 func register_stomp_powerup(powerup: StompPowerup) -> void:
-	DebugLogger.log_info("Registering stomp powerup...")
+	if not tutorial_mode:
+		AchievementManager.unlock_achievement("unlock_stomp")
 	active_stomp = powerup
 
 func register_pierce_powerup(powerup: PiercePowerup) -> void:
-	DebugLogger.log_info("Registering pierce powerup...")
+	AchievementManager.unlock_achievement("unlock_pierce")
 	active_pierce = powerup
 
 func register_ricochet_powerup(powerup: RicochetPowerup) -> void:
-	DebugLogger.log_info("Registering ricochet powerup...")
+	AchievementManager.unlock_achievement("unlock_ricochet")
 	active_ricochet = powerup
 
 func register_magnet_powerup(powerup: MagnetPowerup) -> void:
-	DebugLogger.log_info("Registering magnet powerup...")
+	AchievementManager.unlock_achievement("unlock_magnet")
 	active_magnet = powerup
 
 func register_poison_powerup(powerup: PoisonPowerup) -> void:
-	DebugLogger.log_info("Registering poison powerup...")
+	AchievementManager.unlock_achievement("unlock_poison")
 	active_poison = powerup
 
 func register_auto_aim_powerup(powerup: AutoAimPowerup) -> void:
-	DebugLogger.log_info("Registering auto aim powerup...")
+	AchievementManager.unlock_achievement("unlock_autoaim")
 	active_auto_aim = powerup
 
 func register_flames_powerup(powerup: FlamesPowerup) -> void:
-	DebugLogger.log_info("Registering flames powerup...")
+	AchievementManager.unlock_achievement("unlock_flames")
 	active_flames = powerup
 
 func register_free_ammo_powerup(powerup: FreeAmmoPowerup) -> void:
-	DebugLogger.log_info("Registering free ammo powerup...")
+	AchievementManager.unlock_achievement("unlock_freeammo")
 	active_free_ammo = powerup
 
 func register_ice_powerup(powerup: IcePowerup) -> void:
-	DebugLogger.log_info("Registering ice powerup...")
+	AchievementManager.unlock_achievement("unlock_ice")
 	active_ice = powerup
 
 func register_time_pause_powerup(powerup: TimePausePowerup) -> void:
-	DebugLogger.log_info("Registering time pause powerup...")
+	AchievementManager.unlock_achievement("unlock_timepause")
 	active_time_pause = powerup
 
 func register_grenade_powerup(powerup: GrenadePowerup) -> void:
-	DebugLogger.log_info("Registering grenade powerup...")
+	AchievementManager.unlock_achievement("unlock_grenade")
 	active_grenade = powerup
 
 func register_four_way_shot_powerup(powerup: FourWayShotPowerup) -> void:
-	DebugLogger.log_info("Registering four way shot powerup...")
+	AchievementManager.unlock_achievement("unlock_fourwayshot")
 	active_four_way_shot = powerup
 
 func register_laser_powerup(powerup: LaserPowerup) -> void:
-	DebugLogger.log_info("Registering laser powerup...")
+	AchievementManager.unlock_achievement("unlock_laser")
 	active_laser = powerup
 
-func is_jump_active() -> bool:
-	return active_jump != null and active_jump.is_active
+#func is_jump_active() -> bool:
+#	return active_jump != null and active_jump.is_active
 
 func is_stomp_active() -> bool:
 	return active_stomp != null and active_stomp.is_active
@@ -192,15 +192,15 @@ func is_four_way_shot_active() -> bool:
 func is_laser_active() -> bool:
 	return active_laser != null and active_laser.is_active
 
-func check_jump_movement(target_pos: Vector2, direction: Vector2) -> Vector2:
-	if active_jump and active_jump.is_active:
-		return active_jump.modify_movement(target_pos, direction)
-	return target_pos
+#func check_jump_movement(target_pos: Vector2, direction: Vector2) -> Vector2:
+#	if active_jump and active_jump.is_active:
+#		return active_jump.modify_movement(target_pos, direction)
+#	return target_pos
 
-func check_jump_enemy_collision(enemy: Node2D) -> bool:
-	if active_jump and active_jump.is_active:
-		return active_jump.check_enemy_collision(enemy)
-	return false
+#func check_jump_enemy_collision(enemy: Node2D) -> bool:
+#	if active_jump and active_jump.is_active:
+#		return active_jump.check_enemy_collision(enemy)
+#	return false
 
 func get_ricochet_max_bounces() -> int:
 	if active_ricochet and active_ricochet.is_active:
@@ -209,8 +209,8 @@ func get_ricochet_max_bounces() -> int:
 
 func get_powerup_timer(p_name: String) -> Timer:
 	match p_name:
-		"Jump":
-			return active_jump.get_timer() if active_jump else null
+#		"Jump":
+#			return active_jump.get_timer() if active_jump else null
 		"Stomp":
 			return active_stomp.get_timer() if active_stomp else null
 		"Pierce":
@@ -240,27 +240,21 @@ func get_powerup_timer(p_name: String) -> Timer:
 	return null
 
 func spawn_powerup() -> void:
-	DebugLogger.log_info("Spawning powerup...")
 	var powerup_pos
 	if tutorial_mode:
-		DebugLogger.log_info("Utilizing tutorial random position...")
 		powerup_pos = spawn.random_pos_tutorial()
 	else:
-		DebugLogger.log_info("Utilizing regular random position...")
 		powerup_pos = spawn.random_pos()
 	var attempts = 0
 	
 	while not spawn.is_valid_spawn_position(powerup_pos) and attempts < 100:
 		if tutorial_mode:
-			DebugLogger.log_info("Position conflict. Re-utilizing tutorial random position...")
 			powerup_pos = spawn.random_pos_tutorial()
 		else:
-			DebugLogger.log_info("Position conflict. Re-utilizing regular random position...")
 			powerup_pos = spawn.random_pos()
 		attempts += 1
 	
 	if attempts >= 100:
-		DebugLogger.log_info("Position conflict. Failed over 100 times.")
 		return
 	
 	var random_scene = available_powerups.pick_random()
@@ -268,18 +262,13 @@ func spawn_powerup() -> void:
 	powerup.position = powerup_pos
 	powerup.position += Vector2(16, 16)
 	game_manager.add_child(powerup)
-	DebugLogger.log_info("Powerup added to game manager")
 	powerup_spawned.emit(powerup_pos)
-	DebugLogger.log_info("Powerup spawned successfully!")
 
 func force_spawn_powerup(powerup_scene: PackedScene) -> void:
-	DebugLogger.log_info("Force spawning powerup...")
 	var pos
 	if tutorial_mode:
-		DebugLogger.log_info("Utilizing tutorial random position...")
 		pos = spawn.random_pos_tutorial()
 	else:
-		DebugLogger.log_info("Utilizing regular random position...")
 		pos = spawn.random_pos()
 		
 	var powerup = powerup_scene.instantiate()
@@ -287,6 +276,4 @@ func force_spawn_powerup(powerup_scene: PackedScene) -> void:
 	powerup.position = pos
 	powerup.position += Vector2(16, 16)
 	game_manager.add_child(powerup)
-	DebugLogger.log_info("Powerup added to game manager")
 	powerup_spawned.emit(pos)
-	DebugLogger.log_info("Powerup force spawned successfully!")

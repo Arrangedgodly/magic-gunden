@@ -17,8 +17,7 @@ var animation_speed = 5
 var game_started: bool = false
 var level = 1
 var game_paused : bool
-var is_tutorial_mode: bool = false
-var tutorial_mode_active: bool = false
+var tutorial_mode: bool = false
 
 signal level_changed(new_level: int)
 signal game_ended
@@ -72,7 +71,7 @@ func start_game():
 		
 	game_started = true
 	
-	if not is_tutorial_mode:
+	if not tutorial_mode:
 		AudioManager.play_music(background_music)
 		player.move_timer.start()
 		capture_point_manager.start_capture_systems()
@@ -82,15 +81,13 @@ func start_game():
 		player.move_timer.start()
 
 func start_normal_gameplay_loop():
-	is_tutorial_mode = false
-	tutorial_mode_active = false
+	tutorial_mode = false
 	
 	if background_music:
 		AudioManager.play_music(background_music)
 	
 	if capture_point_manager:
 		capture_point_manager.disable_tutorial_mode()
-		capture_point_manager.start_capture_systems()
 	
 	score_manager.time_counter.start()
 	enemy_manager.start_enemy_systems()
@@ -101,6 +98,7 @@ func end_game():
 	capture_point_manager.stop_capture_systems()
 	score_manager.time_counter.stop()
 	enemy_manager.stop_enemy_systems()
+	pause_screen.disable()
 	game_ended.emit()
 	score_manager.save_game()
 

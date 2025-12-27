@@ -202,28 +202,22 @@ func start_tutorial_logic() -> void:
 	await get_tree().process_frame
 	
 	if game_manager and player:
-		game_manager.is_tutorial_mode = true
-		game_manager.tutorial_mode_active = true
+		game_manager.tutorial_mode = true
 		
 		if pickup_manager:
 			pickup_manager.enable_tutorial_mode()
-		else:
-			DebugLogger.log_error("Pickup manager is null")
 
 		if capture_manager:
 			capture_manager.enable_tutorial_mode()
-		else:
-			DebugLogger.log_error("Capture manager is null")
 
 		if enemy_manager:
 			enemy_manager.enable_tutorial_mode()
-		else:
-			DebugLogger.log_error("Enemy manager is null")
 		
 		if trail_manager:
 			trail_manager.tutorial_mode = true
-		else:
-			DebugLogger.log_error("Trail manager is null")
+		
+		if powerup_manager:
+			powerup_manager.tutorial_mode = true
 
 		game_manager.game_started = true
 		player.move_timer.start()
@@ -316,15 +310,7 @@ func finish_tutorial() -> void:
 	SaveHelper.save_tutorial_save(tutorial_save)
 
 	if pickup_manager:
-		pickup_manager.regen_gem = true
-		pickup_manager.tutorial_mode = false
-	
-	if capture_manager:
-		capture_manager.clear_capture_points()
-		capture_manager.disable_tutorial_mode()
-
-		var spawn_point = capture_manager.find_capture_spawn_point()
-		capture_manager.spawn_capture_points(spawn_point)
+		pickup_manager.disable_tutorial_mode()
 
 	if game_manager:
 		game_manager.start_normal_gameplay_loop()
@@ -332,6 +318,9 @@ func finish_tutorial() -> void:
 	if trail_manager:
 		trail_manager.tutorial_mode = false
 		trail_manager.clear_trail()
+	
+	if powerup_manager:
+		powerup_manager.tutorial_mode = false
 	
 	if not player.can_fire:
 		player.can_fire = true
@@ -344,12 +333,10 @@ func _on_skip_pressed() -> void:
 	if waiting_for_continue:
 		waiting_for_continue = false
 	
-	get_tree().paused = false
-	
 	tutorial_save.show_tutorial = false
 	SaveHelper.save_tutorial_save(tutorial_save)
 	
-	finish_tutorial()
+	call_deferred("finish_tutorial")
 
 func _on_enemy_convert_blocked() -> void:
 	_show_tutorial()

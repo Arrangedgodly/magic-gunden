@@ -8,6 +8,9 @@ signal unhovered
 var _data: AchievementData
 
 func _ready() -> void:
+	if material:
+		material = material.duplicate()
+		
 	mouse_entered.connect(_on_interaction_start)
 	mouse_exited.connect(_on_interaction_end)
 	
@@ -17,17 +20,12 @@ func _ready() -> void:
 func setup(data: AchievementData) -> void:
 	_data = data
 	
-	(material as ShaderMaterial).set_shader_parameter("is_locked", false)
+	material.set_shader_parameter("is_locked", not data.is_unlocked)
 	
-	if data.is_unlocked:
+	if data.icon:
 		texture = data.icon
-		
-	elif data.hidden:
-		texture = hidden_icon
-		
 	else:
-		texture = data.icon
-		(material as ShaderMaterial).set_shader_parameter("is_locked", true)
+		texture = hidden_icon
 
 func _on_interaction_start() -> void:
 	hovered.emit(_data)

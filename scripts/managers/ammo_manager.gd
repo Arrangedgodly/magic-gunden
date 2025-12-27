@@ -12,7 +12,6 @@ signal decrease_ammo
 signal increase_ammo
 
 func handle_attack():
-	DebugLogger.log_info("Ammo manager handle attack initiated...")
 	if ammo.ammo_count == 0:
 		AudioManager.play_sound(ammo_error_sfx)
 		score_manager.reset_current_killstreak()
@@ -23,11 +22,8 @@ func handle_attack():
 		await player.attack()
 		
 	current_ammo.emit(ammo.ammo_count)
-	DebugLogger.log_info("Ammo manager handle attack completed!")
 
 func increase_ammo_count() -> void:
-	DebugLogger.log_info("Ammo manager increase ammo count initiated...")
 	increase_ammo.emit()
 	ammo.increase_ammo()
-	current_ammo.emit(ammo.clip_count)
-	DebugLogger.log_info("Ammo manager increase ammo count completed!")
+	current_ammo.emit(ammo.ammo_count)
