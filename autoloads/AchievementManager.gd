@@ -85,8 +85,7 @@ func progress_achievement(id: String, amount: int = 1) -> void:
 	_save_to_disk()
 
 func reset_all_achievements() -> void:
-	if FileAccess.file_exists(SAVE_PATH):
-		DirAccess.remove_absolute(SAVE_PATH)
+	SaveHelper.delete_save("user://achievements.tres")
 	
 	for id in achievements:
 		achievements[id].is_unlocked = false

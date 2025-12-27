@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://b358oqt40aay3"]
 
-[ext_resource type="Script" uid="uid://dqwe4yqcoxw8" path="res://scripts/ui/achievements_menu.gd" id="1_ai0em"]
+[ext_resource type="Script" uid="uid://dqwe4yqcoxw8" path="res://scripts/menus/achievements_menu.gd" id="1_ai0em"]
 [ext_resource type="PackedScene" uid="uid://pbq177swboeh" path="res://scenes/menus/achievement_background.tscn" id="2_cv4sc"]
 [ext_resource type="FontFile" uid="uid://cjvrsitv57if3" path="res://assets/Stacked pixel.ttf" id="2_xsqes"]
 [ext_resource type="Shader" uid="uid://b721of1jp60rf" path="res://shaders/silhouette.gdshader" id="3_t5h7i"]
