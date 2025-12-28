@@ -110,3 +110,8 @@ func _show_notification(achievement: AchievementData) -> void:
 	
 	is_showing_notification = false
 	_check_notification_queue()
+
+func on_end_game() -> void:
+	var children = get_children()
+	for child in children:
+		child.hide()

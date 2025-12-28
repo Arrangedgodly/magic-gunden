@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_fbt5i")
 id = "unlock_pierce"
-title = "Unlock Pierce Powerup"
+title = "Can't Stop this Bullet"
 description = "You found the pierce powerup!"
 icon = ExtResource("1_5td36")
 hidden = true

@@ -154,12 +154,13 @@ func release_trail() -> void:
 	
 
 func _on_trail_released(items_captured: int) -> void:
+	AchievementManager.set_achievement_score("max_capture", items_captured)
+	
 	if items_captured >= 6:
 		powerup_manager.spawn_powerup()
 	
 	if items_captured == 12:
 		powerup_manager.spawn_powerup()
-		AchievementManager.unlock_achievement("max_capture")
 	
 	if not powerup_manager.is_time_pause_active():
 		capture_point_manager.reset_capture_timers()

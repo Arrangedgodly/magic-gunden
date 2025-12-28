@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_g5kxy")
 id = "unlock_autoaim"
-title = "Unlock Auto Aim"
+title = "Look Ma, No Aim!"
 description = "You found the auto aim powerup!"
 icon = ExtResource("1_s48kw")
 hidden = true

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=2 format=3 uid="uid://cx3f6a8q1y8ru"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_insnr"]
+
+[resource]
+script = ExtResource("1_insnr")
+id = "100_gems_one_game"
+title = "Gem Overlord"
+description = "Capture 100 gems in a singular game!"
+goal = 100
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

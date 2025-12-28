@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_ulhir")
 id = "unlock_grenade"
-title = "Unlock Grenade Powerup"
+title = "Bombs Away!"
 description = "You found the grenade powerup!"
 icon = ExtResource("1_ekasj")
 hidden = true

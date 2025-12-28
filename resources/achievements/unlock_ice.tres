@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_xqv46")
 id = "unlock_ice"
-title = "Unlock Ice Powerup"
+title = "Brrrr! It's Cold"
 description = "You found the ice powerup!"
 icon = ExtResource("1_rrxni")
 hidden = true

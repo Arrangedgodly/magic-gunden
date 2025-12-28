@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_o76wm")
 id = "unlock_stomp"
-title = "Unlock Stomp Powerup"
+title = "These Boots Were Made for Stomping"
 description = "You found the stomp powerup!"
 icon = ExtResource("1_xls75")
 hidden = true

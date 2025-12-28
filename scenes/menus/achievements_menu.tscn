@@ -92,16 +92,17 @@ autowrap_mode = 2
 
 [node name="Description" type="RichTextLabel" parent="HBoxContainer/MarginContainer/InfoPanel"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 75)
+custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("2_xsqes")
 theme_override_font_sizes/normal_font_size = 32
+text = "LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/MarginContainer/InfoPanel"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(350, 75)
+custom_minimum_size = Vector2(350, 50)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("2_xsqes")
@@ -112,7 +113,7 @@ show_percentage = false
 
 [node name="ProgressLabel" type="Label" parent="HBoxContainer/MarginContainer/InfoPanel/ProgressBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(350, 75)
+custom_minimum_size = Vector2(350, 50)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -120,7 +121,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_xsqes")
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 vertical_alignment = 1
 

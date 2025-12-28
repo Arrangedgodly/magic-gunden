@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_k7xup")
 id = "complete_tutorial"
-title = "Complete Tutorial"
+title = "First One Down"
 description = "Finish the tutorial completely!"
 icon = ExtResource("1_ey0j6")
 metadata/_custom_type_script = "uid://bjcftw63cfbwh"

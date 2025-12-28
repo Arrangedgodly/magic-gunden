@@ -8,14 +8,12 @@ const TILE_SIZE = 32
 @onready var trail_manager: Node2D = %TrailManager
 
 func random_pos() -> Vector2i:
-	DebugLogger.log_info("Spawn Manager finding random position...")
 	randomize()
 	var x = (randi_range(0, TILES - 1) * TILE_SIZE)
 	var y = (randi_range(0, TILES - 1) * TILE_SIZE)
 	return Vector2i(x, y)
 
 func random_pos_tutorial() -> Vector2i:
-	DebugLogger.log_info("Spawn Manager finding tutorial position...")
 	randomize()
 	var min_tile = 2
 	var max_tile = TILES - 1 - 2
@@ -25,9 +23,7 @@ func random_pos_tutorial() -> Vector2i:
 	return Vector2i(x, y)
 
 func is_valid_spawn_position(pos: Vector2) -> bool:
-	DebugLogger.log_info("Spawn Manager checking position validity...")
 	if not player:
-		DebugLogger.log_error("Spawn manager player node is null!")
 		return false
 	
 	var diff = (pos - player.position).abs()

@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_56w3y")
 id = "unlock_timepause"
-title = "Unlock Time Pause Powerup"
+title = "TIME FREEZE!"
 description = "You found the time pause powerup!"
 icon = ExtResource("1_ysunw")
 hidden = true

@@ -51,6 +51,8 @@ func increase_kill_count():
 func increase_current_killstreak(killstreak_to_add: int) -> void:
 	current_killstreak += killstreak_to_add
 	
+	AchievementManager.set_achievement_score("killstreak_25", current_killstreak)
+	
 	new_killstreak.emit(current_killstreak)
 	
 	if current_killstreak > saved_game.killstreak:

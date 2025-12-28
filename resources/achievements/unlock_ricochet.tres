@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_thucc")
 id = "unlock_ricochet"
-title = "Unlock Ricochet Powerup"
+title = "Bullets go BOUNCE"
 description = "You found the ricochet powerup!"
 icon = ExtResource("1_kvu6h")
 hidden = true

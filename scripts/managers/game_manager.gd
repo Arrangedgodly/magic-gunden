@@ -50,6 +50,7 @@ func _initialize() -> void:
 		if not (tutorial and tutorial.tutorial_save and tutorial.tutorial_save.show_tutorial):
 			DebugLogger.log_info("Initializing first spawn...")
 			capture_point_manager.initialize_first_spawn()
+			pickup_manager.regen_gem = true
 		else:
 			DebugLogger.log_info("Skipping first spawn - tutorial active")
 	else:
@@ -88,6 +89,9 @@ func start_normal_gameplay_loop():
 	
 	if capture_point_manager:
 		capture_point_manager.disable_tutorial_mode()
+	
+	if pickup_manager:
+		pickup_manager.disable_tutorial_mode()
 	
 	score_manager.time_counter.start()
 	enemy_manager.start_enemy_systems()

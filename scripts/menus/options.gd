@@ -133,22 +133,20 @@ func _on_confirmation_received(confirmed: bool, callback: Callable) -> void:
 		back_button.grab_focus()
 
 func reset_game_save() -> void:
-	var save_path = "user://save.tres"
-	if FileAccess.file_exists(save_path):
-		DirAccess.remove_absolute(save_path)
+	SaveHelper.delete_save("user://highscores.tres")
+	AchievementManager.reset_all_achievements()
 
 func reset_tutorial_save() -> void:
-	var tutorial_path = "user://tutorial.tres"
 	var tutorial_save = TutorialSave.new()
 	tutorial_save.show_tutorial = true
 	tutorial_save.has_played = false
-	ResourceSaver.save(tutorial_save, tutorial_path)
+	SaveHelper.save_tutorial_save(tutorial_save)
 
 func reset_all_data() -> void:
-	reset_game_save()
-	reset_tutorial_save()
+	SaveHelper.reset_all_saves()
 	
 	settings_save = SettingsSave.new()
+	settings_save.set_default_controls()
 	save_settings()
 	
 	setup_volume_controls()

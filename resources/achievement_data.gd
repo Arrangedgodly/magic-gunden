@@ -27,3 +27,15 @@ func increment(amount: int = 1) -> bool:
 		unlock()
 		return true
 	return false
+
+func update_to_highest(new_value: int) -> bool:
+	if is_unlocked: return false
+	
+	if new_value > current_progress:
+		current_progress = new_value
+		
+		if current_progress >= goal:
+			unlock()
+			return true
+			
+	return false

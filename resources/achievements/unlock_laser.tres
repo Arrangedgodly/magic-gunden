@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_2rbas")
 id = "unlock_laser"
-title = "Unlock Laser Powerup"
+title = "The Ultimate PEW PEW"
 description = "You found the laser powerup!"
 icon = ExtResource("1_nd3s1")
 hidden = true

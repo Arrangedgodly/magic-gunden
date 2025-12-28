@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_yco7k")
 id = "kill_1000_slimes"
-title = "Kill 1000 Slimes"
-description = "Slay 1000 slimes over the course of your game!"
+title = "Slime Annihilator"
+description = "Slay 1000 slimes across game sessions"
 goal = 1000
 metadata/_custom_type_script = "uid://bjcftw63cfbwh"

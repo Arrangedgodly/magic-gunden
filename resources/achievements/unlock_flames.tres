@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_pp5ow")
 id = "unlock_flames"
-title = "Unlock Flames Powerup"
+title = "Flame On!"
 description = "You found the flames powerup!"
 icon = ExtResource("1_abags")
 hidden = true

@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_2pc5s")
 id = "unlock_magnet"
-title = "Unlock Magnet Powerup"
+title = "Fear Magneto"
 description = "You found the magnet powerup!"
 icon = ExtResource("1_60648")
 hidden = true

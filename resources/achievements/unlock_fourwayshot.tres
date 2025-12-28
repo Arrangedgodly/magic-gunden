@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_uswcf")
 id = "unlock_fourwayshot"
-title = "Unlock Four Way Shot Powerup"
+title = "One Shot Four Bullets"
 description = "You found the Four Way Shot powerup!"
 icon = ExtResource("1_7iqvb")
 hidden = true

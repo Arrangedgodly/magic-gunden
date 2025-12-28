@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=2 format=3 uid="uid://b4x2hltdvo74i"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_awdu4"]
+
+[resource]
+script = ExtResource("1_awdu4")
+id = "10000_score"
+title = "Big Scorer"
+description = "Achieved a score of at least 10000 in a singular game!"
+goal = 10000
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

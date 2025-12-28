@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_33fw3")
 id = "unlock_poison"
-title = "Unlock Poison"
+title = "Better Call Poison Control"
 description = "You found the poison powerup!"
 icon = ExtResource("1_6p6rw")
 hidden = true

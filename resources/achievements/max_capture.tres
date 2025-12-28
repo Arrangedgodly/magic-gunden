@@ -7,4 +7,5 @@ script = ExtResource("1_xpedg")
 id = "max_capture"
 title = "Maximum Capture"
 description = "Capture 12 gems at one time!"
+goal = 12
 metadata/_custom_type_script = "uid://bjcftw63cfbwh"

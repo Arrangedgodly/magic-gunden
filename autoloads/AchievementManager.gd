@@ -84,6 +84,24 @@ func progress_achievement(id: String, amount: int = 1) -> void:
 	
 	_save_to_disk()
 
+func set_achievement_score(id: String, value: int) -> void:
+	if not achievements.has(id): return
+	
+	var achiev = achievements[id]
+	
+	var old_progress = achiev.current_progress
+	
+	var just_unlocked = achiev.update_to_highest(value)
+	
+	if just_unlocked:
+		achievement_unlocked.emit(achiev)
+		DebugLogger.log_info("High Score Achievement Unlocked: " + achiev.title)
+		_save_to_disk()
+		
+	elif achiev.current_progress > old_progress:
+		achievement_progress.emit(achiev)
+		_save_to_disk()
+
 func reset_all_achievements() -> void:
 	SaveHelper.delete_save("user://achievements.tres")
 	

@@ -36,6 +36,7 @@ func force_spawn_gem() -> void:
 	regen_gem = was_regen
 
 func spawn_gem() -> void:
+	DebugLogger.log_info("PICKUP MANAGER: Attempting gem spawn")
 	if not regen_gem:
 		return
 		
@@ -72,9 +73,11 @@ func spawn_gem() -> void:
 	game_manager.add_child(gem_instance)
 
 func enable_tutorial_mode() -> void:
+	DebugLogger.log_info("PICKUP MANAGER: Enabling tutorial mode")
 	regen_gem = false
 	tutorial_mode = true
 
 func disable_tutorial_mode() -> void:
+	DebugLogger.log_info("PICKUP MANAGER: Disabling tutorial mode")
 	regen_gem = true
 	tutorial_mode = false

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AchievementData" load_steps=2 format=3 uid="uid://hq5ho1en0dkj"]
+
+[ext_resource type="Script" uid="uid://bjcftw63cfbwh" path="res://resources/achievement_data.gd" id="1_644dn"]
+
+[resource]
+script = ExtResource("1_644dn")
+id = "killstreak_25"
+title = "Major Killstreak"
+description = "Reach a killstreak of at least 25"
+goal = 25
+metadata/_custom_type_script = "uid://bjcftw63cfbwh"

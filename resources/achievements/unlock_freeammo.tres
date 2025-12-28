@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_dtcf1")
 id = "unlock_freeammo"
-title = "Unlock Free Ammo Powerup!"
+title = "Ammo Galore"
 description = "You found the free ammo powerup!"
 icon = ExtResource("1_lbuil")
 hidden = true

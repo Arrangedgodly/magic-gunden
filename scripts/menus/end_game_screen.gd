@@ -50,12 +50,14 @@ func _ready() -> void:
 	
 func _on_score_manager_game_ended(final_saved_game) -> void:
 	final_score.text = str(final_saved_game.score)
+	AchievementManager.set_achievement_score("10000_score", final_saved_game.score)
 	final_killcount.text = str(final_saved_game.slimes_killed)
 	best_killstreak.text = str(final_saved_game.killstreak)
 	time_alive.text = final_saved_game.get_time_alive_in_minutes()
 	gems_captured.text = str(final_saved_game.gems_captured)
+	AchievementManager.set_achievement_score("100_gems_one_game", final_saved_game.gems_captured)
 	show()
-	ui.hide()
+	ui.on_end_game()
 
 func _on_no_pressed() -> void:
 	hide()
